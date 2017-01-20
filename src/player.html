@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<!-- INJECTS IE CLASSES ONTO HTML TAG -->
+<!--[if IE 8 ]>    <html class="IE8"> <![endif]-->
+<!--[if IE 9 ]>    <html class="IE9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html class=""> <!--<![endif]-->
+	<head>
+		<title>Template Widget</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+		<!-- STYLESHEETS -->
+		<link rel="stylesheet" type="text/css" href="player.css">
+
+		<!-- REQUIRED MATERIA JAVASCRIPT -->
+		<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+		<script src="materia.enginecore.js"></script>
+
+		<!-- YOUR PREREQUISITES -->
+		<!-- <script src='//cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.16/angular.min.js'></script>
+		<script src='//cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.16/angular-sanitize.min.js'></script> -->
+		<!-- A Frame -->
+		<script src="https://aframe.io/releases/0.4.0/aframe.min.js"></script>
+
+		<!-- MAIN APP -->
+		<script src="js/player.js"></script>
+	</head>
+	<body>
+		<div id="container">
+			<a-scene>
+				<a-sphere position="0 1.25 -5" radius="1.25" color="#EF2D5E"></a-sphere>
+				<a-box position="-1 0.5 -3" rotation="0 45 0" width="1" height="1" depth="1" color="#4CC3D9"></a-box>
+				<a-cylinder position="1 0.75 -3" radius="0.5" height="1.5" color="#FFC65D"></a-cylinder>
+				<a-plane position="0 0 -4" rotation="-90 0 0" width="4" height="4" color="#7BC8A4"></a-plane>
+				<a-sky color="#ECECEC"></a-sky>
+			</a-scene>
+		</div>
+	</body>
+</html>
