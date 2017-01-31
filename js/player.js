@@ -173,7 +173,7 @@ function buildAssets()
 	var rectangle = document.getElementById("asset-2");
 	rectangle.setAttribute('scale', {x: 2, y: 1, z: 1});
 	rectangle.setAttribute('position', {x: 15, y: 0.5, z: 2});
-	rectangle.setAttribute('material', 'color', '#FFFF00');
+	rectangle.setAttribute('material', 'color', '#FF00FF');
 	// Helps not to duplicate cloned objects.
 	rectangle.setAttribute("isCloned", false);
 	// Contains which cells it occupies.
@@ -193,7 +193,7 @@ function buildAssets()
 	var largeBox = document.getElementById("asset-3");
 	largeBox.setAttribute('scale', {x: 2, y: 1, z: 2});
 	largeBox.setAttribute('position', {x: 15, y: 0.5, z: 4});
-	largeBox.setAttribute('material', 'color', '#00FFFF');
+	largeBox.setAttribute('material', 'color', '#FF00FF');
 	// Helps not to duplicate cloned objects.
 	largeBox.setAttribute("isCloned", false);
 	// Contains which cells it occupies.
@@ -247,19 +247,8 @@ function buildGrid()
 	}
 	attachGridCellEventListeners();
 };
-// Changes cells asset owns unless out of bounds.
-function changeCellsOwned(activeCell)
+function checkBoundaries(idContents, x, z, horizontal, vertical)
 {
-	var cellsOwnedBefore = activeElement.element.getAttribute('cellsOwned');
-	// Gives those cells to that asset clone.
-	activeElement.element.setAttribute('cellsOwned', '');
-	var cellsOwnedAfter = activeElement.element.setAttribute('cellsOwned', '');
-
-	var idContents = activeCell.id.split("-");
-	var x = idContents[idContents.length-2];
-	var z = idContents[idContents.length-1];
-	var horizontal = activeElement.element.getAttribute('horizontal');
-	var vertical = activeElement.element.getAttribute('vertical');
 	for(var i = 0; i <= horizontal; i++)
 	{
 		for(var j = 0; j <= vertical; j++)
@@ -268,16 +257,36 @@ function changeCellsOwned(activeCell)
 			var cellToClaim = document.getElementById(cell);
 			if(cellToClaim === null)
 			{
-				activeElement.element.setAttribute('cellsOwned', cellsOwnedBefore);
 				return false;
 			}
+		}
+	}
+	return true;
+};
+// Changes cells asset owns unless out of bounds.
+function changeCellsOwned(activeCell)
+{
+	var idContents = activeCell.id.split("-");
+	var x = idContents[idContents.length-2];
+	var z = idContents[idContents.length-1];
+	var horizontal = activeElement.element.getAttribute('horizontal');
+	var vertical = activeElement.element.getAttribute('vertical');
+	if(!checkBoundaries(idContents, x, z, horizontal, vertical)) return false;
+	// Gives the new cells to that asset clone.
+	activeElement.element.setAttribute('cellsOwned', '');
+	for(var i = 0; i <= horizontal; i++)
+	{
+		for(var j = 0; j <= vertical; j++)
+		{
+			var cell = "cell-" + (Number(x) + i) + "-" + (Number(z) + j);
+			var cellToClaim = document.getElementById(cell);
 			var currentCellsOwned = activeElement.element.getAttribute('cellsOwned');
 			if(currentCellsOwned !== '') activeElement.element.setAttribute('cellsOwned', (currentCellsOwned + "," + cell));
 			else activeElement.element.setAttribute('cellsOwned', cell);
 		}
 	}
 	return true;
-}
+};
 // Clears the highlighting from all cells on the grid.
 function clearCells()
 {
@@ -347,28 +356,41 @@ function keyboardEventSetup()
 		if (keyName === 'r' && !keyDown)
 		{
 			keyDown = true;
-			// Rotate the actual asset.
-			var assetRotation = activeElement.element.getAttribute("rotation");
-			activeElement.element.setAttribute("rotation", {x: assetRotation.x, y: (assetRotation.y + 90), z: assetRotation.z});
-			// Increments to the next rotation state (used to calculate horizontal and vertical shape change).
-			var assetRotationState = activeElement.element.getAttribute("assetRotation");
-			assetRotationState++;
-			if(assetRotationState >= 4) assetRotationState = 0;
-			activeElement.element.setAttribute("assetRotation", assetRotationState);
+			// Place the clone in the scene on top left grid cell.
+			var cellsOwned = activeElement.element.getAttribute('cellsOwned');
+			var cellsOwnedContents = cellsOwned.split(",");
+			var cornerCell = document.getElementById(cellsOwnedContents[0]);
+			var position = cornerCell.getAttribute('position');
+			var scale = activeElement.element.getAttribute('scale');
 			// Adjust cell that will be occupied under new rotation.
 			var horizontal = activeElement.element.getAttribute("horizontal");
 			var vertical = activeElement.element.getAttribute("vertical");
 			activeElement.element.setAttribute("horizontal", vertical);
 			activeElement.element.setAttribute("vertical", horizontal);
-			// If not a clone, stop here. Keep original asset position the same.
-			if(activeElement.element.getAttribute("isCloned") === 'true')
+			var inBounds = changeCellsOwned(cornerCell);
+			if(!inBounds)
 			{
-				// Place the clone in the scene on top left grid cell.
-				var cellsOwned = activeElement.element.getAttribute('cellsOwned');
-				var cellsOwnedContents = cellsOwned.split(",");
-				var cornerCell = document.getElementById(cellsOwnedContents[0]);
-				var position = cornerCell.getAttribute('position');
-				var scale = activeElement.element.getAttribute('scale');
+				// New position is out of bounds. Change back.
+				var horizontal = activeElement.element.getAttribute("horizontal");
+				var vertical = activeElement.element.getAttribute("vertical");
+				activeElement.element.setAttribute("horizontal", vertical);
+				activeElement.element.setAttribute("vertical", horizontal);
+			}
+			// If clone, Make sure new rotation position is within bounds before rotation.
+			if(activeElement.element.getAttribute("isCloned") === 'false' || inBounds)
+			{
+				// Rotate the actual asset.
+				var assetRotation = activeElement.element.getAttribute("rotation");
+				activeElement.element.setAttribute("rotation", {x: assetRotation.x, y: (assetRotation.y + 90), z: assetRotation.z});
+				// Increments to the next rotation state (used to calculate horizontal and vertical shape change).
+				var assetRotationState = activeElement.element.getAttribute("assetRotation");
+				assetRotationState++;
+				if(assetRotationState >= 4) assetRotationState = 0;
+				activeElement.element.setAttribute("assetRotation", assetRotationState);
+			}
+			// If not a clone, stop here. Keep original asset position the same.
+			if(activeElement.element.getAttribute("isCloned") === 'true' && inBounds)
+			{
 				// Local rotation is different from world, this resolves problem.
 				if(assetRotationState % 2 === 0)
 				{
