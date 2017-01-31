@@ -4,14 +4,18 @@ var activeElement = {
 	activated: false
 };
 var assets = [];
+var keyDown = false;
 // The one function to rule them all.
-function init() {
+function init()
+{
 	setup();
 	buildGrid();
 	buildAssets();
+	keyboardEventSetup();
 };
 // Mouse events functionality on the assets
-function attachAssetListeners(obj) {
+function attachAssetListeners(obj)
+{
 	// Hover over the asset
 	obj.addEventListener('mouseenter', function () {
 		if(this.classList.contains("active")) return;
@@ -106,6 +110,13 @@ function buildAssets()
 	box.setAttribute('material', 'color', '#FF00FF');
 	// Helps not to duplicate cloned objects.
 	box.setAttribute("isCloned", false);
+	// Contains which cells it occupies.
+	box.setAttribute("cellsOwned", "");
+	// Contains what rotation state it has (for later evaluation).
+	// 0 is default. 1 is clockwise 90 degrees, 2 is 180 degrees, 3 is is 270 degrees. 
+	box.setAttribute("assetRotation", "0");
+	// Contains which cells will be occupied due to shape.
+	box.setAttribute("shapeData", "");
 	// Sometimes necessary to force the HTML DOM to redraw these pseudo-dom elements.
 	box.flushToDOM();
 	attachAssetListeners(box);
@@ -118,6 +129,11 @@ function buildAssets()
 	rectangle.setAttribute('material', 'color', '#FFFF00');
 	// Helps not to duplicate cloned objects.
 	rectangle.setAttribute("isCloned", false);
+	// Contains which cells it occupies.
+	box.setAttribute("cellsOwned", "");
+	// Contains what rotation state it has (for later evaluation).
+	// 0 is default. 1 is clockwise 90 degrees, 2 is 180 degrees, 3 is is 270 degrees. 
+	box.setAttribute("assetRotation", "0");
 	// Sometimes necessary to force the HTML DOM to redraw these pseudo-dom elements.
 	rectangle.flushToDOM();
 	attachAssetListeners(rectangle);
@@ -189,7 +205,8 @@ function clone(obj)
 	return clonedObject;
 }
 // Deletes a cloned asset from all places referenced.
-function deleteAsset(obj) {
+function deleteAsset(obj)
+{
 	// Flush element from asset collection.
 	var flag = false;
 	for(var i = 0; i < assets.length; i++)
@@ -202,6 +219,31 @@ function deleteAsset(obj) {
 		}
 	}
 	document.querySelector('a-scene').removeChild(obj);
+};
+function keyboardEventSetup()
+{
+	document.addEventListener('keydown', function(event)
+	{
+		const keyName = event.key;
+		console.log(keyName);
+		if (keyName === 'r' && !keyDown)
+		{
+			keyDown = true;
+			var assetRotation = activeElement.element.getAttribute("rotation");
+			activeElement.element.setAttribute("rotation", {x: assetRotation.x, y: (assetRotation.y + 90), z: assetRotation.z});
+			var assetRotationState = activeElement.element.getAttribute("assetRotation");
+			assetRotationState++;
+			if(assetRotationState >= 4) assetRotationState = 0;
+			activeElement.element.setAttribute("assetRotation", assetRotationState);
+			return;
+		}
+	}, false);
+
+	document.addEventListener('keyup', function(event)
+	{
+		const keyName = event.key;
+		keyDown = false;
+	}, false);
 };
 // Removes the active class from any object that has it
 function removesActive()
