@@ -109,6 +109,8 @@ function attachGridCellEventListeners()
 				var cellPosition = this.getAttribute('position');
 				// Get asset's scale (helps with putting bottom of asset on ground).
 				var assetSize = activeElement.element.getAttribute('scale');
+				// If cells are out of bounds, function returns false, and new position skipped.
+				if(!changeCellsOwned(this)) return;
 				// If active object wasn't a clone, make a clone.
 				if(activeElement.element.getAttribute("isCloned") === "false")
 				{
@@ -122,11 +124,24 @@ function attachGridCellEventListeners()
 					activeElement.element.setAttribute('material', 'color', '#00FF00');
 				}
 				// Place the clone in the scene on top of clicked grid cell.
-				activeElement.element.setAttribute('position', {
-					x: cellPosition.x + (assetSize.x / 2.0) - 0.5,
-					y: (assetSize.y / 2.0),
-					z: cellPosition.z + (assetSize.z / 2.0) - 0.5
-				});
+				var assetRotationState = activeElement.element.getAttribute("assetRotation");
+				// Local rotation is different from world, this resolves problem.
+				if(assetRotationState % 2 === 0)
+				{
+					activeElement.element.setAttribute('position', {
+						x: cellPosition.x + (assetSize.x / 2) - 0.5,
+						y: (assetSize.y / 2.0),
+						z: cellPosition.z + (assetSize.z / 2) - 0.5
+					});
+				}
+				else
+				{
+					activeElement.element.setAttribute('position', {
+						x: cellPosition.x + (assetSize.z / 2) - 0.5,
+						y: (assetSize.y / 2.0),
+						z: cellPosition.z + (assetSize.x / 2) - 0.5
+					});
+				}
 				// Make sure clone is manually pushed to HTML DOM.
 				activeElement.element.flushToDOM();
 			}
@@ -232,6 +247,38 @@ function buildGrid()
 	}
 	attachGridCellEventListeners();
 };
+// Changes cells asset owns unless out of bounds.
+function changeCellsOwned(activeCell)
+{
+	var cellsOwnedBefore = activeElement.element.getAttribute('cellsOwned');
+	// Gives those cells to that asset clone.
+	activeElement.element.setAttribute('cellsOwned', '');
+	var cellsOwnedAfter = activeElement.element.setAttribute('cellsOwned', '');
+
+	var idContents = activeCell.id.split("-");
+	var x = idContents[idContents.length-2];
+	var z = idContents[idContents.length-1];
+	var horizontal = activeElement.element.getAttribute('horizontal');
+	var vertical = activeElement.element.getAttribute('vertical');
+	for(var i = 0; i <= horizontal; i++)
+	{
+		for(var j = 0; j <= vertical; j++)
+		{
+			var cell = "cell-" + (Number(x) + i) + "-" + (Number(z) + j);
+			console.log("cell: " + cell);
+			var cellToClaim = document.getElementById(cell);
+			if(cellToClaim === null)
+			{
+				activeElement.element.setAttribute('cellsOwned', cellsOwnedBefore);
+				return false;
+			}
+			var currentCellsOwned = activeElement.element.getAttribute('cellsOwned');
+			if(currentCellsOwned !== '') activeElement.element.setAttribute('cellsOwned', (currentCellsOwned + "," + cell));
+			else activeElement.element.setAttribute('cellsOwned', cell);
+		}
+	}
+	return true;
+}
 // Clears the highlighting from all cells on the grid.
 function clearCells()
 {
@@ -253,6 +300,14 @@ function clone(obj)
 	clonedObject.setAttribute("material", obj.getAttribute("material"));
 	clonedObject.setAttribute("scale", obj.getAttribute("scale"));
 	clonedObject.setAttribute("rotation", obj.getAttribute("rotation"));
+	// Contains which cells it occupies.
+	clonedObject.setAttribute("cellsOwned", obj.getAttribute("cellsOwned"));
+	// Contains what rotation state it has (for later evaluation).
+	// 0 is default. 1 is clockwise 90 degrees, 2 is 180 degrees, 3 is is 270 degrees.
+	clonedObject.setAttribute("assetRotation", obj.getAttribute("assetRotation"));
+	// Helps to highlight which cells will be occupied due to shape.
+	clonedObject.setAttribute("horizontal", obj.getAttribute("horizontal"));
+	clonedObject.setAttribute("vertical", obj.getAttribute("vertical"));
 	// Helps not to duplicate cloned objects.
 	clonedObject.setAttribute("isCloned", true);
 	// Copies classes over to new object.
@@ -306,6 +361,34 @@ function keyboardEventSetup()
 			var vertical = activeElement.element.getAttribute("vertical");
 			activeElement.element.setAttribute("horizontal", vertical);
 			activeElement.element.setAttribute("vertical", horizontal);
+			// If not a clone, stop here. Keep original asset position the same.
+			if(activeElement.element.getAttribute("isCloned") === 'true')
+			{
+				// Place the clone in the scene on top left grid cell.
+				var cellsOwned = activeElement.element.getAttribute('cellsOwned');
+				var cellsOwnedContents = cellsOwned.split(",");
+				var cornerCell = document.getElementById(cellsOwnedContents[0]);
+				var position = cornerCell.getAttribute('position');
+				var scale = activeElement.element.getAttribute('scale');
+				// Local rotation is different from world, this resolves problem.
+				if(assetRotationState % 2 === 0)
+				{
+					activeElement.element.setAttribute('position', {
+						x: position.x + (scale.x / 2) - 0.5,
+						y: (scale.y / 2.0),
+						z: position.z + (scale.z / 2) - 0.5
+					});
+				}
+				else
+				{
+					activeElement.element.setAttribute('position', {
+						x: position.x + (scale.z / 2) - 0.5,
+						y: (scale.y / 2.0),
+						z: position.z + (scale.x / 2) - 0.5
+					});
+				}
+			}
+			activeElement.element.flushToDOM();
 			return;
 		}
 	}, false);
