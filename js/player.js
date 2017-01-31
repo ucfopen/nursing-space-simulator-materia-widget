@@ -67,11 +67,38 @@ function attachGridCellEventListeners()
 	{
 		// Hovering over cell
 		cells[i].addEventListener('mouseenter', function () {
-			this.setAttribute('material', 'color', '#CC4500');
+			// Highlight other cells that the asset would otherwise occupy.
+			if(activeElement.activated)
+			{
+				var idContents = this.id.split("-");
+				var x = idContents[idContents.length-2];
+				var z = idContents[idContents.length-1];
+				var horizontal = activeElement.element.getAttribute("horizontal");
+				var vertical = activeElement.element.getAttribute("vertical");
+
+				if(horizontal > 0 || vertical > 0)
+				{
+					for(var i = 0; i <= horizontal; i++)
+					{
+						for(var j = 0; j <= vertical; j++)
+						{
+							var id = "cell-" + (Number(x) + i) + "-" + (Number(z) + j);
+							var cellToHighlight = document.getElementById(id);
+							if(cellToHighlight === null)
+							{
+								clearCells();
+								return;
+							}
+							cellToHighlight.setAttribute('material', 'color', '#CC4500');
+						}
+					}
+				}
+			}
+
 		});
 		// Mouse cursor has left the cell.
 		cells[i].addEventListener('mouseleave', function () {
-			this.setAttribute('material', 'color', '#7BC8A4');
+			clearCells();
 		});
 		// Mouse cursor has clicked the cell.
 		cells[i].addEventListener('click', function () {
@@ -95,7 +122,11 @@ function attachGridCellEventListeners()
 					activeElement.element.setAttribute('material', 'color', '#00FF00');
 				}
 				// Place the clone in the scene on top of clicked grid cell.
-				activeElement.element.setAttribute('position', {x: cellPosition.x, y: (assetSize.y / 2), z: cellPosition.z});
+				activeElement.element.setAttribute('position', {
+					x: cellPosition.x + (assetSize.x / 2.0) - 0.5,
+					y: (assetSize.y / 2.0),
+					z: cellPosition.z + (assetSize.z / 2.0) - 0.5
+				});
 				// Make sure clone is manually pushed to HTML DOM.
 				activeElement.element.flushToDOM();
 			}
@@ -115,8 +146,9 @@ function buildAssets()
 	// Contains what rotation state it has (for later evaluation).
 	// 0 is default. 1 is clockwise 90 degrees, 2 is 180 degrees, 3 is is 270 degrees. 
 	box.setAttribute("assetRotation", "0");
-	// Contains which cells will be occupied due to shape.
-	box.setAttribute("shapeData", "");
+	// Helps to highlight which cells will be occupied due to shape.
+	box.setAttribute("horizontal", 0);
+	box.setAttribute("vertical", 0);
 	// Sometimes necessary to force the HTML DOM to redraw these pseudo-dom elements.
 	box.flushToDOM();
 	attachAssetListeners(box);
@@ -130,10 +162,13 @@ function buildAssets()
 	// Helps not to duplicate cloned objects.
 	rectangle.setAttribute("isCloned", false);
 	// Contains which cells it occupies.
-	box.setAttribute("cellsOwned", "");
+	rectangle.setAttribute("cellsOwned", "");
 	// Contains what rotation state it has (for later evaluation).
 	// 0 is default. 1 is clockwise 90 degrees, 2 is 180 degrees, 3 is is 270 degrees. 
-	box.setAttribute("assetRotation", "0");
+	rectangle.setAttribute("assetRotation", "0");
+	// Helps to highlight which cells will be occupied due to shape.
+	rectangle.setAttribute("horizontal", 1);
+	rectangle.setAttribute("vertical", 0);
 	// Sometimes necessary to force the HTML DOM to redraw these pseudo-dom elements.
 	rectangle.flushToDOM();
 	attachAssetListeners(rectangle);
@@ -176,6 +211,15 @@ function buildGrid()
 		}
 	}
 	attachGridCellEventListeners();
+};
+// Clears the highlighting from all cells on the grid.
+function clearCells()
+{
+	var cells = document.querySelectorAll('.grid');
+	for(var i = 0; i < cells.length; i++)
+	{
+		cells[i].setAttribute('material', 'color', '#7BC8A4');
+	}
 };
 // Safely clones an asset object rather than use the one in the sidebar
 function clone(obj)
@@ -225,16 +269,23 @@ function keyboardEventSetup()
 	document.addEventListener('keydown', function(event)
 	{
 		const keyName = event.key;
-		console.log(keyName);
+
 		if (keyName === 'r' && !keyDown)
 		{
 			keyDown = true;
+			// Rotate the actual asset.
 			var assetRotation = activeElement.element.getAttribute("rotation");
 			activeElement.element.setAttribute("rotation", {x: assetRotation.x, y: (assetRotation.y + 90), z: assetRotation.z});
+			// Increments to the next rotation state (used to calculate horizontal and vertical shape change).
 			var assetRotationState = activeElement.element.getAttribute("assetRotation");
 			assetRotationState++;
 			if(assetRotationState >= 4) assetRotationState = 0;
 			activeElement.element.setAttribute("assetRotation", assetRotationState);
+			// Adjust cell that will be occupied under new rotation.
+			var horizontal = activeElement.element.getAttribute("horizontal");
+			var vertical = activeElement.element.getAttribute("vertical");
+			activeElement.element.setAttribute("horizontal", vertical);
+			activeElement.element.setAttribute("vertical", horizontal);
 			return;
 		}
 	}, false);
