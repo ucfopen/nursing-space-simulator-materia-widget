@@ -174,6 +174,26 @@ function buildAssets()
 	attachAssetListeners(rectangle);
 	// Adds this fake asset to the array of assets (easier to search through them)
 	assets.push(rectangle);
+
+	var largeBox = document.getElementById("asset-3");
+	largeBox.setAttribute('scale', {x: 2, y: 1, z: 2});
+	largeBox.setAttribute('position', {x: 15, y: 0.5, z: 4});
+	largeBox.setAttribute('material', 'color', '#00FFFF');
+	// Helps not to duplicate cloned objects.
+	largeBox.setAttribute("isCloned", false);
+	// Contains which cells it occupies.
+	largeBox.setAttribute("cellsOwned", "");
+	// Contains what rotation state it has (for later evaluation).
+	// 0 is default. 1 is clockwise 90 degrees, 2 is 180 degrees, 3 is is 270 degrees. 
+	largeBox.setAttribute("assetRotation", "0");
+	// Helps to highlight which cells will be occupied due to shape.
+	largeBox.setAttribute("horizontal", 1);
+	largeBox.setAttribute("vertical", 1);
+	// Sometimes necessary to force the HTML DOM to redraw these pseudo-dom elements.
+	largeBox.flushToDOM();
+	attachAssetListeners(largeBox);
+	// Adds this fake asset to the array of assets (easier to search through them)
+	assets.push(largeBox);
 };
 function buildGrid()
 {
@@ -324,4 +344,8 @@ function setup()
 	var rectangle = document.createElement("a-box");
 	rectangle.id = "asset-2";
 	mainContainer.appendChild(rectangle);
+	// Create the assets, and append to scene.
+	var largeBox = document.createElement("a-box");
+	largeBox.id = "asset-3";
+	mainContainer.appendChild(largeBox);
 };
