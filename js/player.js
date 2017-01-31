@@ -265,7 +265,6 @@ function changeCellsOwned(activeCell)
 		for(var j = 0; j <= vertical; j++)
 		{
 			var cell = "cell-" + (Number(x) + i) + "-" + (Number(z) + j);
-			console.log("cell: " + cell);
 			var cellToClaim = document.getElementById(cell);
 			if(cellToClaim === null)
 			{
