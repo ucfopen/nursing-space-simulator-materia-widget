@@ -76,7 +76,7 @@ function attachGridCellEventListeners()
 				var horizontal = activeElement.element.getAttribute("horizontal");
 				var vertical = activeElement.element.getAttribute("vertical");
 
-				if(horizontal > 0 || vertical > 0)
+				if(checkBoundaries(idContents, x, z, horizontal, vertical))
 				{
 					for(var i = 0; i <= horizontal; i++)
 					{
@@ -84,11 +84,6 @@ function attachGridCellEventListeners()
 						{
 							var id = "cell-" + (Number(x) + i) + "-" + (Number(z) + j);
 							var cellToHighlight = document.getElementById(id);
-							if(cellToHighlight === null)
-							{
-								clearCells();
-								return;
-							}
 							cellToHighlight.setAttribute('material', 'color', '#CC4500');
 						}
 					}
@@ -356,28 +351,32 @@ function keyboardEventSetup()
 		if (keyName === 'r' && !keyDown)
 		{
 			keyDown = true;
-			// Place the clone in the scene on top left grid cell.
-			var cellsOwned = activeElement.element.getAttribute('cellsOwned');
-			var cellsOwnedContents = cellsOwned.split(",");
-			var cornerCell = document.getElementById(cellsOwnedContents[0]);
-			var position = cornerCell.getAttribute('position');
-			var scale = activeElement.element.getAttribute('scale');
+			var isClone = activeElement.element.getAttribute("isCloned");
 			// Adjust cell that will be occupied under new rotation.
 			var horizontal = activeElement.element.getAttribute("horizontal");
 			var vertical = activeElement.element.getAttribute("vertical");
 			activeElement.element.setAttribute("horizontal", vertical);
 			activeElement.element.setAttribute("vertical", horizontal);
-			var inBounds = changeCellsOwned(cornerCell);
-			if(!inBounds)
+			if(isClone === "true")
 			{
-				// New position is out of bounds. Change back.
-				var horizontal = activeElement.element.getAttribute("horizontal");
-				var vertical = activeElement.element.getAttribute("vertical");
-				activeElement.element.setAttribute("horizontal", vertical);
-				activeElement.element.setAttribute("vertical", horizontal);
+				// Place the clone in the scene on top left grid cell.
+				var cellsOwned = activeElement.element.getAttribute('cellsOwned');
+				var cellsOwnedContents = cellsOwned.split(",");
+				var cornerCell = document.getElementById(cellsOwnedContents[0]);
+				var position = cornerCell.getAttribute('position');
+				var scale = activeElement.element.getAttribute('scale');
+				var inBounds = changeCellsOwned(cornerCell);
+				if(!inBounds)
+				{
+					// New position is out of bounds. Change back.
+					var horizontal = activeElement.element.getAttribute("horizontal");
+					var vertical = activeElement.element.getAttribute("vertical");
+					activeElement.element.setAttribute("horizontal", vertical);
+					activeElement.element.setAttribute("vertical", horizontal);
+				}
 			}
 			// If clone, Make sure new rotation position is within bounds before rotation.
-			if(activeElement.element.getAttribute("isCloned") === 'false' || inBounds)
+			if(isClone === 'false' || inBounds)
 			{
 				// Rotate the actual asset.
 				var assetRotation = activeElement.element.getAttribute("rotation");
@@ -389,7 +388,7 @@ function keyboardEventSetup()
 				activeElement.element.setAttribute("assetRotation", assetRotationState);
 			}
 			// If not a clone, stop here. Keep original asset position the same.
-			if(activeElement.element.getAttribute("isCloned") === 'true' && inBounds)
+			if(isClone === 'true' && inBounds)
 			{
 				// Local rotation is different from world, this resolves problem.
 				if(assetRotationState % 2 === 0)
