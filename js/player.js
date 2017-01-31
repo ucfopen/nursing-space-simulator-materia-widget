@@ -188,3 +188,16 @@ function init() {
 		}
 	}
 };
+function setup()
+{
+	var mainContainer = document.querySelector('a-scene');
+	// Create the grid cells, and append to scene.
+	for(var i = 1; i <= 100; i++)
+	{
+		var plane = document.createElement("a-plane");
+		mainContainer.appendChild(plane);
+	}
+	// Create the assets, and append to scene.
+	var box = document.createElement("a-box");
+	mainContainer.appendChild(box);
+};

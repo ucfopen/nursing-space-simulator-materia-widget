@@ -11,17 +11,6 @@
 			<a-entity camera position="0 20 0" rotation="-90 0 0" mouse-cursor></a-entity>
 		</a-scene>
 	</body>
-	<script type="text/javascript">
-		var mainContainer = document.querySelector('a-scene');
-		// Create the grid cells, and append to scene.
-		for(var i = 1; i <= 100; i++)
-		{
-			var plane = document.createElement("a-plane");
-			mainContainer.appendChild(plane);
-		}
-		// Create the assets, and append to scene.
-		var box = document.createElement("a-box");
-		mainContainer.appendChild(box);
-	</script>
+	<script type="text/javascript">setup();</script>
 	<script type="text/javascript">init();</script>
 </html>
