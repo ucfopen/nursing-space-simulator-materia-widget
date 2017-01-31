@@ -101,7 +101,7 @@ function attachGridCellEventListeners()
 function buildAssets()
 {
 	// Makes adjustments to the pretend asset (cube).
-	var box = document.querySelector("a-box");
+	var box = document.getElementById("asset-1");
 	box.setAttribute('position', {x: 15, y: 0.5, z: 0});
 	box.setAttribute('material', 'color', '#FF00FF');
 	// Helps not to duplicate cloned objects.
@@ -111,6 +111,18 @@ function buildAssets()
 	attachAssetListeners(box);
 	// Adds this fake asset to the array of assets (easier to search through them)
 	assets.push(box);
+
+	var rectangle = document.getElementById("asset-2");
+	rectangle.setAttribute('scale', {x: 2, y: 1, z: 1});
+	rectangle.setAttribute('position', {x: 15, y: 0.5, z: 2});
+	rectangle.setAttribute('material', 'color', '#FFFF00');
+	// Helps not to duplicate cloned objects.
+	rectangle.setAttribute("isCloned", false);
+	// Sometimes necessary to force the HTML DOM to redraw these pseudo-dom elements.
+	rectangle.flushToDOM();
+	attachAssetListeners(rectangle);
+	// Adds this fake asset to the array of assets (easier to search through them)
+	assets.push(rectangle);
 };
 function buildGrid()
 {
@@ -124,7 +136,7 @@ function buildGrid()
 		** (0.05 * i) creates the thin, empty space between cells for the grid effect.
 		** Increase or decrease the 0.05 to make gaps thinner or thicker.
 		*/
-		var xCoord = (i) + 0.5 + (0.05 * i);
+		var xCoord = (i-5) + 0.5 + (0.05 * i);
 		for(var j = 0; j < 10; j++)
 		{
 			/* j is base z-coord. If cell is increased in scale along z-axis,
@@ -133,7 +145,7 @@ function buildGrid()
 			** (0.05 * j) creates the thin, empty space between cells for the grid effect.
 			** Increase or decrease the 0.05 to make gaps thinner or thicker.
 			*/
-			var zCoord = (j) + 0.5 + (0.05 * j);
+			var zCoord = (j-5) + 0.5 + (0.05 * j);
 			planes[(i*10)+j].setAttribute('position', {x: xCoord, y: 0, z: zCoord});
 			planes[(i*10)+j].setAttribute('rotation', {x: -90, y: 0, z: 0});
 			planes[(i*10)+j].setAttribute('material', 'color', '#7BC8A4');
@@ -213,5 +225,10 @@ function setup()
 	}
 	// Create the assets, and append to scene.
 	var box = document.createElement("a-box");
+	box.id = "asset-1";
 	mainContainer.appendChild(box);
+	// Create the assets, and append to scene.
+	var rectangle = document.createElement("a-box");
+	rectangle.id = "asset-2";
+	mainContainer.appendChild(rectangle);
 };
