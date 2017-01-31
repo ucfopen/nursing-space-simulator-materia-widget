@@ -1,0 +1,14 @@
+Object, demensions (in squares)
+Bed, 2x1
+Crash Cart, 1x1
+Table, 2x2
+Table, 2x1
+Cabinet, 2x1
+Sink, 1x1
+Chair, 1x1
+Toilet, 1x1
+Computer, 1x1
+Bedside Table, 1x1
+Trash Can, 1x1
+Hazardous Trash Can, 1x1
+Oxygen, 1x1
