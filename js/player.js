@@ -6,6 +6,7 @@ var activeElement = {
 var assets = [];
 // The one function to rule them all.
 function init() {
+	setup();
 	buildGrid();
 	buildAssets();
 };
