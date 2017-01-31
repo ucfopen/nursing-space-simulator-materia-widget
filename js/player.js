@@ -3,6 +3,8 @@ var activeElement = {
 	element: null,
 	activated: false
 };
+// 0 means unoccupied, 1 mean occupied.
+var GridCellsState = [];
 var assets = [];
 var keyDown = false;
 // The one function to rule them all.
@@ -234,6 +236,9 @@ function buildGrid()
 			planes[(i*10)+j].classList.add("grid");
 			// Necessary to easily track state of asset locations.
 			planes[(i*10)+j].id = "cell-" + i + "-" + j;
+			// Creates gridcellsstate as each cell is made.
+			GridCellsState[i] = [];
+			GridCellsState[i][j] = 0;
 			// Helps not to duplicate cloned objects.
 			planes[(i*10)+j].setAttribute("isCloned", false);
 			// Sometimes necessary to force the HTML DOM to redraw these pseudo-dom elements.
@@ -267,6 +272,9 @@ function changeCellsOwned(activeCell)
 	var horizontal = activeElement.element.getAttribute('horizontal');
 	var vertical = activeElement.element.getAttribute('vertical');
 	if(!checkBoundaries(idContents, x, z, horizontal, vertical)) return false;
+	// Resets cell state for previously occupied cells.
+	var cells = activeElement.element.getAttribute('cellsOwned').split(",");
+	resetCellStates(cells);
 	// Gives the new cells to that asset clone.
 	activeElement.element.setAttribute('cellsOwned', '');
 	for(var i = 0; i <= horizontal; i++)
@@ -274,6 +282,7 @@ function changeCellsOwned(activeCell)
 		for(var j = 0; j <= vertical; j++)
 		{
 			var cell = "cell-" + (Number(x) + i) + "-" + (Number(z) + j);
+			GridCellsState[(Number(x) + i)][(Number(z) + j)] = 1;
 			var cellToClaim = document.getElementById(cell);
 			var currentCellsOwned = activeElement.element.getAttribute('cellsOwned');
 			if(currentCellsOwned !== '') activeElement.element.setAttribute('cellsOwned', (currentCellsOwned + "," + cell));
@@ -429,6 +438,18 @@ function removesActive()
 		assets[i].setAttribute('material', 'color', '#FF00FF');
 		assets[i].classList.remove("active");
 	}
+};
+// Resets cell states that an object used to have.
+function resetCellStates(cells)
+{
+	for(var i = 0; i < cells.length; i++)
+	{
+		var coords = cells[i].split("-");
+		GridCellsState[coords[coords.length-2]][coords[coords.length-1]] = 0;
+	}
+	var idContents = this.id.split("-");
+	var x = idContents[idContents.length-2];
+	var z = idContents[idContents.length-1];
 };
 function setup()
 {
