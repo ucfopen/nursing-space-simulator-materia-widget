@@ -99,15 +99,39 @@
 					}
 					this.flushToDOM();
 				});
+				curtain.setAttribute("id", "curtain");
+				curtain.setAttribute('position', {x: 15, y: 0.5, z: 1.25});
+				curtain.setAttribute('material', 'color', '#3FBFBF');
+				curtain.addEventListener("click", function(){
+					if(this.classList.contains("active"))
+					{
+						// Deactivates the selected asset
+						this.setAttribute('material', 'color', '#3FBFBF');
+						this.classList.remove("active");
+						activeElement.element = null;
+						activeElement.activated = false;
+					}
+					else if(activeElement.activated === false)
+					{
+						// Activates the selected asset iff no other element is activated.
+						// TODO: Will change later to clear last active element, and take this new one.
+						this.setAttribute('material', 'color', '#00FF00');
+						this.classList.add("active");
+						activeElement.element = this;
+						activeElement.activated = true;
+					}
+					this.flushToDOM();
+				});
 				// Adds this fake asset to the array of assets (easier to search through them)
 				var assets = [];
 				assets.push(box);
+				assets.push(curtain);
 			};
 		</script>
 	</head>
 	<body>
 		<a-scene>
-			<a-entity camera position="0 20 0" rotation="-90 0 0" mouse-cursor></a-entity>
+			<a-entity camera position="5 20 5" rotation="-90 0 0" mouse-cursor></a-entity>
 		</a-scene>
 	</body>
 	<script type="text/javascript">
@@ -120,6 +144,8 @@
 
 		var box = document.createElement("a-box");
 		mainContainer.appendChild(box);
+		var curtain = document.createElement("a-box");
+		mainContainer.appendChild(curtain);
 	</script>
 	<script type="text/javascript">init();</script>
 </html>
