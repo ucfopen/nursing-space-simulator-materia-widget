@@ -82,7 +82,7 @@ function attachGridCellEventListeners()
 				var horizontal = activeElement.element.getAttribute("horizontal");
 				var vertical = activeElement.element.getAttribute("vertical");
 
-				if(checkBoundaries(idContents, x, z, horizontal, vertical))
+				if(checkBoundaries(false, idContents, x, z, horizontal, vertical))
 				{
 					for(var i = 0; i <= horizontal; i++)
 					{
@@ -117,7 +117,7 @@ function attachGridCellEventListeners()
 				var horizontal = activeElement.element.getAttribute("horizontal");
 				var vertical = activeElement.element.getAttribute("vertical");
 
-				if(!checkBoundaries(idContents, x, z, horizontal, vertical)) return;
+				if(!checkBoundaries(false, idContents, x, z, horizontal, vertical)) return;
 				// If active object wasn't a clone, make a clone.
 				if(activeElement.element.getAttribute("isCloned") === "false")
 				{
@@ -332,7 +332,7 @@ function buildRooms()
 	// Sometimes necessary to force the HTML DOM to redraw these pseudo-dom elements.
 	door.flushToDOM();
 }
-function checkBoundaries(idContents, x, z, horizontal, vertical)
+function checkBoundaries(isRotation, idContents, x, z, horizontal, vertical)
 {
 	for(var i = 0; i <= horizontal; i++)
 	{
@@ -340,10 +340,9 @@ function checkBoundaries(idContents, x, z, horizontal, vertical)
 		{
 			var cell = "cell-" + (Number(x) + i) + "-" + (Number(z) + j);
 			var cellToClaim = document.getElementById(cell);
-			if(cellToClaim === null || ( (i !== 0 && j !== 0) && GridCellsState[(Number(x) + i)][(Number(z) + j)] === 1))
-			{
-				return false;
-			}
+			if(cellToClaim === null) return false;
+			else if(isRotation && ((i !== 0 && j !== 0) && GridCellsState[(Number(x) + i)][(Number(z) + j)] === 1)) return false;
+			else if(!isRotation && GridCellsState[(Number(x) + i)][(Number(z) + j)] === 1) return false;
 		}
 	}
 	return true;
@@ -356,7 +355,7 @@ function changeCellsOwned(activeCell)
 	var z = idContents[idContents.length-1];
 	var horizontal = activeElement.element.getAttribute('horizontal');
 	var vertical = activeElement.element.getAttribute('vertical');
-	if(!checkBoundaries(idContents, x, z, horizontal, vertical)) return false;
+	if(!checkBoundaries(false, idContents, x, z, horizontal, vertical)) return false;
 	// Resets cell state for previously occupied cells.
 	var cells = activeElement.element.getAttribute('cellsOwned').split(",");
 	if(cells[0] !== "")
@@ -474,8 +473,13 @@ function keyboardEventSetup()
 				var cornerCell = document.getElementById(cellsOwned[0]);
 				var position = cornerCell.getAttribute('position');
 				var scale = activeElement.element.getAttribute('scale');
-				var inBounds = changeCellsOwned(cornerCell);
-				console.log(inBounds);
+
+				var idContents = cornerCell.id.split("-");
+				var x = idContents[idContents.length-2];
+				var z = idContents[idContents.length-1];
+				var horizontal = activeElement.element.getAttribute("horizontal");
+				var vertical = activeElement.element.getAttribute("vertical");
+				var inBounds = checkBoundaries(true, idContents, x, z, horizontal, vertical);
 				if(!inBounds)
 				{
 					// New position is out of bounds. Change back.
@@ -483,6 +487,10 @@ function keyboardEventSetup()
 					var vertical = activeElement.element.getAttribute("vertical");
 					activeElement.element.setAttribute("horizontal", vertical);
 					activeElement.element.setAttribute("vertical", horizontal);
+				}
+				else
+				{
+					changeCellsOwned(cornerCell);
 				}
 			}
 			// If clone, Make sure new rotation position is within bounds before rotation.
