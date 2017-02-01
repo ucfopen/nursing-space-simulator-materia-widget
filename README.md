@@ -1,15 +1,20 @@
-#Template Widget
+# Hospital Simulation Simulator
 
----
+Here be the README for CDL's Hospital Simulation Simulator.
 
-This widget serves as a starting point to copy and paste from when making a widget 'from scratch.'
+## Getting started
+Join us on CDL's Slack in the #hospital-sim channel for daily chat about the project.
 
-It's complete with unit tests, not all of which are required. A few superfluous functions and subsequent tests were added to show minimal functionality. The internal comments direct to which areas are expendable, and which are essential.
+Or follow our project Trello board: https://trello.com/b/GDms09JR/hospital-sim
 
-As it stands, all areas of the widget have 100% coverage. Make sure when adding your own tests that you make them testable. A widget that doesn't maintain high test coverage will not be accepted.
+## A-Frame
+We have settled on a Javascript framework called A-Frame.
 
-This is an *Angular* template, as this is the only framework that Materia widgets currently have that have successfully been unit tested (at the time this widget was created). Future frameworks, and future testbeds are possible and welcome.
+https://github.com/aframevr/aframe/
 
-*NOTE:* if you are cloning this widget, to make a new widget, then make sure to redirect your remote git repo to the new widget repo.
+After you clone this repo, you will need to clone the A-Frame repo.
+https://github.com/aframevr/aframe/#local-development
 
----
+Check out the A-Frame demo here: https://codepen.io/mozvr/pen/BjygdO
+
+Don't forget to try the A-Frame inspector by pressing Ctrl + Alt + i
