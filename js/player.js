@@ -5,6 +5,7 @@ var activeElement = {
 };
 // 0 means unoccupied, 1 mean occupied.
 var GridCellsState = [];
+var cellSpacing = 0.05;
 var assets = [];
 var keyDown = false;
 // The one function to rule them all.
@@ -13,6 +14,7 @@ function init()
 	setup();
 	buildGrid();
 	buildAssets();
+	buildRooms();
 	keyboardEventSetup();
 };
 // Mouse events functionality on the assets
@@ -42,6 +44,8 @@ function attachAssetListeners(obj)
 		// Clicking on an active asset that is also a clone will delete that clone.
 		else if(this.classList.contains("active") && this.getAttribute("isCloned") === "true")
 		{
+			var cells = activeElement.element.getAttribute('cellsOwned').split(",");
+			resetCellStates(cells)
 			activeElement.element.setAttribute('material', 'color', '#FF00FF');
 			activeElement.element = null;
 			activeElement.activated = false;
@@ -107,7 +111,13 @@ function attachGridCellEventListeners()
 				// Get asset's scale (helps with putting bottom of asset on ground).
 				var assetSize = activeElement.element.getAttribute('scale');
 				// If cells are out of bounds, function returns false, and new position skipped.
-				if(!changeCellsOwned(this)) return;
+				var idContents = this.id.split("-");
+				var x = idContents[idContents.length-2];
+				var z = idContents[idContents.length-1];
+				var horizontal = activeElement.element.getAttribute("horizontal");
+				var vertical = activeElement.element.getAttribute("vertical");
+
+				if(!checkBoundaries(idContents, x, z, horizontal, vertical)) return;
 				// If active object wasn't a clone, make a clone.
 				if(activeElement.element.getAttribute("isCloned") === "false")
 				{
@@ -120,6 +130,8 @@ function attachGridCellEventListeners()
 					activeElement.element.classList.add("active");
 					activeElement.element.setAttribute('material', 'color', '#00FF00');
 				}
+				// Update cells owned by this asset.
+				changeCellsOwned(this);
 				// Place the clone in the scene on top of clicked grid cell.
 				var assetRotationState = activeElement.element.getAttribute("assetRotation");
 				// Local rotation is different from world, this resolves problem.
@@ -213,22 +225,23 @@ function buildGrid()
 	var planes = document.querySelectorAll('a-plane');
 	for(var i = 0; i < 10; i++)
 	{
+		GridCellsState[i] = [];
 		/* i is base x-coord. If cell is increased in scale along x-axis,
 		** multiply i by the amount (ie. (i * 10) for scale-x: 10).
 		** 0.5 refers to half the cell size, since the plane is drawn out from its center point.
-		** (0.05 * i) creates the thin, empty space between cells for the grid effect.
-		** Increase or decrease the 0.05 to make gaps thinner or thicker.
+		** (cellSpacing * i) creates the thin, empty space between cells for the grid effect.
+		** Increase or decrease the cellSpacing to make gaps thinner or thicker.
 		*/
-		var xCoord = (i-5) + 0.5 + (0.05 * i);
+		var xCoord = (i-5) + 0.5 + (cellSpacing * i);
 		for(var j = 0; j < 10; j++)
 		{
 			/* j is base z-coord. If cell is increased in scale along z-axis,
 			** multiply j by the amount (ie. (j * 10) for scale-z: 10).
 			** 0.5 refers to half the cell size, since the plane is drawn out from its center point.
-			** (0.05 * j) creates the thin, empty space between cells for the grid effect.
-			** Increase or decrease the 0.05 to make gaps thinner or thicker.
+			** (cellSpacing * j) creates the thin, empty space between cells for the grid effect.
+			** Increase or decrease the cellSpacing to make gaps thinner or thicker.
 			*/
-			var zCoord = (j-5) + 0.5 + (0.05 * j);
+			var zCoord = (j-5) + 0.5 + (cellSpacing * j);
 			planes[(i*10)+j].setAttribute('position', {x: xCoord, y: 0, z: zCoord});
 			planes[(i*10)+j].setAttribute('rotation', {x: -90, y: 0, z: 0});
 			planes[(i*10)+j].setAttribute('material', 'color', '#7BC8A4');
@@ -237,7 +250,6 @@ function buildGrid()
 			// Necessary to easily track state of asset locations.
 			planes[(i*10)+j].id = "cell-" + i + "-" + j;
 			// Creates gridcellsstate as each cell is made.
-			GridCellsState[i] = [];
 			GridCellsState[i][j] = 0;
 			// Helps not to duplicate cloned objects.
 			planes[(i*10)+j].setAttribute("isCloned", false);
@@ -247,6 +259,79 @@ function buildGrid()
 	}
 	attachGridCellEventListeners();
 };
+function buildRooms()
+{
+	// Makes adjustments to the left wall.
+	var wall = document.getElementById("wall-1");
+	wall.setAttribute('position', {x: -5.5, y: 1.5, z: 3.5 - (3 * cellSpacing)});
+	wall.setAttribute('scale', {x: 1, y: 3, z: 6 + (5 * cellSpacing)});
+	wall.setAttribute('material', 'color', '#A9A9A9');
+	// Sometimes necessary to force the HTML DOM to redraw these pseudo-dom elements.
+	wall.flushToDOM();
+	// Makes adjustments to the left wall.
+	wall = document.getElementById("wall-2");
+	wall.setAttribute('position', {x: -5.5, y: 1.5, z: -3 + (3 * cellSpacing)});
+	wall.setAttribute('scale', {x: 1, y: 3, z: 4 + (4 * cellSpacing)});
+	wall.setAttribute('material', 'color', '#A9A9A9');
+	// Sometimes necessary to force the HTML DOM to redraw these pseudo-dom elements.
+	wall.flushToDOM();
+	// Makes adjustments to the right wall.
+	wall = document.getElementById("wall-3");
+	wall.setAttribute('position', {x: 6, y: 1.5, z: 3.5 - (3 * cellSpacing)});
+	wall.setAttribute('scale', {x: 1, y: 3, z: 6 + (5 * cellSpacing)});
+	wall.setAttribute('material', 'color', '#A9A9A9');
+	// Sometimes necessary to force the HTML DOM to redraw these pseudo-dom elements.
+	wall.flushToDOM();
+	// Makes adjustments to the right wall.
+	wall = document.getElementById("wall-4");
+	wall.setAttribute('position', {x: 6, y: 1.5, z: -3 + (3 * cellSpacing)});
+	wall.setAttribute('scale', {x: 1, y: 3, z: 4 + (4 * cellSpacing)});
+	wall.setAttribute('material', 'color', '#A9A9A9');
+	// Sometimes necessary to force the HTML DOM to redraw these pseudo-dom elements.
+	wall.flushToDOM();
+	// Makes adjustments to the top wall.
+	wall = document.getElementById("wall-5");
+	wall.setAttribute('position', {x: 0.25, y: 1.5, z: -5.5 + cellSpacing});
+	wall.setAttribute('scale', {x: 12 + (10 * cellSpacing), y: 3, z: 1});
+	wall.setAttribute('material', 'color', '#A9A9A9');
+	// Sometimes necessary to force the HTML DOM to redraw these pseudo-dom elements.
+	wall.flushToDOM();
+	// Makes adjustments to the bottom wall.
+	wall = document.getElementById("wall-6");
+	wall.setAttribute('position', {x: 0.25, y: 1.5, z: 6 - cellSpacing});
+	wall.setAttribute('scale', {x: 8 + (8 * cellSpacing), y: 3, z: 1});
+	wall.setAttribute('material', 'color', '#A9A9A9');
+	// Sometimes necessary to force the HTML DOM to redraw these pseudo-dom elements.
+	wall.flushToDOM();
+	// Makes adjustments to the left door.
+	var door = document.getElementById("door-1");
+	door.setAttribute('position', {x: -5.5, y: 1.5, z: -0.25});
+	door.setAttribute('scale', {x: 1, y: 3, z: 1});
+	door.setAttribute('material', 'color', '#593C1F');
+	// Sometimes necessary to force the HTML DOM to redraw these pseudo-dom elements.
+	door.flushToDOM();
+	// Makes adjustments to the right door.
+	door = document.getElementById("door-2");
+	door.setAttribute('position', {x: 6, y: 1.5, z: -0.25});
+	door.setAttribute('scale', {x: 1, y: 3, z: 1});
+	door.setAttribute('material', 'color', '#593C1F');
+	// Sometimes necessary to force the HTML DOM to redraw these pseudo-dom elements.
+	door.flushToDOM();
+	// Makes adjustments to the bottom-right door.
+	door = document.getElementById("door-3");
+	door.setAttribute('position', {x: 5, y: 1.5, z: 6 - cellSpacing});
+	door.setAttribute('scale', {x: 1, y: 3, z: 1});
+	door.setAttribute('material', 'color', '#593C1F');
+	// Sometimes necessary to force the HTML DOM to redraw these pseudo-dom elements.
+	door.flushToDOM();
+	// Makes adjustments to the bottom-left door.
+	door = document.getElementById("door-4");
+	door.setAttribute('position', {x: -4.5, y: 1.5, z: 6 - cellSpacing});
+	door.setAttribute('scale', {x: 1, y: 3, z: 1});
+	door.setAttribute('material', 'color', '#593C1F');
+	// Sometimes necessary to force the HTML DOM to redraw these pseudo-dom elements.
+	door.flushToDOM();
+}
 function checkBoundaries(idContents, x, z, horizontal, vertical)
 {
 	for(var i = 0; i <= horizontal; i++)
@@ -255,7 +340,7 @@ function checkBoundaries(idContents, x, z, horizontal, vertical)
 		{
 			var cell = "cell-" + (Number(x) + i) + "-" + (Number(z) + j);
 			var cellToClaim = document.getElementById(cell);
-			if(cellToClaim === null)
+			if(cellToClaim === null || ( (i !== 0 && j !== 0) && GridCellsState[(Number(x) + i)][(Number(z) + j)] === 1))
 			{
 				return false;
 			}
@@ -274,7 +359,10 @@ function changeCellsOwned(activeCell)
 	if(!checkBoundaries(idContents, x, z, horizontal, vertical)) return false;
 	// Resets cell state for previously occupied cells.
 	var cells = activeElement.element.getAttribute('cellsOwned').split(",");
-	resetCellStates(cells);
+	if(cells[0] !== "")
+	{
+		resetCellStates(cells);
+	}
 	// Gives the new cells to that asset clone.
 	activeElement.element.setAttribute('cellsOwned', '');
 	for(var i = 0; i <= horizontal; i++)
@@ -289,6 +377,19 @@ function changeCellsOwned(activeCell)
 			else activeElement.element.setAttribute('cellsOwned', cell);
 		}
 	}
+	/*** Delete when done testing - Start ***/
+	console.log("Changed Cell Ownership");
+	for(var n = 0; n < GridCellsState.length; n++)
+	{
+		var str = "";
+		for(var m = 0; m < GridCellsState[n].length; m++)
+		{
+			str += GridCellsState[m][n] + " ";
+		}
+		console.log(str);
+		console.log("");
+	}
+	/*** Delete when done testing - End ***/
 	return true;
 };
 // Clears the highlighting from all cells on the grid.
@@ -369,12 +470,12 @@ function keyboardEventSetup()
 			if(isClone === "true")
 			{
 				// Place the clone in the scene on top left grid cell.
-				var cellsOwned = activeElement.element.getAttribute('cellsOwned');
-				var cellsOwnedContents = cellsOwned.split(",");
-				var cornerCell = document.getElementById(cellsOwnedContents[0]);
+				var cellsOwned = activeElement.element.getAttribute('cellsOwned').split(",");
+				var cornerCell = document.getElementById(cellsOwned[0]);
 				var position = cornerCell.getAttribute('position');
 				var scale = activeElement.element.getAttribute('scale');
 				var inBounds = changeCellsOwned(cornerCell);
+				console.log(inBounds);
 				if(!inBounds)
 				{
 					// New position is out of bounds. Change back.
@@ -447,9 +548,19 @@ function resetCellStates(cells)
 		var coords = cells[i].split("-");
 		GridCellsState[coords[coords.length-2]][coords[coords.length-1]] = 0;
 	}
-	var idContents = this.id.split("-");
-	var x = idContents[idContents.length-2];
-	var z = idContents[idContents.length-1];
+	/*** Delete when done testing - Start ***/
+	console.log("Reset Cell Ownership for moved, or deleted, object.");
+	for(var n = 0; n < GridCellsState.length; n++)
+	{
+		var str = "";
+		for(var m = 0; m < GridCellsState[n].length; m++)
+		{
+			str += GridCellsState[m][n] + " ";
+		}
+		console.log(str);
+		console.log("");
+	}
+	/*** Delete when done testing - End ***/
 };
 function setup()
 {
@@ -472,4 +583,36 @@ function setup()
 	var largeBox = document.createElement("a-box");
 	largeBox.id = "asset-3";
 	mainContainer.appendChild(largeBox);
+	// Create walls
+	var wall = document.createElement("a-box");
+	wall.id = "wall-1";
+	mainContainer.appendChild(wall);
+	wall = document.createElement("a-box");
+	wall.id = "wall-2";
+	mainContainer.appendChild(wall);
+	wall = document.createElement("a-box");
+	wall.id = "wall-3";
+	mainContainer.appendChild(wall);
+	wall = document.createElement("a-box");
+	wall.id = "wall-4";
+	mainContainer.appendChild(wall);
+	wall = document.createElement("a-box");
+	wall.id = "wall-5";
+	mainContainer.appendChild(wall);
+	wall = document.createElement("a-box");
+	wall.id = "wall-6";
+	mainContainer.appendChild(wall);
+	// Create Doors
+	var door = document.createElement("a-box");
+	door.id = "door-1";
+	mainContainer.appendChild(door);
+	door = document.createElement("a-box");
+	door.id = "door-2";
+	mainContainer.appendChild(door);
+	door = document.createElement("a-box");
+	door.id = "door-3";
+	mainContainer.appendChild(door);
+	door = document.createElement("a-box");
+	door.id = "door-4";
+	mainContainer.appendChild(door);
 };
