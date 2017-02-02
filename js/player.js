@@ -143,23 +143,14 @@ function attachGridCellEventListeners()
 				// Update cells owned by this asset.
 				changeCellsOwned(this, false);
 				// Place the clone in the scene on top of clicked grid cell.
-				// Local rotation is different from world, this resolves problem.
-				if(activeElement.assetRotationState % 2 === 0)
-				{
-					activeElement.element.setAttribute('position', {
-						x: cellPosition.x + (assetSize.x / 2) - 0.5,
-						y: (assetSize.y / 2.0),
-						z: cellPosition.z + (assetSize.z / 2) - 0.5
-					});
-				}
-				else
-				{
-					activeElement.element.setAttribute('position', {
-						x: cellPosition.x + (assetSize.z / 2) - 0.5,
-						y: (assetSize.y / 2.0),
-						z: cellPosition.z + (assetSize.x / 2) - 0.5
-					});
-				}
+				// We add one to the horizontal and vertical because of the discrepancies between "size"
+				// and "scale" when dealing with imported object assets. Since one blobk is 0 and two blocks
+				// is one in either direction, we must first add one to express it's proper "size" in that direction.
+				activeElement.element.setAttribute('position', {
+					x: cellPosition.x + ((Number(activeElement.horizontal) + 1) / 2.0) - 0.5,
+					y: (assetSize.y / 2.0),
+					z: cellPosition.z + ((Number(activeElement.vertical) + 1) / 2.0) - 0.5
+				});
 				// If this is the PoV camera object.
 				if(activeElement.element.id === "pov-camera")
 				{
@@ -183,7 +174,7 @@ function buildAssets()
 	// Contains which cells it occupies.
 	box.setAttribute('cellsOwned', '');
 	// Contains what rotation state it has (for later evaluation).
-	// 0 is default. 1 is clockwise 90 degrees, 2 is 180 degrees, 3 is is 270 degrees. 
+	// 0 is default. 1 is clockwise 90 degrees, 2 is 180 degrees, 3 is 270 degrees.
 	box.setAttribute('assetRotationState', 0);
 	// Helps to highlight which cells will be occupied due to shape.
 	box.setAttribute('horizontal', 0);
@@ -194,27 +185,7 @@ function buildAssets()
 	// Adds this fake asset to the array of assets (easier to search through them)
 	assets.push(box);
 
-	var rectangle = document.getElementById('asset-2');
-	rectangle.setAttribute('scale', {x: 2, y: 1, z: 1});
-	rectangle.setAttribute('position', {x: 15, y: 0.5, z: 2});
-	rectangle.setAttribute('material', 'color', '#FF00FF');
-	// Helps not to duplicate cloned objects.
-	rectangle.setAttribute('isCloned', 'false');
-	// Contains which cells it occupies.
-	rectangle.setAttribute('cellsOwned', '');
-	// Contains what rotation state it has (for later evaluation).
-	// 0 is default. 1 is clockwise 90 degrees, 2 is 180 degrees, 3 is is 270 degrees. 
-	rectangle.setAttribute('assetRotationState', 0);
-	// Helps to highlight which cells will be occupied due to shape.
-	rectangle.setAttribute('horizontal', 1);
-	rectangle.setAttribute('vertical', 0);
-	// Sometimes necessary to force the HTML DOM to redraw these pseudo-dom elements.
-	rectangle.flushToDOM();
-	attachAssetListeners(rectangle);
-	// Adds this fake asset to the array of assets (easier to search through them)
-	assets.push(rectangle);
-
-	var largeBox = document.getElementById('asset-3');
+	var largeBox = document.getElementById('asset-2');
 	largeBox.setAttribute('scale', {x: 2, y: 1, z: 2});
 	largeBox.setAttribute('position', {x: 15, y: 0.5, z: 4});
 	largeBox.setAttribute('material', 'color', '#FF00FF');
@@ -223,7 +194,7 @@ function buildAssets()
 	// Contains which cells it occupies.
 	largeBox.setAttribute('cellsOwned', '');
 	// Contains what rotation state it has (for later evaluation).
-	// 0 is default. 1 is clockwise 90 degrees, 2 is 180 degrees, 3 is is 270 degrees. 
+	// 0 is default. 1 is clockwise 90 degrees, 2 is 180 degrees, 3 is 270 degrees.
 	largeBox.setAttribute('assetRotationState', 0);
 	// Helps to highlight which cells will be occupied due to shape.
 	largeBox.setAttribute('horizontal', 1);
@@ -233,6 +204,28 @@ function buildAssets()
 	attachAssetListeners(largeBox);
 	// Adds this fake asset to the array of assets (easier to search through them)
 	assets.push(largeBox);
+
+	//<a-obj-model src=assets/HOSPITAL_BED.obj"" scale="0.1 0.1 0.1"></a-obj-model>
+	var bed = document.getElementById('asset-3');
+	bed.setAttribute('src', 'assets/HOSPITAL_BED.obj');
+	bed.setAttribute('scale', {x: 0.1, y: 0.1, z: 0.1});
+	bed.setAttribute('position', {x: 15, y: 0.5, z: 2});
+	bed.setAttribute('material', 'color', '#FF00FF');
+	// Helps not to duplicate cloned objects.
+	bed.setAttribute('isCloned', 'false');
+	// Contains which cells it occupies.
+	bed.setAttribute('cellsOwned', '');
+	// Contains what rotation state it has (for later evaluation).
+	// 0 is default. 1 is clockwise 90 degrees, 2 is 180 degrees, 3 is 270 degrees.
+	bed.setAttribute('assetRotationState', 0);
+	// Helps to highlight which cells will be occupied due to shape.
+	bed.setAttribute('horizontal', 1);
+	bed.setAttribute('vertical', 0);
+	// Sometimes necessary to force the HTML DOM to redraw these pseudo-dom elements.
+	bed.flushToDOM();
+	attachAssetListeners(bed);
+	// Adds this fake asset to the array of assets (easier to search through them)
+	assets.push(bed);
 
 	// Placeholder camera object.
 	var sphere = document.getElementById("pov-camera");
@@ -422,8 +415,14 @@ function clone(obj)
 	// Make sure an actual object was passed in.
 	if (null == obj || 'object' != typeof obj) return obj;
 	// Create a new object of same type.
-	var copyType = obj.getAttribute('geometry')['primitive'];
-	var clonedObject = document.createElement('a-' + copyType);
+	var clonedObject;
+	// Determine if primitive object or object model.
+	if(obj.getAttribute('obj-model') === null) clonedObject = document.createElement('a-' + obj.getAttribute('geometry')['primitive']);
+	else
+	{
+		clonedObject = document.createElement('a-obj-model');
+		clonedObject.setAttribute('src', obj.getAttribute('src'));
+	}
 	// Copy over its essential attributes.
 	clonedObject.setAttribute('material', obj.getAttribute('material'));
 	clonedObject.setAttribute('scale', obj.getAttribute('scale'));
@@ -486,8 +485,8 @@ function keyboardEventSetup()
 			{
 				// Place the clone in the scene on top left grid cell.
 				var cornerCell = document.getElementById(activeElement.cellsOwned.split(',')[0]);
-				var position = cornerCell.getAttribute('position');
-				var scale = activeElement.element.getAttribute('scale');
+				var cellPosition = cornerCell.getAttribute('position');
+				var assetSize = activeElement.element.getAttribute('scale');
 
 				var idContents = cornerCell.id.split('-');
 				var x = idContents[idContents.length-2];
@@ -522,23 +521,14 @@ function keyboardEventSetup()
 			// If not a clone, stop here. Keep original asset position the same.
 			if(isClone === 'true' && inBounds)
 			{
-				// Local rotation is different from world, this resolves problem.
-				if(activeElement.assetRotationState % 2 === 0)
-				{
-					activeElement.element.setAttribute('position', {
-						x: position.x + (scale.x / 2) - 0.5,
-						y: (scale.y / 2.0),
-						z: position.z + (scale.z / 2) - 0.5
-					});
-				}
-				else
-				{
-					activeElement.element.setAttribute('position', {
-						x: position.x + (scale.z / 2) - 0.5,
-						y: (scale.y / 2.0),
-						z: position.z + (scale.x / 2) - 0.5
-					});
-				}
+				// We add one to the horizontal and vertical because of the discrepancies between "size"
+				// and "scale" when dealing with imported object assets. Since one blobk is 0 and two blocks
+				// is one in either direction, we must first add one to express it's proper "size" in that direction.
+				activeElement.element.setAttribute('position', {
+					x: cellPosition.x + ((Number(activeElement.horizontal) + 1) / 2.0) - 0.5,
+					y: (assetSize.y / 2.0),
+					z: cellPosition.z + ((Number(activeElement.vertical) + 1) / 2.0) - 0.5
+				});
 			}
 			activeElement.element.flushToDOM();
 			return;
@@ -553,7 +543,6 @@ function keyboardEventSetup()
 	{
 
 		const keyName = event.key;
-		console.log(keyName);
 		keyDown = false;
 	}, false);
 };
@@ -629,12 +618,16 @@ function setup()
 		mainContainer.appendChild(plane);
 	}
 	// Create the assets, and append to scene.
-	for(var k = 1; k <= 3; k++)
+	for(var k = 1; k <= 2; k++)
 	{
 		var box = document.createElement('a-box');
 		box.id = 'asset-' + k;
 		mainContainer.appendChild(box);
 	}
+	// Hospital bed asset
+	var bed = document.createElement('a-obj-model');
+		bed.id = 'asset-' + 3;
+		mainContainer.appendChild(bed);
 
 	// Create the PoV asset.
 	var sphere = document.createElement("a-sphere");
