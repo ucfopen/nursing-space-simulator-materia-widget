@@ -389,19 +389,6 @@ function changeCellsOwned(activeCell, isRotation)
 			else changeAttribute('cellsOwned', cell);
 		}
 	}
-	/*** Delete when done testing - Start ***/
-	console.log('Changed Cell Ownership');
-	for(var n = 0; n < GridCellsState.length; n++)
-	{
-		var str = '';
-		for(var m = 0; m < GridCellsState[n].length; m++)
-		{
-			str += GridCellsState[m][n] + ' ';
-		}
-		console.log(str);
-		console.log('');
-	}
-	/*** Delete when done testing - End ***/
 	return true;
 };
 // Clears the highlighting from all cells on the grid.
@@ -567,19 +554,6 @@ function resetCellStates(cells)
 		var coords = cells[i].split('-');
 		GridCellsState[coords[coords.length-2]][coords[coords.length-1]] = 0;
 	}
-	/*** Delete when done testing - Start ***/
-	console.log('Reset Cell Ownership for moved, or deleted, object.');
-	for(var n = 0; n < GridCellsState.length; n++)
-	{
-		var str = '';
-		for(var m = 0; m < GridCellsState[n].length; m++)
-		{
-			str += GridCellsState[m][n] + ' ';
-		}
-		console.log(str);
-		console.log('');
-	}
-	/*** Delete when done testing - End ***/
 };
 function setup()
 {
