@@ -49,8 +49,7 @@ function attachAssetListeners(obj)
 		// Clicking on an active asset that is also a clone will delete that clone.
 		else if(this.classList.contains("active") && this.getAttribute('isCloned') === 'true')
 		{
-			var cells = activeElement.element.getAttribute('cellsOwned').split(",");
-			resetCellStates(cells)
+			resetCellStates(activeElement.cellsOwned.split(","));
 			activeElement.element.setAttribute('material', 'color', '#FF00FF');
 			activeElement.element = null;
 			activeElement.activated = false;
@@ -67,6 +66,7 @@ function attachAssetListeners(obj)
 			activeElement.activated = true;
 			activeElement.isCloned = this.getAttribute('isCloned');
 			activeElement.assetRotationState = this.getAttribute('assetRotationState');
+			activeElement.cellsOwned = this.getAttribute('cellsOwned');
 		}
 		// Manually ensure a-frame pushes changes to the HTML DOM.
 		this.flushToDOM();
@@ -138,6 +138,7 @@ function attachGridCellEventListeners()
 					activeElement.element.setAttribute('material', 'color', '#00FF00');
 					activeElement.isCloned = 'true';
 					activeElement.assetRotationState = activeElement.element.getAttribute('assetRotationState');
+					activeElement.cellsOwned = activeElement.element.getAttribute('cellsOwned');
 				}
 				// Update cells owned by this asset.
 				changeCellsOwned(this, false);
@@ -168,59 +169,59 @@ function attachGridCellEventListeners()
 function buildAssets()
 {
 	// Makes adjustments to the pretend asset (cube).
-	var box = document.getElementById("asset-1");
+	var box = document.getElementById('asset-1');
 	box.setAttribute('position', {x: 15, y: 0.5, z: 0});
 	box.setAttribute('material', 'color', '#FF00FF');
 	// Helps not to duplicate cloned objects.
 	box.setAttribute('isCloned', 'false');
 	// Contains which cells it occupies.
-	box.setAttribute("cellsOwned", "");
+	box.setAttribute('cellsOwned', '');
 	// Contains what rotation state it has (for later evaluation).
 	// 0 is default. 1 is clockwise 90 degrees, 2 is 180 degrees, 3 is is 270 degrees. 
-	box.setAttribute("assetRotationState", 0);
+	box.setAttribute('assetRotationState', 0);
 	// Helps to highlight which cells will be occupied due to shape.
-	box.setAttribute("horizontal", 0);
-	box.setAttribute("vertical", 0);
+	box.setAttribute('horizontal', 0);
+	box.setAttribute('vertical', 0);
 	// Sometimes necessary to force the HTML DOM to redraw these pseudo-dom elements.
 	box.flushToDOM();
 	attachAssetListeners(box);
 	// Adds this fake asset to the array of assets (easier to search through them)
 	assets.push(box);
 
-	var rectangle = document.getElementById("asset-2");
+	var rectangle = document.getElementById('asset-2');
 	rectangle.setAttribute('scale', {x: 2, y: 1, z: 1});
 	rectangle.setAttribute('position', {x: 15, y: 0.5, z: 2});
 	rectangle.setAttribute('material', 'color', '#FF00FF');
 	// Helps not to duplicate cloned objects.
 	rectangle.setAttribute('isCloned', 'false');
 	// Contains which cells it occupies.
-	rectangle.setAttribute("cellsOwned", "");
+	rectangle.setAttribute('cellsOwned', '');
 	// Contains what rotation state it has (for later evaluation).
 	// 0 is default. 1 is clockwise 90 degrees, 2 is 180 degrees, 3 is is 270 degrees. 
-	rectangle.setAttribute("assetRotationState", 0);
+	rectangle.setAttribute('assetRotationState', 0);
 	// Helps to highlight which cells will be occupied due to shape.
-	rectangle.setAttribute("horizontal", 1);
-	rectangle.setAttribute("vertical", 0);
+	rectangle.setAttribute('horizontal', 1);
+	rectangle.setAttribute('vertical', 0);
 	// Sometimes necessary to force the HTML DOM to redraw these pseudo-dom elements.
 	rectangle.flushToDOM();
 	attachAssetListeners(rectangle);
 	// Adds this fake asset to the array of assets (easier to search through them)
 	assets.push(rectangle);
 
-	var largeBox = document.getElementById("asset-3");
+	var largeBox = document.getElementById('asset-3');
 	largeBox.setAttribute('scale', {x: 2, y: 1, z: 2});
 	largeBox.setAttribute('position', {x: 15, y: 0.5, z: 4});
 	largeBox.setAttribute('material', 'color', '#FF00FF');
 	// Helps not to duplicate cloned objects.
 	largeBox.setAttribute('isCloned', 'false');
 	// Contains which cells it occupies.
-	largeBox.setAttribute("cellsOwned", "");
+	largeBox.setAttribute('cellsOwned', '');
 	// Contains what rotation state it has (for later evaluation).
 	// 0 is default. 1 is clockwise 90 degrees, 2 is 180 degrees, 3 is is 270 degrees. 
-	largeBox.setAttribute("assetRotationState", 0);
+	largeBox.setAttribute('assetRotationState', 0);
 	// Helps to highlight which cells will be occupied due to shape.
-	largeBox.setAttribute("horizontal", 1);
-	largeBox.setAttribute("vertical", 1);
+	largeBox.setAttribute('horizontal', 1);
+	largeBox.setAttribute('vertical', 1);
 	// Sometimes necessary to force the HTML DOM to redraw these pseudo-dom elements.
 	largeBox.flushToDOM();
 	attachAssetListeners(largeBox);
@@ -371,13 +372,13 @@ function changeCellsOwned(activeCell, isRotation)
 	var vertical = activeElement.element.getAttribute('vertical');
 	if(!checkBoundaries(isRotation, idContents, x, z, horizontal, vertical)) return false;
 	// Resets cell state for previously occupied cells.
-	var cells = activeElement.element.getAttribute('cellsOwned').split(",");
+	var cells = activeElement.cellsOwned.split(",");
 	if(cells[0] !== "")
 	{
 		resetCellStates(cells);
 	}
 	// Gives the new cells to that asset clone.
-	activeElement.element.setAttribute('cellsOwned', '');
+	changeAttribute('cellsOwned', '');
 	for(var i = 0; i <= horizontal; i++)
 	{
 		for(var j = 0; j <= vertical; j++)
@@ -385,9 +386,8 @@ function changeCellsOwned(activeCell, isRotation)
 			var cell = "cell-" + (Number(x) + i) + "-" + (Number(z) + j);
 			GridCellsState[(Number(x) + i)][(Number(z) + j)] = 1;
 			var cellToClaim = document.getElementById(cell);
-			var currentCellsOwned = activeElement.element.getAttribute('cellsOwned');
-			if(currentCellsOwned !== '') activeElement.element.setAttribute('cellsOwned', (currentCellsOwned + "," + cell));
-			else activeElement.element.setAttribute('cellsOwned', cell);
+			if(activeElement.cellsOwned !== '') changeAttribute('cellsOwned', (activeElement.cellsOwned + "," + cell));
+			else changeAttribute('cellsOwned', cell);
 		}
 	}
 	/*** Delete when done testing - Start ***/
@@ -483,8 +483,7 @@ function keyboardEventSetup()
 			if(isClone === "true")
 			{
 				// Place the clone in the scene on top left grid cell.
-				var cellsOwned = activeElement.element.getAttribute('cellsOwned').split(",");
-				var cornerCell = document.getElementById(cellsOwned[0]);
+				var cornerCell = document.getElementById(activeElement.cellsOwned.split(",")[0]);
 				var position = cornerCell.getAttribute('position');
 				var scale = activeElement.element.getAttribute('scale');
 
