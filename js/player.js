@@ -137,6 +137,12 @@ function attachGridCellEventListeners()
 						z: cellPosition.z + (assetSize.x / 2) - 0.5
 					});
 				}
+				// If this is the PoV camera object.
+				if(activeElement.element.id === "pov-camera")
+				{
+					// Calling placeCamera to handle camera arrangements.
+					placeCamera();
+				}
 				// Make sure clone is manually pushed to HTML DOM.
 				activeElement.element.flushToDOM();
 			}
@@ -204,6 +210,16 @@ function buildAssets()
 	attachAssetListeners(largeBox);
 	// Adds this fake asset to the array of assets (easier to search through them)
 	assets.push(largeBox);
+
+	// Placeholder camera object.
+	var sphere = document.getElementById("pov-camera");
+	sphere.setAttribute('scale', {x:.35, y:.35, z:.35});
+	sphere.setAttribute('position', {x:15,y:0.5, z:6});
+	sphere.setAttribute('material', 'color', '#6699ff');
+	sphere.setAttribute('cellsOwned', '');
+	sphere.flushToDOM();
+	attachAssetListeners(sphere);
+	assets.push(sphere);
 };
 function buildGrid()
 {
@@ -411,11 +427,17 @@ function keyboardEventSetup()
 			activeElement.element.flushToDOM();
 			return;
 		}
+		if (keyName === 'Escape' && !keyDown) {
+			// Reset the camera position.
+			resetCamera();
+		}
 	}, false);
 
 	document.addEventListener('keyup', function(event)
 	{
+
 		const keyName = event.key;
+		console.log(keyName);
 		keyDown = false;
 	}, false);
 };
@@ -430,6 +452,47 @@ function removesActive()
 		assets[i].classList.remove("active");
 	}
 };
+
+// Set up the PoV camera.
+function placeCamera()
+{
+	camera = document.getElementById("camera");
+	povObj = document.getElementById("pov-camera");
+	cam_x_pos = povObj.getAttribute("position").x;
+	cam_z_pos = povObj.getAttribute("position").z;
+	// Y position on PoV Cameras should *always* be 1.6!
+	// https://docs.unrealengine.com/latest/INT/Platforms/VR/ContentSetup/index.html#vrcamerasetup
+	camera.setAttribute("position", {
+		x: cam_x_pos,
+		y: 1.6,
+		z: cam_z_pos
+	});
+	camera.setAttribute("rotation", {x: 1, y: 1, z: 1});
+	var lookControls = document.createAttribute("look-controls");
+	camera.setAttributeNode(lookControls);
+	// camera.removeAttribute("mouse-cursor");
+	camera.flushToDOM();
+};
+
+// Simple function to reset camera postion to original settings.
+function resetCamera()
+{
+	camera = document.getElementById("camera");
+	camera.setAttribute("position", {
+		x: 0,
+		y: 20,
+		z: 0
+	});
+	camera.setAttribute("rotation", {
+		x: -90,
+		y: 0,
+		z: 0
+	});
+	camera.removeAttribute("look-controls");
+	camera.flushToDOM();
+}
+
+
 function setup()
 {
 	var mainContainer = document.querySelector('a-scene');
@@ -451,4 +514,8 @@ function setup()
 	var largeBox = document.createElement("a-box");
 	largeBox.id = "asset-3";
 	mainContainer.appendChild(largeBox);
+	// Create the PoV asset.
+	var sphere = document.createElement("a-sphere");
+	sphere.id = "pov-camera";
+	mainContainer.appendChild(sphere);
 };
