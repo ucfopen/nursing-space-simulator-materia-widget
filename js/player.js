@@ -1,7 +1,7 @@
 // Global Variables. Just for now to keep demo simple.
 var activeElement = {
 	activated: false,
-	assetRotation: 0,
+	assetRotationState: 0,
 	cellsOwned: '',
 	element: null,
 	horizontal: 0,
@@ -66,6 +66,7 @@ function attachAssetListeners(obj)
 			activeElement.element = this;
 			activeElement.activated = true;
 			activeElement.isCloned = this.getAttribute('isCloned');
+			activeElement.assetRotationState = this.getAttribute('assetRotationState');
 		}
 		// Manually ensure a-frame pushes changes to the HTML DOM.
 		this.flushToDOM();
@@ -136,13 +137,13 @@ function attachGridCellEventListeners()
 					activeElement.element.classList.add("active");
 					activeElement.element.setAttribute('material', 'color', '#00FF00');
 					activeElement.isCloned = 'true';
+					activeElement.assetRotationState = activeElement.element.getAttribute('assetRotationState');
 				}
 				// Update cells owned by this asset.
 				changeCellsOwned(this, false);
 				// Place the clone in the scene on top of clicked grid cell.
-				var assetRotationState = activeElement.element.getAttribute("assetRotation");
 				// Local rotation is different from world, this resolves problem.
-				if(assetRotationState % 2 === 0)
+				if(activeElement.assetRotationState % 2 === 0)
 				{
 					activeElement.element.setAttribute('position', {
 						x: cellPosition.x + (assetSize.x / 2) - 0.5,
@@ -176,7 +177,7 @@ function buildAssets()
 	box.setAttribute("cellsOwned", "");
 	// Contains what rotation state it has (for later evaluation).
 	// 0 is default. 1 is clockwise 90 degrees, 2 is 180 degrees, 3 is is 270 degrees. 
-	box.setAttribute("assetRotation", "0");
+	box.setAttribute("assetRotationState", 0);
 	// Helps to highlight which cells will be occupied due to shape.
 	box.setAttribute("horizontal", 0);
 	box.setAttribute("vertical", 0);
@@ -196,7 +197,7 @@ function buildAssets()
 	rectangle.setAttribute("cellsOwned", "");
 	// Contains what rotation state it has (for later evaluation).
 	// 0 is default. 1 is clockwise 90 degrees, 2 is 180 degrees, 3 is is 270 degrees. 
-	rectangle.setAttribute("assetRotation", "0");
+	rectangle.setAttribute("assetRotationState", 0);
 	// Helps to highlight which cells will be occupied due to shape.
 	rectangle.setAttribute("horizontal", 1);
 	rectangle.setAttribute("vertical", 0);
@@ -216,7 +217,7 @@ function buildAssets()
 	largeBox.setAttribute("cellsOwned", "");
 	// Contains what rotation state it has (for later evaluation).
 	// 0 is default. 1 is clockwise 90 degrees, 2 is 180 degrees, 3 is is 270 degrees. 
-	largeBox.setAttribute("assetRotation", "0");
+	largeBox.setAttribute("assetRotationState", 0);
 	// Helps to highlight which cells will be occupied due to shape.
 	largeBox.setAttribute("horizontal", 1);
 	largeBox.setAttribute("vertical", 1);
@@ -429,7 +430,7 @@ function clone(obj)
 	clonedObject.setAttribute("cellsOwned", obj.getAttribute("cellsOwned"));
 	// Contains what rotation state it has (for later evaluation).
 	// 0 is default. 1 is clockwise 90 degrees, 2 is 180 degrees, 3 is is 270 degrees.
-	clonedObject.setAttribute("assetRotation", obj.getAttribute("assetRotation"));
+	clonedObject.setAttribute("assetRotationState", obj.getAttribute("assetRotationState"));
 	// Helps to highlight which cells will be occupied due to shape.
 	clonedObject.setAttribute("horizontal", obj.getAttribute("horizontal"));
 	clonedObject.setAttribute("vertical", obj.getAttribute("vertical"));
@@ -510,19 +511,18 @@ function keyboardEventSetup()
 			if(isClone === 'false' || inBounds)
 			{
 				// Rotate the actual asset.
-				var assetRotation = activeElement.element.getAttribute("rotation");
-				activeElement.element.setAttribute("rotation", {x: assetRotation.x, y: (assetRotation.y + 90), z: assetRotation.z});
+				var rotation = activeElement.element.getAttribute("rotation");
+				activeElement.element.setAttribute("rotation", {x: rotation.x, y: (rotation.y + 90), z: rotation.z});
 				// Increments to the next rotation state (used to calculate horizontal and vertical shape change).
-				var assetRotationState = activeElement.element.getAttribute("assetRotation");
-				assetRotationState++;
-				if(assetRotationState >= 4) assetRotationState = 0;
-				activeElement.element.setAttribute("assetRotation", assetRotationState);
+				activeElement.assetRotationState++;
+				if(activeElement.assetRotationState >= 4) activeElement.assetRotationState = 0;
+				changeAttribute("assetRotationState", activeElement.assetRotationState);
 			}
 			// If not a clone, stop here. Keep original asset position the same.
 			if(isClone === 'true' && inBounds)
 			{
 				// Local rotation is different from world, this resolves problem.
-				if(assetRotationState % 2 === 0)
+				if(activeElement.assetRotationState % 2 === 0)
 				{
 					activeElement.element.setAttribute('position', {
 						x: position.x + (scale.x / 2) - 0.5,
