@@ -1,7 +1,12 @@
 // Global Variables. Just for now to keep demo simple.
 var activeElement = {
+	activated: false,
+	assetRotation: 0,
+	cellsOwned: '',
 	element: null,
-	activated: false
+	horizontal: 0,
+	isCloned: 'false',
+	vertical: 0
 };
 // 0 means unoccupied, 1 mean occupied.
 var GridCellsState = [];
@@ -33,7 +38,7 @@ function attachAssetListeners(obj)
 	// Clicked on asset
 	obj.addEventListener('click', function () {
 		// Asset already active, remove active modifiers
-		if(this.classList.contains("active") && this.getAttribute("isCloned") === "false")
+		if(this.classList.contains("active") && this.getAttribute('isCloned') === 'false')
 		{
 			// Deactivates the selected asset
 			this.setAttribute('material', 'color', 'red');
@@ -42,7 +47,7 @@ function attachAssetListeners(obj)
 			activeElement.activated = false;
 		}
 		// Clicking on an active asset that is also a clone will delete that clone.
-		else if(this.classList.contains("active") && this.getAttribute("isCloned") === "true")
+		else if(this.classList.contains("active") && this.getAttribute('isCloned') === 'true')
 		{
 			var cells = activeElement.element.getAttribute('cellsOwned').split(",");
 			resetCellStates(cells)
@@ -60,6 +65,7 @@ function attachAssetListeners(obj)
 			this.classList.add("active");
 			activeElement.element = this;
 			activeElement.activated = true;
+			activeElement.isCloned = this.getAttribute('isCloned');
 		}
 		// Manually ensure a-frame pushes changes to the HTML DOM.
 		this.flushToDOM();
@@ -119,7 +125,7 @@ function attachGridCellEventListeners()
 
 				if(!checkBoundaries(false, idContents, x, z, horizontal, vertical)) return;
 				// If active object wasn't a clone, make a clone.
-				if(activeElement.element.getAttribute("isCloned") === "false")
+				if(activeElement.isCloned === 'false')
 				{
 					// Remove the active color and related class.
 					activeElement.element.setAttribute('material', 'color', '#FF00FF');
@@ -129,9 +135,10 @@ function attachGridCellEventListeners()
 					// Make the clone the active asset
 					activeElement.element.classList.add("active");
 					activeElement.element.setAttribute('material', 'color', '#00FF00');
+					activeElement.isCloned = 'true';
 				}
 				// Update cells owned by this asset.
-				changeCellsOwned(this);
+				changeCellsOwned(this, false);
 				// Place the clone in the scene on top of clicked grid cell.
 				var assetRotationState = activeElement.element.getAttribute("assetRotation");
 				// Local rotation is different from world, this resolves problem.
@@ -164,7 +171,7 @@ function buildAssets()
 	box.setAttribute('position', {x: 15, y: 0.5, z: 0});
 	box.setAttribute('material', 'color', '#FF00FF');
 	// Helps not to duplicate cloned objects.
-	box.setAttribute("isCloned", false);
+	box.setAttribute('isCloned', 'false');
 	// Contains which cells it occupies.
 	box.setAttribute("cellsOwned", "");
 	// Contains what rotation state it has (for later evaluation).
@@ -184,7 +191,7 @@ function buildAssets()
 	rectangle.setAttribute('position', {x: 15, y: 0.5, z: 2});
 	rectangle.setAttribute('material', 'color', '#FF00FF');
 	// Helps not to duplicate cloned objects.
-	rectangle.setAttribute("isCloned", false);
+	rectangle.setAttribute('isCloned', 'false');
 	// Contains which cells it occupies.
 	rectangle.setAttribute("cellsOwned", "");
 	// Contains what rotation state it has (for later evaluation).
@@ -204,7 +211,7 @@ function buildAssets()
 	largeBox.setAttribute('position', {x: 15, y: 0.5, z: 4});
 	largeBox.setAttribute('material', 'color', '#FF00FF');
 	// Helps not to duplicate cloned objects.
-	largeBox.setAttribute("isCloned", false);
+	largeBox.setAttribute('isCloned', 'false');
 	// Contains which cells it occupies.
 	largeBox.setAttribute("cellsOwned", "");
 	// Contains what rotation state it has (for later evaluation).
@@ -252,7 +259,7 @@ function buildGrid()
 			// Creates gridcellsstate as each cell is made.
 			GridCellsState[i][j] = 0;
 			// Helps not to duplicate cloned objects.
-			planes[(i*10)+j].setAttribute("isCloned", false);
+			planes[(i*10)+j].setAttribute('isCloned', 'false');
 			// Sometimes necessary to force the HTML DOM to redraw these pseudo-dom elements.
 			planes[(i*10)+j].flushToDOM();
 		}
@@ -332,6 +339,12 @@ function buildRooms()
 	// Sometimes necessary to force the HTML DOM to redraw these pseudo-dom elements.
 	door.flushToDOM();
 }
+function changeAttribute(attribute, value)
+{
+	activeElement.element.setAttribute(attribute, value);
+	activeElement[attribute] = value;
+	activeElement.element.flushToDOM();
+};
 function checkBoundaries(isRotation, idContents, x, z, horizontal, vertical)
 {
 	for(var i = 0; i <= horizontal; i++)
@@ -348,14 +361,14 @@ function checkBoundaries(isRotation, idContents, x, z, horizontal, vertical)
 	return true;
 };
 // Changes cells asset owns unless out of bounds.
-function changeCellsOwned(activeCell)
+function changeCellsOwned(activeCell, isRotation)
 {
 	var idContents = activeCell.id.split("-");
 	var x = idContents[idContents.length-2];
 	var z = idContents[idContents.length-1];
 	var horizontal = activeElement.element.getAttribute('horizontal');
 	var vertical = activeElement.element.getAttribute('vertical');
-	if(!checkBoundaries(false, idContents, x, z, horizontal, vertical)) return false;
+	if(!checkBoundaries(isRotation, idContents, x, z, horizontal, vertical)) return false;
 	// Resets cell state for previously occupied cells.
 	var cells = activeElement.element.getAttribute('cellsOwned').split(",");
 	if(cells[0] !== "")
@@ -421,7 +434,7 @@ function clone(obj)
 	clonedObject.setAttribute("horizontal", obj.getAttribute("horizontal"));
 	clonedObject.setAttribute("vertical", obj.getAttribute("vertical"));
 	// Helps not to duplicate cloned objects.
-	clonedObject.setAttribute("isCloned", true);
+	clonedObject.setAttribute('isCloned', 'true');
 	// Copies classes over to new object.
 	for(cls in obj.classList)
 	{
@@ -460,7 +473,7 @@ function keyboardEventSetup()
 		if (keyName === 'r' && !keyDown)
 		{
 			keyDown = true;
-			var isClone = activeElement.element.getAttribute("isCloned");
+			var isClone = activeElement.isCloned;
 			// Adjust cell that will be occupied under new rotation.
 			var horizontal = activeElement.element.getAttribute("horizontal");
 			var vertical = activeElement.element.getAttribute("vertical");
@@ -490,7 +503,7 @@ function keyboardEventSetup()
 				}
 				else
 				{
-					changeCellsOwned(cornerCell);
+					changeCellsOwned(cornerCell, true);
 				}
 			}
 			// If clone, Make sure new rotation position is within bounds before rotation.
@@ -580,47 +593,24 @@ function setup()
 		mainContainer.appendChild(plane);
 	}
 	// Create the assets, and append to scene.
-	var box = document.createElement("a-box");
-	box.id = "asset-1";
-	mainContainer.appendChild(box);
-	// Create the assets, and append to scene.
-	var rectangle = document.createElement("a-box");
-	rectangle.id = "asset-2";
-	mainContainer.appendChild(rectangle);
-	// Create the assets, and append to scene.
-	var largeBox = document.createElement("a-box");
-	largeBox.id = "asset-3";
-	mainContainer.appendChild(largeBox);
+	for(var k = 1; k <= 3; k++)
+	{
+		var box = document.createElement("a-box");
+		box.id = "asset-" + k;
+		mainContainer.appendChild(box);
+	}
 	// Create walls
-	var wall = document.createElement("a-box");
-	wall.id = "wall-1";
-	mainContainer.appendChild(wall);
-	wall = document.createElement("a-box");
-	wall.id = "wall-2";
-	mainContainer.appendChild(wall);
-	wall = document.createElement("a-box");
-	wall.id = "wall-3";
-	mainContainer.appendChild(wall);
-	wall = document.createElement("a-box");
-	wall.id = "wall-4";
-	mainContainer.appendChild(wall);
-	wall = document.createElement("a-box");
-	wall.id = "wall-5";
-	mainContainer.appendChild(wall);
-	wall = document.createElement("a-box");
-	wall.id = "wall-6";
-	mainContainer.appendChild(wall);
+	for(var j = 1; j <= 6; j++)
+	{
+		var wall = document.createElement("a-box");
+		wall.id = "wall-" + j;
+		mainContainer.appendChild(wall);
+	}
 	// Create Doors
-	var door = document.createElement("a-box");
-	door.id = "door-1";
-	mainContainer.appendChild(door);
-	door = document.createElement("a-box");
-	door.id = "door-2";
-	mainContainer.appendChild(door);
-	door = document.createElement("a-box");
-	door.id = "door-3";
-	mainContainer.appendChild(door);
-	door = document.createElement("a-box");
-	door.id = "door-4";
-	mainContainer.appendChild(door);
+	for(var k = 1; k <= 4; k++)
+	{
+		var door = document.createElement("a-box");
+		door.id = "door-" + k;
+		mainContainer.appendChild(door);
+	}
 };
