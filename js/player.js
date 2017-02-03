@@ -16,7 +16,6 @@ var keyDown = false;
 // The one function to rule them all.
 function init()
 {
-	setup();
 	buildGrid();
 	buildAssets();
 	buildRooms();
@@ -165,80 +164,130 @@ function attachGridCellEventListeners()
 };
 function buildAssets()
 {
-	// Makes adjustments to the pretend asset (cube).
-	var box = document.getElementById('asset-1');
-	box.setAttribute('position', {x: 15, y: 0.5, z: 0});
-	box.setAttribute('material', 'color', '#FF00FF');
-	// Helps not to duplicate cloned objects.
-	box.setAttribute('isCloned', 'false');
-	// Contains which cells it occupies.
-	box.setAttribute('cellsOwned', '');
-	// Contains what rotation state it has (for later evaluation).
-	// 0 is default. 1 is clockwise 90 degrees, 2 is 180 degrees, 3 is 270 degrees.
-	box.setAttribute('assetRotationState', 0);
-	// Helps to highlight which cells will be occupied due to shape.
-	box.setAttribute('horizontal', 0);
-	box.setAttribute('vertical', 0);
-	// Sometimes necessary to force the HTML DOM to redraw these pseudo-dom elements.
-	box.flushToDOM();
-	attachAssetListeners(box);
-	// Adds this fake asset to the array of assets (easier to search through them)
-	assets.push(box);
+	var assetsFromFile = {
+		"box": {
+			"assetRotationState": 0,
+			"cellsOwned": "",
+			"color": "#FF00FF",
+			"horizontal": 0,
+			"id": "asset-1",
+			"isCloned": "false",
+			"materialType": "primitive",
+			"moveable": "true",
+			"position": {"x": 15, "y": 0.5, "z": 0},
+			"scale": {"x": 1, "y": 1, "z": 1},
+			"tag": "a-box",
+			"type": "object",
+			"vertical": 0
+		},
+		"largeBox": {
+			"assetRotationState": 0,
+			"cellsOwned": "",
+			"color": "#FF00FF",
+			"horizontal": 1,
+			"id": "asset-2",
+			"isCloned": "false",
+			"materialType": "primitive",
+			"moveable": "true",
+			"position": {"x": 15, "y": 0.5, "z": 4},
+			"scale": {"x": 2, "y": 1, "z": 2},
+			"tag": "a-box",
+			"type": "object",
+			"vertical": 1
+		},
+		"bed": {
+			"assetRotationState": 0,
+			"cellsOwned": "",
+			"color": "#FF00FF",
+			"horizontal": 0,
+			"id": "asset-3",
+			"isCloned": "false",
+			"material": "",
+			"materialType": "complex",
+			"moveable": "true",
+			"objectSource": "assets/HOSPITAL_BED.obj",
+			"position": {"x": 15, "y": 0.5, "z": 2},
+			"scale": {"x": 0.1, "y": 0.1, "z": 0.1},
+			"tag": "a-obj-model",
+			"type": "object",
+			"vertical": 1
+		},
+		"viewer": {
+			"assetRotationState": 0,
+			"cellsOwned": "",
+			"color": "#6699FF",
+			"horizontal": 0,
+			"id": "pov-camera",
+			"isCloned": "false",
+			"materialType": "primitive",
+			"moveable": "true",
+			"position": {"x": 15, "y": 0.5, "z": 6},
+			"scale": {"x":.35, "y":.35, "z":.35},
+			"tag": "a-sphere",
+			"type": "view",
+			"vertical": 0
+		}
+	}
+	var mainContainer = document.querySelector('a-scene');
+	for(var index in assetsFromFile) 
+	{
+		if (assetsFromFile.hasOwnProperty(index))
+		{
+			var attr = assetsFromFile[index];
+			var asset = document.createElement(attr['tag']);
+			asset.id = attr['id'];
+			mainContainer.appendChild(asset);
+			// Makes core adjustments to the asset.
+			asset.setAttribute('position', attr['position']);
+			asset.setAttribute('scale', attr['scale']);
+			if(attr['materialType'] === 'primitive') asset.setAttribute('material', 'color', attr['color']);
+			else
+			{
+				asset.setAttribute('src', attr['objectSource']);
+				if(attr['material'] !== '') asset.setAttribute('mtl', attr['material']);
+				else asset.setAttribute('material', 'color', attr['color']);
+			}
+			// Helps not to duplicate cloned objects.
+			asset.setAttribute('isCloned', attr['isCloned']);
+			// Contains which cells it occupies.
+			asset.setAttribute('cellsOwned', attr['cellsOwned']);
+			// Contains what rotation state it has (for later evaluation).
+			// 0 is default. 1 is clockwise 90 degrees, 2 is 180 degrees, 3 is 270 degrees.
+			asset.setAttribute('assetRotationState', attr['assetRotationState']);
+			// Helps to highlight which cells will be occupied due to shape.
+			asset.setAttribute('horizontal', attr['horizontal']);
+			asset.setAttribute('vertical', attr['vertical']);
+			// Makes data containing adjustments to the asset.
+			asset.setAttribute('type', attr['type']);
+			asset.setAttribute('materialType', attr['materialType']);
+			asset.setAttribute('moveable', attr['moveable']);
+			// Sometimes necessary to force the HTML DOM to redraw these pseudo-dom elements.
+			asset.flushToDOM();
+			attachAssetListeners(asset);
+			// Adds this asset to the array of assets, if object type.
+			if(attr['type'] === 'object') assets.push(asset);
+			console.log(asset);
+		}
+	}
 
-	var largeBox = document.getElementById('asset-2');
-	largeBox.setAttribute('scale', {x: 2, y: 1, z: 2});
-	largeBox.setAttribute('position', {x: 15, y: 0.5, z: 4});
-	largeBox.setAttribute('material', 'color', '#FF00FF');
-	// Helps not to duplicate cloned objects.
-	largeBox.setAttribute('isCloned', 'false');
-	// Contains which cells it occupies.
-	largeBox.setAttribute('cellsOwned', '');
-	// Contains what rotation state it has (for later evaluation).
-	// 0 is default. 1 is clockwise 90 degrees, 2 is 180 degrees, 3 is 270 degrees.
-	largeBox.setAttribute('assetRotationState', 0);
-	// Helps to highlight which cells will be occupied due to shape.
-	largeBox.setAttribute('horizontal', 1);
-	largeBox.setAttribute('vertical', 1);
-	// Sometimes necessary to force the HTML DOM to redraw these pseudo-dom elements.
-	largeBox.flushToDOM();
-	attachAssetListeners(largeBox);
-	// Adds this fake asset to the array of assets (easier to search through them)
-	assets.push(largeBox);
-
-	//<a-obj-model src=assets/HOSPITAL_BED.obj"" scale="0.1 0.1 0.1"></a-obj-model>
-	var bed = document.getElementById('asset-3');
-	bed.setAttribute('src', 'assets/HOSPITAL_BED.obj');
-	bed.setAttribute('scale', {x: 0.1, y: 0.1, z: 0.1});
-	bed.setAttribute('position', {x: 15, y: 0.5, z: 2});
-	bed.setAttribute('material', 'color', '#FF00FF');
-	// Helps not to duplicate cloned objects.
-	bed.setAttribute('isCloned', 'false');
-	// Contains which cells it occupies.
-	bed.setAttribute('cellsOwned', '');
-	// Contains what rotation state it has (for later evaluation).
-	// 0 is default. 1 is clockwise 90 degrees, 2 is 180 degrees, 3 is 270 degrees.
-	bed.setAttribute('assetRotationState', 0);
-	// Helps to highlight which cells will be occupied due to shape.
-	bed.setAttribute('horizontal', 1);
-	bed.setAttribute('vertical', 0);
-	// Sometimes necessary to force the HTML DOM to redraw these pseudo-dom elements.
-	bed.flushToDOM();
-	attachAssetListeners(bed);
-	// Adds this fake asset to the array of assets (easier to search through them)
-	assets.push(bed);
-
-	// Placeholder camera object.
-	var sphere = document.getElementById("pov-camera");
-	sphere.setAttribute('scale', {x:.35, y:.35, z:.35});
-	sphere.setAttribute('position', {x:15,y:0.5, z:6});
-	sphere.setAttribute('material', 'color', '#6699ff');
-	sphere.setAttribute('cellsOwned', '');
-	sphere.flushToDOM();
-	attachAssetListeners(sphere);
-	assets.push(sphere);
+	// Create walls
+	for(var j = 1; j <= 6; j++)
+	{
+		var wall = document.createElement('a-box');
+		wall.id = 'wall-' + j;
+		mainContainer.appendChild(wall);
+	}
+	// Create Doors
+	for(var k = 1; k <= 4; k++)
+	{
+		var door = document.createElement('a-box');
+		door.id = 'door-' + k;
+		mainContainer.appendChild(door);
+	}
 };
 function buildGrid()
 {
+	var mainContainer = document.querySelector('a-scene');
 	// Makes adjustments to the grid cell.
 	var planes = document.querySelectorAll('a-plane');
 	for(var i = 0; i < 10; i++)
@@ -253,6 +302,9 @@ function buildGrid()
 		var xCoord = (i-5) + 0.5 + (cellSpacing * i);
 		for(var j = 0; j < 10; j++)
 		{
+			// Create the grid cells, and append to scene.
+			var plane = document.createElement('a-plane');
+			mainContainer.appendChild(plane);
 			/* j is base z-coord. If cell is increased in scale along z-axis,
 			** multiply j by the amount (ie. (j * 10) for scale-z: 10).
 			** 0.5 refers to half the cell size, since the plane is drawn out from its center point.
@@ -260,19 +312,19 @@ function buildGrid()
 			** Increase or decrease the cellSpacing to make gaps thinner or thicker.
 			*/
 			var zCoord = (j-5) + 0.5 + (cellSpacing * j);
-			planes[(i*10)+j].setAttribute('position', {x: xCoord, y: 0, z: zCoord});
-			planes[(i*10)+j].setAttribute('rotation', {x: -90, y: 0, z: 0});
-			planes[(i*10)+j].setAttribute('material', 'color', '#7BC8A4');
+			plane.setAttribute('position', {x: xCoord, y: 0, z: zCoord});
+			plane.setAttribute('rotation', {x: -90, y: 0, z: 0});
+			plane.setAttribute('material', 'color', '#7BC8A4');
 			// Necessary for event listeners.
-			planes[(i*10)+j].classList.add('grid');
+			plane.classList.add('grid');
 			// Necessary to easily track state of asset locations.
-			planes[(i*10)+j].id = 'cell-' + i + '-' + j;
+			plane.id = 'cell-' + i + '-' + j;
 			// Creates gridcellsstate as each cell is made.
 			GridCellsState[i][j] = 0;
 			// Helps not to duplicate cloned objects.
-			planes[(i*10)+j].setAttribute('isCloned', 'false');
+			plane.setAttribute('isCloned', 'false');
 			// Sometimes necessary to force the HTML DOM to redraw these pseudo-dom elements.
-			planes[(i*10)+j].flushToDOM();
+			plane.flushToDOM();
 		}
 	}
 	attachGridCellEventListeners();
@@ -619,47 +671,5 @@ function resetCellStates(cells)
 	{
 		var coords = cells[i].split('-');
 		GridCellsState[coords[coords.length-2]][coords[coords.length-1]] = 0;
-	}
-};
-
-function setup()
-{
-	var mainContainer = document.querySelector('a-scene');
-	// Create the grid cells, and append to scene.
-	for(var i = 1; i <= 100; i++)
-	{
-		var plane = document.createElement('a-plane');
-		mainContainer.appendChild(plane);
-	}
-	// Create the assets, and append to scene.
-	for(var k = 1; k <= 2; k++)
-	{
-		var box = document.createElement('a-box');
-		box.id = 'asset-' + k;
-		mainContainer.appendChild(box);
-	}
-	// Hospital bed asset
-	var bed = document.createElement('a-obj-model');
-		bed.id = 'asset-' + 3;
-		mainContainer.appendChild(bed);
-
-	// Create the PoV asset.
-	var sphere = document.createElement("a-sphere");
-	sphere.id = "pov-camera";
-	mainContainer.appendChild(sphere);
-
-	// Create walls
-	for(var j = 1; j <= 6; j++)
-	{
-		var wall = document.createElement('a-box');
-		wall.id = 'wall-' + j;
-		mainContainer.appendChild(wall);
-	}
-	// Create Doors
-	for(var k = 1; k <= 4; k++)
-	{
-		var door = document.createElement('a-box');
-		door.id = 'door-' + k;
-		mainContainer.appendChild(door);
 	}
 };
