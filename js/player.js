@@ -358,10 +358,24 @@ function changeAttribute(attribute, value)
 };
 function checkBoundaries(isRotation, idContents, x, z, horizontal, vertical)
 {
+	var cells = activeElement.cellsOwned.split(',');
 	for(var i = 0; i <= horizontal; i++)
 	{
 		for(var j = 0; j <= vertical; j++)
 		{
+			// Correction to make sure collision isn't with the active object.
+			var everythingIsOkFlag = false;
+			for(var k = 0; k < cells.length; k++)
+			{
+				var nextCell = cells[k].split('-');
+				if(Number(nextCell[1]) === (Number(x) + i) && Number(nextCell[2]) === (Number(z) + j))
+				{
+					everythingIsOkFlag = true;
+					break;
+				}
+			}
+			// Collision is with same object. Let it go. Don't worry about it.
+			if(everythingIsOkFlag) continue;
 			var cell = 'cell-' + (Number(x) + i) + '-' + (Number(z) + j);
 			var cellToClaim = document.getElementById(cell);
 			if(cellToClaim === null) return false;
