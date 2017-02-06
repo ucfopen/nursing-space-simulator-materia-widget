@@ -205,7 +205,7 @@ function attachAssetListeners(obj)
 		{
 			if(this.getAttribute('moveable') === 'false') return;
 			// Activates the selected asset after deactivating all others.
-			if(activeElement.activated === true) removesActive();
+			if(activeElement.activated === true) removeActive();
 			this.setAttribute('material', 'color', '#00FF00');
 			this.classList.add('active');
 			activeElement.element = this;
@@ -392,8 +392,8 @@ function buildGrid()
 				}
 			};
 		}
-		attachGridCellEventListeners();
 	}
+	attachGridCellEventListeners();
 };
 function changeAttribute(attribute, value)
 {
@@ -496,6 +496,11 @@ function clone(obj)
 	clonedObject.setAttribute('vertical', obj.getAttribute('vertical'));
 	// Helps not to duplicate cloned objects.
 	clonedObject.setAttribute('isCloned', 'true');
+	// Clones data containing adjustments to the asset.
+	clonedObject.setAttribute('type', obj.getAttribute('type'));
+	clonedObject.setAttribute('defaultColor', obj.getAttribute('defaultColor'));
+	clonedObject.setAttribute('materialType', obj.getAttribute('materialType'));
+	clonedObject.setAttribute('moveable', obj.getAttribute('moveable'));
 	// Copies classes over to new object.
 	for(cls in obj.classList)
 	{
@@ -545,7 +550,7 @@ function createAsset(details, x, z)
 	asset.flushToDOM();
 	attachAssetListeners(asset);
 	// Adds this asset to the array of assets, if object type.
-	if(details['type'] === 'object') assets.push(asset);
+	if(details['type'] === 'object' || details['type'] === 'view') assets.push(asset);
 };
 // Deletes a cloned asset from all places referenced.
 function deleteAsset(obj)
@@ -644,7 +649,7 @@ function keyboardEventSetup()
 	}, false);
 };
 // Removes the active class from any object that has it
-function removesActive()
+function removeActive()
 {
 	activeElement.element = null;
 	activeElement.activated = false;
