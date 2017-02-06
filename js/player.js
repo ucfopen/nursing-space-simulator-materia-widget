@@ -247,7 +247,8 @@ function attachAssetListeners(obj)
 		if(onGround) return;
 		else if(this.classList.contains('active')) return;
 		else if(activeElement.activated === true && activeElement.element.getAttribute('clonable') === 'false') return;
-		else if(activeElement.activated === false && this.getAttribute('isCloned') === 'false') return;
+		else if(activeElement.activated === false && this.getAttribute('isCloned') === 'true' && this.getAttribute('clonable') === 'false') return;
+		else if(activeElement.activated === false && this.getAttribute('isLoaded') === 'true') return;
 		console.log("bb");
 		this.setAttribute('material', 'color', 'red');
 		console.log("cc");
@@ -285,7 +286,7 @@ function attachAssetListeners(obj)
 			deleteAsset(this);
 		}
 		// Asset wasn't active before, but some (not cloned) asset types can replace it.
-		else if(activeElement.activated === true && activeElement.canReplace.indexOf(this.getAttribute('type')) > -1 && activeElement.isCloned === 'false')
+		else if(activeElement.activated === true && activeElement.canReplace.indexOf(this.getAttribute('type')) > -1 && activeElement.isCloned === 'false' && this.getAttribute('isCloned') === 'true')
 		{
 			console.log("55");
 			console.log("Here now");
@@ -664,11 +665,13 @@ function createAsset(details, x, z, isLoaded)
 	if(details['materialType'] === 'primitive') asset.setAttribute('material', 'color', details['defaultColor']);
 	else if(details['materialType'] === 'textured')
 	{
+		asset.setAttribute('objectSource', details['objectSource']);
 		asset.setAttribute('material', 'src', details['objectSource']);
 		asset.setAttribute('material', 'repeat', details['repeat']);
 	}
 	else
 	{
+		asset.setAttribute('objectSource', details['objectSource']);
 		asset.setAttribute('src', details['objectSource']);
 		asset.setAttribute('materialSource', details['materialSource']);
 		if(details['materialSource'] !== '') asset.setAttribute('mtl', details['materialSource']);
