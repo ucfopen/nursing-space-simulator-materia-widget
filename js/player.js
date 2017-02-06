@@ -160,11 +160,14 @@ var keyDown = false;
 // The one function to rule them all.
 function init()
 {
-	buildGrid();
-	buildAssets();
+	buildScene();
 	keyboardEventSetup();
 	var cam = document.getElementById('camera');
-	cam.setAttribute('position', { x: (gridLoader['columns'] / 2), y: 25, z: (gridLoader['rows'] / 2) });
+	cam.setAttribute('position', {
+		x: (gridLoader['columns'] / 2),
+		y: 25,
+		z: (gridLoader['rows'] / 2)
+	});
 	cam.flushToDOM();
 };
 // Mouse events functionality on the assets
@@ -327,9 +330,53 @@ function buildAssets()
 		}
 	}
 };
-function buildGrid()
+function buildCell(i, j)
 {
 	var mainContainer = document.querySelector('a-scene');
+	// Create the grid cells, and append to scene.
+	var plane = document.createElement('a-plane');
+	mainContainer.appendChild(plane);
+
+	plane.setAttribute('position', {x: i, y: 0, z: j});
+	plane.setAttribute('rotation', {x: -90, y: 0, z: 0});
+	plane.setAttribute('material', 'color', '#7BC8A4');
+	// Necessary for event listeners.
+	plane.classList.add('grid');
+	// Necessary to easily track state of asset locations.
+	plane.id = 'cell-' + i + '-' + j;
+	// Helps not to duplicate cloned objects.
+	plane.setAttribute('isCloned', 'false');
+	// Sometimes necessary to force the HTML DOM to redraw these pseudo-dom elements.
+	plane.flushToDOM();
+};
+function buildCeiling()
+{
+	var mainContainer = document.querySelector('a-scene');
+	// Create the plane (ceiling), and append to scene.
+	var ceiling = document.createElement('a-plane');
+	// Identify it for better inspection in Chrome inspector.
+	ceiling.id = 'ceiling';
+	mainContainer.appendChild(ceiling);
+	// Uses the gridLoader string to determine the upper left corner for starting position.
+	ceiling.setAttribute('position', {
+		x: (gridLoader['columns'] / 2.0) - (0.5),
+		y: 3,
+		z: (gridLoader['rows'] / 2.0)
+	});
+	// Renders face of plane downward, invisible from above, but visible at ground-level.
+	ceiling.setAttribute('rotation', {x: 90, y: 0, z: 0});
+	// Uses the gridLoader string to determine the full dimensions of the "rooms" portion of scene.
+	ceiling.setAttribute('height', gridLoader['rows']);
+	ceiling.setAttribute('width', gridLoader['columns']);
+	// Try to use texture with dimensions at power of 2 (ie. 128x128, 256x256, 512x512).
+	ceiling.setAttribute('material', 'src', 'assets/CEILING_TILE.jpg');
+	// Again use powers of 2 for best results (ie. "1 1", "2 2", "4 4", "8 8", etc.).
+	ceiling.setAttribute('material', 'repeat', '16 16');
+	// Sometimes necessary to force the HTML DOM to redraw these pseudo-dom elements.
+	ceiling.flushToDOM();
+};
+function buildScene()
+{
 	var grid = gridLoader['content'].split('-');
 	// Parses the load string into the gridCellsState for easier building.
 	var indexCounter = 0;
@@ -354,21 +401,7 @@ function buildGrid()
 			{
 				case '0':
 				{
-					// Create the grid cells, and append to scene.
-					var plane = document.createElement('a-plane');
-					mainContainer.appendChild(plane);
-
-					plane.setAttribute('position', {x: i, y: 0, z: j});
-					plane.setAttribute('rotation', {x: -90, y: 0, z: 0});
-					plane.setAttribute('material', 'color', '#7BC8A4');
-					// Necessary for event listeners.
-					plane.classList.add('grid');
-					// Necessary to easily track state of asset locations.
-					plane.id = 'cell-' + i + '-' + j;
-					// Helps not to duplicate cloned objects.
-					plane.setAttribute('isCloned', 'false');
-					// Sometimes necessary to force the HTML DOM to redraw these pseudo-dom elements.
-					plane.flushToDOM();
+					buildCell(i, j);
 					break;
 				}
 				case 'd1':
@@ -394,6 +427,8 @@ function buildGrid()
 		}
 	}
 	attachGridCellEventListeners();
+	buildCeiling();
+	buildAssets();
 };
 function changeAttribute(attribute, value)
 {
@@ -674,21 +709,24 @@ function placeCamera()
 		y: 1.6,
 		z: cam_z_pos
 	});
-	camera.setAttribute('rotation', {x: 1, y: 1, z: 1});
+	camera.setAttribute('rotation', {
+		x: 1,
+		y: 1,
+		z: 1
+	});
 	var lookControls = document.createAttribute('look-controls');
 	camera.setAttributeNode(lookControls);
 	// camera.removeAttribute('mouse-cursor');
 	camera.flushToDOM();
 };
-
 // Simple function to reset camera postion to original settings.
 function resetCamera()
 {
 	camera = document.getElementById('camera');
 	camera.setAttribute('position', {
-		x: 0,
-		y: 20,
-		z: 0
+		x: (gridLoader['columns'] / 2),
+		y: 25,
+		z: (gridLoader['rows'] / 2)
 	});
 	camera.setAttribute('rotation', {
 		x: -90,
@@ -698,8 +736,6 @@ function resetCamera()
 	camera.removeAttribute('look-controls');
 	camera.flushToDOM();
 }
-
-
 // Resets cell states that an object used to have.
 function resetCellStates(cells)
 {
