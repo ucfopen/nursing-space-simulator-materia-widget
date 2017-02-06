@@ -510,37 +510,10 @@ function clone(obj)
 	if (null == obj || 'object' != typeof obj) return obj;
 	// Create a new object of same type.
 	var clonedObject;
-	// Determine if primitive object or object model.
-	if(obj.getAttribute('obj-model') === null) clonedObject = document.createElement('a-' + obj.getAttribute('geometry')['primitive']);
-	else
-	{
-		clonedObject = document.createElement('a-obj-model');
-		clonedObject.setAttribute('src', obj.getAttribute('src'));
-	}
-	// Copy over its essential attributes.
-	clonedObject.setAttribute('material', obj.getAttribute('material'));
-	clonedObject.setAttribute('scale', obj.getAttribute('scale'));
-	clonedObject.setAttribute('rotation', obj.getAttribute('rotation'));
-	// Contains which cells it occupies.
-	clonedObject.setAttribute('cellsOwned', obj.getAttribute('cellsOwned'));
-	// Contains what rotation state it has (for later evaluation).
-	// 0 is default. 1 is clockwise 90 degrees, 2 is 180 degrees, 3 is is 270 degrees.
-	clonedObject.setAttribute('assetRotationState', obj.getAttribute('assetRotationState'));
-	// Helps to highlight which cells will be occupied due to shape.
-	clonedObject.setAttribute('horizontal', obj.getAttribute('horizontal'));
-	clonedObject.setAttribute('vertical', obj.getAttribute('vertical'));
+	clonedObject = obj.cloneNode(true);
+	clonedObject.id = obj.id + '-clone';
 	// Helps not to duplicate cloned objects.
 	clonedObject.setAttribute('isCloned', 'true');
-	// Clones data containing adjustments to the asset.
-	clonedObject.setAttribute('type', obj.getAttribute('type'));
-	clonedObject.setAttribute('defaultColor', obj.getAttribute('defaultColor'));
-	clonedObject.setAttribute('materialType', obj.getAttribute('materialType'));
-	clonedObject.setAttribute('moveable', obj.getAttribute('moveable'));
-	// Copies classes over to new object.
-	for(cls in obj.classList)
-	{
-		clonedObject.classList.add(cls);
-	}
 	// Put it in the scene.
 	document.querySelector('a-scene').appendChild(clonedObject);
 	// Give new object same listeners as the original.
