@@ -45,13 +45,15 @@ var assetsFromFile = {
 		"door-1": {
 			"assetRotationState": 0,
 			"cellsOwned": "",
-			"defaultColor": "#593C1F",
+			"defaultColor": "",
 			"horizontal": 0,
 			"id": "door-1",
 			"isCloned": "false",
-			"materialType": "primitive",
+			"materialType": "textured",
 			"moveable": "false",
+			"objectSource": "assets/DOOR_1.png",
 			"position": {"x": -50, "y": -50, "z": -50},
+			"repeat": "1 1",
 			"scale": {"x":1, "y":3, "z":1},
 			"tag": "a-box",
 			"type": "structure",
@@ -60,13 +62,15 @@ var assetsFromFile = {
 		"door-2": {
 			"assetRotationState": 0,
 			"cellsOwned": "",
-			"defaultColor": "#593C1F",
+			"defaultColor": "",
 			"horizontal": 0,
 			"id": "door-1",
 			"isCloned": "false",
-			"materialType": "primitive",
+			"materialType": "textured",
 			"moveable": "false",
+			"objectSource": "assets/DOOR_2.png",
 			"position": {"x": -50, "y": -50, "z": -50},
+			"repeat": "1 1",
 			"scale": {"x":1, "y":3, "z":1},
 			"tag": "a-box",
 			"type": "structure",
@@ -105,7 +109,7 @@ var assetsFromFile = {
 		"wall-1": {
 			"assetRotationState": 0,
 			"cellsOwned": "",
-			"defaultColor": "#A9A9A9",
+			"defaultColor": "#9FCDB1",
 			"horizontal": 0,
 			"id": "wall-1",
 			"isCloned": "false",
@@ -133,9 +137,10 @@ var gridLoader = {
 				"w1-0-0-0-0-0-0-0-0-0-0-w1-0-0-0-0-0-0-0-0-0-0-w1-0-0-0-0-0-0-0-0-0-0-0-w1-" +
 				"w1-0-0-0-0-0-0-0-0-0-0-w1-0-0-0-0-0-0-0-0-0-0-w1-0-0-0-0-0-0-0-0-0-0-0-w1-" +
 				"w1-0-0-0-0-0-0-0-0-0-0-w1-0-0-0-0-0-0-0-0-0-0-w1-0-0-0-0-0-0-0-0-0-0-0-w1-" +
-				"w1-w1-w1-w1-d2-d2-w1-w1-w1-w1-w1-w1-d1-w1-w1-w1-w1-d2-d2-w1-w1-w1-w1-0-0-0-0-0-0-0-0-0-0-0-w1-" +
+				"w1-w1-w1-w1-d1-d2-w1-w1-w1-w1-w1-w1-d1-w1-w1-w1-w1-d1-d2-w1-w1-w1-w1-0-0-0-0-0-0-0-0-0-0-0-w1-" +
 				"d1-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-d1-0-0-0-0-0-0-0-0-0-0-0-w1-" +
-				"w1-w1-w1-w1-d2-d2-w1-w1-w1-w1-w1-w1-d1-w1-w1-w1-w1-d2-d2-w1-w1-w1-w1-0-0-0-0-0-0-0-0-0-0-0-w1-" + 
+				"d2-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-w1-w1-0-0-0-0-0-0-0-0-0-0-0-w1-" +
+				"w1-w1-w1-w1-d2-d1-w1-w1-w1-w1-w1-w1-d1-w1-w1-w1-w1-d2-d1-w1-w1-w1-w1-0-0-0-0-0-0-0-0-0-0-0-w1-" +
 				"w1-0-0-0-0-0-0-0-0-0-0-w1-0-0-0-0-0-0-0-0-0-0-w1-0-0-0-0-0-0-0-0-0-0-0-w1-" +
 				"w1-0-0-0-0-0-0-0-0-0-0-w1-0-0-0-0-0-0-0-0-0-0-w1-0-0-0-0-0-0-0-0-0-0-0-w1-" +
 				"w1-0-0-0-0-0-0-0-0-0-0-w1-0-0-0-0-0-0-0-0-0-0-w1-0-0-0-0-0-0-0-0-0-0-0-w1-" +
@@ -147,7 +152,6 @@ var gridLoader = {
 				"w1-0-0-0-0-0-0-0-0-0-0-d1-0-0-0-0-0-0-0-0-0-0-d1-0-0-0-0-0-0-0-0-0-0-0-w1-" +
 				"w1-0-0-0-0-0-0-0-0-0-0-w1-0-0-0-0-0-0-0-0-0-0-w1-0-0-0-0-0-0-0-0-0-0-0-w1-" +
 				"w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-" +
-				"x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-" +
 				"x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-" +
 				"x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x",
 	"rows": 30
@@ -177,7 +181,10 @@ function attachAssetListeners(obj)
 	// Hover over the asset
 	obj.addEventListener('mouseenter', function ()
 	{
-		if(this.classList.contains('active') || onGround) return;
+		// If mouse hovers over asset that is active, don't change color.
+		// If nothing is active AND asset type is structure (ie. wall), don't change color.
+		// If viewpoint is on the ground, don't change color.
+		if(this.classList.contains('active') || (this.getAttribute('type') === 'structure' && activeElement.activated === false) || onGround) return;
 		this.setAttribute('material', 'color', 'red');
 	});
 	// No longer hovering over asset
@@ -346,7 +353,7 @@ function buildCell(i, j)
 
 	plane.setAttribute('position', {x: i, y: 0, z: j});
 	plane.setAttribute('rotation', {x: -90, y: 0, z: 0});
-	plane.setAttribute('material', 'color', '#7BC8A4');
+	plane.setAttribute('material', 'color', '#C1D2CC');
 	// Necessary for event listeners.
 	plane.classList.add('grid');
 	// Necessary to easily track state of asset locations.
@@ -506,7 +513,7 @@ function clearCells()
 {
 	for(var i = 0; i < activeCells.length; i++)
 	{
-		activeCells[i].setAttribute('material', 'color', '#7BC8A4');
+		activeCells[i].setAttribute('material', 'color', '#C1D2CC');
 	}
 	activeCells = [];
 };
@@ -540,6 +547,11 @@ function createAsset(details, x, z)
 	else asset.setAttribute('position', { x: x, y: (details['scale'].y / 2), z: z });
 	asset.setAttribute('scale', details['scale']);
 	if(details['materialType'] === 'primitive') asset.setAttribute('material', 'color', details['defaultColor']);
+	else if(details['materialType'] === 'textured')
+	{
+		asset.setAttribute('material', 'src', details['objectSource']);
+		asset.setAttribute('material', 'repeat', details['repeat']);
+	}
 	else
 	{
 		asset.setAttribute('src', details['objectSource']);
