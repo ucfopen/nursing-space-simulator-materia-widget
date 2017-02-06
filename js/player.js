@@ -157,6 +157,7 @@ var gridCellsState = [];
 var cellSpacing = 0.05;
 var assets = [];
 var keyDown = false;
+var onGround = false;
 // The one function to rule them all.
 function init()
 {
@@ -174,19 +175,22 @@ function init()
 function attachAssetListeners(obj)
 {
 	// Hover over the asset
-	obj.addEventListener('mouseenter', function () {
-		if(this.classList.contains('active')) return;
+	obj.addEventListener('mouseenter', function ()
+	{
+		if(this.classList.contains('active') || onGround) return;
 		this.setAttribute('material', 'color', 'red');
 	});
 	// No longer hovering over asset
-	obj.addEventListener('mouseleave', function () {
-		if(this.classList.contains('active')) return;
+	obj.addEventListener('mouseleave', function ()
+	{
+		if(this.classList.contains('active') || onGround) return;
 		this.setAttribute('material', 'color', this.getAttribute('defaultColor'));
 	});
 	// Clicked on asset
-	obj.addEventListener('click', function () {
+	obj.addEventListener('click', function ()
+	{
 		// Asset already active, remove active modifiers
-		if(this.classList.contains('active') && this.getAttribute('isCloned') === 'false')
+		if(this.classList.contains('active') && this.getAttribute('isCloned') === 'false' && !onGround)
 		{
 			// Deactivates the selected asset
 			this.setAttribute('material', 'color', 'red');
@@ -195,7 +199,7 @@ function attachAssetListeners(obj)
 			activeElement.activated = false;
 		}
 		// Clicking on an active asset that is also a clone will delete that clone.
-		else if(this.classList.contains('active') && this.getAttribute('isCloned') === 'true')
+		else if(this.classList.contains('active') && this.getAttribute('isCloned') === 'true' && !onGround)
 		{
 			resetCellStates(activeElement.cellsOwned.split(','));
 			activeElement.element.setAttribute('material', 'color', '#FF00FF');
@@ -206,7 +210,7 @@ function attachAssetListeners(obj)
 		// Asset wasn't active before, but will be now.
 		else
 		{
-			if(this.getAttribute('moveable') === 'false') return;
+			if(this.getAttribute('moveable') === 'false' || onGround) return;
 			// Activates the selected asset after deactivating all others.
 			if(activeElement.activated === true) removeActive();
 			this.setAttribute('material', 'color', '#00FF00');
@@ -232,8 +236,9 @@ function attachGridCellEventListeners()
 		// Hovering over cell
 		cells[i].addEventListener('mouseenter', function ()
 		{
+			if(onGround) return;
 			// Highlight other cells that the asset would otherwise occupy.
-			if(activeElement.activated)
+			else if(activeElement.activated)
 			{
 				var idContents = this.id.split('-');
 				var x = idContents[idContents.length-2];
@@ -258,12 +263,14 @@ function attachGridCellEventListeners()
 		// Mouse cursor has left the cell.
 		cells[i].addEventListener('mouseleave', function ()
 		{
-			if(activeElement.activated) clearCells();
+			if(onGround) return;
+			else if(activeElement.activated) clearCells();
 		});
 		// Mouse cursor has clicked the cell.
 		cells[i].addEventListener('click', function ()
 		{
-			if(activeElement.activated && activeElement.element.getAttribute('moveable') === 'false') return;
+			if(onGround) return;
+			else if(activeElement.activated && activeElement.element.getAttribute('moveable') === 'false') return;
 			// If asset has been activated, place it on this cell.
 			if(activeElement.activated)
 			{
@@ -691,6 +698,7 @@ function placeCamera()
 	camera.setAttributeNode(lookControls);
 	// camera.removeAttribute('mouse-cursor');
 	camera.flushToDOM();
+	onGround = true;
 };
 // Simple function to reset camera postion to original settings.
 function resetCamera()
@@ -708,6 +716,7 @@ function resetCamera()
 	});
 	camera.removeAttribute('look-controls');
 	camera.flushToDOM();
+	onGround = false;
 }
 // Resets cell states that an object used to have.
 function resetCellStates(cells)
