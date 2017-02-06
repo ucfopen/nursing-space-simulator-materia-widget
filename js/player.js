@@ -203,7 +203,7 @@ function attachAssetListeners(obj)
 		// Asset wasn't active before, but will be now.
 		else
 		{
-			if(this.getAttribute('moveable')) return;
+			if(this.getAttribute('moveable') === 'false') return;
 			// Activates the selected asset after deactivating all others.
 			if(activeElement.activated === true) removesActive();
 			this.setAttribute('material', 'color', '#00FF00');
@@ -260,7 +260,7 @@ function attachGridCellEventListeners()
 		// Mouse cursor has clicked the cell.
 		cells[i].addEventListener('click', function ()
 		{
-			if(activeElement.element.getAttribute('moveable')) return;
+			if(activeElement.activated && activeElement.element.getAttribute('moveable') === 'false') return;
 			// If asset has been activated, place it on this cell.
 			if(activeElement.activated)
 			{
@@ -299,7 +299,7 @@ function attachGridCellEventListeners()
 				// is one in either direction, we must first add one to express it's proper "size" in that direction.
 				activeElement.element.setAttribute('position', {
 					x: cellPosition.x + ((Number(activeElement.horizontal) + 1) / 2.0) - 0.5,
-					y: (assetSize.y / 2.0),
+					y: assetSize.y / 2.0,
 					z: cellPosition.z + ((Number(activeElement.vertical) + 1) / 2.0) - 0.5
 				});
 				// If this is the PoV camera object.
