@@ -203,7 +203,7 @@ function attachAssetListeners(obj)
 		// Asset wasn't active before, but will be now.
 		else
 		{
-			if(this.getAttribute('moveable')) return;
+			if(this.getAttribute('moveable') === 'false') return;
 			// Activates the selected asset after deactivating all others.
 			if(activeElement.activated === true) removesActive();
 			this.setAttribute('material', 'color', '#00FF00');
@@ -260,7 +260,7 @@ function attachGridCellEventListeners()
 		// Mouse cursor has clicked the cell.
 		cells[i].addEventListener('click', function ()
 		{
-			if(activeElement.element.getAttribute('moveable')) return;
+			if(activeElement.activated && activeElement.element.getAttribute('moveable') === 'false') return;
 			// If asset has been activated, place it on this cell.
 			if(activeElement.activated)
 			{
@@ -274,8 +274,8 @@ function attachGridCellEventListeners()
 				var z = idContents[idContents.length-1];
 
 				if(!checkBoundaries(false, idContents, x, z, activeElement.horizontal, activeElement.vertical)) return;
-				// If active object wasn't a clone, make a clone, unless it was a 'structure object.
-				if(activeElement.isCloned === 'false')
+				// If active object wasn't a clone, make a clone, unless it was a 'structure object, or viewer.
+				if(activeElement.isCloned === 'false' && activeElement.element.id !== "pov-camera")
 				{
 					// Remove the active color and related class.
 					activeElement.element.setAttribute('material', 'color', '#FF00FF');
@@ -299,7 +299,7 @@ function attachGridCellEventListeners()
 				// is one in either direction, we must first add one to express it's proper "size" in that direction.
 				activeElement.element.setAttribute('position', {
 					x: cellPosition.x + ((Number(activeElement.horizontal) + 1) / 2.0) - 0.5,
-					y: (assetSize.y / 2.0),
+					y: assetSize.y / 2.0,
 					z: cellPosition.z + ((Number(activeElement.vertical) + 1) / 2.0) - 0.5
 				});
 				// If this is the PoV camera object.
