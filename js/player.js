@@ -274,8 +274,8 @@ function attachGridCellEventListeners()
 				var z = idContents[idContents.length-1];
 
 				if(!checkBoundaries(false, idContents, x, z, activeElement.horizontal, activeElement.vertical)) return;
-				// If active object wasn't a clone, make a clone, unless it was a 'structure object.
-				if(activeElement.isCloned === 'false')
+				// If active object wasn't a clone, make a clone, unless it was a 'structure object, or viewer.
+				if(activeElement.isCloned === 'false' && activeElement.element.id !== "pov-camera")
 				{
 					// Remove the active color and related class.
 					activeElement.element.setAttribute('material', 'color', '#FF00FF');
