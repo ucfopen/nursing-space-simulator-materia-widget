@@ -10,266 +10,6 @@ var activeElement = {
 	vertical: 0
 };
 var activeCells = [];
-var assetsFromFile = {
-		"bed": {
-			"assetRotationState": 0,
-			"canReplace": [],
-			"cellsOwned": "",
-			"clonable": "false",
-			"defaultColor": "#376AD3",
-			"horizontal": 0,
-			"id": "bed-1",
-			"isCloned": "false",
-			"isPermanent": "false",
-			"materialSource": "",
-			"materialType": "complex",
-			"movable": "true",
-			"objectSource": "assets/HOSPITAL_BED.obj",
-			"position": {"x": -5, "y": 0, "z": 13},
-			"rotation": {"x": 0, "y": -90, "z": 0},
-			"scale": {"x": 0.1, "y": 0.1, "z": 0.1},
-			"tag": "a-obj-model",
-			"type": "object",
-			"vertical": 1
-		},
-		"bed-2": {
-			"assetRotationState": 0,
-			"canReplace": [],
-			"cellsOwned": "",
-			"clonable": "false",
-			"defaultColor": "#B5848A",
-			"horizontal": 0,
-			"id": "bed-2",
-			"isCloned": "false",
-			"isPermanent": "false",
-			"materialSource": "",
-			"materialType": "complex",
-			"movable": "true",
-			"objectSource": "assets/HOSPITAL_BED.obj",
-			"position": {"x": -7, "y": 0, "z": 13},
-			"rotation": {"x": 0, "y": -90, "z": 0},
-			"scale": {"x": 0.1, "y": 0.1, "z": 0.1},
-			"tag": "a-obj-model",
-			"type": "object",
-			"vertical": 1
-		},
-		"bed-3": {
-			"assetRotationState": 0,
-			"canReplace": [],
-			"cellsOwned": "",
-			"clonable": "false",
-			"defaultColor": "#54A898",
-			"horizontal": 0,
-			"id": "bed-3",
-			"isCloned": "false",
-			"isPermanent": "false",
-			"materialSource": "",
-			"materialType": "complex",
-			"movable": "true",
-			"objectSource": "assets/HOSPITAL_BED.obj",
-			"position": {"x": -9, "y": 0, "z": 13},
-			"rotation": {"x": 0, "y": -90, "z": 0},
-			"scale": {"x": 0.1, "y": 0.1, "z": 0.1},
-			"tag": "a-obj-model",
-			"type": "object",
-			"vertical": 1
-		},
-		"door-1": {
-			"assetRotationState": 0,
-			"canReplace": ["door"],
-			"cellsOwned": "",
-			"clonable": "false",
-			"defaultColor": "",
-			"horizontal": 0,
-			"id": "door-1",
-			"isCloned": "false",
-			"isPermanent": "false",
-			"materialType": "textured",
-			"movable": "false",
-			"objectSource": "assets/DOOR_1.png",
-			"position": {"x": -11, "y": 1.5, "z": 10},
-			"rotation": {"x": 0, "y": 0, "z": 0},
-			"repeat": "1 1",
-			"scale": {"x":1, "y":3, "z":1},
-			"tag": "a-box",
-			"type": "door",
-			"vertical": 0
-		},
-		"door-2": {
-			"assetRotationState": 0,
-			"canReplace": ["door"],
-			"cellsOwned": "",
-			"clonable": "false",
-			"defaultColor": "",
-			"horizontal": 0,
-			"id": "door-2",
-			"isCloned": "false",
-			"isPermanent": "false",
-			"materialType": "textured",
-			"movable": "false",
-			"objectSource": "assets/DOOR_2.png",
-			"position": {"x": -13, "y": 1.5, "z": 10},
-			"rotation": {"x": 0, "y": 0, "z": 0},
-			"repeat": "1 1",
-			"scale": {"x":1, "y":3, "z":1},
-			"tag": "a-box",
-			"type": "door",
-			"vertical": 0
-		},
-		"largeBox": {
-			"assetRotationState": 0,
-			"canReplace": [],
-			"cellsOwned": "",
-			"clonable": "false",
-			"defaultColor": "#FF00FF",
-			"horizontal": 1,
-			"id": "largeBox-2",
-			"isCloned": "false",
-			"isPermanent": "false",
-			"materialType": "primitive",
-			"movable": "true",
-			"position": {"x": -5, "y": 0.5, "z": 16},
-			"rotation": {"x": 0, "y": 0, "z": 0},
-			"scale": {"x": 2, "y": 1, "z": 2},
-			"tag": "a-box",
-			"type": "object",
-			"vertical": 1
-		},
-		"viewer": {
-			"assetRotationState": 0,
-			"canReplace": [],
-			"cellsOwned": "",
-			"clonable": "false",
-			"defaultColor": "",
-			"horizontal": 0,
-			"id": "pov-camera",
-			"isCloned": "false",
-			"isPermanent": "false",
-			"materialSource": "assets/body-armour/BodyArmour02.mtl",
-			"materialType": "complex",
-			"movable": "true",
-			"objectSource": "assets/body-armour/BodyArmour02.obj",
-			"position": {"x": -5, "y": 0.3, "z": 18},
-			"rotation": {"x": 0, "y": 180, "z": 0},
-			"scale": {"x":.0008, "y":.0008, "z":.0008},
-			"tag": "a-obj-model",
-			"type": "view",
-			"vertical": 0
-		},
-		"wall-1": {
-			"assetRotationState": 0,
-			"canReplace": ["wall"],
-			"cellsOwned": "",
-			"clonable": "false",
-			"defaultColor": "#9FCDB1",
-			"horizontal": 0,
-			"id": "wall-1",
-			"isCloned": "false",
-			"isPermanent": "false",
-			"materialType": "primitive",
-			"movable": "false",
-			"position": {"x": -5, "y": 1.5, "z": 10},
-			"rotation": {"x": 0, "y": 0, "z": 0},
-			"scale": {"x":1, "y":3, "z":1},
-			"tag": "a-box",
-			"type": "wall",
-			"vertical": 0
-		},
-		"wall-2": {
-			"assetRotationState": 0,
-			"canReplace": ["wall"],
-			"cellsOwned": "",
-			"clonable": "false",
-			"defaultColor": "#CBC99D",
-			"horizontal": 0,
-			"id": "wall-2",
-			"isCloned": "false",
-			"isPermanent": "false",
-			"materialType": "primitive",
-			"movable": "false",
-			"position": {"x": -7, "y": 1.5, "z": 10},
-			"rotation": {"x": 0, "y": 0, "z": 0},
-			"scale": {"x":1, "y":3, "z":1},
-			"tag": "a-box",
-			"type": "wall",
-			"vertical": 0
-		}
-		,
-		"wall-3": {
-			"assetRotationState": 0,
-			"canReplace": ["wall"],
-			"cellsOwned": "",
-			"clonable": "false",
-			"defaultColor": "#86867C",
-			"horizontal": 0,
-			"id": "wall-3",
-			"isCloned": "false",
-			"isPermanent": "false",
-			"materialType": "primitive",
-			"movable": "false",
-			"position": {"x": -9, "y": 1.5, "z": 10},
-			"rotation": {"x": 0, "y": 0, "z": 0},
-			"scale": {"x":1, "y":3, "z":1},
-			"tag": "a-box",
-			"type": "wall",
-			"vertical": 0
-		},
-		"wheelchair": {
-			"assetRotationState": 0,
-			"canReplace": [],
-			"cellsOwned": "",
-			"clonable": "false",
-			"defaultColor": "",
-			"horizontal": 0,
-			"id": "wheelchair-1",
-			"isCloned": "false",
-			"isPermanent": "false",
-			"materialSource": "assets/wheelchair/wheelchair.mtl",
-			"materialType": "complex",
-			"movable": "true",
-			"objectSource": "assets/wheelchair/wheelchair.obj",
-			"position": {"x": -5, "y": 0, "z": 20},
-			"rotation": {"x": 0, "y": 0, "z": 0},
-			"scale": {"x": 0.025, "y": 0.025, "z": 0.025},
-			"tag": "a-obj-model",
-			"type": "object",
-			"vertical": 0
-		}
-	};
-var gridLoader = {
-	"columns": 35,
-	"content": 	"x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-" +
-				"x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-" +
-				"w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-" +
-				"w1-0-0-0-0-0-0-0-0-0-0-w1-0-0-0-0-0-0-0-0-0-0-w1-0-0-0-0-0-0-0-0-0-0-0-w1-" +
-				"w1-0-0-0-0-0-0-0-0-0-0-w1-0-0-0-0-0-0-0-0-0-0-w1-0-0-0-0-0-0-0-0-0-0-0-w1-" +
-				"w1-0-0-0-0-0-0-0-0-0-0-w1-0-0-0-0-0-0-0-0-0-0-w1-0-0-0-0-0-0-0-0-0-0-0-w1-" +
-				"w1-0-0-0-0-0-0-0-0-0-0-w1-0-0-0-0-0-0-0-0-0-0-w1-0-0-0-0-0-0-0-0-0-0-0-w1-" +
-				"w1-0-0-0-0-0-0-0-0-0-0-d1-0-0-0-0-0-0-0-0-0-0-d1-0-0-0-0-0-0-0-0-0-0-0-w1-" +
-				"w1-0-0-0-0-0-0-0-0-0-0-w1-0-0-0-0-0-0-0-0-0-0-w1-0-0-0-0-0-0-0-0-0-0-0-w1-" +
-				"w1-0-0-0-0-0-0-0-0-0-0-w1-0-0-0-0-0-0-0-0-0-0-w1-0-0-0-0-0-0-0-0-0-0-0-w1-" +
-				"w1-0-0-0-0-0-0-0-0-0-0-w1-0-0-0-0-0-0-0-0-0-0-w1-0-0-0-0-0-0-0-0-0-0-0-w1-" +
-				"w1-0-0-0-0-0-0-0-0-0-0-w1-0-0-0-0-0-0-0-0-0-0-w1-0-0-0-0-0-0-0-0-0-0-0-w1-" +
-				"w1-0-0-0-0-0-0-0-0-0-0-w1-0-0-0-0-0-0-0-0-0-0-w1-0-0-0-0-0-0-0-0-0-0-0-w1-" +
-				"w1-w1-w1-w1-d1-d2-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-d1-d2-w1-w1-w1-w1-0-0-0-0-0-0-0-0-0-0-0-w1-" +
-				"d1-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-d1-0-0-0-0-0-0-0-0-0-0-0-w1-" +
-				"d2-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-w1-w1-0-0-0-0-0-0-0-0-0-0-0-w1-" +
-				"w1-w1-w1-w1-d2-d1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-d2-d1-w1-w1-w1-w1-0-0-0-0-0-0-0-0-0-0-0-w1-" +
-				"w1-0-0-0-0-0-0-0-0-0-0-w1-0-0-0-0-0-0-0-0-0-0-w1-0-0-0-0-0-0-0-0-0-0-0-w1-" +
-				"w1-0-0-0-0-0-0-0-0-0-0-w1-0-0-0-0-0-0-0-0-0-0-w1-0-0-0-0-0-0-0-0-0-0-0-w1-" +
-				"w1-0-0-0-0-0-0-0-0-0-0-w1-0-0-0-0-0-0-0-0-0-0-w1-0-0-0-0-0-0-0-0-0-0-0-w1-" +
-				"w1-0-0-0-0-0-0-0-0-0-0-w1-0-0-0-0-0-0-0-0-0-0-w1-0-0-0-0-0-0-0-0-0-0-0-w1-" +
-				"w1-0-0-0-0-0-0-0-0-0-0-w1-0-0-0-0-0-0-0-0-0-0-w1-0-0-0-0-0-0-0-0-0-0-0-w1-" +
-				"w1-0-0-0-0-0-0-0-0-0-0-w1-0-0-0-0-0-0-0-0-0-0-w1-0-0-0-0-0-0-0-0-0-0-0-w1-" +
-				"w1-0-0-0-0-0-0-0-0-0-0-w1-0-0-0-0-0-0-0-0-0-0-w1-0-0-0-0-0-0-0-0-0-0-0-w1-" +
-				"w1-0-0-0-0-0-0-0-0-0-0-w1-0-0-0-0-0-0-0-0-0-0-w1-0-0-0-0-0-0-0-0-0-0-0-w1-" +
-				"w1-0-0-0-0-0-0-0-0-0-0-d1-0-0-0-0-0-0-0-0-0-0-d1-0-0-0-0-0-0-0-0-0-0-0-w1-" +
-				"w1-0-0-0-0-0-0-0-0-0-0-w1-0-0-0-0-0-0-0-0-0-0-w1-0-0-0-0-0-0-0-0-0-0-0-w1-" +
-				"w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-" +
-				"x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-" +
-				"x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x",
-	"rows": 30
-};
 // 0 means unoccupied, 1 mean occupied.
 var gridCellsState = [];
 var cellSpacing = 0.05;
@@ -283,9 +23,9 @@ function init()
 	keyboardEventSetup();
 	var cam = document.getElementById('camera');
 	cam.setAttribute('position', {
-		x: (gridLoader['columns'] / 2),
+		x: (data.gridLoader['columns'] / 2),
 		y: 25,
-		z: (gridLoader['rows'] / 2)
+		z: (data.gridLoader['rows'] / 2)
 	});
 	cam.flushToDOM();
 };
@@ -428,32 +168,31 @@ function attachGridCellEventListeners()
 				// If active object wasn't a clone, make a clone, unless it was a 'structure object, or viewer.
 				if(activeElement.isCloned === 'false' && activeElement.element.id !== "pov-camera")
 				{
+					console.log("Here");
 					// Remove the active color and related class.
 					swapMaterials(activeElement.element);
-					//activeElement.element.classList.remove('active');
+					// Update cells owned by this asset.
+					changeCellsOwned(this, false);
 					// Clone the asset.
 					theElementToMove = clone(activeElement.element);
-					theElementToMove.classList.remove('active');
 					// Make the clone the active asset
-					//activeElement.element.classList.add('active');
 					activeElement.element.setAttribute('material', 'color', '#00FF00');
-					// activeElement.isCloned = 'true';
-					// activeElement.assetRotationState = activeElement.element.getAttribute('assetRotationState');
-					// activeElement.canReplace = activeElement.element.getAttribute('canReplace');
-					// activeElement.cellsOwned = activeElement.element.getAttribute('cellsOwned');
-					// activeElement.horizontal = activeElement.element.getAttribute('horizontal');
-					// activeElement.vertical = activeElement.element.getAttribute('vertical');
+					// Remove activeElement's cells owned now.
+					activeElement.cellsOwned = '';
 				}
-				// Update cells owned by this asset.
-				changeCellsOwned(this, false);
+				else
+				{
+					// Update cells owned by this asset.
+					changeCellsOwned(this, false);
+				}
 				// Place the clone in the scene on top of clicked grid cell.
 				// We add one to the horizontal and vertical because of the discrepancies between "size"
 				// and "scale" when dealing with imported object assets. Since one blobk is 0 and two blocks
 				// is one in either direction, we must first add one to express it's proper "size" in that direction.
 				theElementToMove.setAttribute('position', {
-					x: cellPosition.x + ((Number(activeElement.horizontal) + 1) / 2.0) - 0.5,
+					x: cellPosition.x + ((Number(theElementToMove.getAttribute('horizontal')) + 1) / 2.0) - 0.5,
 					y: assetPosY,
-					z: cellPosition.z + ((Number(activeElement.vertical) + 1) / 2.0) - 0.5
+					z: cellPosition.z + ((Number(theElementToMove.getAttribute('vertical')) + 1) / 2.0) - 0.5
 				});
 				// Make sure clone is manually pushed to HTML DOM.
 				theElementToMove.flushToDOM();
@@ -470,11 +209,11 @@ function attachGridCellEventListeners()
 };
 function buildAssets()
 {
-	for(var index in assetsFromFile) 
+	for(var index in data.assetsFromFile) 
 	{
-		if (assetsFromFile.hasOwnProperty(index))
+		if (data.assetsFromFile.hasOwnProperty(index))
 		{
-			var attr = assetsFromFile[index];
+			var attr = data.assetsFromFile[index];
 			createAsset(attr);
 		}
 	}
@@ -508,15 +247,15 @@ function buildCeiling()
 	mainContainer.appendChild(ceiling);
 	// Uses the gridLoader string to determine the upper left corner for starting position.
 	ceiling.setAttribute('position', {
-		x: (gridLoader['columns'] / 2.0) - (0.5),
+		x: (data.gridLoader['columns'] / 2.0) - (0.5),
 		y: 3,
-		z: (gridLoader['rows'] / 2.0)
+		z: (data.gridLoader['rows'] / 2.0)
 	});
 	// Renders face of plane downward, invisible from above, but visible at ground-level.
 	ceiling.setAttribute('rotation', {x: 90, y: 0, z: 0});
 	// Uses the gridLoader string to determine the full dimensions of the "rooms" portion of scene.
-	ceiling.setAttribute('height', gridLoader['rows']);
-	ceiling.setAttribute('width', gridLoader['columns']);
+	ceiling.setAttribute('height', data.gridLoader['rows']);
+	ceiling.setAttribute('width', data.gridLoader['columns']);
 	// Try to use texture with dimensions at power of 2 (ie. 128x128, 256x256, 512x512).
 	ceiling.setAttribute('material', 'src', 'assets/CEILING_TILE.jpg');
 	// Again use powers of 2 for best results (ie. "1 1", "2 2", "4 4", "8 8", etc.).
@@ -526,25 +265,25 @@ function buildCeiling()
 };
 function buildScene()
 {
-	var grid = gridLoader['content'].split('-');
+	var grid = data.gridLoader['content'].split('-');
 	// Parses the load string into the gridCellsState for easier building.
 	var indexCounter = 0;
 	var n = 0;
 	do
 	{
 		gridCellsState[indexCounter] = [];
-		for(var w = 0; w < gridLoader['columns']; w++)
+		for(var w = 0; w < data.gridLoader['columns']; w++)
 		{
 			// Creates gridcellsstate as each cell is pulled from loader string.
 			gridCellsState[indexCounter][w] = grid[n];
 			n++;
 		}
 		indexCounter++;
-	} while(indexCounter < gridLoader['rows']);
+	} while(indexCounter < data.gridLoader['rows']);
 	// Uses the gridCellsState double array to populate the scene.
-	for(var i = 0; i < gridLoader['columns']; i++)
+	for(var i = 0; i < data.gridLoader['columns']; i++)
 	{
-		for(var j = 0; j < gridLoader['rows']; j++)
+		for(var j = 0; j < data.gridLoader['rows']; j++)
 		{
 			switch(gridCellsState[j][i])
 			{
@@ -555,27 +294,27 @@ function buildScene()
 				}
 				case 'd1':
 				{
-					createAsset(assetsFromFile['door-1'], i, j, true);
+					createAsset(data.assetsFromFile['door-1'], i, j, true);
 					break;
 				}
 				case 'd2':
 				{
-					createAsset(assetsFromFile['door-2'], i, j, true);
+					createAsset(data.assetsFromFile['door-2'], i, j, true);
 					break;
 				}
 				case 'w1':
 				{
-					createAsset(assetsFromFile['wall-1'], i, j, true);
+					createAsset(data.assetsFromFile['wall-1'], i, j, true);
 					break;
 				}
 				case 'w2':
 				{
-					createAsset(assetsFromFile['wall-2'], i, j, true);
+					createAsset(data.assetsFromFile['wall-2'], i, j, true);
 					break;
 				}
 				case 'w3':
 				{
-					createAsset(assetsFromFile['wall-3'], i, j, true);
+					createAsset(data.assetsFromFile['wall-3'], i, j, true);
 					break;
 				}
 				case 'x':
@@ -674,6 +413,7 @@ function clone(obj)
 	// Helps not to duplicate cloned objects.
 	clonedObject.setAttribute('isCloned', 'true');
 	clonedObject.setAttribute('clonable', 'false');
+	clonedObject.classList.remove('active');
 	// Put it in the scene.
 	document.querySelector('a-scene').appendChild(clonedObject);
 	// Give new object same listeners as the original.
@@ -691,7 +431,11 @@ function createAsset(details, x, z, isPermanent)
 	// Makes adjustments to the asset based off loadString load string or clonable assets.
 	if(x === null || x === undefined)
 	{
-		asset.setAttribute('position', details['position']);
+		asset.setAttribute('position', {
+			x: details['position'].x,
+			y: details['position'].y,
+			z: details['position'].z
+		});
 		asset.setAttribute('clonable', 'true');
 		asset.setAttribute('movable', 'true');
 		// Helps not to duplicate cloned objects.
@@ -886,9 +630,9 @@ function resetCamera()
 {
 	camera = document.getElementById('camera');
 	camera.setAttribute('position', {
-		x: (gridLoader['columns'] / 2),
+		x: (data.gridLoader['columns'] / 2),
 		y: 25,
-		z: (gridLoader['rows'] / 2)
+		z: (data.gridLoader['rows'] / 2)
 	});
 	camera.setAttribute('rotation', {
 		x: -90,
