@@ -45,13 +45,15 @@ var assetsFromFile = {
 		"door-1": {
 			"assetRotationState": 0,
 			"cellsOwned": "",
-			"defaultColor": "#593C1F",
+			"defaultColor": "",
 			"horizontal": 0,
 			"id": "door-1",
 			"isCloned": "false",
-			"materialType": "primitive",
+			"materialType": "textured",
 			"moveable": "false",
+			"objectSource": "assets/DOOR_1.png",
 			"position": {"x": -50, "y": -50, "z": -50},
+			"repeat": "1 1",
 			"scale": {"x":1, "y":3, "z":1},
 			"tag": "a-box",
 			"type": "structure",
@@ -60,13 +62,15 @@ var assetsFromFile = {
 		"door-2": {
 			"assetRotationState": 0,
 			"cellsOwned": "",
-			"defaultColor": "#593C1F",
+			"defaultColor": "",
 			"horizontal": 0,
 			"id": "door-1",
 			"isCloned": "false",
-			"materialType": "primitive",
+			"materialType": "textured",
 			"moveable": "false",
+			"objectSource": "assets/DOOR_2.png",
 			"position": {"x": -50, "y": -50, "z": -50},
+			"repeat": "1 1",
 			"scale": {"x":1, "y":3, "z":1},
 			"tag": "a-box",
 			"type": "structure",
@@ -105,7 +109,7 @@ var assetsFromFile = {
 		"wall-1": {
 			"assetRotationState": 0,
 			"cellsOwned": "",
-			"defaultColor": "#A9A9A9",
+			"defaultColor": "#9FCDB1",
 			"horizontal": 0,
 			"id": "wall-1",
 			"isCloned": "false",
@@ -133,9 +137,10 @@ var gridLoader = {
 				"w1-0-0-0-0-0-0-0-0-0-0-w1-0-0-0-0-0-0-0-0-0-0-w1-0-0-0-0-0-0-0-0-0-0-0-w1-" +
 				"w1-0-0-0-0-0-0-0-0-0-0-w1-0-0-0-0-0-0-0-0-0-0-w1-0-0-0-0-0-0-0-0-0-0-0-w1-" +
 				"w1-0-0-0-0-0-0-0-0-0-0-w1-0-0-0-0-0-0-0-0-0-0-w1-0-0-0-0-0-0-0-0-0-0-0-w1-" +
-				"w1-w1-w1-w1-d2-d2-w1-w1-w1-w1-w1-w1-d1-w1-w1-w1-w1-d2-d2-w1-w1-w1-w1-0-0-0-0-0-0-0-0-0-0-0-w1-" +
+				"w1-w1-w1-w1-d1-d2-w1-w1-w1-w1-w1-w1-d1-w1-w1-w1-w1-d1-d2-w1-w1-w1-w1-0-0-0-0-0-0-0-0-0-0-0-w1-" +
 				"d1-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-d1-0-0-0-0-0-0-0-0-0-0-0-w1-" +
-				"w1-w1-w1-w1-d2-d2-w1-w1-w1-w1-w1-w1-d1-w1-w1-w1-w1-d2-d2-w1-w1-w1-w1-0-0-0-0-0-0-0-0-0-0-0-w1-" + 
+				"d2-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-w1-w1-0-0-0-0-0-0-0-0-0-0-0-w1-" +
+				"w1-w1-w1-w1-d2-d1-w1-w1-w1-w1-w1-w1-d1-w1-w1-w1-w1-d2-d1-w1-w1-w1-w1-0-0-0-0-0-0-0-0-0-0-0-w1-" +
 				"w1-0-0-0-0-0-0-0-0-0-0-w1-0-0-0-0-0-0-0-0-0-0-w1-0-0-0-0-0-0-0-0-0-0-0-w1-" +
 				"w1-0-0-0-0-0-0-0-0-0-0-w1-0-0-0-0-0-0-0-0-0-0-w1-0-0-0-0-0-0-0-0-0-0-0-w1-" +
 				"w1-0-0-0-0-0-0-0-0-0-0-w1-0-0-0-0-0-0-0-0-0-0-w1-0-0-0-0-0-0-0-0-0-0-0-w1-" +
@@ -148,7 +153,6 @@ var gridLoader = {
 				"w1-0-0-0-0-0-0-0-0-0-0-w1-0-0-0-0-0-0-0-0-0-0-w1-0-0-0-0-0-0-0-0-0-0-0-w1-" +
 				"w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-" +
 				"x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-" +
-				"x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-" +
 				"x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x",
 	"rows": 30
 };
@@ -157,6 +161,7 @@ var gridCellsState = [];
 var cellSpacing = 0.05;
 var assets = [];
 var keyDown = false;
+var onGround = false;
 // The one function to rule them all.
 function init()
 {
@@ -174,19 +179,25 @@ function init()
 function attachAssetListeners(obj)
 {
 	// Hover over the asset
-	obj.addEventListener('mouseenter', function () {
-		if(this.classList.contains('active')) return;
+	obj.addEventListener('mouseenter', function ()
+	{
+		// If mouse hovers over asset that is active, don't change color.
+		// If nothing is active AND asset type is structure (ie. wall), don't change color.
+		// If viewpoint is on the ground, don't change color.
+		if(this.classList.contains('active') || (this.getAttribute('type') === 'structure' && activeElement.activated === false) || onGround) return;
 		this.setAttribute('material', 'color', 'red');
 	});
 	// No longer hovering over asset
-	obj.addEventListener('mouseleave', function () {
-		if(this.classList.contains('active')) return;
+	obj.addEventListener('mouseleave', function ()
+	{
+		if(this.classList.contains('active') || onGround) return;
 		this.setAttribute('material', 'color', this.getAttribute('defaultColor'));
 	});
 	// Clicked on asset
-	obj.addEventListener('click', function () {
+	obj.addEventListener('click', function ()
+	{
 		// Asset already active, remove active modifiers
-		if(this.classList.contains('active') && this.getAttribute('isCloned') === 'false')
+		if(this.classList.contains('active') && this.getAttribute('isCloned') === 'false' && !onGround)
 		{
 			// Deactivates the selected asset
 			this.setAttribute('material', 'color', 'red');
@@ -195,7 +206,7 @@ function attachAssetListeners(obj)
 			activeElement.activated = false;
 		}
 		// Clicking on an active asset that is also a clone will delete that clone.
-		else if(this.classList.contains('active') && this.getAttribute('isCloned') === 'true')
+		else if(this.classList.contains('active') && this.getAttribute('isCloned') === 'true' && !onGround)
 		{
 			resetCellStates(activeElement.cellsOwned.split(','));
 			activeElement.element.setAttribute('material', 'color', '#FF00FF');
@@ -206,7 +217,7 @@ function attachAssetListeners(obj)
 		// Asset wasn't active before, but will be now.
 		else
 		{
-			if(this.getAttribute('moveable') === 'false') return;
+			if(this.getAttribute('moveable') === 'false' || onGround) return;
 			// Activates the selected asset after deactivating all others.
 			if(activeElement.activated === true) removeActive();
 			this.setAttribute('material', 'color', '#00FF00');
@@ -232,8 +243,9 @@ function attachGridCellEventListeners()
 		// Hovering over cell
 		cells[i].addEventListener('mouseenter', function ()
 		{
+			if(onGround) return;
 			// Highlight other cells that the asset would otherwise occupy.
-			if(activeElement.activated)
+			else if(activeElement.activated)
 			{
 				var idContents = this.id.split('-');
 				var x = idContents[idContents.length-2];
@@ -258,12 +270,14 @@ function attachGridCellEventListeners()
 		// Mouse cursor has left the cell.
 		cells[i].addEventListener('mouseleave', function ()
 		{
-			if(activeElement.activated) clearCells();
+			if(onGround) return;
+			else if(activeElement.activated) clearCells();
 		});
 		// Mouse cursor has clicked the cell.
 		cells[i].addEventListener('click', function ()
 		{
-			if(activeElement.activated && activeElement.element.getAttribute('moveable') === 'false') return;
+			if(onGround) return;
+			else if(activeElement.activated && activeElement.element.getAttribute('moveable') === 'false') return;
 			// If asset has been activated, place it on this cell.
 			if(activeElement.activated)
 			{
@@ -339,7 +353,7 @@ function buildCell(i, j)
 
 	plane.setAttribute('position', {x: i, y: 0, z: j});
 	plane.setAttribute('rotation', {x: -90, y: 0, z: 0});
-	plane.setAttribute('material', 'color', '#7BC8A4');
+	plane.setAttribute('material', 'color', '#C1D2CC');
 	// Necessary for event listeners.
 	plane.classList.add('grid');
 	// Necessary to easily track state of asset locations.
@@ -499,7 +513,7 @@ function clearCells()
 {
 	for(var i = 0; i < activeCells.length; i++)
 	{
-		activeCells[i].setAttribute('material', 'color', '#7BC8A4');
+		activeCells[i].setAttribute('material', 'color', '#C1D2CC');
 	}
 	activeCells = [];
 };
@@ -510,37 +524,10 @@ function clone(obj)
 	if (null == obj || 'object' != typeof obj) return obj;
 	// Create a new object of same type.
 	var clonedObject;
-	// Determine if primitive object or object model.
-	if(obj.getAttribute('obj-model') === null) clonedObject = document.createElement('a-' + obj.getAttribute('geometry')['primitive']);
-	else
-	{
-		clonedObject = document.createElement('a-obj-model');
-		clonedObject.setAttribute('src', obj.getAttribute('src'));
-	}
-	// Copy over its essential attributes.
-	clonedObject.setAttribute('material', obj.getAttribute('material'));
-	clonedObject.setAttribute('scale', obj.getAttribute('scale'));
-	clonedObject.setAttribute('rotation', obj.getAttribute('rotation'));
-	// Contains which cells it occupies.
-	clonedObject.setAttribute('cellsOwned', obj.getAttribute('cellsOwned'));
-	// Contains what rotation state it has (for later evaluation).
-	// 0 is default. 1 is clockwise 90 degrees, 2 is 180 degrees, 3 is is 270 degrees.
-	clonedObject.setAttribute('assetRotationState', obj.getAttribute('assetRotationState'));
-	// Helps to highlight which cells will be occupied due to shape.
-	clonedObject.setAttribute('horizontal', obj.getAttribute('horizontal'));
-	clonedObject.setAttribute('vertical', obj.getAttribute('vertical'));
+	clonedObject = obj.cloneNode(true);
+	clonedObject.id = obj.id + '-clone';
 	// Helps not to duplicate cloned objects.
 	clonedObject.setAttribute('isCloned', 'true');
-	// Clones data containing adjustments to the asset.
-	clonedObject.setAttribute('type', obj.getAttribute('type'));
-	clonedObject.setAttribute('defaultColor', obj.getAttribute('defaultColor'));
-	clonedObject.setAttribute('materialType', obj.getAttribute('materialType'));
-	clonedObject.setAttribute('moveable', obj.getAttribute('moveable'));
-	// Copies classes over to new object.
-	for(cls in obj.classList)
-	{
-		clonedObject.classList.add(cls);
-	}
 	// Put it in the scene.
 	document.querySelector('a-scene').appendChild(clonedObject);
 	// Give new object same listeners as the original.
@@ -560,6 +547,11 @@ function createAsset(details, x, z)
 	else asset.setAttribute('position', { x: x, y: (details['scale'].y / 2), z: z });
 	asset.setAttribute('scale', details['scale']);
 	if(details['materialType'] === 'primitive') asset.setAttribute('material', 'color', details['defaultColor']);
+	else if(details['materialType'] === 'textured')
+	{
+		asset.setAttribute('material', 'src', details['objectSource']);
+		asset.setAttribute('material', 'repeat', details['repeat']);
+	}
 	else
 	{
 		asset.setAttribute('src', details['objectSource']);
@@ -718,6 +710,7 @@ function placeCamera()
 	camera.setAttributeNode(lookControls);
 	// camera.removeAttribute('mouse-cursor');
 	camera.flushToDOM();
+	onGround = true;
 };
 // Simple function to reset camera postion to original settings.
 function resetCamera()
@@ -735,6 +728,7 @@ function resetCamera()
 	});
 	camera.removeAttribute('look-controls');
 	camera.flushToDOM();
+	onGround = false;
 }
 // Resets cell states that an object used to have.
 function resetCellStates(cells)
