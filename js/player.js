@@ -2,6 +2,7 @@
 var activeElement = {
 	activated: false,
 	assetRotationState: 0,
+	canReplace: [],
 	cellsOwned: '',
 	element: null,
 	horizontal: 0,
@@ -12,14 +13,17 @@ var activeCells = [];
 var assetsFromFile = {
 		"bed": {
 			"assetRotationState": 0,
+			"canReplace": [],
 			"cellsOwned": "",
+			"clonable": "false",
 			"defaultColor": "#FF00FF",
 			"horizontal": 1,
 			"id": "asset-3",
 			"isCloned": "false",
-			"material": "",
+			"isPermanent": "false",
+			"materialSource": "",
 			"materialType": "complex",
-			"moveable": "true",
+			"movable": "true",
 			"objectSource": "assets/HOSPITAL_BED.obj",
 			"position": {"x": -5, "y": 0.5, "z": 12},
 			"scale": {"x": 0.1, "y": 0.1, "z": 0.1},
@@ -27,30 +31,36 @@ var assetsFromFile = {
 			"type": "object",
 			"vertical": 0
 		},
-		"box": {
-			"assetRotationState": 0,
-			"cellsOwned": "",
-			"defaultColor": "#FF00FF",
-			"horizontal": 0,
-			"id": "asset-1",
-			"isCloned": "false",
-			"materialType": "primitive",
-			"moveable": "true",
-			"position": {"x": -5, "y": 0.5, "z": 10},
-			"scale": {"x": 1, "y": 1, "z": 1},
-			"tag": "a-box",
-			"type": "object",
-			"vertical": 0
-		},
+		// "box": {
+		// 	"assetRotationState": 0,
+		// 	"canReplace": [],
+		// 	"cellsOwned": "",
+		// 	"clonable": "false",
+		// 	"defaultColor": "#FF00FF",
+		// 	"horizontal": 0,
+		// 	"id": "asset-1",
+		// 	"isCloned": "false",
+		// 	"isPermanent": "false",
+		// 	"materialType": "primitive",
+		// 	"movable": "true",
+		// 	"position": {"x": -5, "y": 0.5, "z": 10},
+		// 	"scale": {"x": 1, "y": 1, "z": 1},
+		// 	"tag": "a-box",
+		// 	"type": "object",
+		// 	"vertical": 0
+		// },
 		"door-1": {
 			"assetRotationState": 0,
+			"canReplace": ["structure"],
 			"cellsOwned": "",
+			"clonable": "false",
 			"defaultColor": "",
 			"horizontal": 0,
 			"id": "door-1",
 			"isCloned": "false",
+			"isPermanent": "false",
 			"materialType": "textured",
-			"moveable": "false",
+			"movable": "false",
 			"objectSource": "assets/DOOR_1.png",
 			"position": {"x": -50, "y": -50, "z": -50},
 			"repeat": "1 1",
@@ -61,13 +71,16 @@ var assetsFromFile = {
 		},
 		"door-2": {
 			"assetRotationState": 0,
+			"canReplace": ["structure"],
 			"cellsOwned": "",
+			"clonable": "false",
 			"defaultColor": "",
 			"horizontal": 0,
 			"id": "door-1",
 			"isCloned": "false",
+			"isPermanent": "false",
 			"materialType": "textured",
-			"moveable": "false",
+			"movable": "false",
 			"objectSource": "assets/DOOR_2.png",
 			"position": {"x": -50, "y": -50, "z": -50},
 			"repeat": "1 1",
@@ -78,13 +91,16 @@ var assetsFromFile = {
 		},
 		"largeBox": {
 			"assetRotationState": 0,
+			"canReplace": [],
 			"cellsOwned": "",
+			"clonable": "false",
 			"defaultColor": "#FF00FF",
 			"horizontal": 1,
 			"id": "asset-2",
 			"isCloned": "false",
+			"isPermanent": "false",
 			"materialType": "primitive",
-			"moveable": "true",
+			"movable": "true",
 			"position": {"x": -5, "y": 0.5, "z": 14},
 			"scale": {"x": 2, "y": 1, "z": 2},
 			"tag": "a-box",
@@ -93,13 +109,16 @@ var assetsFromFile = {
 		},
 		"viewer": {
 			"assetRotationState": 0,
+			"canReplace": [],
 			"cellsOwned": "",
+			"clonable": "false",
 			"defaultColor": "#6699FF",
 			"horizontal": 0,
 			"id": "pov-camera",
 			"isCloned": "false",
+			"isPermanent": "false",
 			"materialType": "primitive",
-			"moveable": "true",
+			"movable": "true",
 			"position": {"x": -5, "y": 0.5, "z": 16},
 			"scale": {"x":.35, "y":.35, "z":.35},
 			"tag": "a-sphere",
@@ -108,14 +127,54 @@ var assetsFromFile = {
 		},
 		"wall-1": {
 			"assetRotationState": 0,
+			"canReplace": ["structure"],
 			"cellsOwned": "",
+			"clonable": "false",
 			"defaultColor": "#9FCDB1",
 			"horizontal": 0,
 			"id": "wall-1",
 			"isCloned": "false",
+			"isPermanent": "false",
 			"materialType": "primitive",
-			"moveable": "false",
-			"position": {"x": -50, "y": -50, "z": -50},
+			"movable": "false",
+			"position": {"x": -5, "y": 1.5, "z": 10},
+			"scale": {"x":1, "y":3, "z":1},
+			"tag": "a-box",
+			"type": "structure",
+			"vertical": 0
+		},
+		"wall-2": {
+			"assetRotationState": 0,
+			"canReplace": ["structure"],
+			"cellsOwned": "",
+			"clonable": "false",
+			"defaultColor": "#CBC99D",
+			"horizontal": 0,
+			"id": "wall-2",
+			"isCloned": "false",
+			"isPermanent": "false",
+			"materialType": "primitive",
+			"movable": "false",
+			"position": {"x": -7, "y": 1.5, "z": 10},
+			"scale": {"x":1, "y":3, "z":1},
+			"tag": "a-box",
+			"type": "structure",
+			"vertical": 0
+		}
+		,
+		"wall-3": {
+			"assetRotationState": 0,
+			"canReplace": ["structure"],
+			"cellsOwned": "",
+			"clonable": "false",
+			"defaultColor": "#86867C",
+			"horizontal": 0,
+			"id": "wall-3",
+			"isCloned": "false",
+			"isPermanent": "false",
+			"materialType": "primitive",
+			"movable": "false",
+			"position": {"x": -9, "y": 1.5, "z": 10},
 			"scale": {"x":1, "y":3, "z":1},
 			"tag": "a-box",
 			"type": "structure",
@@ -128,19 +187,19 @@ var gridLoader = {
 				"x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-" +
 				"w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-" +
 				"w1-0-0-0-0-0-0-0-0-0-0-w1-0-0-0-0-0-0-0-0-0-0-w1-0-0-0-0-0-0-0-0-0-0-0-w1-" +
-				"w1-0-0-0-0-0-0-0-0-0-0-w1-0-0-0-0-0-0-0-0-0-0-d1-0-0-0-0-0-0-0-0-0-0-0-w1-" +
-				"w1-0-0-0-0-0-0-0-0-0-0-w1-0-0-0-0-0-0-0-0-0-0-w1-0-0-0-0-0-0-0-0-0-0-0-w1-" +
-				"w1-0-0-0-0-0-0-0-0-0-0-w1-0-0-0-0-0-0-0-0-0-0-w1-0-0-0-0-0-0-0-0-0-0-0-w1-" +
-				"d1-0-0-0-0-0-0-0-0-0-0-d1-0-0-0-0-0-0-0-0-0-0-d1-0-0-0-0-0-0-0-0-0-0-0-w1-" +
 				"w1-0-0-0-0-0-0-0-0-0-0-w1-0-0-0-0-0-0-0-0-0-0-w1-0-0-0-0-0-0-0-0-0-0-0-w1-" +
 				"w1-0-0-0-0-0-0-0-0-0-0-w1-0-0-0-0-0-0-0-0-0-0-w1-0-0-0-0-0-0-0-0-0-0-0-w1-" +
 				"w1-0-0-0-0-0-0-0-0-0-0-w1-0-0-0-0-0-0-0-0-0-0-w1-0-0-0-0-0-0-0-0-0-0-0-w1-" +
+				"w1-0-0-0-0-0-0-0-0-0-0-d1-0-0-0-0-0-0-0-0-0-0-d1-0-0-0-0-0-0-0-0-0-0-0-w1-" +
 				"w1-0-0-0-0-0-0-0-0-0-0-w1-0-0-0-0-0-0-0-0-0-0-w1-0-0-0-0-0-0-0-0-0-0-0-w1-" +
 				"w1-0-0-0-0-0-0-0-0-0-0-w1-0-0-0-0-0-0-0-0-0-0-w1-0-0-0-0-0-0-0-0-0-0-0-w1-" +
-				"w1-w1-w1-w1-d1-d2-w1-w1-w1-w1-w1-w1-d1-w1-w1-w1-w1-d1-d2-w1-w1-w1-w1-0-0-0-0-0-0-0-0-0-0-0-w1-" +
+				"w1-0-0-0-0-0-0-0-0-0-0-w1-0-0-0-0-0-0-0-0-0-0-w1-0-0-0-0-0-0-0-0-0-0-0-w1-" +
+				"w1-0-0-0-0-0-0-0-0-0-0-w1-0-0-0-0-0-0-0-0-0-0-w1-0-0-0-0-0-0-0-0-0-0-0-w1-" +
+				"w1-0-0-0-0-0-0-0-0-0-0-w1-0-0-0-0-0-0-0-0-0-0-w1-0-0-0-0-0-0-0-0-0-0-0-w1-" +
+				"w1-w1-w1-w1-d1-d2-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-d1-d2-w1-w1-w1-w1-0-0-0-0-0-0-0-0-0-0-0-w1-" +
 				"d1-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-d1-0-0-0-0-0-0-0-0-0-0-0-w1-" +
 				"d2-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-w1-w1-0-0-0-0-0-0-0-0-0-0-0-w1-" +
-				"w1-w1-w1-w1-d2-d1-w1-w1-w1-w1-w1-w1-d1-w1-w1-w1-w1-d2-d1-w1-w1-w1-w1-0-0-0-0-0-0-0-0-0-0-0-w1-" +
+				"w1-w1-w1-w1-d2-d1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-d2-d1-w1-w1-w1-w1-0-0-0-0-0-0-0-0-0-0-0-w1-" +
 				"w1-0-0-0-0-0-0-0-0-0-0-w1-0-0-0-0-0-0-0-0-0-0-w1-0-0-0-0-0-0-0-0-0-0-0-w1-" +
 				"w1-0-0-0-0-0-0-0-0-0-0-w1-0-0-0-0-0-0-0-0-0-0-w1-0-0-0-0-0-0-0-0-0-0-0-w1-" +
 				"w1-0-0-0-0-0-0-0-0-0-0-w1-0-0-0-0-0-0-0-0-0-0-w1-0-0-0-0-0-0-0-0-0-0-0-w1-" +
@@ -181,23 +240,28 @@ function attachAssetListeners(obj)
 	// Hover over the asset
 	obj.addEventListener('mouseenter', function ()
 	{
+		// If viewpoint is on the ground, don't change color.
 		// If mouse hovers over asset that is active, don't change color.
 		// If nothing is active AND asset type is structure (ie. wall), don't change color.
-		// If viewpoint is on the ground, don't change color.
-		if(this.classList.contains('active') || (this.getAttribute('type') === 'structure' && activeElement.activated === false) || onGround) return;
+		if(onGround) return;
+		else if(this.classList.contains('active')) return;
+		else if(activeElement.activated === false && this.getAttribute('isCloned') === 'true' && this.getAttribute('clonable') === 'false') return;
+		else if(activeElement.activated === false && this.getAttribute('isPermanent') === 'true') return;
 		this.setAttribute('material', 'color', 'red');
 	});
 	// No longer hovering over asset
 	obj.addEventListener('mouseleave', function ()
 	{
 		if(this.classList.contains('active') || onGround) return;
-		this.setAttribute('material', 'color', this.getAttribute('defaultColor'));
+		swapMaterials(this);
 	});
 	// Clicked on asset
 	obj.addEventListener('click', function ()
 	{
+		// Ignore click when viewpoint is one ground.
+		if(onGround) return;
 		// Asset already active, remove active modifiers
-		if(this.classList.contains('active') && this.getAttribute('isCloned') === 'false' && !onGround)
+		if(this.classList.contains('active') && this.getAttribute('isCloned') === 'false')
 		{
 			// Deactivates the selected asset
 			this.setAttribute('material', 'color', 'red');
@@ -205,19 +269,30 @@ function attachAssetListeners(obj)
 			activeElement.element = null;
 			activeElement.activated = false;
 		}
-		// Clicking on an active asset that is also a clone will delete that clone.
-		else if(this.classList.contains('active') && this.getAttribute('isCloned') === 'true' && !onGround)
+		// Clicking on an active asset that isn't loaded from gridLoader and is also a clone will delete that clone.
+		else if(this.classList.contains('active') && this.getAttribute('isCloned') === 'true' && this.getAttribute('isPermanent') === 'false')
 		{
 			resetCellStates(activeElement.cellsOwned.split(','));
-			activeElement.element.setAttribute('material', 'color', '#FF00FF');
 			activeElement.element = null;
 			activeElement.activated = false;
 			deleteAsset(this);
 		}
+		// Asset wasn't active before, but some (not cloned) asset types can replace it.
+		else if(activeElement.activated === true &&
+				activeElement.canReplace.indexOf(this.getAttribute('type')) > -1 &&
+				activeElement.isCloned === 'false' &&
+				this.getAttribute('isCloned') === 'true')
+		{
+			this.setAttribute('vertical', activeElement.vertical);
+			this.setAttribute('horizontal', activeElement.horizontal);
+			// Making sure to replace asset's material with the correct combination of color, .mtl, and/or .obj
+			swapMaterials(this, activeElement.element);
+			this.classList.add('active');
+		}
 		// Asset wasn't active before, but will be now.
 		else
 		{
-			if(this.getAttribute('moveable') === 'false' || onGround) return;
+			if(this.getAttribute('movable') === 'false') return;
 			// Activates the selected asset after deactivating all others.
 			if(activeElement.activated === true) removeActive();
 			this.setAttribute('material', 'color', '#00FF00');
@@ -226,6 +301,7 @@ function attachAssetListeners(obj)
 			activeElement.activated = true;
 			activeElement.isCloned = this.getAttribute('isCloned');
 			activeElement.assetRotationState = this.getAttribute('assetRotationState');
+			activeElement.canReplace = this.getAttribute('canReplace');
 			activeElement.cellsOwned = this.getAttribute('cellsOwned');
 			activeElement.horizontal = this.getAttribute('horizontal');
 			activeElement.vertical = this.getAttribute('vertical');
@@ -276,8 +352,8 @@ function attachGridCellEventListeners()
 		// Mouse cursor has clicked the cell.
 		cells[i].addEventListener('click', function ()
 		{
-			if(onGround) return;
-			else if(activeElement.activated && activeElement.element.getAttribute('moveable') === 'false') return;
+			if(onGround || activeElement.element.getAttribute('isPermanent') === 'true') return;
+			else if(activeElement.activated && activeElement.element.getAttribute('movable') === 'false') return;
 			// If asset has been activated, place it on this cell.
 			if(activeElement.activated)
 			{
@@ -295,7 +371,7 @@ function attachGridCellEventListeners()
 				if(activeElement.isCloned === 'false' && activeElement.element.id !== "pov-camera")
 				{
 					// Remove the active color and related class.
-					activeElement.element.setAttribute('material', 'color', '#FF00FF');
+					swapMaterials(activeElement.element);
 					activeElement.element.classList.remove('active');
 					// Clone the asset.
 					activeElement.element = clone(activeElement.element);
@@ -304,6 +380,7 @@ function attachGridCellEventListeners()
 					activeElement.element.setAttribute('material', 'color', '#00FF00');
 					activeElement.isCloned = 'true';
 					activeElement.assetRotationState = activeElement.element.getAttribute('assetRotationState');
+					activeElement.canReplace = activeElement.element.getAttribute('canReplace');
 					activeElement.cellsOwned = activeElement.element.getAttribute('cellsOwned');
 					activeElement.horizontal = activeElement.element.getAttribute('horizontal');
 					activeElement.vertical = activeElement.element.getAttribute('vertical');
@@ -339,7 +416,7 @@ function buildAssets()
 		{
 			var attr = assetsFromFile[index];
 			// Structure assets are placed when grid is created.
-			if(attr['type'] === 'structure') continue;
+			// if(attr['type'] === 'structure') continue;
 			createAsset(attr);
 		}
 	}
@@ -420,17 +497,22 @@ function buildScene()
 				}
 				case 'd1':
 				{
-					createAsset(assetsFromFile['door-1'], i, j);
+					createAsset(assetsFromFile['door-1'], i, j, true);
 					break;
 				}
 				case 'd2':
 				{
-					createAsset(assetsFromFile['door-2'], i, j);
+					createAsset(assetsFromFile['door-2'], i, j, true);
 					break;
 				}
 				case 'w1':
 				{
-					createAsset(assetsFromFile['wall-1'], i, j);
+					createAsset(assetsFromFile['wall-1'], i, j, true);
+					break;
+				}
+				case 'w2':
+				{
+					createAsset(assetsFromFile['wall-2'], i, j, true);
 					break;
 				}
 				case 'x':
@@ -528,6 +610,7 @@ function clone(obj)
 	clonedObject.id = obj.id + '-clone';
 	// Helps not to duplicate cloned objects.
 	clonedObject.setAttribute('isCloned', 'true');
+	clonedObject.setAttribute('clonable', 'false');
 	// Put it in the scene.
 	document.querySelector('a-scene').appendChild(clonedObject);
 	// Give new object same listeners as the original.
@@ -536,30 +619,50 @@ function clone(obj)
 	assets.push(clonedObject);
 	return clonedObject;
 }
-function createAsset(details, x, z)
+function createAsset(details, x, z, isPermanent)
 {
 	var mainContainer = document.querySelector('a-scene');
 	var asset = document.createElement(details['tag']);
 	asset.id = details['id'];
 	mainContainer.appendChild(asset);
-	// Makes core adjustments to the asset.
-	if(x === null || x === undefined) asset.setAttribute('position', details['position']);
-	else asset.setAttribute('position', { x: x, y: (details['scale'].y / 2), z: z });
+	// Makes adjustments to the asset based off loadString load string or clonable assets.
+	if(x === null || x === undefined)
+	{
+		asset.setAttribute('position', details['position']);
+		asset.setAttribute('clonable', 'true');
+		asset.setAttribute('movable', 'true');
+		// Helps not to duplicate cloned objects.
+		asset.setAttribute('isCloned', details['isCloned']);
+		asset.setAttribute('isPermanent', 'false');
+	}
+	else
+	{
+		asset.setAttribute('position', {
+			x: x,
+			y: (details['scale'].y / 2),
+			z: z
+		});
+		asset.setAttribute('clonable', 'false');
+		asset.setAttribute('isCloned', 'true');
+		asset.setAttribute('movable', details['movable']);
+		asset.setAttribute('isPermanent', 'true');
+	}
 	asset.setAttribute('scale', details['scale']);
 	if(details['materialType'] === 'primitive') asset.setAttribute('material', 'color', details['defaultColor']);
 	else if(details['materialType'] === 'textured')
 	{
+		asset.setAttribute('objectSource', details['objectSource']);
 		asset.setAttribute('material', 'src', details['objectSource']);
 		asset.setAttribute('material', 'repeat', details['repeat']);
 	}
 	else
 	{
+		asset.setAttribute('objectSource', details['objectSource']);
 		asset.setAttribute('src', details['objectSource']);
-		if(details['material'] !== '') asset.setAttribute('mtl', details['material']);
+		asset.setAttribute('materialSource', details['materialSource']);
+		if(details['materialSource'] !== '') asset.setAttribute('mtl', details['materialSource']);
 		else asset.setAttribute('material', 'color', details['defaultColor']);
 	}
-	// Helps not to duplicate cloned objects.
-	asset.setAttribute('isCloned', details['isCloned']);
 	// Contains which cells it occupies.
 	asset.setAttribute('cellsOwned', details['cellsOwned']);
 	// Contains what rotation state it has (for later evaluation).
@@ -572,12 +675,14 @@ function createAsset(details, x, z)
 	asset.setAttribute('type', details['type']);
 	asset.setAttribute('defaultColor', details['defaultColor']);
 	asset.setAttribute('materialType', details['materialType']);
-	asset.setAttribute('moveable', details['moveable']);
+	asset.setAttribute('canReplace', details['canReplace']);
+	// If this asset was created from the gridLoader, set isPermanent to true, otherwise false is default.
+	if(isPermanent) asset.setAttribute('isPermanent', 'true');
 	// Sometimes necessary to force the HTML DOM to redraw these pseudo-dom elements.
 	asset.flushToDOM();
 	attachAssetListeners(asset);
 	// Adds this asset to the array of assets, if object type.
-	if(details['type'] === 'object' || details['type'] === 'view') assets.push(asset);
+	if(x === null || x === undefined) assets.push(asset);
 };
 // Deletes a cloned asset from all places referenced.
 function deleteAsset(obj)
@@ -682,7 +787,7 @@ function removeActive()
 	activeElement.activated = false;
 	for(var i = 0; i < assets.length; i++)
 	{
-		assets[i].setAttribute('material', 'color', '#FF00FF');
+		swapMaterials(assets[i]);
 		assets[i].classList.remove('active');
 	}
 };
@@ -739,3 +844,25 @@ function resetCellStates(cells)
 		gridCellsState[coords[coords.length-1]][coords[coords.length-2]] = '0';
 	}
 };
+// Replaces 1st parameter's material properties with defaults of 2nd parameter,
+// unless only one parameter then replace current material with default material
+function swapMaterials(toBeReplaced, toBeReplacedWith)
+{
+	if(toBeReplacedWith === undefined) toBeReplacedWith = toBeReplaced;
+	if(toBeReplaced.getAttribute('materialType') === 'primitive')
+	{
+		toBeReplaced.setAttribute('material', 'color', toBeReplacedWith.getAttribute('defaultColor'));
+	}
+	else if(toBeReplaced.getAttribute('materialType') === 'textured')
+	{
+		toBeReplaced.setAttribute('material', 'src', toBeReplacedWith.getAttribute('objectSource'));
+		toBeReplaced.setAttribute('material', 'repeat', toBeReplacedWith.getAttribute('repeat'));
+		toBeReplaced.setAttribute('material', 'color', '');
+	}
+	else
+	{
+		if(toBeReplaced.getAttribute('materialSource') !== '' && toBeReplaced.getAttribute('materialSource') !== null) toBeReplaced.setAttribute('mtl', toBeReplacedWith.getAttribute('materialSource'));
+		else toBeReplaced.setAttribute('material', 'color', toBeReplacedWith.getAttribute('defaultColor'));
+	}
+	toBeReplaced.flushToDOM();
+}
