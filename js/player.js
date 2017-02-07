@@ -168,15 +168,23 @@ function attachGridCellEventListeners()
 				// If active object wasn't a clone, make a clone, unless it was a 'structure object, or viewer.
 				if(activeElement.isCloned === 'false' && activeElement.element.id !== "pov-camera")
 				{
+					console.log("Here");
 					// Remove the active color and related class.
 					swapMaterials(activeElement.element);
+					// Update cells owned by this asset.
+					changeCellsOwned(this, false);
 					// Clone the asset.
 					theElementToMove = clone(activeElement.element);
 					// Make the clone the active asset
 					activeElement.element.setAttribute('material', 'color', '#00FF00');
+					// Remove activeElement's cells owned now.
+					activeElement.cellsOwned = '';
 				}
-				// Update cells owned by this asset.
-				changeCellsOwned(this, false);
+				else
+				{
+					// Update cells owned by this asset.
+					changeCellsOwned(this, false);
+				}
 				// Place the clone in the scene on top of clicked grid cell.
 				// We add one to the horizontal and vertical because of the discrepancies between "size"
 				// and "scale" when dealing with imported object assets. Since one blobk is 0 and two blocks
@@ -186,7 +194,6 @@ function attachGridCellEventListeners()
 					y: assetPosY,
 					z: cellPosition.z + ((Number(theElementToMove.getAttribute('vertical')) + 1) / 2.0) - 0.5
 				});
-				console.log(theElementToMove.getAttribute('position').x, theElementToMove.getAttribute('position').z);
 				// Make sure clone is manually pushed to HTML DOM.
 				theElementToMove.flushToDOM();
 				// If this is the PoV camera object.
@@ -424,7 +431,11 @@ function createAsset(details, x, z, isPermanent)
 	// Makes adjustments to the asset based off loadString load string or clonable assets.
 	if(x === null || x === undefined)
 	{
-		asset.setAttribute('position', details['position']);
+		asset.setAttribute('position', {
+			x: details['position'].x,
+			y: details['position'].y,
+			z: details['position'].z
+		});
 		asset.setAttribute('clonable', 'true');
 		asset.setAttribute('movable', 'true');
 		// Helps not to duplicate cloned objects.
