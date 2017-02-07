@@ -16,39 +16,21 @@ var assetsFromFile = {
 			"canReplace": [],
 			"cellsOwned": "",
 			"clonable": "false",
-			"defaultColor": "#FF00FF",
+			"defaultColor": "#376AD3",
 			"horizontal": 1,
-			"id": "asset-3",
+			"id": "bed-3",
 			"isCloned": "false",
 			"isPermanent": "false",
 			"materialSource": "",
 			"materialType": "complex",
 			"movable": "true",
 			"objectSource": "assets/HOSPITAL_BED.obj",
-			"position": {"x": -5, "y": 0.5, "z": 12},
+			"position": {"x": -5, "y": 0, "z": 12},
 			"scale": {"x": 0.1, "y": 0.1, "z": 0.1},
 			"tag": "a-obj-model",
 			"type": "object",
 			"vertical": 0
 		},
-		// "box": {
-		// 	"assetRotationState": 0,
-		// 	"canReplace": [],
-		// 	"cellsOwned": "",
-		// 	"clonable": "false",
-		// 	"defaultColor": "#FF00FF",
-		// 	"horizontal": 0,
-		// 	"id": "asset-1",
-		// 	"isCloned": "false",
-		// 	"isPermanent": "false",
-		// 	"materialType": "primitive",
-		// 	"movable": "true",
-		// 	"position": {"x": -5, "y": 0.5, "z": 10},
-		// 	"scale": {"x": 1, "y": 1, "z": 1},
-		// 	"tag": "a-box",
-		// 	"type": "object",
-		// 	"vertical": 0
-		// },
 		"door-1": {
 			"assetRotationState": 0,
 			"canReplace": ["structure"],
@@ -62,7 +44,7 @@ var assetsFromFile = {
 			"materialType": "textured",
 			"movable": "false",
 			"objectSource": "assets/DOOR_1.png",
-			"position": {"x": -50, "y": -50, "z": -50},
+			"position": {"x": -11, "y": 1.5, "z": 10},
 			"repeat": "1 1",
 			"scale": {"x":1, "y":3, "z":1},
 			"tag": "a-box",
@@ -76,13 +58,13 @@ var assetsFromFile = {
 			"clonable": "false",
 			"defaultColor": "",
 			"horizontal": 0,
-			"id": "door-1",
+			"id": "door-2",
 			"isCloned": "false",
 			"isPermanent": "false",
 			"materialType": "textured",
 			"movable": "false",
 			"objectSource": "assets/DOOR_2.png",
-			"position": {"x": -50, "y": -50, "z": -50},
+			"position": {"x": -13, "y": 1.5, "z": 10},
 			"repeat": "1 1",
 			"scale": {"x":1, "y":3, "z":1},
 			"tag": "a-box",
@@ -96,7 +78,7 @@ var assetsFromFile = {
 			"clonable": "false",
 			"defaultColor": "#FF00FF",
 			"horizontal": 1,
-			"id": "asset-2",
+			"id": "largeBox-2",
 			"isCloned": "false",
 			"isPermanent": "false",
 			"materialType": "primitive",
@@ -112,16 +94,19 @@ var assetsFromFile = {
 			"canReplace": [],
 			"cellsOwned": "",
 			"clonable": "false",
-			"defaultColor": "#6699FF",
+			"defaultColor": "",
 			"horizontal": 0,
 			"id": "pov-camera",
 			"isCloned": "false",
 			"isPermanent": "false",
-			"materialType": "primitive",
+			"materialSource": "assets/body-armour/BodyArmour02.mtl",
+			"materialType": "complex",
 			"movable": "true",
-			"position": {"x": -5, "y": 0.5, "z": 16},
-			"scale": {"x":.35, "y":.35, "z":.35},
-			"tag": "a-sphere",
+			"objectSource": "assets/body-armour/BodyArmour02.obj",
+			"position": {"x": -5, "y": 0.3, "z": 16},
+			"rotation": {"x": 0, "y": 180, "z": 0},
+			"scale": {"x":.0008, "y":.0008, "z":.0008},
+			"tag": "a-obj-model",
 			"type": "view",
 			"vertical": 0
 		},
@@ -178,6 +163,26 @@ var assetsFromFile = {
 			"scale": {"x":1, "y":3, "z":1},
 			"tag": "a-box",
 			"type": "structure",
+			"vertical": 0
+		},
+		"wheelchair": {
+			"assetRotationState": 0,
+			"canReplace": [],
+			"cellsOwned": "",
+			"clonable": "false",
+			"defaultColor": "",
+			"horizontal": 0,
+			"id": "wheelchair-1",
+			"isCloned": "false",
+			"isPermanent": "false",
+			"materialSource": "assets/wheelchair/wheelchair.mtl",
+			"materialType": "complex",
+			"movable": "true",
+			"objectSource": "assets/wheelchair/wheelchair.obj",
+			"position": {"x": -5, "y": 0, "z": 18},
+			"scale": {"x": 0.025, "y": 0.025, "z": 0.025},
+			"tag": "a-obj-model",
+			"type": "object",
 			"vertical": 0
 		}
 	};
@@ -352,7 +357,7 @@ function attachGridCellEventListeners()
 		// Mouse cursor has clicked the cell.
 		cells[i].addEventListener('click', function ()
 		{
-			if(onGround || activeElement.element.getAttribute('isPermanent') === 'true') return;
+			if(onGround || activeElement.activated === 'false' || activeElement.element.getAttribute('isPermanent') === 'true') return;
 			else if(activeElement.activated && activeElement.element.getAttribute('movable') === 'false') return;
 			// If asset has been activated, place it on this cell.
 			if(activeElement.activated)
@@ -360,7 +365,7 @@ function attachGridCellEventListeners()
 				// Position of cell you clicked.
 				var cellPosition = this.getAttribute('position');
 				// Get asset's scale (helps with putting bottom of asset on ground).
-				var assetSize = activeElement.element.getAttribute('scale');
+				var assetPosY = activeElement.element.getAttribute('position').y;
 				// If cells are out of bounds, function returns false, and new position skipped.
 				var idContents = this.id.split('-');
 				var x = idContents[idContents.length-2];
@@ -393,17 +398,18 @@ function attachGridCellEventListeners()
 				// is one in either direction, we must first add one to express it's proper "size" in that direction.
 				activeElement.element.setAttribute('position', {
 					x: cellPosition.x + ((Number(activeElement.horizontal) + 1) / 2.0) - 0.5,
-					y: assetSize.y / 2.0,
+					y: assetPosY,
 					z: cellPosition.z + ((Number(activeElement.vertical) + 1) / 2.0) - 0.5
 				});
+				// Make sure clone is manually pushed to HTML DOM.
+				activeElement.element.flushToDOM();
 				// If this is the PoV camera object.
 				if(activeElement.element.id === "pov-camera")
 				{
 					// Calling placeCamera to handle camera arrangements.
 					placeCamera();
 				}
-				// Make sure clone is manually pushed to HTML DOM.
-				activeElement.element.flushToDOM();
+				this.setAttribute('material', 'color', '#C1D2CC');
 			}
 		});
 	}
@@ -513,6 +519,11 @@ function buildScene()
 				case 'w2':
 				{
 					createAsset(assetsFromFile['wall-2'], i, j, true);
+					break;
+				}
+				case 'w3':
+				{
+					createAsset(assetsFromFile['wall-3'], i, j, true);
 					break;
 				}
 				case 'x':
@@ -674,7 +685,6 @@ function createAsset(details, x, z, isPermanent)
 	// Makes data containing adjustments to the asset.
 	asset.setAttribute('type', details['type']);
 	asset.setAttribute('defaultColor', details['defaultColor']);
-	asset.setAttribute('materialType', details['materialType']);
 	asset.setAttribute('canReplace', details['canReplace']);
 	// If this asset was created from the gridLoader, set isPermanent to true, otherwise false is default.
 	if(isPermanent) asset.setAttribute('isPermanent', 'true');
@@ -706,7 +716,7 @@ function keyboardEventSetup()
 	{
 		const keyName = event.key;
 
-		if (keyName === 'r' && !keyDown)
+		if (keyName === 'r' && !keyDown && !onGround)
 		{
 			keyDown = true;
 			var isClone = activeElement.isCloned;
@@ -720,7 +730,7 @@ function keyboardEventSetup()
 				// Place the clone in the scene on top left grid cell.
 				var cornerCell = document.getElementById(activeElement.cellsOwned.split(',')[0]);
 				var cellPosition = cornerCell.getAttribute('position');
-				var assetSize = activeElement.element.getAttribute('scale');
+				var assetPosY = activeElement.element.getAttribute('position').y;
 
 				var idContents = cornerCell.id.split('-');
 				var x = idContents[idContents.length-2];
@@ -760,7 +770,7 @@ function keyboardEventSetup()
 				// is one in either direction, we must first add one to express it's proper "size" in that direction.
 				activeElement.element.setAttribute('position', {
 					x: cellPosition.x + ((Number(activeElement.horizontal) + 1) / 2.0) - 0.5,
-					y: (assetSize.y / 2.0),
+					y: assetPosY,
 					z: cellPosition.z + ((Number(activeElement.vertical) + 1) / 2.0) - 0.5
 				});
 			}
@@ -795,6 +805,7 @@ function removeActive()
 // Set up the PoV camera.
 function placeCamera()
 {
+	removeActive();
 	camera = document.getElementById('camera');
 	povObj = document.getElementById('pov-camera');
 	cam_x_pos = povObj.getAttribute('position').x;
@@ -807,9 +818,9 @@ function placeCamera()
 		z: cam_z_pos
 	});
 	camera.setAttribute('rotation', {
-		x: 1,
-		y: 1,
-		z: 1
+		x: 0,
+		y: 180,
+		z: 0
 	});
 	var lookControls = document.createAttribute('look-controls');
 	camera.setAttributeNode(lookControls);
