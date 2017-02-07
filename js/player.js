@@ -20,7 +20,7 @@ var assetsFromFile = {
 			"horizontal": 1,
 			"id": "asset-3",
 			"isCloned": "false",
-			"isLoaded": "false",
+			"isPermanent": "false",
 			"materialSource": "",
 			"materialType": "complex",
 			"movable": "true",
@@ -40,7 +40,7 @@ var assetsFromFile = {
 		// 	"horizontal": 0,
 		// 	"id": "asset-1",
 		// 	"isCloned": "false",
-		// "isLoaded": "false",
+		// 	"isPermanent": "false",
 		// 	"materialType": "primitive",
 		// 	"movable": "true",
 		// 	"position": {"x": -5, "y": 0.5, "z": 10},
@@ -58,7 +58,7 @@ var assetsFromFile = {
 			"horizontal": 0,
 			"id": "door-1",
 			"isCloned": "false",
-			"isLoaded": "false",
+			"isPermanent": "false",
 			"materialType": "textured",
 			"movable": "false",
 			"objectSource": "assets/DOOR_1.png",
@@ -78,7 +78,7 @@ var assetsFromFile = {
 			"horizontal": 0,
 			"id": "door-1",
 			"isCloned": "false",
-			"isLoaded": "false",
+			"isPermanent": "false",
 			"materialType": "textured",
 			"movable": "false",
 			"objectSource": "assets/DOOR_2.png",
@@ -98,7 +98,7 @@ var assetsFromFile = {
 			"horizontal": 1,
 			"id": "asset-2",
 			"isCloned": "false",
-			"isLoaded": "false",
+			"isPermanent": "false",
 			"materialType": "primitive",
 			"movable": "true",
 			"position": {"x": -5, "y": 0.5, "z": 14},
@@ -116,7 +116,7 @@ var assetsFromFile = {
 			"horizontal": 0,
 			"id": "pov-camera",
 			"isCloned": "false",
-			"isLoaded": "false",
+			"isPermanent": "false",
 			"materialType": "primitive",
 			"movable": "true",
 			"position": {"x": -5, "y": 0.5, "z": 16},
@@ -134,7 +134,7 @@ var assetsFromFile = {
 			"horizontal": 0,
 			"id": "wall-1",
 			"isCloned": "false",
-			"isLoaded": "false",
+			"isPermanent": "false",
 			"materialType": "primitive",
 			"movable": "false",
 			"position": {"x": -5, "y": 1.5, "z": 10},
@@ -152,7 +152,7 @@ var assetsFromFile = {
 			"horizontal": 0,
 			"id": "wall-2",
 			"isCloned": "false",
-			"isLoaded": "false",
+			"isPermanent": "false",
 			"materialType": "primitive",
 			"movable": "false",
 			"position": {"x": -7, "y": 1.5, "z": 10},
@@ -171,7 +171,7 @@ var assetsFromFile = {
 			"horizontal": 0,
 			"id": "wall-3",
 			"isCloned": "false",
-			"isLoaded": "false",
+			"isPermanent": "false",
 			"materialType": "primitive",
 			"movable": "false",
 			"position": {"x": -9, "y": 1.5, "z": 10},
@@ -243,15 +243,11 @@ function attachAssetListeners(obj)
 		// If viewpoint is on the ground, don't change color.
 		// If mouse hovers over asset that is active, don't change color.
 		// If nothing is active AND asset type is structure (ie. wall), don't change color.
-		console.log("aa");
 		if(onGround) return;
 		else if(this.classList.contains('active')) return;
-		else if(activeElement.activated === true && activeElement.element.getAttribute('clonable') === 'false') return;
 		else if(activeElement.activated === false && this.getAttribute('isCloned') === 'true' && this.getAttribute('clonable') === 'false') return;
-		else if(activeElement.activated === false && this.getAttribute('isLoaded') === 'true') return;
-		console.log("bb");
+		else if(activeElement.activated === false && this.getAttribute('isPermanent') === 'true') return;
 		this.setAttribute('material', 'color', 'red');
-		console.log("cc");
 	});
 	// No longer hovering over asset
 	obj.addEventListener('mouseleave', function ()
@@ -262,14 +258,11 @@ function attachAssetListeners(obj)
 	// Clicked on asset
 	obj.addEventListener('click', function ()
 	{
-		console.log("11");
 		// Ignore click when viewpoint is one ground.
 		if(onGround) return;
-		console.log("22");
 		// Asset already active, remove active modifiers
 		if(this.classList.contains('active') && this.getAttribute('isCloned') === 'false')
 		{
-			console.log("33");
 			// Deactivates the selected asset
 			this.setAttribute('material', 'color', 'red');
 			this.classList.remove('active');
@@ -277,23 +270,19 @@ function attachAssetListeners(obj)
 			activeElement.activated = false;
 		}
 		// Clicking on an active asset that isn't loaded from gridLoader and is also a clone will delete that clone.
-		else if(this.classList.contains('active') && this.getAttribute('isCloned') === 'true' && this.getAttribute('isLoaded') === 'false')
+		else if(this.classList.contains('active') && this.getAttribute('isCloned') === 'true' && this.getAttribute('isPermanent') === 'false')
 		{
-			console.log("44");
 			resetCellStates(activeElement.cellsOwned.split(','));
 			activeElement.element = null;
 			activeElement.activated = false;
 			deleteAsset(this);
 		}
 		// Asset wasn't active before, but some (not cloned) asset types can replace it.
-		else if(activeElement.activated === true && activeElement.canReplace.indexOf(this.getAttribute('type')) > -1 && activeElement.isCloned === 'false' && this.getAttribute('isCloned') === 'true')
+		else if(activeElement.activated === true &&
+				activeElement.canReplace.indexOf(this.getAttribute('type')) > -1 &&
+				activeElement.isCloned === 'false' &&
+				this.getAttribute('isCloned') === 'true')
 		{
-			console.log("55");
-			console.log("Here now");
-			if(this.getAttribute('movable') === 'false') return;
-			// Replaces the selected asset with active asset without switching active after.
-			//if(activeElement.activated === true) removeActive();
-
 			this.setAttribute('vertical', activeElement.vertical);
 			this.setAttribute('horizontal', activeElement.horizontal);
 			// Making sure to replace asset's material with the correct combination of color, .mtl, and/or .obj
@@ -303,7 +292,6 @@ function attachAssetListeners(obj)
 		// Asset wasn't active before, but will be now.
 		else
 		{
-			console.log("66");
 			if(this.getAttribute('movable') === 'false') return;
 			// Activates the selected asset after deactivating all others.
 			if(activeElement.activated === true) removeActive();
@@ -364,14 +352,11 @@ function attachGridCellEventListeners()
 		// Mouse cursor has clicked the cell.
 		cells[i].addEventListener('click', function ()
 		{
-			console.log("1");
-			if(onGround || activeElement.element.getAttribute('isLoaded') === 'true') return;
+			if(onGround || activeElement.element.getAttribute('isPermanent') === 'true') return;
 			else if(activeElement.activated && activeElement.element.getAttribute('movable') === 'false') return;
-			console.log("2");
 			// If asset has been activated, place it on this cell.
 			if(activeElement.activated)
 			{
-				console.log("3");
 				// Position of cell you clicked.
 				var cellPosition = this.getAttribute('position');
 				// Get asset's scale (helps with putting bottom of asset on ground).
@@ -382,11 +367,9 @@ function attachGridCellEventListeners()
 				var z = idContents[idContents.length-1];
 
 				if(!checkBoundaries(false, idContents, x, z, activeElement.horizontal, activeElement.vertical)) return;
-				console.log("4");
 				// If active object wasn't a clone, make a clone, unless it was a 'structure object, or viewer.
 				if(activeElement.isCloned === 'false' && activeElement.element.id !== "pov-camera")
 				{
-					console.log("5");
 					// Remove the active color and related class.
 					swapMaterials(activeElement.element);
 					activeElement.element.classList.remove('active');
@@ -627,6 +610,7 @@ function clone(obj)
 	clonedObject.id = obj.id + '-clone';
 	// Helps not to duplicate cloned objects.
 	clonedObject.setAttribute('isCloned', 'true');
+	clonedObject.setAttribute('clonable', 'false');
 	// Put it in the scene.
 	document.querySelector('a-scene').appendChild(clonedObject);
 	// Give new object same listeners as the original.
@@ -635,7 +619,7 @@ function clone(obj)
 	assets.push(clonedObject);
 	return clonedObject;
 }
-function createAsset(details, x, z, isLoaded)
+function createAsset(details, x, z, isPermanent)
 {
 	var mainContainer = document.querySelector('a-scene');
 	var asset = document.createElement(details['tag']);
@@ -649,6 +633,7 @@ function createAsset(details, x, z, isLoaded)
 		asset.setAttribute('movable', 'true');
 		// Helps not to duplicate cloned objects.
 		asset.setAttribute('isCloned', details['isCloned']);
+		asset.setAttribute('isPermanent', 'false');
 	}
 	else
 	{
@@ -657,9 +642,10 @@ function createAsset(details, x, z, isLoaded)
 			y: (details['scale'].y / 2),
 			z: z
 		});
-		asset.setAttribute('clonable', details['clonable']);
+		asset.setAttribute('clonable', 'false');
 		asset.setAttribute('isCloned', 'true');
 		asset.setAttribute('movable', details['movable']);
+		asset.setAttribute('isPermanent', 'true');
 	}
 	asset.setAttribute('scale', details['scale']);
 	if(details['materialType'] === 'primitive') asset.setAttribute('material', 'color', details['defaultColor']);
@@ -690,13 +676,13 @@ function createAsset(details, x, z, isLoaded)
 	asset.setAttribute('defaultColor', details['defaultColor']);
 	asset.setAttribute('materialType', details['materialType']);
 	asset.setAttribute('canReplace', details['canReplace']);
-	// If this asset was created from the gridLoader, set isLoaded to true, otherwise false is default.
-	if(isLoaded) asset.setAttribute('isLoaded', 'true');
+	// If this asset was created from the gridLoader, set isPermanent to true, otherwise false is default.
+	if(isPermanent) asset.setAttribute('isPermanent', 'true');
 	// Sometimes necessary to force the HTML DOM to redraw these pseudo-dom elements.
 	asset.flushToDOM();
 	attachAssetListeners(asset);
 	// Adds this asset to the array of assets, if object type.
-	if(details['type'] === 'object' || details['type'] === 'view') assets.push(asset);
+	if(x === null || x === undefined) assets.push(asset);
 };
 // Deletes a cloned asset from all places referenced.
 function deleteAsset(obj)
@@ -871,10 +857,12 @@ function swapMaterials(toBeReplaced, toBeReplacedWith)
 	{
 		toBeReplaced.setAttribute('material', 'src', toBeReplacedWith.getAttribute('objectSource'));
 		toBeReplaced.setAttribute('material', 'repeat', toBeReplacedWith.getAttribute('repeat'));
+		toBeReplaced.setAttribute('material', 'color', '');
 	}
 	else
 	{
 		if(toBeReplaced.getAttribute('materialSource') !== '' && toBeReplaced.getAttribute('materialSource') !== null) toBeReplaced.setAttribute('mtl', toBeReplacedWith.getAttribute('materialSource'));
 		else toBeReplaced.setAttribute('material', 'color', toBeReplacedWith.getAttribute('defaultColor'));
 	}
+	toBeReplaced.flushToDOM();
 }
