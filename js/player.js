@@ -572,7 +572,7 @@ function keyboardEventSetup()
 			return;
 		}
 		// Move camera toward top of screen
-		if (keyName === 'w' && !onGround)
+		if ( (keyName === 'w' || keyName === 'ArrowUp') && !onGround )
 		{
 			var cam = document.getElementById('camera');
 			cam.setAttribute('position', {
@@ -582,7 +582,7 @@ function keyboardEventSetup()
 			});
 		}
 		// Move camera toward bottom of screen
-		if (keyName === 's' && !onGround)
+		if ( (keyName === 's' || keyName === 'ArrowDown') && !onGround )
 		{
 			var cam = document.getElementById('camera');
 			cam.setAttribute('position', {
@@ -592,7 +592,7 @@ function keyboardEventSetup()
 			});
 		}
 		// Move camera toward left of screen
-		if (keyName === 'a' && !onGround)
+		if ( (keyName === 'a' || keyName === 'ArrowLeft') && !onGround )
 		{
 			var cam = document.getElementById('camera');
 			cam.setAttribute('position', {
@@ -602,7 +602,7 @@ function keyboardEventSetup()
 			});
 		}
 		// Move camera toward right of screen
-		if (keyName === 'd' && !onGround)
+		if ( (keyName === 'd' || keyName === 'ArrowRight') && !onGround )
 		{
 			var cam = document.getElementById('camera');
 			cam.setAttribute('position', {
@@ -636,8 +636,6 @@ function keyboardEventSetup()
 			resetCamera();
 		}
 	}, false);
-
-
 
 	document.addEventListener('keyup', function(event)
 	{
