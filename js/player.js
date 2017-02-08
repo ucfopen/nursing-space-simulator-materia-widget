@@ -28,6 +28,33 @@ function init()
 		z: (data.gridLoader['rows'] / 2)
 	});
 	cam.flushToDOM();
+	// Create an observer to observe camera attributes (meant for POV).
+	var cameraObserver = new MutationObserver(function(mutations)
+	{
+		mutations.forEach(function(mutation)
+		{
+			console.log(mutation);
+			if(activeElement.activated === true && mutation.attributeName === 'rotation')
+			{
+				cameraRotationChanged();
+			}
+		});
+	});
+	function cameraRotationChanged() {
+		console.log(activeElement.element.id);
+		// Using orbital controls, move decapitated body around y-axis.
+		activeElement.element.setAttribute('rotation', {
+			x: activeElement.element.getAttribute('rotation').x,
+			y: cam.getAttribute('rotation').y,
+			z: activeElement.element.getAttribute('rotation').z
+		});
+		cameraObserver.disconnect();
+		cameraObserver.observe(cam, config);
+	}
+	// configuration of the observer:
+	var config = { attributes: true, childList: true, characterData: true };
+	// pass in the target node, as well as the observer options
+	cameraObserver.observe(cam, config);
 };
 // Mouse events functionality on the assets
 function attachAssetListeners(obj)
@@ -659,7 +686,6 @@ function removeActive()
 // Set up the PoV camera.
 function placeCamera()
 {
-	removeActive();
 	camera = document.getElementById('camera');
 	povObj = document.getElementById('pov-camera');
 	cam_x_pos = povObj.getAttribute('position').x;
@@ -673,7 +699,7 @@ function placeCamera()
 	});
 	camera.setAttribute('rotation', {
 		x: 0,
-		y: 180,
+		y: 0,
 		z: 0
 	});
 	var lookControls = document.createAttribute('look-controls');
