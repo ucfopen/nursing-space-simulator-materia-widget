@@ -2,6 +2,7 @@
 var activeElement = {
 	activated: false,
 	assetRotationState: 0,
+	canReplace: [],
 	cellsOwned: '',
 	element: null,
 	horizontal: 0,
@@ -9,153 +10,6 @@ var activeElement = {
 	vertical: 0
 };
 var activeCells = [];
-var assetsFromFile = {
-		"bed": {
-			"assetRotationState": 0,
-			"cellsOwned": "",
-			"defaultColor": "#FF00FF",
-			"horizontal": 1,
-			"id": "asset-3",
-			"isCloned": "false",
-			"material": "",
-			"materialType": "complex",
-			"moveable": "true",
-			"objectSource": "assets/HOSPITAL_BED.obj",
-			"position": {"x": -5, "y": 0.5, "z": 12},
-			"scale": {"x": 0.1, "y": 0.1, "z": 0.1},
-			"tag": "a-obj-model",
-			"type": "object",
-			"vertical": 0
-		},
-		"box": {
-			"assetRotationState": 0,
-			"cellsOwned": "",
-			"defaultColor": "#FF00FF",
-			"horizontal": 0,
-			"id": "asset-1",
-			"isCloned": "false",
-			"materialType": "primitive",
-			"moveable": "true",
-			"position": {"x": -5, "y": 0.5, "z": 10},
-			"scale": {"x": 1, "y": 1, "z": 1},
-			"tag": "a-box",
-			"type": "object",
-			"vertical": 0
-		},
-		"door-1": {
-			"assetRotationState": 0,
-			"cellsOwned": "",
-			"defaultColor": "",
-			"horizontal": 0,
-			"id": "door-1",
-			"isCloned": "false",
-			"materialType": "textured",
-			"moveable": "false",
-			"objectSource": "assets/DOOR_1.png",
-			"position": {"x": -50, "y": -50, "z": -50},
-			"repeat": "1 1",
-			"scale": {"x":1, "y":3, "z":1},
-			"tag": "a-box",
-			"type": "structure",
-			"vertical": 0
-		},
-		"door-2": {
-			"assetRotationState": 0,
-			"cellsOwned": "",
-			"defaultColor": "",
-			"horizontal": 0,
-			"id": "door-1",
-			"isCloned": "false",
-			"materialType": "textured",
-			"moveable": "false",
-			"objectSource": "assets/DOOR_2.png",
-			"position": {"x": -50, "y": -50, "z": -50},
-			"repeat": "1 1",
-			"scale": {"x":1, "y":3, "z":1},
-			"tag": "a-box",
-			"type": "structure",
-			"vertical": 0
-		},
-		"largeBox": {
-			"assetRotationState": 0,
-			"cellsOwned": "",
-			"defaultColor": "#FF00FF",
-			"horizontal": 1,
-			"id": "asset-2",
-			"isCloned": "false",
-			"materialType": "primitive",
-			"moveable": "true",
-			"position": {"x": -5, "y": 0.5, "z": 14},
-			"scale": {"x": 2, "y": 1, "z": 2},
-			"tag": "a-box",
-			"type": "object",
-			"vertical": 1
-		},
-		"viewer": {
-			"assetRotationState": 0,
-			"cellsOwned": "",
-			"defaultColor": "#6699FF",
-			"horizontal": 0,
-			"id": "pov-camera",
-			"isCloned": "false",
-			"materialType": "primitive",
-			"moveable": "true",
-			"position": {"x": -5, "y": 0.5, "z": 16},
-			"scale": {"x":.35, "y":.35, "z":.35},
-			"tag": "a-sphere",
-			"type": "view",
-			"vertical": 0
-		},
-		"wall-1": {
-			"assetRotationState": 0,
-			"cellsOwned": "",
-			"defaultColor": "#9FCDB1",
-			"horizontal": 0,
-			"id": "wall-1",
-			"isCloned": "false",
-			"materialType": "primitive",
-			"moveable": "false",
-			"position": {"x": -50, "y": -50, "z": -50},
-			"scale": {"x":1, "y":3, "z":1},
-			"tag": "a-box",
-			"type": "structure",
-			"vertical": 0
-		}
-	};
-var gridLoader = {
-	"columns": 35,
-	"content": 	"x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-" +
-				"x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-" +
-				"w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-" +
-				"w1-0-0-0-0-0-0-0-0-0-0-w1-0-0-0-0-0-0-0-0-0-0-w1-0-0-0-0-0-0-0-0-0-0-0-w1-" +
-				"w1-0-0-0-0-0-0-0-0-0-0-w1-0-0-0-0-0-0-0-0-0-0-d1-0-0-0-0-0-0-0-0-0-0-0-w1-" +
-				"w1-0-0-0-0-0-0-0-0-0-0-w1-0-0-0-0-0-0-0-0-0-0-w1-0-0-0-0-0-0-0-0-0-0-0-w1-" +
-				"w1-0-0-0-0-0-0-0-0-0-0-w1-0-0-0-0-0-0-0-0-0-0-w1-0-0-0-0-0-0-0-0-0-0-0-w1-" +
-				"d1-0-0-0-0-0-0-0-0-0-0-d1-0-0-0-0-0-0-0-0-0-0-d1-0-0-0-0-0-0-0-0-0-0-0-w1-" +
-				"w1-0-0-0-0-0-0-0-0-0-0-w1-0-0-0-0-0-0-0-0-0-0-w1-0-0-0-0-0-0-0-0-0-0-0-w1-" +
-				"w1-0-0-0-0-0-0-0-0-0-0-w1-0-0-0-0-0-0-0-0-0-0-w1-0-0-0-0-0-0-0-0-0-0-0-w1-" +
-				"w1-0-0-0-0-0-0-0-0-0-0-w1-0-0-0-0-0-0-0-0-0-0-w1-0-0-0-0-0-0-0-0-0-0-0-w1-" +
-				"w1-0-0-0-0-0-0-0-0-0-0-w1-0-0-0-0-0-0-0-0-0-0-w1-0-0-0-0-0-0-0-0-0-0-0-w1-" +
-				"w1-0-0-0-0-0-0-0-0-0-0-w1-0-0-0-0-0-0-0-0-0-0-w1-0-0-0-0-0-0-0-0-0-0-0-w1-" +
-				"w1-w1-w1-w1-d1-d2-w1-w1-w1-w1-w1-w1-d1-w1-w1-w1-w1-d1-d2-w1-w1-w1-w1-0-0-0-0-0-0-0-0-0-0-0-w1-" +
-				"d1-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-d1-0-0-0-0-0-0-0-0-0-0-0-w1-" +
-				"d2-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-w1-w1-0-0-0-0-0-0-0-0-0-0-0-w1-" +
-				"w1-w1-w1-w1-d2-d1-w1-w1-w1-w1-w1-w1-d1-w1-w1-w1-w1-d2-d1-w1-w1-w1-w1-0-0-0-0-0-0-0-0-0-0-0-w1-" +
-				"w1-0-0-0-0-0-0-0-0-0-0-w1-0-0-0-0-0-0-0-0-0-0-w1-0-0-0-0-0-0-0-0-0-0-0-w1-" +
-				"w1-0-0-0-0-0-0-0-0-0-0-w1-0-0-0-0-0-0-0-0-0-0-w1-0-0-0-0-0-0-0-0-0-0-0-w1-" +
-				"w1-0-0-0-0-0-0-0-0-0-0-w1-0-0-0-0-0-0-0-0-0-0-w1-0-0-0-0-0-0-0-0-0-0-0-w1-" +
-				"w1-0-0-0-0-0-0-0-0-0-0-w1-0-0-0-0-0-0-0-0-0-0-w1-0-0-0-0-0-0-0-0-0-0-0-w1-" +
-				"w1-0-0-0-0-0-0-0-0-0-0-w1-0-0-0-0-0-0-0-0-0-0-w1-0-0-0-0-0-0-0-0-0-0-0-w1-" +
-				"w1-0-0-0-0-0-0-0-0-0-0-w1-0-0-0-0-0-0-0-0-0-0-w1-0-0-0-0-0-0-0-0-0-0-0-w1-" +
-				"w1-0-0-0-0-0-0-0-0-0-0-w1-0-0-0-0-0-0-0-0-0-0-w1-0-0-0-0-0-0-0-0-0-0-0-w1-" +
-				"w1-0-0-0-0-0-0-0-0-0-0-w1-0-0-0-0-0-0-0-0-0-0-w1-0-0-0-0-0-0-0-0-0-0-0-w1-" +
-				"w1-0-0-0-0-0-0-0-0-0-0-d1-0-0-0-0-0-0-0-0-0-0-d1-0-0-0-0-0-0-0-0-0-0-0-w1-" +
-				"w1-0-0-0-0-0-0-0-0-0-0-w1-0-0-0-0-0-0-0-0-0-0-w1-0-0-0-0-0-0-0-0-0-0-0-w1-" +
-				"w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-" +
-				"x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-" +
-				"x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x",
-	"rows": 30
-};
 // 0 means unoccupied, 1 mean occupied.
 var gridCellsState = [];
 var cellSpacing = 0.05;
@@ -169,9 +23,9 @@ function init()
 	keyboardEventSetup();
 	var cam = document.getElementById('camera');
 	cam.setAttribute('position', {
-		x: (gridLoader['columns'] / 2),
+		x: (data.gridLoader['columns'] / 2),
 		y: 25,
-		z: (gridLoader['rows'] / 2)
+		z: (data.gridLoader['rows'] / 2)
 	});
 	cam.flushToDOM();
 };
@@ -181,23 +35,29 @@ function attachAssetListeners(obj)
 	// Hover over the asset
 	obj.addEventListener('mouseenter', function ()
 	{
-		// If mouse hovers over asset that is active, don't change color.
-		// If nothing is active AND asset type is structure (ie. wall), don't change color.
 		// If viewpoint is on the ground, don't change color.
-		if(this.classList.contains('active') || (this.getAttribute('type') === 'structure' && activeElement.activated === false) || onGround) return;
+		// If mouse hovers over asset that is active, don't change color.
+		// If there is an active asset and it can't replace the hovered assets type, don't change color.
+		// If nothing is active AND asset os permanent fixture loaded from gridString (ie. wall), don't change color.
+		if(onGround) return;
+		else if(this.classList.contains('active')) return;
+		else if(activeElement.activated === true && activeElement.element.getAttribute('canReplace').indexOf(this.getAttribute('type')) <= -1) return;
+		else if(activeElement.activated === false && this.getAttribute('isPermanent') === 'true') return;
 		this.setAttribute('material', 'color', 'red');
 	});
 	// No longer hovering over asset
 	obj.addEventListener('mouseleave', function ()
 	{
 		if(this.classList.contains('active') || onGround) return;
-		this.setAttribute('material', 'color', this.getAttribute('defaultColor'));
+		swapMaterials(this);
 	});
 	// Clicked on asset
 	obj.addEventListener('click', function ()
 	{
+		// Ignore click when viewpoint is one ground.
+		if(onGround) return;
 		// Asset already active, remove active modifiers
-		if(this.classList.contains('active') && this.getAttribute('isCloned') === 'false' && !onGround)
+		if(this.classList.contains('active') && this.getAttribute('isCloned') === 'false')
 		{
 			// Deactivates the selected asset
 			this.setAttribute('material', 'color', 'red');
@@ -205,19 +65,29 @@ function attachAssetListeners(obj)
 			activeElement.element = null;
 			activeElement.activated = false;
 		}
-		// Clicking on an active asset that is also a clone will delete that clone.
-		else if(this.classList.contains('active') && this.getAttribute('isCloned') === 'true' && !onGround)
+		// Clicking on an active asset that isn't loaded from gridLoader and is also a clone will delete that clone.
+		else if(this.classList.contains('active') && this.getAttribute('isCloned') === 'true' && this.getAttribute('isPermanent') === 'false')
 		{
 			resetCellStates(activeElement.cellsOwned.split(','));
-			activeElement.element.setAttribute('material', 'color', '#FF00FF');
 			activeElement.element = null;
 			activeElement.activated = false;
 			deleteAsset(this);
 		}
+		// Asset wasn't active before, and some (not cloned) asset types can replace it.
+		else if(activeElement.activated === true &&
+				activeElement.canReplace.indexOf(this.getAttribute('type')) > -1 &&
+				activeElement.isCloned === 'false' &&
+				this.getAttribute('isCloned') === 'true')
+		{
+			this.setAttribute('vertical', activeElement.vertical);
+			this.setAttribute('horizontal', activeElement.horizontal);
+			// Making sure to replace asset's material with the correct combination of color, .mtl, and/or .obj
+			swapMaterials(this, activeElement.element);
+		}
 		// Asset wasn't active before, but will be now.
 		else
 		{
-			if(this.getAttribute('moveable') === 'false' || onGround) return;
+			if(this.getAttribute('movable') === 'false') return;
 			// Activates the selected asset after deactivating all others.
 			if(activeElement.activated === true) removeActive();
 			this.setAttribute('material', 'color', '#00FF00');
@@ -226,6 +96,7 @@ function attachAssetListeners(obj)
 			activeElement.activated = true;
 			activeElement.isCloned = this.getAttribute('isCloned');
 			activeElement.assetRotationState = this.getAttribute('assetRotationState');
+			activeElement.canReplace = this.getAttribute('canReplace');
 			activeElement.cellsOwned = this.getAttribute('cellsOwned');
 			activeElement.horizontal = this.getAttribute('horizontal');
 			activeElement.vertical = this.getAttribute('vertical');
@@ -276,70 +147,73 @@ function attachGridCellEventListeners()
 		// Mouse cursor has clicked the cell.
 		cells[i].addEventListener('click', function ()
 		{
-			if(onGround) return;
-			else if(activeElement.activated && activeElement.element.getAttribute('moveable') === 'false') return;
+			if(onGround || activeElement.activated === 'false' || activeElement.element.getAttribute('isPermanent') === 'true') return;
+			else if(activeElement.activated && activeElement.element.getAttribute('movable') === 'false') return;
 			// If asset has been activated, place it on this cell.
 			if(activeElement.activated)
 			{
 				// Position of cell you clicked.
 				var cellPosition = this.getAttribute('position');
 				// Get asset's scale (helps with putting bottom of asset on ground).
-				var assetSize = activeElement.element.getAttribute('scale');
+				var assetPosY = activeElement.element.getAttribute('position').y;
 				// If cells are out of bounds, function returns false, and new position skipped.
 				var idContents = this.id.split('-');
 				var x = idContents[idContents.length-2];
 				var z = idContents[idContents.length-1];
 
 				if(!checkBoundaries(false, idContents, x, z, activeElement.horizontal, activeElement.vertical)) return;
+
+				// Stand-in variable in case we're not using the active asset.
+				var theElementToMove = activeElement.element;
 				// If active object wasn't a clone, make a clone, unless it was a 'structure object, or viewer.
 				if(activeElement.isCloned === 'false' && activeElement.element.id !== "pov-camera")
 				{
+					console.log("Here");
 					// Remove the active color and related class.
-					activeElement.element.setAttribute('material', 'color', '#FF00FF');
-					activeElement.element.classList.remove('active');
+					swapMaterials(activeElement.element);
+					// Update cells owned by this asset.
+					changeCellsOwned(this, false);
 					// Clone the asset.
-					activeElement.element = clone(activeElement.element);
+					theElementToMove = clone(activeElement.element);
 					// Make the clone the active asset
-					activeElement.element.classList.add('active');
 					activeElement.element.setAttribute('material', 'color', '#00FF00');
-					activeElement.isCloned = 'true';
-					activeElement.assetRotationState = activeElement.element.getAttribute('assetRotationState');
-					activeElement.cellsOwned = activeElement.element.getAttribute('cellsOwned');
-					activeElement.horizontal = activeElement.element.getAttribute('horizontal');
-					activeElement.vertical = activeElement.element.getAttribute('vertical');
+					// Remove activeElement's cells owned now.
+					activeElement.cellsOwned = '';
 				}
-				// Update cells owned by this asset.
-				changeCellsOwned(this, false);
+				else
+				{
+					// Update cells owned by this asset.
+					changeCellsOwned(this, false);
+				}
 				// Place the clone in the scene on top of clicked grid cell.
 				// We add one to the horizontal and vertical because of the discrepancies between "size"
 				// and "scale" when dealing with imported object assets. Since one blobk is 0 and two blocks
 				// is one in either direction, we must first add one to express it's proper "size" in that direction.
-				activeElement.element.setAttribute('position', {
-					x: cellPosition.x + ((Number(activeElement.horizontal) + 1) / 2.0) - 0.5,
-					y: assetSize.y / 2.0,
-					z: cellPosition.z + ((Number(activeElement.vertical) + 1) / 2.0) - 0.5
+				theElementToMove.setAttribute('position', {
+					x: cellPosition.x + ((Number(theElementToMove.getAttribute('horizontal')) + 1) / 2.0) - 0.5,
+					y: assetPosY,
+					z: cellPosition.z + ((Number(theElementToMove.getAttribute('vertical')) + 1) / 2.0) - 0.5
 				});
+				// Make sure clone is manually pushed to HTML DOM.
+				theElementToMove.flushToDOM();
 				// If this is the PoV camera object.
 				if(activeElement.element.id === "pov-camera")
 				{
 					// Calling placeCamera to handle camera arrangements.
 					placeCamera();
 				}
-				// Make sure clone is manually pushed to HTML DOM.
-				activeElement.element.flushToDOM();
+				this.setAttribute('material', 'color', '#C1D2CC');
 			}
 		});
 	}
 };
 function buildAssets()
 {
-	for(var index in assetsFromFile) 
+	for(var index in data.assetsFromFile) 
 	{
-		if (assetsFromFile.hasOwnProperty(index))
+		if (data.assetsFromFile.hasOwnProperty(index))
 		{
-			var attr = assetsFromFile[index];
-			// Structure assets are placed when grid is created.
-			if(attr['type'] === 'structure') continue;
+			var attr = data.assetsFromFile[index];
 			createAsset(attr);
 		}
 	}
@@ -373,15 +247,15 @@ function buildCeiling()
 	mainContainer.appendChild(ceiling);
 	// Uses the gridLoader string to determine the upper left corner for starting position.
 	ceiling.setAttribute('position', {
-		x: (gridLoader['columns'] / 2.0) - (0.5),
+		x: (data.gridLoader['columns'] / 2.0) - (0.5),
 		y: 3,
-		z: (gridLoader['rows'] / 2.0)
+		z: (data.gridLoader['rows'] / 2.0)
 	});
 	// Renders face of plane downward, invisible from above, but visible at ground-level.
 	ceiling.setAttribute('rotation', {x: 90, y: 0, z: 0});
 	// Uses the gridLoader string to determine the full dimensions of the "rooms" portion of scene.
-	ceiling.setAttribute('height', gridLoader['rows']);
-	ceiling.setAttribute('width', gridLoader['columns']);
+	ceiling.setAttribute('height', data.gridLoader['rows']);
+	ceiling.setAttribute('width', data.gridLoader['columns']);
 	// Try to use texture with dimensions at power of 2 (ie. 128x128, 256x256, 512x512).
 	ceiling.setAttribute('material', 'src', 'assets/CEILING_TILE.jpg');
 	// Again use powers of 2 for best results (ie. "1 1", "2 2", "4 4", "8 8", etc.).
@@ -391,25 +265,25 @@ function buildCeiling()
 };
 function buildScene()
 {
-	var grid = gridLoader['content'].split('-');
+	var grid = data.gridLoader['content'].split('-');
 	// Parses the load string into the gridCellsState for easier building.
 	var indexCounter = 0;
 	var n = 0;
 	do
 	{
 		gridCellsState[indexCounter] = [];
-		for(var w = 0; w < gridLoader['columns']; w++)
+		for(var w = 0; w < data.gridLoader['columns']; w++)
 		{
 			// Creates gridcellsstate as each cell is pulled from loader string.
 			gridCellsState[indexCounter][w] = grid[n];
 			n++;
 		}
 		indexCounter++;
-	} while(indexCounter < gridLoader['rows']);
+	} while(indexCounter < data.gridLoader['rows']);
 	// Uses the gridCellsState double array to populate the scene.
-	for(var i = 0; i < gridLoader['columns']; i++)
+	for(var i = 0; i < data.gridLoader['columns']; i++)
 	{
-		for(var j = 0; j < gridLoader['rows']; j++)
+		for(var j = 0; j < data.gridLoader['rows']; j++)
 		{
 			switch(gridCellsState[j][i])
 			{
@@ -420,17 +294,27 @@ function buildScene()
 				}
 				case 'd1':
 				{
-					createAsset(assetsFromFile['door-1'], i, j);
+					createAsset(data.assetsFromFile['door-1'], i, j, true);
 					break;
 				}
 				case 'd2':
 				{
-					createAsset(assetsFromFile['door-2'], i, j);
+					createAsset(data.assetsFromFile['door-2'], i, j, true);
 					break;
 				}
 				case 'w1':
 				{
-					createAsset(assetsFromFile['wall-1'], i, j);
+					createAsset(data.assetsFromFile['wall-1'], i, j, true);
+					break;
+				}
+				case 'w2':
+				{
+					createAsset(data.assetsFromFile['wall-2'], i, j, true);
+					break;
+				}
+				case 'w3':
+				{
+					createAsset(data.assetsFromFile['wall-3'], i, j, true);
 					break;
 				}
 				case 'x':
@@ -525,9 +409,11 @@ function clone(obj)
 	// Create a new object of same type.
 	var clonedObject;
 	clonedObject = obj.cloneNode(true);
-	clonedObject.id = obj.id + '-clone';
+	clonedObject.id = obj.id + '-clone-' + Math.random(100000);
 	// Helps not to duplicate cloned objects.
 	clonedObject.setAttribute('isCloned', 'true');
+	clonedObject.setAttribute('clonable', 'false');
+	clonedObject.classList.remove('active');
 	// Put it in the scene.
 	document.querySelector('a-scene').appendChild(clonedObject);
 	// Give new object same listeners as the original.
@@ -536,30 +422,55 @@ function clone(obj)
 	assets.push(clonedObject);
 	return clonedObject;
 }
-function createAsset(details, x, z)
+function createAsset(details, x, z, isPermanent)
 {
 	var mainContainer = document.querySelector('a-scene');
 	var asset = document.createElement(details['tag']);
 	asset.id = details['id'];
 	mainContainer.appendChild(asset);
-	// Makes core adjustments to the asset.
-	if(x === null || x === undefined) asset.setAttribute('position', details['position']);
-	else asset.setAttribute('position', { x: x, y: (details['scale'].y / 2), z: z });
+	// Makes adjustments to the asset based off loadString load string or clonable assets.
+	if(x === null || x === undefined)
+	{
+		asset.setAttribute('position', {
+			x: details['position'].x,
+			y: details['position'].y,
+			z: details['position'].z
+		});
+		asset.setAttribute('clonable', 'true');
+		asset.setAttribute('movable', 'true');
+		// Helps not to duplicate cloned objects.
+		asset.setAttribute('isCloned', details['isCloned']);
+		asset.setAttribute('isPermanent', 'false');
+	}
+	else
+	{
+		asset.setAttribute('position', {
+			x: x,
+			y: (details['scale'].y / 2),
+			z: z
+		});
+		asset.setAttribute('clonable', 'false');
+		asset.setAttribute('isCloned', 'true');
+		asset.setAttribute('movable', details['movable']);
+		asset.setAttribute('isPermanent', 'true');
+	}
 	asset.setAttribute('scale', details['scale']);
+	asset.setAttribute('rotation', details['rotation']);
 	if(details['materialType'] === 'primitive') asset.setAttribute('material', 'color', details['defaultColor']);
 	else if(details['materialType'] === 'textured')
 	{
+		asset.setAttribute('objectSource', details['objectSource']);
 		asset.setAttribute('material', 'src', details['objectSource']);
 		asset.setAttribute('material', 'repeat', details['repeat']);
 	}
 	else
 	{
+		asset.setAttribute('objectSource', details['objectSource']);
 		asset.setAttribute('src', details['objectSource']);
-		if(details['material'] !== '') asset.setAttribute('mtl', details['material']);
+		asset.setAttribute('materialSource', details['materialSource']);
+		if(details['materialSource'] !== '') asset.setAttribute('mtl', details['materialSource']);
 		else asset.setAttribute('material', 'color', details['defaultColor']);
 	}
-	// Helps not to duplicate cloned objects.
-	asset.setAttribute('isCloned', details['isCloned']);
 	// Contains which cells it occupies.
 	asset.setAttribute('cellsOwned', details['cellsOwned']);
 	// Contains what rotation state it has (for later evaluation).
@@ -571,13 +482,14 @@ function createAsset(details, x, z)
 	// Makes data containing adjustments to the asset.
 	asset.setAttribute('type', details['type']);
 	asset.setAttribute('defaultColor', details['defaultColor']);
-	asset.setAttribute('materialType', details['materialType']);
-	asset.setAttribute('moveable', details['moveable']);
+	asset.setAttribute('canReplace', details['canReplace']);
+	// If this asset was created from the gridLoader, set isPermanent to true, otherwise false is default.
+	if(isPermanent) asset.setAttribute('isPermanent', 'true');
 	// Sometimes necessary to force the HTML DOM to redraw these pseudo-dom elements.
 	asset.flushToDOM();
 	attachAssetListeners(asset);
 	// Adds this asset to the array of assets, if object type.
-	if(details['type'] === 'object' || details['type'] === 'view') assets.push(asset);
+	if(x === null || x === undefined) assets.push(asset);
 };
 // Deletes a cloned asset from all places referenced.
 function deleteAsset(obj)
@@ -601,7 +513,7 @@ function keyboardEventSetup()
 	{
 		const keyName = event.key;
 
-		if (keyName === 'r' && !keyDown)
+		if (keyName === 'r' && !keyDown && !onGround)
 		{
 			keyDown = true;
 			var isClone = activeElement.isCloned;
@@ -615,7 +527,7 @@ function keyboardEventSetup()
 				// Place the clone in the scene on top left grid cell.
 				var cornerCell = document.getElementById(activeElement.cellsOwned.split(',')[0]);
 				var cellPosition = cornerCell.getAttribute('position');
-				var assetSize = activeElement.element.getAttribute('scale');
+				var assetPosY = activeElement.element.getAttribute('position').y;
 
 				var idContents = cornerCell.id.split('-');
 				var x = idContents[idContents.length-2];
@@ -655,7 +567,7 @@ function keyboardEventSetup()
 				// is one in either direction, we must first add one to express it's proper "size" in that direction.
 				activeElement.element.setAttribute('position', {
 					x: cellPosition.x + ((Number(activeElement.horizontal) + 1) / 2.0) - 0.5,
-					y: (assetSize.y / 2.0),
+					y: assetPosY,
 					z: cellPosition.z + ((Number(activeElement.vertical) + 1) / 2.0) - 0.5
 				});
 			}
@@ -682,7 +594,7 @@ function removeActive()
 	activeElement.activated = false;
 	for(var i = 0; i < assets.length; i++)
 	{
-		assets[i].setAttribute('material', 'color', '#FF00FF');
+		swapMaterials(assets[i]);
 		assets[i].classList.remove('active');
 	}
 };
@@ -690,6 +602,7 @@ function removeActive()
 // Set up the PoV camera.
 function placeCamera()
 {
+	removeActive();
 	camera = document.getElementById('camera');
 	povObj = document.getElementById('pov-camera');
 	cam_x_pos = povObj.getAttribute('position').x;
@@ -702,9 +615,9 @@ function placeCamera()
 		z: cam_z_pos
 	});
 	camera.setAttribute('rotation', {
-		x: 1,
-		y: 1,
-		z: 1
+		x: 0,
+		y: 180,
+		z: 0
 	});
 	var lookControls = document.createAttribute('look-controls');
 	camera.setAttributeNode(lookControls);
@@ -717,9 +630,9 @@ function resetCamera()
 {
 	camera = document.getElementById('camera');
 	camera.setAttribute('position', {
-		x: (gridLoader['columns'] / 2),
+		x: (data.gridLoader['columns'] / 2),
 		y: 25,
-		z: (gridLoader['rows'] / 2)
+		z: (data.gridLoader['rows'] / 2)
 	});
 	camera.setAttribute('rotation', {
 		x: -90,
@@ -739,3 +652,37 @@ function resetCellStates(cells)
 		gridCellsState[coords[coords.length-1]][coords[coords.length-2]] = '0';
 	}
 };
+// Replaces 1st parameter's material properties with defaults of 2nd parameter,
+// unless only one parameter then replace current material with default material
+function swapMaterials(toBeReplaced, toBeReplacedWith)
+{
+	if(toBeReplacedWith === undefined) toBeReplacedWith = toBeReplaced;
+	if(toBeReplaced.getAttribute('materialType') === 'primitive')
+	{
+		toBeReplaced.setAttribute('material', 'color', toBeReplacedWith.getAttribute('defaultColor'));
+		toBeReplaced.setAttribute('defaultColor', toBeReplacedWith.getAttribute('defaultColor'));
+	}
+	else if(toBeReplaced.getAttribute('materialType') === 'textured')
+	{
+		toBeReplaced.setAttribute('material', 'src', toBeReplacedWith.getAttribute('objectSource'));
+		toBeReplaced.setAttribute('objectSource', toBeReplacedWith.getAttribute('objectSource'));
+		toBeReplaced.setAttribute('material', 'repeat', toBeReplacedWith.getAttribute('repeat'));
+		toBeReplaced.setAttribute('repeat', toBeReplacedWith.getAttribute('repeat'));
+		toBeReplaced.setAttribute('material', 'color', '');
+		toBeReplaced.setAttribute('defaultColor', '');
+	}
+	else
+	{
+		if(toBeReplaced.getAttribute('materialSource') !== '' && toBeReplaced.getAttribute('materialSource') !== null)
+		{
+			toBeReplaced.setAttribute('mtl', toBeReplacedWith.getAttribute('materialSource'));
+			toBeReplaced.setAttribute('materialSource', toBeReplacedWith.getAttribute('materialSource'));
+		}
+		else
+		{
+			toBeReplaced.setAttribute('material', 'color', toBeReplacedWith.getAttribute('defaultColor'));
+			toBeReplaced.setAttribute('defaultColor', toBeReplacedWith.getAttribute('defaultColor'));
+		}
+	}
+	toBeReplaced.flushToDOM();
+}
