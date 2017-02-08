@@ -1,0 +1,28 @@
+<html>
+	<head>
+		<script src="https://aframe.io/releases/0.4.0/aframe.min.js"></script>
+		<script type="text/javascript" src="js/toon-shader.js"></script>
+	</head>
+	<body>
+		<a-scene>
+			<a-assets>
+				<a-assets-item id="bed-obj" src="assets/HOSPITAL_BED.obj"></a-assets-item>
+			</a-assets>
+			<a-entity obj-model="obj: #bed-obj" material="shader: toon-shader; uMaterialColor: white" position="0 -14 -10"></a-entity>
+			<!--
+			<a-entity geometry="primitive: cylinder"  material="shader: toon-shader; uMaterialColor: green" position="0 2 -4">
+				 <a-animation easing="linear" attribute="rotation" dur="10000" to="0 360 360" repeat="indefinite"></a-animation>
+			</a-entity>
+			
+			<a-entity geometry="primitive: cylinder"  material="shader: toon-shader; uMaterialColor: red" position="-3 2 -4">
+				 <a-animation easing="linear" attribute="rotation" dur="10000" to="0 360 360" repeat="indefinite"></a-animation>
+			</a-entity>
+			
+			<a-entity geometry="primitive: cylinder"  material="shader: toon-shader; uMaterialColor: blue" position="3 2 -4">
+				 <a-animation easing="linear" attribute="rotation" dur="10000" to="0 360 360" repeat="indefinite"></a-animation>
+			</a-entity>
+			-->
+			<!--<a-camera position="0 0 -3"></a-camera>-->
+		</a-scene>
+	</body>
+</html>
