@@ -121,7 +121,6 @@ function attachGridCellEventListeners()
 				var idContents = this.id.split('-');
 				var x = idContents[idContents.length-2];
 				var z = idContents[idContents.length-1];
-
 				if(checkBoundaries(false, idContents, x, z, activeElement.horizontal, activeElement.vertical))
 				{
 					for(var i = 0; i <= activeElement.horizontal; i++)
@@ -160,7 +159,6 @@ function attachGridCellEventListeners()
 				var idContents = this.id.split('-');
 				var x = idContents[idContents.length-2];
 				var z = idContents[idContents.length-1];
-
 				if(!checkBoundaries(false, idContents, x, z, activeElement.horizontal, activeElement.vertical)) return;
 
 				// Stand-in variable in case we're not using the active asset.
@@ -168,7 +166,6 @@ function attachGridCellEventListeners()
 				// If active object wasn't a clone, make a clone, unless it was a 'structure object, or viewer.
 				if(activeElement.isCloned === 'false' && activeElement.element.id !== "pov-camera")
 				{
-					console.log("Here");
 					// Remove the active color and related class.
 					swapMaterials(activeElement.element);
 					// Update cells owned by this asset.
@@ -341,14 +338,14 @@ function checkBoundaries(isRotation, idContents, x, z, horizontal, vertical)
 	{
 		for(var j = 0; j <= vertical; j++)
 		{
-			// Correction to make sure collision isn't with the active object.
-			var everythingIsOkFlag = false;
+			// Correction to make sure collision isn't with the active object./*
+			var everythingIsOkFlag = true;
 			for(var k = 0; k < cells.length; k++)
 			{
 				var nextCell = cells[k].split('-');
-				if(Number(nextCell[1]) === (Number(x) + i) && Number(nextCell[2]) === (Number(z) + j))
+				if(Number(nextCell[1]) !== (Number(x) + i) && Number(nextCell[2]) !== (Number(z) + j))
 				{
-					everythingIsOkFlag = true;
+					everythingIsOkFlag = false;
 					break;
 				}
 			}
@@ -357,7 +354,7 @@ function checkBoundaries(isRotation, idContents, x, z, horizontal, vertical)
 			var cell = 'cell-' + (Number(x) + i) + '-' + (Number(z) + j);
 			var cellToClaim = document.getElementById(cell);
 			if(cellToClaim === null) return false;
-			else if(isRotation && ((i !== 0 && j !== 0) && gridCellsState[(Number(z) + j)][(Number(x) + i)] === 1)) return false;
+			if(isRotation && gridCellsState[(Number(z) + j)][(Number(x) + i)] === 1) return false;
 			else if(!isRotation && gridCellsState[(Number(z) + j)][(Number(x) + i)] !== '0') return false;
 		}
 	}
