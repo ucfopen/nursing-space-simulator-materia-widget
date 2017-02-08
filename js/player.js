@@ -571,11 +571,53 @@ function keyboardEventSetup()
 			activeElement.element.flushToDOM();
 			return;
 		}
+		// Move camera toward top of screen
+		if (keyName === 'w' && !onGround)
+		{
+			var cam = document.getElementById('camera');
+			cam.setAttribute('position', {
+				x: cam.getAttribute('position').x,
+				y: cam.getAttribute('position').y,
+				z: cam.getAttribute('position').z - 1,
+			});
+		}
+		// Move camera toward bottom of screen
+		if (keyName === 's' && !onGround)
+		{
+			var cam = document.getElementById('camera');
+			cam.setAttribute('position', {
+				x: cam.getAttribute('position').x,
+				y: cam.getAttribute('position').y,
+				z: cam.getAttribute('position').z + 1,
+			});
+		}
+		// Move camera toward left of screen
+		if (keyName === 'a' && !onGround)
+		{
+			var cam = document.getElementById('camera');
+			cam.setAttribute('position', {
+				x: cam.getAttribute('position').x - 1,
+				y: cam.getAttribute('position').y,
+				z: cam.getAttribute('position').z,
+			});
+		}
+		// Move camera toward right of screen
+		if (keyName === 'd' && !onGround)
+		{
+			var cam = document.getElementById('camera');
+			cam.setAttribute('position', {
+				x: cam.getAttribute('position').x + 1,
+				y: cam.getAttribute('position').y,
+				z: cam.getAttribute('position').z,
+			});
+		}
 		if (keyName === 'Escape' && !keyDown) {
 			// Reset the camera position.
 			resetCamera();
 		}
 	}, false);
+
+
 
 	document.addEventListener('keyup', function(event)
 	{
