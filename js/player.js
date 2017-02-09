@@ -28,6 +28,19 @@ function init()
 		z: (data.gridLoader['rows'] / 2)
 	});
 	cam.flushToDOM();
+	// Create an observer to observe camera attributes (meant for POV).
+	cam.addEventListener('componentchanged', function (evt)
+	{
+		// Using orbital controls, move decapitated body around y-axis.
+		if (evt.detail.name === 'rotation')
+		{
+			activeElement.element.setAttribute('rotation', {
+				x: activeElement.element.getAttribute('rotation').x,
+				y: cam.getAttribute('rotation').y,
+				z: activeElement.element.getAttribute('rotation').z
+			});
+		}
+	});
 };
 // Mouse events functionality on the assets
 function attachAssetListeners(obj)
@@ -659,7 +672,6 @@ function removeActive()
 // Set up the PoV camera.
 function placeCamera()
 {
-	removeActive();
 	camera = document.getElementById('camera');
 	povObj = document.getElementById('pov-camera');
 	cam_x_pos = povObj.getAttribute('position').x;
@@ -673,7 +685,7 @@ function placeCamera()
 	});
 	camera.setAttribute('rotation', {
 		x: 0,
-		y: 180,
+		y: 0,
 		z: 0
 	});
 	var lookControls = document.createAttribute('look-controls');
