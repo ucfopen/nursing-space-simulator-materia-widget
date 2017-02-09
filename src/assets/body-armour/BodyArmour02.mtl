@@ -1,0 +1,69 @@
+# Max2Mtl Version 4.0 Mar 10th, 2001
+#
+# Multi/Sub BodyArmour_02Mtl (7) to come 
+#
+newmtl belts
+Ka  0.0 0.0 0.0
+Kd  0.1 0.1 0.1
+Ks  0.3 0.3 0.3
+d  1.0
+Ns  3.0
+illum 2
+bump noisebump.jpg
+#
+newmtl canvas
+Ka  0.0 0.0 0.0
+Kd  0.3 0.3 0.3
+Ks  0.1 0.1 0.1
+d  1.0
+Ns  3.0
+illum 2
+bump canvasbmp.jpg
+#
+newmtl canvas_blue
+Ka  0.0 0.0 0.0
+Kd  0.1 0.1 0.2
+Ks  0.1 0.1 0.1
+d  1.0
+Ns  3.0
+illum 2
+bump canvasbmp.jpg
+#
+newmtl chrome
+Ka  0.0 0.0 0.0
+Kd  0.5 0.5 0.5
+Ks  0.4 0.4 0.4
+d  1.0
+Ns  7.0
+illum 2
+#
+newmtl id_patch_back
+Ka  0.0 0.0 0.0
+Kd  0.4 0.4 0.4
+Ks  0.2 0.2 0.2
+d  1.0
+Ns  2.0
+illum 2
+bump canvasbmp.jpg
+#
+newmtl id_patch_front
+Ka  0.0 0.0 0.0
+Kd  0.4 0.4 0.4
+Ks  0.2 0.2 0.2
+d  1.0
+Ns  2.0
+illum 2
+bump canvasbmp.jpg
+#
+newmtl id_patches_sides
+Ka  0.0 0.0 0.0
+Kd  0.4 0.4 0.4
+Ks  0.2 0.2 0.2
+d  1.0
+Ns  2.0
+illum 2
+bump canvasbmp.jpg
+#
+# Multi/Sub BodyArmour_02Mtl done 
+#
+# EOF
