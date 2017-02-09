@@ -124,6 +124,27 @@ var data = {
 			"type": "object",
 			"vertical": 1
 		},
+		"trashcan": {
+			"assetRotationState": 0,
+			"canReplace": [],
+			"cellsOwned": "",
+			"clonable": "false",
+			"defaultColor": "",
+			"horizontal": 0,
+			"id": "trashcan-1",
+			"isCloned": "false",
+			"isPermanent": "false",
+			"materialSource": "assets/trashcan/mesh_trashcan.mtl",
+			"materialType": "complex",
+			"movable": "true",
+			"objectSource": "assets/trashcan/mesh_trashcan.obj",
+			"position": {"x": -5, "y": 0, "z": 22},
+			"rotation": {"x": 0, "y": 0, "z": 0},
+			"scale": {"x": 0.4, "y": 0.4, "z": 0.4},
+			"tag": "a-obj-model",
+			"type": "object",
+			"vertical": 0
+		},
 		"viewer": {
 			"assetRotationState": 0,
 			"canReplace": [],
