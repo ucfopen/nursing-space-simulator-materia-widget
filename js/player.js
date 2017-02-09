@@ -118,6 +118,29 @@ function attachAssetListeners(obj)
 		this.flushToDOM();
 	});
 }
+function highlightCells() {
+	if(onGround) return;
+	// Highlight other cells that the asset would otherwise occupy.
+	else if(activeElement.activated)
+	{
+		var idContents = this.id.split('-');
+		var x = idContents[idContents.length-2];
+		var z = idContents[idContents.length-1];
+		if(checkBoundaries(false, idContents, x, z, activeElement.horizontal, activeElement.vertical))
+		{
+			for(var i = 0; i <= activeElement.horizontal; i++)
+			{
+				for(var j = 0; j <= activeElement.vertical; j++)
+				{
+					var id = 'cell-' + (Number(x) + i) + '-' + (Number(z) + j);
+					var cellToHighlight = document.getElementById(id);
+					cellToHighlight.setAttribute('material', 'color', '#CC4500');
+					activeCells.push(cellToHighlight);
+				}
+			}
+		}
+	}
+}
 function attachGridCellEventListeners()
 {
 	// Attaches mouse events to the grid cells.
@@ -125,31 +148,7 @@ function attachGridCellEventListeners()
 	for(var i = 0; i < cells.length; i++)
 	{
 		// Hovering over cell
-		cells[i].addEventListener('mouseenter', function ()
-		{
-			if(onGround) return;
-			// Highlight other cells that the asset would otherwise occupy.
-			else if(activeElement.activated)
-			{
-				var idContents = this.id.split('-');
-				var x = idContents[idContents.length-2];
-				var z = idContents[idContents.length-1];
-				if(checkBoundaries(false, idContents, x, z, activeElement.horizontal, activeElement.vertical))
-				{
-					for(var i = 0; i <= activeElement.horizontal; i++)
-					{
-						for(var j = 0; j <= activeElement.vertical; j++)
-						{
-							var id = 'cell-' + (Number(x) + i) + '-' + (Number(z) + j);
-							var cellToHighlight = document.getElementById(id);
-							cellToHighlight.setAttribute('material', 'color', '#CC4500');
-							activeCells.push(cellToHighlight);
-						}
-					}
-				}
-			}
-
-		});
+		cells[i].addEventListener('mouseenter', highlightCells);
 		// Mouse cursor has left the cell.
 		cells[i].addEventListener('mouseleave', function ()
 		{
@@ -581,6 +580,16 @@ function keyboardEventSetup()
 					z: cellPosition.z + ((Number(activeElement.vertical) + 1) / 2.0) - 0.5
 				});
 			}
+			// clear and rehighlight cells on rotation
+			var originCell;
+			if(activeCells.length > 0) {
+				// Origin Cell is assumed to be first in list (usually horz and vert = 0)
+				originCell = activeCells[0];
+				clearCells();
+				// call highlightCells() using the originCell as the 'this'
+				highlightCells.apply(originCell)();
+			}
+
 			activeElement.element.flushToDOM();
 			return;
 		}
