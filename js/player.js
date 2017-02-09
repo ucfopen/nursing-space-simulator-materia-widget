@@ -587,7 +587,7 @@ function keyboardEventSetup()
 				originCell = activeCells[0];
 				clearCells();
 				// call highlightCells() using the originCell as the 'this'
-				highlightCells.apply(originCell)();
+				highlightCells.apply(originCell);
 			}
 
 			activeElement.element.flushToDOM();
