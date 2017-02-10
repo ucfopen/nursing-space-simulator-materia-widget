@@ -18,6 +18,7 @@ var cellSpacing = 0.05;
 var assets = [];
 var keyDown = false;
 var onGround = false;
+
 // The one function to rule them all.
 function init()
 {
@@ -484,6 +485,7 @@ function createAsset(details, x, z, isPermanent)
 	// Adds this asset to the array of assets, if object type.
 	if(x === null || x === undefined) assets.push(asset);
 };
+
 // Deletes a cloned asset from all places referenced.
 function deleteAsset(obj)
 {
@@ -500,6 +502,7 @@ function deleteAsset(obj)
 	}
 	document.querySelector('a-scene').removeChild(obj);
 };
+
 // Highlights grid cells, typically when mouse hovers over them.
 function highlightCells()
 {
@@ -512,16 +515,30 @@ function highlightCells()
 		var z = idContents[idContents.length-1];
 		if(checkBoundaries(false, idContents, x, z, activeElement.horizontal, activeElement.vertical))
 		{
+			activeElement.element.setAttribute('position', {
+				x: Number(x),
+				y: 1,
+				z: Number(z),
+			});
+			activeElement.element.setAttribute('material', 'transparent', true);
+			activeElement.element.setAttribute('material', 'opacity', '0.35');
+			
 			for(var i = 0; i <= activeElement.horizontal; i++)
 			{
 				for(var j = 0; j <= activeElement.vertical; j++)
 				{
 					var id = 'cell-' + (Number(x) + i) + '-' + (Number(z) + j);
 					var cellToHighlight = document.getElementById(id);
-					cellToHighlight.setAttribute('material', 'color', '#CC4500');
+					//cellToHighlight.setAttribute('material', 'color', '#CC4500');
 					activeCells.push(cellToHighlight);
 				}
 			}
+		}
+		// hide it
+		else 
+		{
+			activeElement.element.setAttribute('material', 'opacity', '0');
+
 		}
 	}
 };
@@ -708,6 +725,7 @@ function makeActiveClicked()
 	// Sometimes necessary to force the HTML DOM to redraw these pseudo-dom elements.
 	activeClicked.flushToDOM();
 };
+
 // Creates and places the yellow plane beneath the asset where the mouse is hovering.
 function makeActiveHover(asset)
 {
