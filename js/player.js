@@ -515,13 +515,15 @@ function highlightCells()
 		var z = idContents[idContents.length-1];
 		if(checkBoundaries(false, idContents, x, z, activeElement.horizontal, activeElement.vertical))
 		{
-			activeElement.element.setAttribute('position', {
-				x: Number(x),
-				y: 1,
-				z: Number(z),
-			});
-			activeElement.element.setAttribute('material', 'transparent', true);
-			activeElement.element.setAttribute('material', 'opacity', '0.35');
+			/** Dan's ghost object code -- Start
+			**activeElement.element.setAttribute('position', {
+			**	x: Number(x),
+			**	y: 1,
+			**	z: Number(z),
+			**});
+			**activeElement.element.setAttribute('material', 'transparent', true);
+			**activeElement.element.setAttribute('material', 'opacity', '0.35');
+			**Dan's ghost object Code -- End **/
 			
 			for(var i = 0; i <= activeElement.horizontal; i++)
 			{
@@ -529,17 +531,18 @@ function highlightCells()
 				{
 					var id = 'cell-' + (Number(x) + i) + '-' + (Number(z) + j);
 					var cellToHighlight = document.getElementById(id);
-					//cellToHighlight.setAttribute('material', 'color', '#CC4500');
+					cellToHighlight.setAttribute('material', 'color', '#CC4500');
 					activeCells.push(cellToHighlight);
 				}
 			}
 		}
+		/** Dan's ghost object code -- Start
 		// hide it
-		else 
-		{
-			activeElement.element.setAttribute('material', 'opacity', '0');
-
-		}
+		**else 
+		**{
+		**	activeElement.element.setAttribute('material', 'opacity', '0');
+		**}
+		**Dan's ghost object Code -- End **/
 	}
 };
 // All keyboard events are handled here.
