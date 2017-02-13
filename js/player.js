@@ -45,6 +45,17 @@ function init()
 		}
 	});
 };
+// Puts the camer in a position to see the menu
+function activateMenu()
+{
+	var cam = document.getElementById('camera');
+	cam.setAttribute('position', {
+		x: 0,
+		y: -1.1,
+		z: 0
+	});
+	cam.flushToDOM();
+}
 // Mouse events functionality on the assets
 function attachAssetListeners(obj)
 {
@@ -485,7 +496,17 @@ function createAsset(details, x, z, isPermanent)
 	// Adds this asset to the array of assets, if object type.
 	if(x === null || x === undefined) assets.push(asset);
 };
-
+// Puts the camer in a position to see the menu
+function deactivateMenu()
+{
+	var cam = document.getElementById('camera');
+	cam.setAttribute('position', {
+		x: (data.gridLoader['columns'] / 2),
+		y: 25,
+		z: (data.gridLoader['rows'] / 2)
+	});
+	cam.flushToDOM();
+}
 // Deletes a cloned asset from all places referenced.
 function deleteAsset(obj)
 {
@@ -684,6 +705,11 @@ function keyboardEventSetup()
 				y: cam.getAttribute('position').y + 1,
 				z: cam.getAttribute('position').z,
 			});
+		}
+		// Moves the camera in position to see the menu
+		if (keyName === 'm' && !onGround)
+		{
+			activateMenu();
 		}
 		if (keyName === 'Escape' && !keyDown) {
 			// Reset the camera position.
