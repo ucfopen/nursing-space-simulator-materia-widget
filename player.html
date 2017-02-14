@@ -6,6 +6,8 @@
 		<script type="text/javascript" src="data.json"></script>
 		<script type="text/javascript" src="js/player.js"></script>
 		<script type="text/javascript" src="js/asset-picker.js"></script>
+
+		<link rel="stylesheet" type="text/css" href="main.css">
 	</head>
 	<body>
 		<a-scene stats antialias="true">
@@ -13,10 +15,16 @@
 			<a-plane id="asset-panel" height="30" color="#7C7062" position="-10 -0.5 15" rotation="-90 0 0" width="15"></a-plane>
 			<!-- Your main camera. It starts high, and is looking straight down. -->
 			<a-entity id="camera" camera position="0 0 0" rotation="-90 0 0" mouse-cursor>
-				<a-entity asset-picker position="14 -14 -20" rotation="-90 180 0"></a-entity>
 			</a-entity>
 			
 		</a-scene>
+		<div id="asset-picker">
+			<button id="previous-asset">Previous</button>
+			<button class="asset">1</button>
+			<button class="asset">2</button>
+			<button class="asset">3</button>
+			<button id="next-asset">Next</button>
+		</div>
 	</body>
 	<script type="text/javascript">init();</script>
 </html>

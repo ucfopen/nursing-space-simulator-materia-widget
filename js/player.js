@@ -19,6 +19,10 @@ var assets = [];
 var keyDown = false;
 var onGround = false;
 
+var assetIndex = 0;
+var assetsShown = 4;
+var assetCatalog = [];
+
 // The one function to rule them all.
 function init()
 {
@@ -45,6 +49,24 @@ function init()
 		}
 	});
 };
+
+// attach click listeners to the Asset Picker
+function attachUIListeners() 
+{
+	var prev = document.getElementById("previous-asset");
+	var next = document.getElementById("next-asset");
+
+	prev.addEventListener('click', function(e) { updateAssetPicker(-1); });
+	next.addEventListener('click', function(e) { updateAssetPicker(1); })
+
+	for(var assetEl of document.getElementsByClassName('asset')) {
+		assetEl.addEventListener('click', function(e){ 
+			var name = this.innerHTML;
+			console.log(name);
+			// TODO set activeElement
+		});
+	}
+}
 // Mouse events functionality on the assets
 function attachAssetListeners(obj)
 {
@@ -203,14 +225,21 @@ function attachGridCellEventListeners()
 };
 function buildAssets()
 {
+	var assetContainer = document.getElementById('asset-picker');
+	var assetItems = document.getElementsByClassName('asset');
+	assetsShown = assetItems.length;
+
 	for(var index in data.assetsFromFile) 
 	{
 		if (data.assetsFromFile.hasOwnProperty(index))
 		{
 			var attr = data.assetsFromFile[index];
 			createAsset(attr);
+			assetCatalog.push({'name': index, 'details': attr});
+
 		}
 	}
+	updateAssetPicker(0);
 };
 function buildCell(i, j)
 {
@@ -321,6 +350,7 @@ function buildScene()
 	attachGridCellEventListeners();
 	buildCeiling();
 	buildAssets();
+	attachUIListeners();
 };
 function changeAttribute(attribute, value)
 {
@@ -871,3 +901,13 @@ function swapMaterials(toBeReplaced, toBeReplacedWith)
 	}
 	toBeReplaced.flushToDOM();
 };
+// update the assetpicker icons by advancing assetIndex forward or backward via change variable
+function updateAssetPicker(change) {
+	var updatedIndex = Math.max(0, Math.min(assetIndex + change, assetCatalog.length - assetsShown));
+	// TODO only update if updatedIndex is different then assetIndex ??
+	assetIndex = updatedIndex;
+	var i = assetIndex;
+	for(var assetEl of document.getElementsByClassName('asset')) {
+		assetEl.innerHTML = assetCatalog[i++].name;
+	}
+}
