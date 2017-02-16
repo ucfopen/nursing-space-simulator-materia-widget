@@ -1,0 +1,12 @@
+#asset-picker {
+	position: absolute;
+	left: 35%;
+	bottom: 5px;
+}
+
+.asset {
+	display: inline-block;
+	width: 64px;
+	height: 64px;
+	padding: 0;
+}
