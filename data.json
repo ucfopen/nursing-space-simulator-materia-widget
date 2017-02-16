@@ -2,7 +2,7 @@ var data = {
 	"assetsFromFile": {
 		"bed": {
 			"assetRotationState": 0,
-			"buttonSource":"assets/HOSPITAL_BED_2D.png",
+			"buttonSource":"../assets/HOSPITAL_BED_2D.png",
 			"canReplace": [],
 			"cellsOwned": "",
 			"clonable": "false",
@@ -24,7 +24,7 @@ var data = {
 		},
 		"bed-2": {
 			"assetRotationState": 0,
-			"buttonSource":"assets/HOSPITAL_BED_2D.png",
+			"buttonSource":"../assets/HOSPITAL_BED_2D_2.png",
 			"canReplace": [],
 			"cellsOwned": "",
 			"clonable": "false",
@@ -46,7 +46,7 @@ var data = {
 		},
 		"bed-3": {
 			"assetRotationState": 0,
-			"buttonSource":"assets/HOSPITAL_BED_2D.png",
+			"buttonSource":"../assets/HOSPITAL_BED_2D_3.png",
 			"canReplace": [],
 			"cellsOwned": "",
 			"clonable": "false",
@@ -129,7 +129,7 @@ var data = {
 		},
 		"trashcan": {
 			"assetRotationState": 0,
-			"buttonSource":"assets/HOSPITAL_BED_2D.png",
+			"buttonSource":"../assets/HOSPITAL_BED_2D.png",
 			"canReplace": [],
 			"cellsOwned": "",
 			"clonable": "false",
@@ -151,7 +151,7 @@ var data = {
 		},
 		"viewer": {
 			"assetRotationState": 0,
-			"buttonSource":"assets/HOSPITAL_BED_2D.png",
+			"buttonSource":"../assets/HOSPITAL_BED_2D.png",
 			"canReplace": [],
 			"cellsOwned": "",
 			"clonable": "false",
@@ -231,6 +231,7 @@ var data = {
 		},
 		"wheelchair": {
 			"assetRotationState": 0,
+			"buttonSource":"../assets/HOSPITAL_BED_2D.png",
 			"canReplace": [],
 			"cellsOwned": "",
 			"clonable": "false",

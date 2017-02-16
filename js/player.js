@@ -926,8 +926,10 @@ function updateAssetPicker(change) {
 	var i = assetIndex;
 	for(var assetEl of document.getElementsByClassName('asset')) {
 		assetEl.dataset.index = i;
-		assetEl.innerHTML = assetCatalog[i++].name;
-		assetEl.style.background = "url('../assets/HOSPITAL_BED_2D.png') no-repeat center center";
+		assetEl.innerHTML = assetCatalog[i].name;
+		assetEl.id = assetCatalog[i].details.id;
+		assetEl.style.background = "url(" + assetCatalog[i].details.buttonSource + ") no-repeat center center";
 		assetEl.style.backgroundSize = "100% 100%";
+		i++;
 	}
 }
