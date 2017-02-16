@@ -35,7 +35,7 @@ catch(e)
 	console.log(e);
 }
 
-var widget = sanitize("template-widget");
+var widget = sanitize("hospital-sim");
 // When compiling this may be entered as an argument.
 var minify = argv.minify;
 var mangle = argv.mangle;
