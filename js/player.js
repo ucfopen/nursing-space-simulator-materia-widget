@@ -909,5 +909,7 @@ function updateAssetPicker(change) {
 	var i = assetIndex;
 	for(var assetEl of document.getElementsByClassName('asset')) {
 		assetEl.innerHTML = assetCatalog[i++].name;
+		assetEl.style.background = "url('../assets/HOSPITAL_BED_2D.png') no-repeat center center";
+		assetEl.style.backgroundSize = "100% 100%";
 	}
 }
