@@ -68,6 +68,7 @@ var data = {
 		},
 		"door-1": {
 			"assetRotationState": 0,
+			"buttonSource":"../assets/DOOR_1_2D.png",
 			"canReplace": ["door"],
 			"cellsOwned": "",
 			"clonable": "false",
@@ -89,6 +90,7 @@ var data = {
 		},
 		"door-2": {
 			"assetRotationState": 0,
+			"buttonSource":"../assets/DOOR_2_2D.png",
 			"canReplace": ["door"],
 			"cellsOwned": "",
 			"clonable": "false",
@@ -110,6 +112,7 @@ var data = {
 		},
 		"largeBox": {
 			"assetRotationState": 0,
+			"buttonSource":"../assets/LARGE_BOX_2D.png",
 			"canReplace": [],
 			"cellsOwned": "",
 			"clonable": "false",
