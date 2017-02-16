@@ -61,12 +61,14 @@ function attachUIListeners()
 
 	for(var assetEl of document.getElementsByClassName('asset')) {
 		assetEl.addEventListener('click', function(e){ 
-			var name = this.innerHTML;
-			console.log(name);
-			// TODO set activeElement
+			var asset = assetCatalog[this.dataset.index];
+			console.log(asset);
+			// TODO deactive activeElement if different then picked one
+			// TODO clone asset and set activeElement
 		});
 	}
 }
+
 // Mouse events functionality on the assets
 function attachAssetListeners(obj)
 {
@@ -425,6 +427,7 @@ function clearCells()
 	}
 	activeCells = [];
 };
+
 // Safely clones an asset object rather than use the one in the sidebar
 function clone(obj)
 {
@@ -446,6 +449,7 @@ function clone(obj)
 	assets.push(clonedObject);
 	return clonedObject;
 };
+
 function createAsset(details, x, z, isPermanent)
 {
 	var mainContainer = document.querySelector('a-scene');
@@ -908,6 +912,7 @@ function updateAssetPicker(change) {
 	assetIndex = updatedIndex;
 	var i = assetIndex;
 	for(var assetEl of document.getElementsByClassName('asset')) {
+		assetEl.dataset.index = i;
 		assetEl.innerHTML = assetCatalog[i++].name;
 	}
 }
