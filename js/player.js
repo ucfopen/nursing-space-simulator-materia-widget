@@ -63,8 +63,21 @@ function attachUIListeners()
 		assetEl.addEventListener('click', function(e){ 
 			var asset = assetCatalog[this.dataset.index];
 			console.log(asset);
-			// TODO deactive activeElement if different then picked one
-			// TODO clone asset and set activeElement
+			var elem = document.getElementById(asset.details.id);
+			// Activates the selected asset after deactivating all others.
+			if(activeElement.activated === true) removeActive();
+			this.classList.add('active');
+			activeElement.element = elem;
+			activeElement.activated = true;
+			activeElement.isCloned = elem.getAttribute('isCloned');
+			activeElement.assetRotationState = elem.getAttribute('assetRotationState');
+			activeElement.canReplace = elem.getAttribute('canReplace');
+			activeElement.cellsOwned = elem.getAttribute('cellsOwned');
+			activeElement.horizontal = elem.getAttribute('horizontal');
+			activeElement.vertical = elem.getAttribute('vertical');
+
+			if(activeHover !== null) removeActiveHover();
+			makeActiveClicked();
 		});
 	}
 }
