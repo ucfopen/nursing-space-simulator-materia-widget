@@ -1,13 +1,11 @@
-/*
-** Template Note: These are the basic functions required to create an instance of a widget through
-** Materia's creator. Additional functions like those near the bottom can give your creator
-** functionality. Most widgets require more user input for unique widgets and have unique functions
-** to account for that input.
-*/
 document.addEventListener("DOMContentLoaded", function(event) {
 	console.log("woo!");
 
-	var qset = "";
+	var qset = {
+		items: [],
+		options: {}
+	};
+
 	var widget =
 	{
 		engineName: '',
@@ -15,6 +13,274 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	};
 
 	var materiaInterface = {}
+
+	// Note: We're populating the qset assets and gridloader properties with default assets
+	// This is currently copy/pasted from the demo.json
+	qset.options.assets = {
+		"bed": {
+			"assetRotationState": 0,
+			"buttonSource":"assets/HOSPITAL_BED_2D.png",
+			"canReplace": [],
+			"cellsOwned": "",
+			"clonable": "false",
+			"defaultColor": "#376AD3",
+			"horizontal": 0,
+			"id": "bed-1",
+			"isCloned": "false",
+			"isPermanent": "false",
+			"materialSource": "",
+			"materialType": "complex",
+			"movable": "true",
+			"objectSource": "assets/HOSPITAL_BED.obj",
+			"position": {"x": -100, "y": 0, "z": -100},
+			"rotation": {"x": 0, "y": -90, "z": 0},
+			"scale": {"x": 0.1, "y": 0.1, "z": 0.1},
+			"tag": "a-obj-model",
+			"type": "object",
+			"vertical": 1
+		},
+		"bed-2": {
+			"assetRotationState": 0,
+			"buttonSource":"assets/HOSPITAL_BED_2D_2.png",
+			"canReplace": [],
+			"cellsOwned": "",
+			"clonable": "false",
+			"defaultColor": "#B5848A",
+			"horizontal": 0,
+			"id": "bed-2",
+			"isCloned": "false",
+			"isPermanent": "false",
+			"materialSource": "",
+			"materialType": "complex",
+			"movable": "true",
+			"objectSource": "assets/HOSPITAL_BED.obj",
+			"position": {"x": -100, "y": 0, "z": -100},
+			"rotation": {"x": 0, "y": -90, "z": 0},
+			"scale": {"x": 0.1, "y": 0.1, "z": 0.1},
+			"tag": "a-obj-model",
+			"type": "object",
+			"vertical": 1
+		},
+		"bed-3": {
+			"assetRotationState": 0,
+			"buttonSource":"assets/HOSPITAL_BED_2D_3.png",
+			"canReplace": [],
+			"cellsOwned": "",
+			"clonable": "false",
+			"defaultColor": "#54A898",
+			"horizontal": 0,
+			"id": "bed-3",
+			"isCloned": "false",
+			"isPermanent": "false",
+			"materialSource": "",
+			"materialType": "complex",
+			"movable": "true",
+			"objectSource": "assets/HOSPITAL_BED.obj",
+			"position": {"x": -100, "y": 0, "z": -100},
+			"rotation": {"x": 0, "y": -90, "z": 0},
+			"scale": {"x": 0.1, "y": 0.1, "z": 0.1},
+			"tag": "a-obj-model",
+			"type": "object",
+			"vertical": 1
+		},
+		"door-1": {
+			"assetRotationState": 0,
+			"buttonSource":"assets/DOOR_1_2D.png",
+			"canReplace": ["door"],
+			"cellsOwned": "",
+			"clonable": "false",
+			"defaultColor": "",
+			"horizontal": 0,
+			"id": "door-1",
+			"isCloned": "false",
+			"isPermanent": "false",
+			"materialType": "textured",
+			"movable": "false",
+			"objectSource": "assets/DOOR_1.png",
+			"position": {"x": -100, "y": 0, "z": -100},
+			"rotation": {"x": 0, "y": 0, "z": 0},
+			"repeat": "1 1",
+			"scale": {"x":1, "y":3, "z":1},
+			"tag": "a-box",
+			"type": "door",
+			"vertical": 0
+		},
+		"door-2": {
+			"assetRotationState": 0,
+			"buttonSource":"assets/DOOR_2_2D.png",
+			"canReplace": ["door"],
+			"cellsOwned": "",
+			"clonable": "false",
+			"defaultColor": "",
+			"horizontal": 0,
+			"id": "door-2",
+			"isCloned": "false",
+			"isPermanent": "false",
+			"materialType": "textured",
+			"movable": "false",
+			"objectSource": "assets/DOOR_2.png",
+			"position": {"x": -100, "y": 0, "z": -100},
+			"rotation": {"x": 0, "y": 0, "z": 0},
+			"repeat": "1 1",
+			"scale": {"x":1, "y":3, "z":1},
+			"tag": "a-box",
+			"type": "door",
+			"vertical": 0
+		},
+		"largeBox": {
+			"assetRotationState": 0,
+			"buttonSource":"assets/LARGE_BOX_2D.png",
+			"canReplace": [],
+			"cellsOwned": "",
+			"clonable": "false",
+			"defaultColor": "#FF00FF",
+			"horizontal": 1,
+			"id": "largeBox-2",
+			"isCloned": "false",
+			"isPermanent": "false",
+			"materialType": "primitive",
+			"movable": "true",
+			"position": {"x": -100, "y": 0, "z": -100},
+			"rotation": {"x": 0, "y": 0, "z": 0},
+			"scale": {"x": 2, "y": 1, "z": 2},
+			"tag": "a-box",
+			"type": "object",
+			"vertical": 1
+		},
+		"trashcan": {
+			"assetRotationState": 0,
+			"buttonSource":"assets/trashcan/TRASHCAN_1_2D.png",
+			"canReplace": [],
+			"cellsOwned": "",
+			"clonable": "false",
+			"defaultColor": "",
+			"horizontal": 0,
+			"id": "trashcan-1",
+			"isCloned": "false",
+			"isPermanent": "false",
+			"materialSource": "assets/trashcan/mesh_trashcan.mtl",
+			"materialType": "complex",
+			"movable": "true",
+			"objectSource": "assets/trashcan/mesh_trashcan.obj",
+			"position": {"x": -100, "y": 0, "z": -100},
+			"rotation": {"x": 0, "y": 0, "z": 0},
+			"scale": {"x": 0.4, "y": 0.4, "z": 0.4},
+			"tag": "a-obj-model",
+			"type": "object",
+			"vertical": 0
+		},
+		"viewer": {
+			"assetRotationState": 0,
+			"buttonSource":"assets/VIEWER_1_2D.png",
+			"canReplace": [],
+			"cellsOwned": "",
+			"clonable": "false",
+			"defaultColor": "",
+			"horizontal": 0,
+			"id": "pov-camera",
+			"isCloned": "false",
+			"isPermanent": "false",
+			"materialSource": "assets/body-armour/BodyArmour02.mtl",
+			"materialType": "complex",
+			"movable": "true",
+			"objectSource": "assets/body-armour/BodyArmour02.obj",
+			"position": {"x": -100, "y": 0, "z": -100},
+			"rotation": {"x": 0, "y": 180, "z": 0},
+			"scale": {"x":0.0008, "y":0.0008, "z":0.0008},
+			"tag": "a-obj-model",
+			"type": "view",
+			"vertical": 0
+		},
+		"wall-1": {
+			"assetRotationState": 0,
+			"buttonSource":"assets/WALL_2D_1.png",
+			"canReplace": ["wall"],
+			"cellsOwned": "",
+			"clonable": "false",
+			"defaultColor": "#9FCDB1",
+			"horizontal": 0,
+			"id": "wall-1",
+			"isCloned": "false",
+			"isPermanent": "false",
+			"materialType": "primitive",
+			"movable": "false",
+			"position": {"x": -100, "y": 0, "z": -100},
+			"rotation": {"x": 0, "y": 0, "z": 0},
+			"scale": {"x":1, "y":3, "z":1},
+			"tag": "a-box",
+			"type": "wall",
+			"vertical": 0
+		},
+		"wall-2": {
+			"assetRotationState": 0,
+			"buttonSource":"assets/WALL_2D_2.png",
+			"canReplace": ["wall"],
+			"cellsOwned": "",
+			"clonable": "false",
+			"defaultColor": "#CBC99D",
+			"horizontal": 0,
+			"id": "wall-2",
+			"isCloned": "false",
+			"isPermanent": "false",
+			"materialType": "primitive",
+			"movable": "false",
+			"position": {"x": -100, "y": 0, "z": -100},
+			"rotation": {"x": 0, "y": 0, "z": 0},
+			"scale": {"x":1, "y":3, "z":1},
+			"tag": "a-box",
+			"type": "wall",
+			"vertical": 0
+		}
+		,
+		"wall-3": {
+			"assetRotationState": 0,
+			"buttonSource":"assets/WALL_2D_3.png",
+			"canReplace": ["wall"],
+			"cellsOwned": "",
+			"clonable": "false",
+			"defaultColor": "#86867C",
+			"horizontal": 0,
+			"id": "wall-3",
+			"isCloned": "false",
+			"isPermanent": "false",
+			"materialType": "primitive",
+			"movable": "false",
+			"position": {"x": -100, "y": 0, "z": -100},
+			"rotation": {"x": 0, "y": 0, "z": 0},
+			"scale": {"x":1, "y":3, "z":1},
+			"tag": "a-box",
+			"type": "wall",
+			"vertical": 0
+		},
+		"wheelchair": {
+			"assetRotationState": 0,
+			"buttonSource":"assets/wheelchair/WHEELCHAIR_1_2D.png",
+			"canReplace": [],
+			"cellsOwned": "",
+			"clonable": "false",
+			"defaultColor": "",
+			"horizontal": 0,
+			"id": "wheelchair-1",
+			"isCloned": "false",
+			"isPermanent": "false",
+			"materialSource": "assets/wheelchair/wheelchair.mtl",
+			"materialType": "complex",
+			"movable": "true",
+			"objectSource": "assets/wheelchair/wheelchair.obj",
+			"position": {"x": -100, "y": 0, "z": -100},
+			"rotation": {"x": 0, "y": 0, "z": 0},
+			"scale": {"x": 0.025, "y": 0.025, "z": 0.025},
+			"tag": "a-obj-model",
+			"type": "object",
+			"vertical": 0
+		}
+	}
+
+	qset.options.gridLoader = {
+		"columns": 30,
+		"content": "x-x-x-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-x-x-x-x-x-x-w1-0-0-0-0-0-0-0-0-0-0-w1-w1-0-0-0-0-0-0-0-0-0-0-w1-x-x-x-x-x-x-w1-0-0-0-0-0-0-0-0-0-0-w1-w1-0-0-0-0-0-0-0-0-0-0-w1-x-x-x-x-x-x-w1-0-0-0-0-0-0-0-0-0-0-w1-w1-0-0-0-0-0-0-0-0-0-0-w1-x-x-x-x-x-x-w1-0-0-0-0-0-0-0-0-0-0-w1-w1-0-0-0-0-0-0-0-0-0-0-w1-x-x-x-x-x-x-w1-0-0-0-0-0-0-0-0-0-0-d1-d2-0-0-0-0-0-0-0-0-0-0-w1-x-x-x-x-x-x-w1-0-0-0-0-0-0-0-0-0-0-w1-w1-0-0-0-0-0-0-0-0-0-0-w1-x-x-x-x-x-x-w1-0-0-0-0-0-0-0-0-0-0-w1-w1-0-0-0-0-0-0-0-0-0-0-w1-x-x-x-x-x-x-w1-0-0-0-0-0-0-0-0-0-0-w1-w1-0-0-0-0-0-0-0-0-0-0-w1-x-x-x-x-x-x-w1-0-0-0-0-0-0-0-0-0-0-w1-w1-0-0-0-0-0-0-0-0-0-0-w1-x-x-x-x-x-x-w1-0-0-0-0-0-0-0-0-0-0-w1-w1-0-0-0-0-0-0-0-0-0-0-w1-x-x-x-x-x-x-w1-w1-w1-w1-w1-d1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-d1-w1-w1-w1-w1-w1-w1-x-x-x",
+		"rows": 12
+	}
 
 	materiaInterface.initNewWidget = function(w) {
 		console.log("new");
@@ -25,83 +291,16 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	}
 
 	materiaInterface.onSaveClicked = function() {
-		console.log("save!");
+		title = document.getElementById("title").value;
+		Materia.CreatorCore.save(title, qset, 1);
+
 	}
 
 	materiaInterface.onSaveComplete = function() {
 		console.log("save complete!");
+		return true;
 	}
 
 	return Materia.CreatorCore.start(materiaInterface);
 
 });
-
-// var MateriaCreator = angular.module('materiaCreator', []);
-
-// MateriaCreator.controller('creatorCtrl', ['$scope', '$http', function($scope, $http) {
-// 	var qset = "";
-// 	$scope.widget =
-// 	{
-// 		engineName: '',
-// 		title: ''
-// 	};
-// 	$scope.state =
-// 	{
-// 		isEditingExistingWidget: false
-// 	};
-// 	$scope.initNewWidget = function(widget) {
-// 		console.log("new");
-// 		$scope.$apply(function() {
-// 			return $scope.widget.engineName = $scope.widget.title = widget.name;
-// 		});
-// 		return $http.get('assets/questions.json').then(function(success) {
-// 			return qset = success.data.qset.data;
-// 		}, function(fail) {
-// 			return console.log("Could not load preset questions!");
-// 		});
-// 	};
-// 	$scope.initExistingWidget = function(title, widget, qset, version, baseUrl) {
-// 		console.log("edit");
-// 		$scope.state.isEditingExistingWidget = true;
-// 		$scope.$apply(function() {
-// 			$scope.widget.engineName = widget.name;
-// 			return $scope.widget.title = title;
-// 		});
-// 		if (!qset.length) {
-// 			return $http.get('assets/questions.json').then(function(success) {
-// 				return qset = success.data.qset.data;
-// 			}, function(fail) {
-// 				return console.log("Could not load preset questions!");
-// 			});
-// 		} else {
-// 			return qset;
-// 		}
-// 	};
-// 	$scope.onSaveClicked = function() {
-// 		console.log("save");
-// 		if($scope.widget.title) {
-// 			return Materia.CreatorCore.save($scope.widget.title, qset);
-// 		} else {
-// 			return Materia.CreatorCore.cancelSave('This widget has no title!');
-// 		}
-// 	};
-// 	/**
-// 	* Template Note: Typical creator function not needed in this example template
-// 	*
-// 	*	$scope.onSaveComplete = function(title, widget, qset, version) {
-// 	*		console.log("complete");
-// 	*		return null;
-// 	*	};
-// 	*	$scope.onMediaImportComplete = function(media) {
-// 	*		console.log("import");
-// 	*		return null;
-// 	*	};
-// 	*	var _buildSaveData = function() {
-// 	*		return {
-// 	*			name: '',
-// 	*			items: []
-// 	*		};
-// 	*	};
-// 	*/
-// 	return Materia.CreatorCore.start($scope);
-// }]);
