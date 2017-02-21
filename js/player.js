@@ -23,6 +23,8 @@ var assetIndex = 0;
 var assetsShown = 4;
 var assetCatalog = [];
 
+var mouseHoldTimeout;
+
 // The one function to rule them all.
 function init()
 {
@@ -56,16 +58,69 @@ function attachUIListeners()
 	var prev = document.getElementById("previous-asset");
 	var next = document.getElementById("next-asset");
 
-	heldDown(prev, function(){ updateAssetPicker(-1); }, 300);
-	heldDown(next, function(){ updateAssetPicker(1); }, 300);
+	heldDown(prev, function(){ updateAssetPicker(-1); }, 500);
+	heldDown(next, function(){ updateAssetPicker(1); }, 500);
 
-	// prev.addEventListener('click', function(e) { updateAssetPicker(-1); });
-	// next.addEventListener('click', function(e) { updateAssetPicker(1); })
+	var screenshot = document.getElementById("screenshot");
+	var rotate = document.getElementById("rotate");
+	var del = document.getElementById("delete");
+
+	var cameraLeft = document.getElementById('camera-left');
+	var cameraUp = document.getElementById('camera-up');
+	var cameraRight = document.getElementById('camera-right');
+	var cameraDown = document.getElementById('camera-down');
+
+	var cam = document.getElementById('camera');
+
+
+	screenshot.addEventListener('click', function(e) {
+		// do screenshot here
+	});
+
+	rotate.addEventListener('click', function(e) {
+
+	});
+
+	del.addEventListener('click', function(e) {
+		// do delete here
+	});
+
+	heldDown(cameraLeft, function() {
+		cam.setAttribute('position', {
+			x: cam.getAttribute('position').x - 1,
+			y: cam.getAttribute('position').y,
+			z: cam.getAttribute('position').z,
+		});
+	}, 200);
+
+	heldDown(cameraUp, function() {
+		cam.setAttribute('position', {
+			x: cam.getAttribute('position').x,
+			y: cam.getAttribute('position').y,
+			z: cam.getAttribute('position').z - 1,
+		});
+	}, 200);
+
+	heldDown(cameraRight, function() {
+		cam.setAttribute('position', {
+			x: cam.getAttribute('position').x + 1,
+			y: cam.getAttribute('position').y,
+			z: cam.getAttribute('position').z,
+		});
+	}, 200);
+
+	heldDown(cameraDown, function() {
+		cam.setAttribute('position', {
+			x: cam.getAttribute('position').x,
+			y: cam.getAttribute('position').y,
+			z: cam.getAttribute('position').z + 1,
+		});
+	}, 200);
+
 
 	for(var assetEl of document.getElementsByClassName('asset')) {
 		assetEl.addEventListener('click', function(e){ 
 			var asset = assetCatalog[this.dataset.index];
-			console.log(asset);
 			var elem = document.getElementById(asset.details.id);
 			// Activates the selected asset after deactivating all others.
 			if(activeElement.activated === true) removeActive();
@@ -83,6 +138,9 @@ function attachUIListeners()
 			makeActiveClicked();
 		});
 	}
+	document.addEventListener('mouseup', function(){
+		clearTimeout(mouseHoldTimeout);
+	});
 }
 
 // Mouse events functionality on the assets
@@ -931,20 +989,15 @@ function swapMaterials(toBeReplaced, toBeReplacedWith)
 
 // Sets up an function {func} that fires every {delay} on HTML element {element} while the mouse is held down
 function heldDown(element, func, delay) {
-	var timeout;
-
+	// clear existing timeout
+	clearTimeout(mouseHoldTimeout);
 	var repeat = function() {
-		console.log("REPEATING");
 		func();
-		timeout = setTimeout(repeat, delay);
+		mouseHoldTimeout = setTimeout(repeat, delay);
 	};
 
 	element.addEventListener('mousedown', function(){
 		repeat();
-	});
-
-	element.addEventListener('mouseup', function(){
-		clearTimeout(timeout);
 	});
 }
 
