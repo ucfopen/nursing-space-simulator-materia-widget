@@ -44,9 +44,10 @@ Namespace('HospitalSim').Engine = (function() {
 		var cam = document.getElementById('camera');
 		cam.setAttribute('position', {
 			x: (data.gridLoader['columns'] / 2),
-			y: 25,
+			y: 14,
 			z: (data.gridLoader['rows'] / 2)
 		});
+		console.log(cam);
 		cam.flushToDOM();
 		// Create an observer to observe camera attributes (meant for POV).
 		cam.addEventListener('componentchanged', function (evt)
@@ -879,7 +880,7 @@ Namespace('HospitalSim').Engine = (function() {
 		camera = document.getElementById('camera');
 		camera.setAttribute('position', {
 			x: (data.gridLoader['columns'] / 2),
-			y: 25,
+			y: 14,
 			z: (data.gridLoader['rows'] / 2)
 		});
 		camera.setAttribute('rotation', {
