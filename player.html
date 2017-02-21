@@ -9,19 +9,42 @@
 		<link rel="stylesheet" type="text/css" href="main.css">
 	</head>
 	<body>
-		<a-scene stats antialias="true">
+		<a-scene antialias="true">
 			<a-plane id="grass" height="500" color="#526F35" position="0 -1 0" rotation="-90 0 0" width="500"></a-plane>
 			<!-- Your main camera. It starts high, and is looking straight down. -->
 			<a-entity id="camera" camera position="0 0 0" rotation="-90 0 0" mouse-cursor>
 			</a-entity>
 			
 		</a-scene>
-		<div id="asset-picker">
-			<button id="previous-asset">Previous</button>
-			<button class="asset">1</button>
-			<button class="asset">2</button>
-			<button class="asset">3</button>
-			<button id="next-asset">Next</button>
+		<div id="UI-right-panel">
+			<div id="top-buttons">
+				<button id="screenshot">Camera</button>
+				<button id="delete">&times;</button>
+			</div>
+			<button id="rotate">Rotate</button>
+			<div id="cameraMove">
+				<button id="camera-up">&uarr;</button>
+				<div id="camera-move-horizontal">
+					<button id="camera-left">&larr;</button>
+					<button id="camera-right">&rarr;</button>
+				</div>
+				<button id="camera-down">&darr;</button>
+			</div>
+
+		</div>
+		<div id="UI-bottom-panel">
+			<div id="asset-toggle">
+				<button class="assetType">Floor</button>
+				<button class="assetType">Wall</button>
+			</div>
+			<div id="asset-picker">
+				<button id="previous-asset">&lt;</button>
+				<button class="asset">1</button>
+				<button class="asset">2</button>
+				<button class="asset">3</button>
+				<button class="asset">4</button>
+				<button id="next-asset">&gt;</button>
+			</div>
 		</div>
 	</body>
 	<script type="text/javascript">init();</script>
