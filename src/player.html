@@ -23,15 +23,22 @@
 		<script src="https://rawgit.com/mayognaise/aframe-mouse-cursor-component/master/dist/aframe-mouse-cursor-component.min.js"></script>
 
 		<!-- MAIN APP -->
-		<script type="text/javascript" src="assets/data.json"></script>
 		<script type="text/javascript" src="js/player.js"></script>
+		<link rel="stylesheet" type="text/css" href="player.css">
 	</head>
 	<body>
-		<a-scene>
+		<a-scene stats antialias="true">
 			<a-plane id="grass" height="500" color="#526F35" position="0 -1 0" rotation="-90 0 0" width="500"></a-plane>
-			<a-plane id="asset-panel" height="30" color="#7C7062" position="-10 -0.5 15" rotation="-90 0 0" width="15"></a-plane>
 			<!-- Your main camera. It starts high, and is looking straight down. -->
-			<a-entity id="camera" camera position="0 0 0" rotation="-90 0 0" return false;" mouse-cursor></a-entity>
+			<a-entity id="camera" camera position="0 0 0" rotation="-90 0 0" mouse-cursor>
+			</a-entity>
 		</a-scene>
+		<div id="asset-picker">
+			<button id="previous-asset">Previous</button>
+			<button class="asset">1</button>
+			<button class="asset">2</button>
+			<button class="asset">3</button>
+			<button id="next-asset">Next</button>
+		</div>
 	</body>
 </html>
