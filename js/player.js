@@ -62,7 +62,7 @@ function attachUIListeners()
 	heldDown(next, function(){ updateAssetPicker(1); }, 500);
 
 	var screenshot = document.getElementById("screenshot");
-	var rotate = document.getElementById("rotate");
+	var rotateBTN = document.getElementById("rotate");
 	var del = document.getElementById("delete");
 
 	var cameraLeft = document.getElementById('camera-left');
@@ -74,11 +74,11 @@ function attachUIListeners()
 
 
 	screenshot.addEventListener('click', function(e) {
-		// do screenshot here
+		document.querySelector('a-scene').components.screenshot.capture('perspective');
 	});
 
-	rotate.addEventListener('click', function(e) {
-
+	rotateBTN.addEventListener('click', function(e) {
+		rotate();
 	});
 
 	del.addEventListener('click', function(e) {
@@ -653,84 +653,88 @@ function highlightCells()
 		**Dan's ghost object Code -- End **/
 	}
 };
+function rotate() {
+	var isClone = activeElement.isCloned;
+	// Adjust cell that will be occupied under new rotation.
+	var horizontal = activeElement.horizontal;
+	var vertical = activeElement.vertical;
+	changeAttribute('horizontal', vertical);
+	changeAttribute('vertical', horizontal);
+	if(isClone === 'true')
+	{
+		// Place the clone in the scene on top left grid cell.
+		var cornerCell = document.getElementById(activeElement.cellsOwned.split(',')[0]);
+		var cellPosition = cornerCell.getAttribute('position');
+		var assetPosY = activeElement.element.getAttribute('position').y;
+
+		var idContents = cornerCell.id.split('-');
+		var x = idContents[idContents.length-2];
+		var z = idContents[idContents.length-1];
+		var horizontal = activeElement.horizontal;
+		var vertical = activeElement.vertical;
+		var inBounds = checkBoundaries(true, idContents, x, z, horizontal, vertical);
+		if(!inBounds)
+		{
+			// New position is out of bounds. Change back.
+			var horizontal = activeElement.element.getAttribute('horizontal');
+			var vertical = activeElement.element.getAttribute('vertical');
+			changeAttribute('horizontal', vertical);
+			changeAttribute('vertical', horizontal);
+		}
+		else
+		{
+			changeCellsOwned(cornerCell, true);
+		}
+	}
+	// If clone, Make sure new rotation position is within bounds before rotation.
+	if(isClone === 'false' || inBounds)
+	{
+		// Rotate the actual asset.
+		var rotation = activeElement.element.getAttribute('rotation');
+		activeElement.element.setAttribute('rotation', {x: rotation.x, y: (rotation.y + 90), z: rotation.z});
+		// Increments to the next rotation state (used to calculate horizontal and vertical shape change).
+		activeElement.assetRotationState++;
+		if(activeElement.assetRotationState >= 4) activeElement.assetRotationState = 0;
+		changeAttribute('assetRotationState', activeElement.assetRotationState);
+	}
+	// If not a clone, stop here. Keep original asset position the same.
+	if(isClone === 'true' && inBounds)
+	{
+		// We add one to the horizontal and vertical because of the discrepancies between 'size'
+		// and 'scale' when dealing with imported object assets. Since one blobk is 0 and two blocks
+		// is one in either direction, we must first add one to express it's proper 'size' in that direction.
+		activeElement.element.setAttribute('position', {
+			x: cellPosition.x + ((Number(activeElement.horizontal) + 1) / 2.0) - 0.5,
+			y: assetPosY,
+			z: cellPosition.z + ((Number(activeElement.vertical) + 1) / 2.0) - 0.5
+		});
+	}
+	// clear and rehighlight cells on rotation
+	var originCell;
+	if(activeCells.length > 0) {
+		// Origin Cell is assumed to be first in list (usually horz and vert = 0)
+		originCell = activeCells[0];
+		clearCells();
+		// call highlightCells() using the originCell as the 'this'
+		highlightCells.apply(originCell);
+	}
+
+	activeElement.element.flushToDOM();
+	if(activeClicked !== null) removeActiveClicked();
+	makeActiveClicked();
+}
+
 // All keyboard events are handled here.
 function keyboardEventSetup()
 {
 	document.addEventListener('keydown', function(event)
 	{
 		const keyName = event.key;
-
+		// rotate
 		if (keyName === 'r' && !keyDown && !onGround)
 		{
 			keyDown = true;
-			var isClone = activeElement.isCloned;
-			// Adjust cell that will be occupied under new rotation.
-			var horizontal = activeElement.horizontal;
-			var vertical = activeElement.vertical;
-			changeAttribute('horizontal', vertical);
-			changeAttribute('vertical', horizontal);
-			if(isClone === 'true')
-			{
-				// Place the clone in the scene on top left grid cell.
-				var cornerCell = document.getElementById(activeElement.cellsOwned.split(',')[0]);
-				var cellPosition = cornerCell.getAttribute('position');
-				var assetPosY = activeElement.element.getAttribute('position').y;
-
-				var idContents = cornerCell.id.split('-');
-				var x = idContents[idContents.length-2];
-				var z = idContents[idContents.length-1];
-				var horizontal = activeElement.horizontal;
-				var vertical = activeElement.vertical;
-				var inBounds = checkBoundaries(true, idContents, x, z, horizontal, vertical);
-				if(!inBounds)
-				{
-					// New position is out of bounds. Change back.
-					var horizontal = activeElement.element.getAttribute('horizontal');
-					var vertical = activeElement.element.getAttribute('vertical');
-					changeAttribute('horizontal', vertical);
-					changeAttribute('vertical', horizontal);
-				}
-				else
-				{
-					changeCellsOwned(cornerCell, true);
-				}
-			}
-			// If clone, Make sure new rotation position is within bounds before rotation.
-			if(isClone === 'false' || inBounds)
-			{
-				// Rotate the actual asset.
-				var rotation = activeElement.element.getAttribute('rotation');
-				activeElement.element.setAttribute('rotation', {x: rotation.x, y: (rotation.y + 90), z: rotation.z});
-				// Increments to the next rotation state (used to calculate horizontal and vertical shape change).
-				activeElement.assetRotationState++;
-				if(activeElement.assetRotationState >= 4) activeElement.assetRotationState = 0;
-				changeAttribute('assetRotationState', activeElement.assetRotationState);
-			}
-			// If not a clone, stop here. Keep original asset position the same.
-			if(isClone === 'true' && inBounds)
-			{
-				// We add one to the horizontal and vertical because of the discrepancies between 'size'
-				// and 'scale' when dealing with imported object assets. Since one blobk is 0 and two blocks
-				// is one in either direction, we must first add one to express it's proper 'size' in that direction.
-				activeElement.element.setAttribute('position', {
-					x: cellPosition.x + ((Number(activeElement.horizontal) + 1) / 2.0) - 0.5,
-					y: assetPosY,
-					z: cellPosition.z + ((Number(activeElement.vertical) + 1) / 2.0) - 0.5
-				});
-			}
-			// clear and rehighlight cells on rotation
-			var originCell;
-			if(activeCells.length > 0) {
-				// Origin Cell is assumed to be first in list (usually horz and vert = 0)
-				originCell = activeCells[0];
-				clearCells();
-				// call highlightCells() using the originCell as the 'this'
-				highlightCells.apply(originCell);
-			}
-
-			activeElement.element.flushToDOM();
-			if(activeClicked !== null) removeActiveClicked();
-			makeActiveClicked();
+			rotate();
 			return;
 		}
 		// Move camera toward top of screen
