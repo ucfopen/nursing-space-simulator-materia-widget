@@ -56,8 +56,11 @@ function attachUIListeners()
 	var prev = document.getElementById("previous-asset");
 	var next = document.getElementById("next-asset");
 
-	prev.addEventListener('click', function(e) { updateAssetPicker(-1); });
-	next.addEventListener('click', function(e) { updateAssetPicker(1); })
+	heldDown(prev, function(){ updateAssetPicker(-1); }, 300);
+	heldDown(next, function(){ updateAssetPicker(1); }, 300);
+
+	// prev.addEventListener('click', function(e) { updateAssetPicker(-1); });
+	// next.addEventListener('click', function(e) { updateAssetPicker(1); })
 
 	for(var assetEl of document.getElementsByClassName('asset')) {
 		assetEl.addEventListener('click', function(e){ 
@@ -745,6 +748,7 @@ function keyboardEventSetup()
 		keyDown = false;
 	}, false);
 };
+
 // Creates and places the green plane beneath the active asset.
 function makeActiveClicked()
 {
@@ -831,6 +835,7 @@ function placeCamera()
 	camera.flushToDOM();
 	onGround = true;
 };
+
 // Removes the active class from any object that has it
 function removeActive()
 {
@@ -843,6 +848,7 @@ function removeActive()
 		assets[i].classList.remove('active');
 	}
 };
+
 // Removes activeClicked from scene.
 function removeActiveClicked()
 {
@@ -850,6 +856,7 @@ function removeActiveClicked()
 	mainContainer.removeChild(activeClicked);
 	activeClicked = null;
 };
+
 // Removes activeHover from scene.
 function removeActiveHover()
 {
@@ -857,6 +864,7 @@ function removeActiveHover()
 	mainContainer.removeChild(activeHover);
 	activeHover = null;
 };
+
 // Simple function to reset camera postion to original settings.
 function resetCamera()
 {
@@ -875,6 +883,7 @@ function resetCamera()
 	camera.flushToDOM();
 	onGround = false;
 };
+
 // Resets cell states that an object used to have.
 function resetCellStates(cells)
 {
@@ -884,6 +893,7 @@ function resetCellStates(cells)
 		gridCellsState[coords[coords.length-1]][coords[coords.length-2]] = '0';
 	}
 };
+
 // Replaces 1st parameter's material properties with defaults of 2nd parameter,
 // unless only one parameter then replace current material with default material
 function swapMaterials(toBeReplaced, toBeReplacedWith)
@@ -918,6 +928,26 @@ function swapMaterials(toBeReplaced, toBeReplacedWith)
 	}
 	toBeReplaced.flushToDOM();
 };
+
+// Sets up an function {func} that fires every {delay} on HTML element {element} while the mouse is held down
+function heldDown(element, func, delay) {
+	var timeout;
+
+	var repeat = function() {
+		console.log("REPEATING");
+		func();
+		timeout = setTimeout(repeat, delay);
+	};
+
+	element.addEventListener('mousedown', function(){
+		repeat();
+	});
+
+	element.addEventListener('mouseup', function(){
+		clearTimeout(timeout);
+	});
+}
+
 // update the assetpicker icons by advancing assetIndex forward or backward via change variable
 function updateAssetPicker(change) {
 	var updatedIndex = Math.max(0, Math.min(assetIndex + change, assetCatalog.length - assetsShown));
