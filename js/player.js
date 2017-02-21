@@ -872,9 +872,26 @@ function makeActiveHover(asset)
 	// Sometimes necessary to force the HTML DOM to redraw these pseudo-dom elements.
 	activeHover.flushToDOM();
 };
+function hideBuildUI() {
+	var rightPanel = document.getElementById("UI-right-panel");
+	var bottomPanel = document.getElementById("UI-bottom-panel");
+
+	rightPanel.style.visibility = 'hidden';
+	bottomPanel.style.visibility = 'hidden';
+}
+
+function showBuildUI() {
+	var rightPanel = document.getElementById("UI-right-panel");
+	var bottomPanel = document.getElementById("UI-bottom-panel");
+
+	rightPanel.style.visibility = 'visible';
+	bottomPanel.style.visibility = 'visible';
+}
+
 // Set up the PoV camera.
 function placeCamera()
 {
+	hideBuildUI();
 	camera = document.getElementById('camera');
 	povObj = document.getElementById('pov-camera');
 	cam_x_pos = povObj.getAttribute('position').x;
@@ -930,6 +947,7 @@ function removeActiveHover()
 // Simple function to reset camera postion to original settings.
 function resetCamera()
 {
+	showBuildUI();
 	camera = document.getElementById('camera');
 	camera.setAttribute('position', {
 		x: (data.gridLoader['columns'] / 2),
