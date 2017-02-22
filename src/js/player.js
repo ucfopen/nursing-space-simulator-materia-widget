@@ -696,7 +696,7 @@ Namespace('HospitalSim').Engine = (function() {
 				cam.setAttribute('position', {
 					x: cam.getAttribute('position').x,
 					y: cam.getAttribute('position').y,
-					z: cam.getAttribute('position').z - 1,
+					z: cam.getAttribute('position').z + 1,
 				});
 			}
 			// Move camera toward bottom of screen
@@ -706,7 +706,7 @@ Namespace('HospitalSim').Engine = (function() {
 				cam.setAttribute('position', {
 					x: cam.getAttribute('position').x,
 					y: cam.getAttribute('position').y,
-					z: cam.getAttribute('position').z + 1,
+					z: cam.getAttribute('position').z - 1,
 				});
 			}
 			// Move camera toward left of screen
@@ -714,7 +714,7 @@ Namespace('HospitalSim').Engine = (function() {
 			{
 				var cam = document.getElementById('camera');
 				cam.setAttribute('position', {
-					x: cam.getAttribute('position').x - 1,
+					x: cam.getAttribute('position').x + 1,
 					y: cam.getAttribute('position').y,
 					z: cam.getAttribute('position').z,
 				});
@@ -724,7 +724,7 @@ Namespace('HospitalSim').Engine = (function() {
 			{
 				var cam = document.getElementById('camera');
 				cam.setAttribute('position', {
-					x: cam.getAttribute('position').x + 1,
+					x: cam.getAttribute('position').x - 1,
 					y: cam.getAttribute('position').y,
 					z: cam.getAttribute('position').z,
 				});
@@ -735,7 +735,7 @@ Namespace('HospitalSim').Engine = (function() {
 				var cam = document.getElementById('camera');
 				cam.setAttribute('position', {
 					x: cam.getAttribute('position').x,
-					y: cam.getAttribute('position').y - 1,
+					y: cam.getAttribute('position').y + 1,
 					z: cam.getAttribute('position').z,
 				});
 			}
@@ -745,7 +745,7 @@ Namespace('HospitalSim').Engine = (function() {
 				var cam = document.getElementById('camera');
 				cam.setAttribute('position', {
 					x: cam.getAttribute('position').x,
-					y: cam.getAttribute('position').y + 1,
+					y: cam.getAttribute('position').y - 1,
 					z: cam.getAttribute('position').z,
 				});
 			}
