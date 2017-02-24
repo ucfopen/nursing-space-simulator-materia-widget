@@ -1,3 +1,17 @@
+#ground-top-panel {
+	position: absolute;
+	top: 10px;
+	left: 10px;
+	width: 15%;
+	visibility: hidden;
+}
+#back {
+	width: 100%;
+	background-color: #ff1a1a;
+	font-size: 32px;
+	font-weight: bold;
+}
+
 #UI-right-panel {
 	position: absolute;
 	top: 5px;
@@ -87,5 +101,6 @@
 .asset {
 	width: 19%; /* 15% of 80% */
 	padding: 0;
+	font-size: 16px;
 }
 

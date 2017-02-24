@@ -52,7 +52,7 @@ function init()
 	});
 };
 
-// attach click listeners to the Asset Picker
+// attach click listeners to all the UI / non 3D elements
 function attachUIListeners() 
 {
 	var prev = document.getElementById("previous-asset");
@@ -72,6 +72,11 @@ function attachUIListeners()
 
 	var cam = document.getElementById('camera');
 
+	var backBTN = document.getElementById('back');
+
+	backBTN.addEventListener('click', function(e) {
+		resetCamera();
+	});
 
 	screenshot.addEventListener('click', function(e) {
 		document.querySelector('a-scene').components.screenshot.capture('perspective');
@@ -872,7 +877,10 @@ function makeActiveHover(asset)
 	// Sometimes necessary to force the HTML DOM to redraw these pseudo-dom elements.
 	activeHover.flushToDOM();
 };
-function hideBuildUI() {
+
+// Build UI is the default state, not in VR mode
+function hideBuildUI() 
+{
 	var rightPanel = document.getElementById("UI-right-panel");
 	var bottomPanel = document.getElementById("UI-bottom-panel");
 
@@ -880,18 +888,33 @@ function hideBuildUI() {
 	bottomPanel.style.visibility = 'hidden';
 }
 
-function showBuildUI() {
+function showBuildUI() 
+{
 	var rightPanel = document.getElementById("UI-right-panel");
 	var bottomPanel = document.getElementById("UI-bottom-panel");
 
 	rightPanel.style.visibility = 'visible';
 	bottomPanel.style.visibility = 'visible';
 }
+ // Ground UI is the VR mode
+function hideGroundUI() 
+{
+	var topPanel = document.getElementById("ground-top-panel");
 
+	topPanel.style.visibility = 'hidden';
+}
+
+function showGroundUI()
+{
+	var topPanel = document.getElementById("ground-top-panel");
+
+	topPanel.style.visibility = 'visible';
+}
 // Set up the PoV camera.
 function placeCamera()
 {
 	hideBuildUI();
+	showGroundUI();
 	camera = document.getElementById('camera');
 	povObj = document.getElementById('pov-camera');
 	cam_x_pos = povObj.getAttribute('position').x;
@@ -948,6 +971,7 @@ function removeActiveHover()
 function resetCamera()
 {
 	showBuildUI();
+	hideGroundUI();
 	camera = document.getElementById('camera');
 	camera.setAttribute('position', {
 		x: (data.gridLoader['columns'] / 2),
