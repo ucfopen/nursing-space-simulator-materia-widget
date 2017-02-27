@@ -25,12 +25,12 @@ Namespace('HospitalSim').Engine = (function() {
 	var assetsShown = 4;
 	var assetCatalog = [];
 
+	var mouseHoldTimeout;
+
 	// Object that holds all preset asset data
 	var data = {}
 
 	function start(instance, qset, version) {
-		console.log("Started!!!");
-		console.log(qset);
 		data.assetsFromFile = qset.options.assets
 		data.gridLoader = qset.options.gridLoader
 		init();
@@ -47,7 +47,6 @@ Namespace('HospitalSim').Engine = (function() {
 			y: 14,
 			z: (data.gridLoader['rows'] / 2)
 		});
-		console.log(cam);
 		cam.flushToDOM();
 		// Create an observer to observe camera attributes (meant for POV).
 		cam.addEventListener('componentchanged', function (evt)
@@ -70,8 +69,64 @@ Namespace('HospitalSim').Engine = (function() {
 		var prev = document.getElementById("previous-asset");
 		var next = document.getElementById("next-asset");
 
-		prev.addEventListener('click', function(e) { updateAssetPicker(-1); });
-		next.addEventListener('click', function(e) { updateAssetPicker(1); })
+		heldDown(prev, function(){ updateAssetPicker(-1); }, 500);
+		heldDown(next, function(){ updateAssetPicker(1); }, 500);
+
+		var screenshot = document.getElementById("screenshot");
+		var rotateBTN = document.getElementById("rotate");
+		var del = document.getElementById("delete");
+
+		var cameraLeft = document.getElementById('camera-left');
+		var cameraUp = document.getElementById('camera-up');
+		var cameraRight = document.getElementById('camera-right');
+		var cameraDown = document.getElementById('camera-down');
+
+		var cam = document.getElementById('camera');
+
+
+		screenshot.addEventListener('click', function(e) {
+			document.querySelector('a-scene').components.screenshot.capture('perspective');
+		});
+
+		rotateBTN.addEventListener('click', function(e) {
+			rotate();
+		});
+
+		del.addEventListener('click', function(e) {
+			// do delete here
+		});
+
+		heldDown(cameraLeft, function() {
+			cam.setAttribute('position', {
+				x: cam.getAttribute('position').x - 1,
+				y: cam.getAttribute('position').y,
+				z: cam.getAttribute('position').z,
+			});
+		}, 200);
+
+		heldDown(cameraUp, function() {
+			cam.setAttribute('position', {
+				x: cam.getAttribute('position').x,
+				y: cam.getAttribute('position').y,
+				z: cam.getAttribute('position').z - 1,
+			});
+		}, 200);
+
+		heldDown(cameraRight, function() {
+			cam.setAttribute('position', {
+				x: cam.getAttribute('position').x + 1,
+				y: cam.getAttribute('position').y,
+				z: cam.getAttribute('position').z,
+			});
+		}, 200);
+
+		heldDown(cameraDown, function() {
+			cam.setAttribute('position', {
+				x: cam.getAttribute('position').x,
+				y: cam.getAttribute('position').y,
+				z: cam.getAttribute('position').z + 1,
+			});
+		}, 200);
 
 		var i;
 		var assetList = document.getElementsByClassName('asset');
@@ -97,6 +152,9 @@ Namespace('HospitalSim').Engine = (function() {
 				makeActiveClicked();
 			});
 		}
+		document.addEventListener('mouseup', function(){
+			clearTimeout(mouseHoldTimeout);
+		});
 	}
 
 	// Mouse events functionality on the assets
@@ -609,6 +667,78 @@ Namespace('HospitalSim').Engine = (function() {
 			**Dan's ghost object Code -- End **/
 		}
 	}
+
+	function rotate() {
+		var isClone = activeElement.isCloned;
+		// Adjust cell that will be occupied under new rotation.
+		var horizontal = activeElement.horizontal;
+		var vertical = activeElement.vertical;
+		changeAttribute('horizontal', vertical);
+		changeAttribute('vertical', horizontal);
+		if(isClone === 'true')
+		{
+			// Place the clone in the scene on top left grid cell.
+			var cornerCell = document.getElementById(activeElement.cellsOwned.split(',')[0]);
+			var cellPosition = cornerCell.getAttribute('position');
+			var assetPosY = activeElement.element.getAttribute('position').y;
+
+			var idContents = cornerCell.id.split('-');
+			var x = idContents[idContents.length-2];
+			var z = idContents[idContents.length-1];
+			var horizontal = activeElement.horizontal;
+			var vertical = activeElement.vertical;
+			var inBounds = checkBoundaries(true, idContents, x, z, horizontal, vertical);
+			if(!inBounds)
+			{
+				// New position is out of bounds. Change back.
+				var horizontal = activeElement.element.getAttribute('horizontal');
+				var vertical = activeElement.element.getAttribute('vertical');
+				changeAttribute('horizontal', vertical);
+				changeAttribute('vertical', horizontal);
+			}
+			else
+			{
+				changeCellsOwned(cornerCell, true);
+			}
+		}
+		// If clone, Make sure new rotation position is within bounds before rotation.
+		if(isClone === 'false' || inBounds)
+		{
+			// Rotate the actual asset.
+			var rotation = activeElement.element.getAttribute('rotation');
+			activeElement.element.setAttribute('rotation', {x: rotation.x, y: (rotation.y + 90), z: rotation.z});
+			// Increments to the next rotation state (used to calculate horizontal and vertical shape change).
+			activeElement.assetRotationState++;
+			if(activeElement.assetRotationState >= 4) activeElement.assetRotationState = 0;
+			changeAttribute('assetRotationState', activeElement.assetRotationState);
+		}
+		// If not a clone, stop here. Keep original asset position the same.
+		if(isClone === 'true' && inBounds)
+		{
+			// We add one to the horizontal and vertical because of the discrepancies between 'size'
+			// and 'scale' when dealing with imported object assets. Since one blobk is 0 and two blocks
+			// is one in either direction, we must first add one to express it's proper 'size' in that direction.
+			activeElement.element.setAttribute('position', {
+				x: cellPosition.x + ((Number(activeElement.horizontal) + 1) / 2.0) - 0.5,
+				y: assetPosY,
+				z: cellPosition.z + ((Number(activeElement.vertical) + 1) / 2.0) - 0.5
+			});
+		}
+		// clear and rehighlight cells on rotation
+		var originCell;
+		if(activeCells.length > 0) {
+			// Origin Cell is assumed to be first in list (usually horz and vert = 0)
+			originCell = activeCells[0];
+			clearCells();
+			// call highlightCells() using the originCell as the 'this'
+			highlightCells.apply(originCell);
+		}
+
+		activeElement.element.flushToDOM();
+		if(activeClicked !== null) removeActiveClicked();
+		makeActiveClicked();
+	}
+
 	// All keyboard events are handled here.
 	function keyboardEventSetup()
 	{
@@ -619,74 +749,7 @@ Namespace('HospitalSim').Engine = (function() {
 			if (keyName === 'r' && !keyDown && !onGround)
 			{
 				keyDown = true;
-				var isClone = activeElement.isCloned;
-				// Adjust cell that will be occupied under new rotation.
-				var horizontal = activeElement.horizontal;
-				var vertical = activeElement.vertical;
-				changeAttribute('horizontal', vertical);
-				changeAttribute('vertical', horizontal);
-				if(isClone === 'true')
-				{
-					// Place the clone in the scene on top left grid cell.
-					var cornerCell = document.getElementById(activeElement.cellsOwned.split(',')[0]);
-					var cellPosition = cornerCell.getAttribute('position');
-					var assetPosY = activeElement.element.getAttribute('position').y;
-
-					var idContents = cornerCell.id.split('-');
-					var x = idContents[idContents.length-2];
-					var z = idContents[idContents.length-1];
-					var horizontal = activeElement.horizontal;
-					var vertical = activeElement.vertical;
-					var inBounds = checkBoundaries(true, idContents, x, z, horizontal, vertical);
-					if(!inBounds)
-					{
-						// New position is out of bounds. Change back.
-						var horizontal = activeElement.element.getAttribute('horizontal');
-						var vertical = activeElement.element.getAttribute('vertical');
-						changeAttribute('horizontal', vertical);
-						changeAttribute('vertical', horizontal);
-					}
-					else
-					{
-						changeCellsOwned(cornerCell, true);
-					}
-				}
-				// If clone, Make sure new rotation position is within bounds before rotation.
-				if(isClone === 'false' || inBounds)
-				{
-					// Rotate the actual asset.
-					var rotation = activeElement.element.getAttribute('rotation');
-					activeElement.element.setAttribute('rotation', {x: rotation.x, y: (rotation.y + 90), z: rotation.z});
-					// Increments to the next rotation state (used to calculate horizontal and vertical shape change).
-					activeElement.assetRotationState++;
-					if(activeElement.assetRotationState >= 4) activeElement.assetRotationState = 0;
-					changeAttribute('assetRotationState', activeElement.assetRotationState);
-				}
-				// If not a clone, stop here. Keep original asset position the same.
-				if(isClone === 'true' && inBounds)
-				{
-					// We add one to the horizontal and vertical because of the discrepancies between 'size'
-					// and 'scale' when dealing with imported object assets. Since one blobk is 0 and two blocks
-					// is one in either direction, we must first add one to express it's proper 'size' in that direction.
-					activeElement.element.setAttribute('position', {
-						x: cellPosition.x + ((Number(activeElement.horizontal) + 1) / 2.0) - 0.5,
-						y: assetPosY,
-						z: cellPosition.z + ((Number(activeElement.vertical) + 1) / 2.0) - 0.5
-					});
-				}
-				// clear and rehighlight cells on rotation
-				var originCell;
-				if(activeCells.length > 0) {
-					// Origin Cell is assumed to be first in list (usually horz and vert = 0)
-					originCell = activeCells[0];
-					clearCells();
-					// call highlightCells() using the originCell as the 'this'
-					highlightCells.apply(originCell);
-				}
-
-				activeElement.element.flushToDOM();
-				if(activeClicked !== null) removeActiveClicked();
-				makeActiveClicked();
+				rotate();
 				return;
 			}
 			// Move camera toward top of screen
@@ -823,9 +886,27 @@ Namespace('HospitalSim').Engine = (function() {
 		// Sometimes necessary to force the HTML DOM to redraw these pseudo-dom elements.
 		activeHover.flushToDOM();
 	}
+
+	function hideBuildUI() {
+		var rightPanel = document.getElementById("UI-right-panel");
+		var bottomPanel = document.getElementById("UI-bottom-panel");
+
+		rightPanel.style.visibility = 'hidden';
+		bottomPanel.style.visibility = 'hidden';
+	}
+
+	function showBuildUI() {
+		var rightPanel = document.getElementById("UI-right-panel");
+		var bottomPanel = document.getElementById("UI-bottom-panel");
+
+		rightPanel.style.visibility = 'visible';
+		bottomPanel.style.visibility = 'visible';
+	}
+
 	// Set up the PoV camera.
 	function placeCamera()
 	{
+		hideBuildUI();
 		camera = document.getElementById('camera');
 		povObj = document.getElementById('pov-camera');
 		cam_x_pos = povObj.getAttribute('position').x;
@@ -877,6 +958,7 @@ Namespace('HospitalSim').Engine = (function() {
 	// Simple function to reset camera postion to original settings.
 	function resetCamera()
 	{
+		showBuildUI();
 		camera = document.getElementById('camera');
 		camera.setAttribute('position', {
 			x: (data.gridLoader['columns'] / 2),
@@ -935,11 +1017,25 @@ Namespace('HospitalSim').Engine = (function() {
 		}
 		toBeReplaced.flushToDOM();
 	}
+
+	// Sets up an function {func} that fires every {delay} on HTML element {element} while the mouse is held down
+	function heldDown(element, func, delay) {
+		// clear existing timeout
+		clearTimeout(mouseHoldTimeout);
+		var repeat = function() {
+			func();
+			mouseHoldTimeout = setTimeout(repeat, delay);
+		};
+
+		element.addEventListener('mousedown', function(){
+			repeat();
+		});
+	}
+
 	// update the assetpicker icons by advancing assetIndex forward or backward via change variable
 	function updateAssetPicker(change) {
 		var updatedIndex = Math.max(0, Math.min(assetIndex + change, assetCatalog.length - assetsShown));
 		// TODO only update if updatedIndex is different then assetIndex ??
-		console.log(updatedIndex);
 		assetIndex = updatedIndex;
 		var j = assetIndex;
 		var assetList = document.getElementsByClassName('asset');
