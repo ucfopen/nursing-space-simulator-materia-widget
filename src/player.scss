@@ -1,12 +1,90 @@
-#asset-picker {
+#UI-right-panel {
 	position: absolute;
-	left: 35%;
-	bottom: 5px;
+	top: 5px;
+	right: 0;
+	width: 20%;
 }
 
+#screenshot, #delete, #rotate {
+	width: 30%;
+	position: relative;
+	float: left;
+}
+#rotate {
+	margin-left: 30%;
+	margin-right: 40%;
+	margin-top: 25%;
+	margin-bottom: 25%;
+}
+#top-buttons {
+	position: relative;
+	float: left;
+	width: 100%;
+}
+#camera-move {
+	margin-top: 15%;
+}
+#camera-move-horizontal {
+	position: relative;
+	float: left;
+	display: block;
+	width: 100%;
+}
+#camera-left, #camera-right {
+	position: relative;
+	float: left;
+	display: block;
+}
+#camera-left {
+	margin-left: 40%;
+}
+#camera-right {
+	margin-right: 40%;
+}
+#camera-up, #camera-down {
+	position: relative;
+	float: left;
+	display: block;
+	margin-left: 45%;
+	margin-right: 50%;
+}
+#UI-bottom-panel {
+	width: 100%;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	height: 30%;
+}
+#asset-toggle {
+	position: relative;
+	width: 20%;
+	display: block;
+	float: left;
+}
+#asset-picker {
+	position: relative;
+	float: left;
+	width: 80%;
+}
+
+#asset-toggle > button {
+	width: 100%;
+	float: left;
+	height: 50%;
+	font-size: 32px;
+	font-weight: bold;
+}
+
+#asset-picker > button{
+	float: left;
+	height: 100%;
+}
+#previous-asset, #next-asset {
+	width: 8%; /* 10% of 80% */
+    font-size: 32px;
+    font-weight: bold;
+}
 .asset {
-	display: inline-block;
-	width: 64px;
-	height: 64px;
+	width: 19%; /* 15% of 80% */
 	padding: 0;
 }
