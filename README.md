@@ -19,6 +19,11 @@ Check out the A-Frame demo here: https://codepen.io/mozvr/pen/BjygdO
 
 Don't forget to try the A-Frame inspector by pressing Ctrl + Alt + i
 
+## UI Concepts
+Here's the working document that outlines the gist of our UI.
+https://docs.google.com/document/d/1TSJ3jovXUSu7N78MxGUVOUxALBcYFtmRRjlABIJVHR8/edit
+
+
 ## Testing Locally
 Until the `master` branch is updated with Materia widget support, steps to run the Simulator locally will differ between `master` and the `materia-widget-integration` branch.
 
