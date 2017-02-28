@@ -87,7 +87,9 @@ function attachUIListeners()
 	});
 
 	del.addEventListener('click', function(e) {
-		// do delete here
+		// If an object in the tray is selected, deselect it.
+		// If an object on the stage is selected, delete it.
+		if(activeElement.activated === true) removeActive();
 	});
 
 	heldDown(cameraLeft, function() {
