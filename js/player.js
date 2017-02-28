@@ -63,7 +63,7 @@ function attachUIListeners()
 
 	var screenshot = document.getElementById("screenshot");
 	var rotateBTN = document.getElementById("rotate");
-	var del = document.getElementById("delete");
+	var deselect = document.getElementById("deselect");
 
 	var cameraLeft = document.getElementById('camera-left');
 	var cameraUp = document.getElementById('camera-up');
@@ -86,9 +86,8 @@ function attachUIListeners()
 		rotate();
 	});
 
-	del.addEventListener('click', function(e) {
-		// If an object in the tray is selected, deselect it.
-		// If an object on the stage is selected, delete it.
+	deselect.addEventListener('click', function(e) {
+		// If an object in the tray or on the stage is selected, deselect it.
 		if(activeElement.activated === true) removeActive();
 	});
 
