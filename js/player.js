@@ -159,7 +159,7 @@ function attachUIListeners()
 
 	for(var assetEl of document.getElementsByClassName('asset')) {
 		assetEl.addEventListener('click', function(e){ 
-			var asset = assetCatalog[this.dataset.index];
+			var asset = assetCatalog[currentAssetCategory][this.dataset.index];
 			var elem = document.getElementById(asset.details.id);
 			// Activates the selected asset after deactivating all others.
 			if(activeElement.activated === true) removeActive();
