@@ -9,9 +9,9 @@
 		<link rel="stylesheet" type="text/css" href="main.css">
 	</head>
 	<body>
-		<a-scene antialias="true">
-			<a-plane id="grass" height="500" color="#526F35" position="0 -1 0" rotation="-90 0 0" width="500"></a-plane>
-			<!-- Your main camera. It starts high, and is looking straight down. -->
+		<a-scene antialias="true" vr-mode-ui="enabled: false">
+			<a-plane id="blueprint" height="500" color="#BFFDF5" position="0 -1 0" rotation="-90 0 0" width="500"></a-plane>
+			<!-- Your main camera. It starts high, and is looking straight down. Actual positon in the player.js file. -->
 			<a-entity id="camera" camera position="0 0 0" rotation="-90 0 0" mouse-cursor>
 			</a-entity>
 			
