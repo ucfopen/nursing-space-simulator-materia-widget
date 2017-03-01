@@ -21,7 +21,8 @@ var onGround = false;
 
 var assetIndex = 0;
 var assetsShown = 4;
-var assetCatalog = [];
+var assetCatalog = { 'floor': [], 'wall': [] };
+var currentAssetCategory = "floor";
 
 var mouseHoldTimeout;
 
@@ -55,6 +56,9 @@ function init()
 // attach click listeners to all the UI / non 3D elements
 function attachUIListeners() 
 {
+	var floorBTN = document.getElementById('floor');
+	var wallBTN = document.getElementById('wall');
+
 	var prev = document.getElementById("previous-asset");
 	var next = document.getElementById("next-asset");
 
@@ -73,6 +77,28 @@ function attachUIListeners()
 	var cam = document.getElementById('camera');
 
 	var backBTN = document.getElementById('back');
+
+	floorBTN.addEventListener('click', function(e) {
+		if(currentAssetCategory === 'floor')
+			return;
+
+		wallBTN.classList.remove("active-category");
+		floorBTN.classList.add("active-category");
+		assetIndex = 0;
+		currentAssetCategory = "floor";
+		updateAssetPicker(0);
+	});
+	
+	wallBTN.addEventListener('click', function(e) {
+		if(currentAssetCategory === 'wall')
+			return;
+
+		wallBTN.classList.add("active-category");
+		floorBTN.classList.remove("active-category");
+		assetIndex = 0;
+		currentAssetCategory = "wall";
+		updateAssetPicker(0);
+	});
 
 	backBTN.addEventListener('click', function(e) {
 		resetCamera();
@@ -317,7 +343,10 @@ function buildAssets()
 		{
 			var attr = data.assetsFromFile[index];
 			createAsset(attr);
-			assetCatalog.push({'name': index, 'details': attr});
+			if(attr.type == 'object')
+				assetCatalog['floor'].push({'name': index, 'details': attr});
+			else
+				assetCatalog['wall'].push({'name': index, 'details': attr});
 
 		}
 	}
@@ -1050,15 +1079,16 @@ function heldDown(element, func, delay) {
 
 // update the assetpicker icons by advancing assetIndex forward or backward via change variable
 function updateAssetPicker(change) {
-	var updatedIndex = Math.max(0, Math.min(assetIndex + change, assetCatalog.length - assetsShown));
+	var currentAssetCatalog = assetCatalog[currentAssetCategory];
+	var updatedIndex = Math.max(0, Math.min(assetIndex + change, currentAssetCatalog.length - assetsShown));
 	// TODO only update if updatedIndex is different then assetIndex ??
 	assetIndex = updatedIndex;
 	var i = assetIndex;
 	for(var assetEl of document.getElementsByClassName('asset')) {
 		assetEl.dataset.index = i;
-		assetEl.innerHTML = assetCatalog[i].name;
-		assetEl.id = assetCatalog[i].details.id;
-		assetEl.style.background = "url(" + assetCatalog[i].details.buttonSource + ") no-repeat center center";
+		assetEl.innerHTML = currentAssetCatalog[i].name;
+		assetEl.id = currentAssetCatalog[i].details.id;
+		assetEl.style.background = "url(" + currentAssetCatalog[i].details.buttonSource + ") no-repeat center center";
 		assetEl.style.backgroundSize = "100% 100%";
 		i++;
 	}
