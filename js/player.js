@@ -31,10 +31,17 @@ function init()
 	buildScene();
 	keyboardEventSetup();
 	var cam = document.getElementById('camera');
+	// This looks like "funny" math, but we are trying to set the camera close
+	// enough on the Y axis to see some detail. The X is calculated as half the
+	// total number of column cells. The Z is centered on half the total number of 
+	// row cells, then bumped a few spots to compensate for the UI dock at the
+	// bottom of the screen. This isn't very scaleable, but for our first two
+	// room demo, it will work. We can look at new strategies when we get to the
+	// phase where we are trying to build multiple rooms. -Phil
 	cam.setAttribute('position', {
 		x: (data.gridLoader['columns'] / 2),
-		y: 25,
-		z: (data.gridLoader['rows'] / 2)
+		y: 15,
+		z: (data.gridLoader['rows'] / 2) + 2
 	});
 	cam.flushToDOM();
 	// Create an observer to observe camera attributes (meant for POV).
@@ -283,7 +290,7 @@ function attachGridCellEventListeners()
 				}
 				// Place the clone in the scene on top of clicked grid cell.
 				// We add one to the horizontal and vertical because of the discrepancies between 'size'
-				// and 'scale' when dealing with imported object assets. Since one blobk is 0 and two blocks
+				// and 'scale' when dealing with imported object assets. Since one block is 0 and two blocks
 				// is one in either direction, we must first add one to express it's proper 'size' in that direction.
 				theElementToMove.setAttribute('position', {
 					x: cellPosition.x + ((Number(theElementToMove.getAttribute('horizontal')) + 1) / 2.0) - 0.5,
@@ -934,9 +941,10 @@ function placeCamera()
 	});
 	var lookControls = document.createAttribute('look-controls');
 	camera.setAttributeNode(lookControls);
-	// camera.removeAttribute('mouse-cursor');
 	camera.flushToDOM();
 	onGround = true;
+	// Enable the VR Goggles button.
+	document.querySelector('a-scene').setAttribute("vr-mode-ui", "enabled: true");
 };
 
 // Removes the active class from any object that has it
@@ -974,10 +982,17 @@ function resetCamera()
 	showBuildUI();
 	hideGroundUI();
 	camera = document.getElementById('camera');
+	// This looks like "funny" math, but we are trying to set the camera close
+	// enough on the Y axis to see some detail. The X is calculated as half the
+	// total number of column cells. The Z is centered on half the total number of 
+	// row cells, then bumped a few spots to compensate for the UI dock at the
+	// bottom of the screen. This isn't very scaleable, but for our first two
+	// room demo, it will work. We can look at new strategies when we get to the
+	// phase where we are trying to build multiple rooms. -Phil
 	camera.setAttribute('position', {
 		x: (data.gridLoader['columns'] / 2),
-		y: 25,
-		z: (data.gridLoader['rows'] / 2)
+		y: 15,
+		z: (data.gridLoader['rows'] / 2) + 2
 	});
 	camera.setAttribute('rotation', {
 		x: -90,
@@ -987,6 +1002,10 @@ function resetCamera()
 	camera.removeAttribute('look-controls');
 	camera.flushToDOM();
 	onGround = false;
+	// TODO Deload the "viewer" object.
+
+	// Disable the VR Goggles button.
+	document.querySelector('a-scene').setAttribute("vr-mode-ui", "enabled: false");
 };
 
 // Resets cell states that an object used to have.
