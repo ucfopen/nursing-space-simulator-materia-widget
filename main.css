@@ -1,3 +1,12 @@
+/* State listener. Iso is default view, PoV is first person view. */
+.view-mode-pov .a-enter-vr {
+	display: block;
+}
+
+.view-mode-iso .a-enter-vr {
+	display: none;
+}
+
 #ground-top-panel {
 	position: absolute;
 	top: 10px;
@@ -21,7 +30,6 @@
 
 #screenshot, #deselect, #rotate {
 	width: 100%;
-	
 }
 #rotate {
 }
@@ -58,6 +66,7 @@
 	margin-right: 50%;
 }
 #UI-bottom-panel {
+	/* Not sure why, but 107% seems to fill the browser. */
 	width: 107%;
 	position: absolute;
 	bottom: 0;

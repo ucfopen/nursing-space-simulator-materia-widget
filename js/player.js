@@ -174,6 +174,8 @@ function attachUIListeners()
 			activeElement.vertical = elem.getAttribute('vertical');
 
 			if(activeHover !== null) removeActiveHover();
+			// This places the big green target under the placed asset.
+			// TODO this currently fires for the PoV camera, let's disable that.
 			makeActiveClicked();
 		});
 	}
@@ -470,12 +472,14 @@ function buildScene()
 	buildAssets();
 	attachUIListeners();
 };
+
 function changeAttribute(attribute, value)
 {
 	activeElement.element.setAttribute(attribute, value);
 	activeElement[attribute] = value;
 	activeElement.element.flushToDOM();
 };
+
 function checkBoundaries(isRotation, idContents, x, z, horizontal, vertical)
 {
 	var cells = activeElement.cellsOwned.split(',');
@@ -505,6 +509,7 @@ function checkBoundaries(isRotation, idContents, x, z, horizontal, vertical)
 	}
 	return true;
 };
+
 // Changes cells asset owns unless out of bounds.
 function changeCellsOwned(activeCell, isRotation)
 {
@@ -534,6 +539,7 @@ function changeCellsOwned(activeCell, isRotation)
 	}
 	return true;
 };
+
 // Clears the highlighting from all cells on the grid.
 function clearCells()
 {
@@ -972,8 +978,52 @@ function placeCamera()
 	camera.setAttributeNode(lookControls);
 	camera.flushToDOM();
 	onGround = true;
-	// Enable the VR Goggles button.
-	document.querySelector('a-scene').setAttribute("vr-mode-ui", "enabled: true");
+	// Toggle the camera state.
+	// VR button should be shown now.
+	toggleCameraState();
+	// TODO We don't want the big green active selection box in VR.
+	// removeActiveClicked();
+};
+
+// Simple function to reset camera postion to original settings.
+function resetCamera()
+{
+	showBuildUI();
+	hideGroundUI();
+	camera = document.getElementById('camera');
+	// This looks like "funny" math, but we are trying to set the camera close
+	// enough on the Y axis to see some detail. The X is calculated as half the
+	// total number of column cells. The Z is centered on half the total number of 
+	// row cells, then bumped a few spots to compensate for the UI dock at the
+	// bottom of the screen. This isn't very scaleable, but for our first two
+	// room demo, it will work. We can look at new strategies when we get to the
+	// phase where we are trying to build multiple rooms. -Phil
+	camera.setAttribute('position', {
+		x: (data.gridLoader['columns'] / 2),
+		y: 15,
+		z: (data.gridLoader['rows'] / 2) + 2
+	});
+	camera.setAttribute('rotation', {
+		x: -90,
+		y: 0,
+		z: 0
+	});
+	camera.removeAttribute('look-controls');
+	camera.flushToDOM();
+	onGround = false;
+	// Reset the PoV object.
+	povObj = document.getElementById('pov-camera');
+	povObj.setAttribute('position', {
+		x: -100,
+		y: 0,
+		z: -100
+	});
+	
+	// Toggle the camera state.
+	// VR Button should be hidden now.
+	toggleCameraState();
+	// TODO Remove the cell selection highlight.
+	// removeActiveClicked();
 };
 
 // Removes the active class from any object that has it
@@ -1003,38 +1053,6 @@ function removeActiveHover()
 	var mainContainer = document.querySelector('a-scene');
 	mainContainer.removeChild(activeHover);
 	activeHover = null;
-};
-
-// Simple function to reset camera postion to original settings.
-function resetCamera()
-{
-	showBuildUI();
-	hideGroundUI();
-	camera = document.getElementById('camera');
-	// This looks like "funny" math, but we are trying to set the camera close
-	// enough on the Y axis to see some detail. The X is calculated as half the
-	// total number of column cells. The Z is centered on half the total number of 
-	// row cells, then bumped a few spots to compensate for the UI dock at the
-	// bottom of the screen. This isn't very scaleable, but for our first two
-	// room demo, it will work. We can look at new strategies when we get to the
-	// phase where we are trying to build multiple rooms. -Phil
-	camera.setAttribute('position', {
-		x: (data.gridLoader['columns'] / 2),
-		y: 15,
-		z: (data.gridLoader['rows'] / 2) + 2
-	});
-	camera.setAttribute('rotation', {
-		x: -90,
-		y: 0,
-		z: 0
-	});
-	camera.removeAttribute('look-controls');
-	camera.flushToDOM();
-	onGround = false;
-	// TODO Deload the "viewer" object.
-
-	// Disable the VR Goggles button.
-	document.querySelector('a-scene').setAttribute("vr-mode-ui", "enabled: false");
 };
 
 // Resets cell states that an object used to have.
@@ -1081,6 +1099,17 @@ function swapMaterials(toBeReplaced, toBeReplacedWith)
 	}
 	toBeReplaced.flushToDOM();
 };
+
+function toggleCameraState() {
+	// We call this whenever swtiching camera views.
+	// Get the body tag.
+	var body = document.getElementsByTagName("body")[0];
+	// Default state for the view mode is iso, with button hidden.
+	// View-mode-iso hides the enter vr button.
+	body.classList.toggle("view-mode-iso");
+	// view-mode-pov shows the enter vr button.
+	body.classList.toggle("view-mode-pov");
+}
 
 // Sets up an function {func} that fires every {delay} on HTML element {element} while the mouse is held down
 function heldDown(element, func, delay) {
