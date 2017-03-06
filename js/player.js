@@ -671,15 +671,6 @@ function highlightCells()
 		var z = idContents[idContents.length-1];
 		if(checkBoundaries(false, idContents, x, z, activeElement.horizontal, activeElement.vertical))
 		{
-			/** Dan's ghost object code -- Start
-			**activeElement.element.setAttribute('position', {
-			**	x: Number(x),
-			**	y: 1,
-			**	z: Number(z),
-			**});
-			**activeElement.element.setAttribute('material', 'transparent', true);
-			**activeElement.element.setAttribute('material', 'opacity', '0.35');
-			**Dan's ghost object Code -- End **/
 			
 			for(var i = 0; i <= activeElement.horizontal; i++)
 			{
@@ -692,13 +683,6 @@ function highlightCells()
 				}
 			}
 		}
-		/** Dan's ghost object code -- Start
-		// hide it
-		**else 
-		**{
-		**	activeElement.element.setAttribute('material', 'opacity', '0');
-		**}
-		**Dan's ghost object Code -- End **/
 	}
 };
 function rotate() {
