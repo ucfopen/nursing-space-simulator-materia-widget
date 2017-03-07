@@ -7,6 +7,13 @@
 	display: none;
 }
 
+button {
+	border: solid 1px #A9A9A9;
+	border-radius: 5px;
+	box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.2);
+	outline: none;
+}
+
 #ground-top-panel {
 	position: absolute;
 	top: 10px;
@@ -25,83 +32,151 @@
 	position: absolute;
 	top: 5px;
 	right: 0;
-	width: 20%;
+	padding: 25px;
+	background: rgba(255, 255, 255, 0.7);
+	border-radius: 5px;
 }
 
-#screenshot, #deselect, #rotate {
+#UI-right-panel .label {
+	display: block;
+
 	width: 100%;
+
+	margin: 10px 0px;
+	padding: 5px 10px;
+
+	text-align: center;
+
+	font-family: sans-serif;
 }
-#rotate {
-}
-#top-buttons {
-	position: relative;
-	float: left;
+
+#UI-right-panel #top-buttons {
 	width: 100%;
+	text-align: center;
 }
+
+#UI-right-panel button {
+	padding: 10px;
+	background: #FFFFFF;
+	/*border: solid 1px #A9A9A9;
+	border-radius: 7px;*/
+
+	/*box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.2);*/
+}
+
+#UI-right-panel button:hover {
+	background: #d1ebff;
+}
+
 #camera-move {
-	margin-top: 15%;
+	width: 125px;
+	height: 85px;
+	margin-top: 15px;
+	margin-left: auto;
+	margin-right: auto;
 }
+
+#camera-move button {
+	text-align: center;
+	padding: 5px 10px;
+}
+
 #camera-move-horizontal {
 	position: relative;
 	float: left;
 	display: block;
 	width: 100%;
+	text-align: center;
 }
 #camera-left, #camera-right {
-	position: relative;
-	float: left;
-	display: block;
-}
-#camera-left {
-	margin-left: 40%;
-}
-#camera-right {
-	margin-right: 40%;
+	display: inline-block;
 }
 #camera-up, #camera-down {
-	position: relative;
-	float: left;
 	display: block;
-	margin-left: 45%;
-	margin-right: 50%;
+	margin-left: auto;
+	margin-right: auto ;
 }
+
+
+
 #UI-bottom-panel {
 	/* Not sure why, but 107% seems to fill the browser. */
-	width: 107%;
+	/*width: 107%;
 	position: absolute;
 	bottom: 0;
 	left: 0;
-	height: 30%;
+	height: 30%;*/
+	position: absolute;
+	width: 107%;
+	height: 160px;
+	bottom: 0;
+	left: 0;
+
+	padding: 10px 10% 20px 10%;
+
+	background: rgba(255, 255, 255, 0.7);
+	border-radius: 5px;
 }
 #asset-toggle {
-	position: relative;
-	width: 20%;
-	display: block;
-	float: left;
+	display: inline-block;
+	/*position: relative;*/
+	width: 9%;
+	margin-right: 1%;
 }
+
+#asset-toggle button {
+	background: #A9A9A9;
+	/*border: solid 1px #A9A9A9;*/
+	margin-bottom: 2px;
+	/*border-radius: 5px;*/
+
+	/*box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.2);*/
+}
+
+#asset-toggle button.active-category {
+	background: #FFFFFF;
+}
+
+#asset-toggle button:hover, #asset-toggle button.active-category:hover {
+	background: #d1ebff;
+}
+
 #asset-picker {
-	position: relative;
-	float: left;
-	width: 80%;
+	display: inline-block;
+	width: 70%;
+
+	vertical-align: top;
 }
 
 #asset-toggle > button {
 	width: 100%;
 	float: left;
 	height: 50%;
-	font-size: 32px;
+	font-size: 24px;
 	font-weight: bold;
 }
 
 #asset-picker > button{
-	float: left;
+	/*float: left;*/
+	display: inline-block;
 	height: 100%;
+
+	vertical-align: top;
 }
 #previous-asset, #next-asset {
 	width: 8%; /* 10% of 80% */
-    font-size: 32px;
-    font-weight: bold;
+	height: 100%;
+
+	background: #FFFFFF;
+	/*border-radius: 5px;*/
+
+	font-size: 32px;
+ 	font-weight: bold;
 }
+#previous-asset:hover, #next-asset:hover {
+	background: #d1ebff;
+}
+
 .asset {
 	width: 19%; /* 15% of 80% */
 	padding: 0;
