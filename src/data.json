@@ -2,7 +2,7 @@ var data = {
 	"assetsFromFile": {
 		"bed": {
 			"assetRotationState": 0,
-			"buttonSource":"../assets/HOSPITAL_BED_2D.png",
+			"buttonSource":"assets/HOSPITAL_BED_2D.png",
 			"canReplace": [],
 			"cellsOwned": "",
 			"clonable": "false",
@@ -24,7 +24,7 @@ var data = {
 		},
 		"bed-2": {
 			"assetRotationState": 0,
-			"buttonSource":"../assets/HOSPITAL_BED_2D_2.png",
+			"buttonSource":"assets/HOSPITAL_BED_2D_2.png",
 			"canReplace": [],
 			"cellsOwned": "",
 			"clonable": "false",
@@ -46,7 +46,7 @@ var data = {
 		},
 		"bed-3": {
 			"assetRotationState": 0,
-			"buttonSource":"../assets/HOSPITAL_BED_2D_3.png",
+			"buttonSource":"assets/HOSPITAL_BED_2D_3.png",
 			"canReplace": [],
 			"cellsOwned": "",
 			"clonable": "false",
@@ -68,7 +68,7 @@ var data = {
 		},
 		"crashcart": {
 			"assetRotationState": 0,
-			"buttonSource":"../assets/wheelchair/WHEELCHAIR_1_2D.png",
+			"buttonSource":"assets/wheelchair/WHEELCHAIR_1_2D.png",
 			"canReplace": [],
 			"cellsOwned": "",
 			"clonable": "false",
@@ -90,7 +90,7 @@ var data = {
 		},
 		"computer": {
 			"assetRotationState": 0,
-			"buttonSource":"../assets/wheelchair/WHEELCHAIR_1_2D.png",
+			"buttonSource":"assets/wheelchair/WHEELCHAIR_1_2D.png",
 			"canReplace": [],
 			"cellsOwned": "",
 			"clonable": "false",
@@ -112,7 +112,7 @@ var data = {
 		},
 		"door-1": {
 			"assetRotationState": 0,
-			"buttonSource":"../assets/DOOR_1_2D.png",
+			"buttonSource":"assets/DOOR_1_2D.png",
 			"canReplace": ["door"],
 			"cellsOwned": "",
 			"clonable": "false",
@@ -134,7 +134,7 @@ var data = {
 		},
 		"door-2": {
 			"assetRotationState": 0,
-			"buttonSource":"../assets/DOOR_2_2D.png",
+			"buttonSource":"assets/DOOR_2_2D.png",
 			"canReplace": ["door"],
 			"cellsOwned": "",
 			"clonable": "false",
@@ -156,7 +156,7 @@ var data = {
 		},
 		"iv": {
 			"assetRotationState": 0,
-			"buttonSource":"../assets/wheelchair/WHEELCHAIR_1_2D.png",
+			"buttonSource":"assets/wheelchair/WHEELCHAIR_1_2D.png",
 			"canReplace": [],
 			"cellsOwned": "",
 			"clonable": "false",
@@ -178,7 +178,7 @@ var data = {
 		},
 		"largeBox": {
 			"assetRotationState": 0,
-			"buttonSource":"../assets/LARGE_BOX_2D.png",
+			"buttonSource":"assets/LARGE_BOX_2D.png",
 			"canReplace": [],
 			"cellsOwned": "",
 			"clonable": "false",
@@ -198,7 +198,7 @@ var data = {
 		},
 		"trashcan": {
 			"assetRotationState": 0,
-			"buttonSource":"../assets/trashcan/TRASHCAN_1_2D.png",
+			"buttonSource":"assets/trashcan/TRASHCAN_1_2D.png",
 			"canReplace": [],
 			"cellsOwned": "",
 			"clonable": "false",
@@ -220,7 +220,7 @@ var data = {
 		},
 		"viewer": {
 			"assetRotationState": 0,
-			"buttonSource":"../assets/VIEWER_1_2D.png",
+			"buttonSource":"assets/VIEWER_1_2D.png",
 			"canReplace": [],
 			"cellsOwned": "",
 			"clonable": "false",
@@ -242,7 +242,7 @@ var data = {
 		},
 		"wall-1": {
 			"assetRotationState": 0,
-			"buttonSource":"../assets/WALL_2D_1.png",
+			"buttonSource":"assets/WALL_2D_1.png",
 			"canReplace": ["wall"],
 			"cellsOwned": "",
 			"clonable": "false",
@@ -262,7 +262,7 @@ var data = {
 		},
 		"wall-2": {
 			"assetRotationState": 0,
-			"buttonSource":"../assets/WALL_2D_2.png",
+			"buttonSource":"assets/WALL_2D_2.png",
 			"canReplace": ["wall"],
 			"cellsOwned": "",
 			"clonable": "false",
@@ -282,7 +282,7 @@ var data = {
 		},
 		"wall-3": {
 			"assetRotationState": 0,
-			"buttonSource":"../assets/WALL_2D_3.png",
+			"buttonSource":"assets/WALL_2D_3.png",
 			"canReplace": ["wall"],
 			"cellsOwned": "",
 			"clonable": "false",
@@ -302,7 +302,7 @@ var data = {
 		},
 		"wheelchair": {
 			"assetRotationState": 0,
-			"buttonSource":"../assets/wheelchair/WHEELCHAIR_1_2D.png",
+			"buttonSource":"assets/wheelchair/WHEELCHAIR_1_2D.png",
 			"canReplace": [],
 			"cellsOwned": "",
 			"clonable": "false",
