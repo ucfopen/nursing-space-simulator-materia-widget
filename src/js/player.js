@@ -23,7 +23,8 @@ Namespace('HospitalSim').Engine = (function() {
 
 	var assetIndex = 0;
 	var assetsShown = 4;
-	var assetCatalog = [];
+	var assetCatalog = { 'floor': [], 'wall': [] };
+	var currentAssetCategory = "floor";
 
 	var mouseHoldTimeout;
 
@@ -42,10 +43,17 @@ Namespace('HospitalSim').Engine = (function() {
 		buildScene();
 		keyboardEventSetup();
 		var cam = document.getElementById('camera');
+		// This looks like "funny" math, but we are trying to set the camera close
+		// enough on the Y axis to see some detail. The X is calculated as half the
+		// total number of column cells. The Z is centered on half the total number of
+		// row cells, then bumped a few spots to compensate for the UI dock at the
+		// bottom of the screen. This isn't very scaleable, but for our first two
+		// room demo, it will work. We can look at new strategies when we get to the
+		// phase where we are trying to build multiple rooms. -Phil
 		cam.setAttribute('position', {
 			x: (data.gridLoader['columns'] / 2),
-			y: 14,
-			z: (data.gridLoader['rows'] / 2)
+			y: 15,
+			z: (data.gridLoader['rows'] / 2) + 2
 		});
 		cam.flushToDOM();
 		// Create an observer to observe camera attributes (meant for POV).
@@ -61,11 +69,14 @@ Namespace('HospitalSim').Engine = (function() {
 				});
 			}
 		});
-	}
+	};
 
-	// attach click listeners to the Asset Picker
-	function attachUIListeners() 
+	// attach click listeners to all the UI / non 3D elements
+	function attachUIListeners()
 	{
+		var floorBTN = document.getElementById('floor');
+		var wallBTN = document.getElementById('wall');
+
 		var prev = document.getElementById("previous-asset");
 		var next = document.getElementById("next-asset");
 
@@ -74,7 +85,7 @@ Namespace('HospitalSim').Engine = (function() {
 
 		var screenshot = document.getElementById("screenshot");
 		var rotateBTN = document.getElementById("rotate");
-		var del = document.getElementById("delete");
+		var deselect = document.getElementById("deselect");
 
 		var cameraLeft = document.getElementById('camera-left');
 		var cameraUp = document.getElementById('camera-up');
@@ -83,6 +94,33 @@ Namespace('HospitalSim').Engine = (function() {
 
 		var cam = document.getElementById('camera');
 
+		var backBTN = document.getElementById('back');
+
+		floorBTN.addEventListener('click', function(e) {
+			if(currentAssetCategory === 'floor')
+				return;
+
+			wallBTN.classList.remove("active-category");
+			floorBTN.classList.add("active-category");
+			assetIndex = 0;
+			currentAssetCategory = "floor";
+			updateAssetPicker(0);
+		});
+
+		wallBTN.addEventListener('click', function(e) {
+			if(currentAssetCategory === 'wall')
+				return;
+
+			wallBTN.classList.add("active-category");
+			floorBTN.classList.remove("active-category");
+			assetIndex = 0;
+			currentAssetCategory = "wall";
+			updateAssetPicker(0);
+		});
+
+		backBTN.addEventListener('click', function(e) {
+			resetCamera();
+		});
 
 		screenshot.addEventListener('click', function(e) {
 			document.querySelector('a-scene').components.screenshot.capture('perspective');
@@ -92,8 +130,9 @@ Namespace('HospitalSim').Engine = (function() {
 			rotate();
 		});
 
-		del.addEventListener('click', function(e) {
-			// do delete here
+		deselect.addEventListener('click', function(e) {
+			// If an object in the tray or on the stage is selected, deselect it.
+			if(activeElement.activated === true) removeActive();
 		});
 
 		heldDown(cameraLeft, function() {
@@ -134,7 +173,7 @@ Namespace('HospitalSim').Engine = (function() {
 		for(i = 0; i < assetList.length; i++) {
 			var assetEl = assetList[i];
 			assetEl.addEventListener('click', function(e){
-				var asset = assetCatalog[this.dataset.index];
+				var asset = assetCatalog[currentAssetCategory][this.dataset.index];
 				var elem = document.getElementById(asset.details.id);
 				// Activates the selected asset after deactivating all others.
 				if(activeElement.activated === true) removeActive();
@@ -149,6 +188,8 @@ Namespace('HospitalSim').Engine = (function() {
 				activeElement.vertical = elem.getAttribute('vertical');
 
 				if(activeHover !== null) removeActiveHover();
+				// This places the big green target under the placed asset.
+				// TODO this currently fires for the PoV camera, let's disable that.
 				makeActiveClicked();
 			});
 		}
@@ -237,7 +278,7 @@ Namespace('HospitalSim').Engine = (function() {
 			// Manually ensure a-frame pushes changes to the HTML DOM.
 			this.flushToDOM();
 		});
-	}
+	};
 	function attachGridCellEventListeners()
 	{
 		// Attaches mouse events to the grid cells.
@@ -291,7 +332,7 @@ Namespace('HospitalSim').Engine = (function() {
 					}
 					// Place the clone in the scene on top of clicked grid cell.
 					// We add one to the horizontal and vertical because of the discrepancies between 'size'
-					// and 'scale' when dealing with imported object assets. Since one blobk is 0 and two blocks
+					// and 'scale' when dealing with imported object assets. Since one block is 0 and two blocks
 					// is one in either direction, we must first add one to express it's proper 'size' in that direction.
 					theElementToMove.setAttribute('position', {
 						x: cellPosition.x + ((Number(theElementToMove.getAttribute('horizontal')) + 1) / 2.0) - 0.5,
@@ -312,7 +353,7 @@ Namespace('HospitalSim').Engine = (function() {
 				}
 			});
 		}
-	}
+	};
 	function buildAssets()
 	{
 		var assetContainer = document.getElementById('asset-picker');
@@ -325,12 +366,16 @@ Namespace('HospitalSim').Engine = (function() {
 			{
 				var attr = data.assetsFromFile[index];
 				createAsset(attr);
-				assetCatalog.push({'name': index, 'details': attr});
-
+				// console.log(attr);
+				if(attr.type == 'object')
+					assetCatalog['floor'].push({'name': index, 'details': attr});
+				else
+					assetCatalog['wall'].push({'name': index, 'details': attr});
 			}
 		}
+		console.log(assetCatalog);
 		updateAssetPicker(0);
-	}
+	};
 	function buildCell(i, j)
 	{
 		var mainContainer = document.querySelector('a-scene');
@@ -349,7 +394,7 @@ Namespace('HospitalSim').Engine = (function() {
 		plane.setAttribute('isCloned', 'false');
 		// Sometimes necessary to force the HTML DOM to redraw these pseudo-dom elements.
 		plane.flushToDOM();
-	}
+	};
 	function buildCeiling()
 	{
 		var mainContainer = document.querySelector('a-scene');
@@ -375,7 +420,7 @@ Namespace('HospitalSim').Engine = (function() {
 		ceiling.setAttribute('material', 'repeat', '16 16');
 		// Sometimes necessary to force the HTML DOM to redraw these pseudo-dom elements.
 		ceiling.flushToDOM();
-	}
+	};
 	function buildScene()
 	{
 		var grid = data.gridLoader['content'].split('-');
@@ -434,20 +479,22 @@ Namespace('HospitalSim').Engine = (function() {
 					{
 						break;
 					}
-				}
+				};
 			}
 		}
 		attachGridCellEventListeners();
 		buildCeiling();
 		buildAssets();
 		attachUIListeners();
-	}
+	};
+
 	function changeAttribute(attribute, value)
 	{
 		activeElement.element.setAttribute(attribute, value);
 		activeElement[attribute] = value;
 		activeElement.element.flushToDOM();
-	}
+	};
+
 	function checkBoundaries(isRotation, idContents, x, z, horizontal, vertical)
 	{
 		var cells = activeElement.cellsOwned.split(',');
@@ -476,7 +523,8 @@ Namespace('HospitalSim').Engine = (function() {
 			}
 		}
 		return true;
-	}
+	};
+
 	// Changes cells asset owns unless out of bounds.
 	function changeCellsOwned(activeCell, isRotation)
 	{
@@ -505,7 +553,8 @@ Namespace('HospitalSim').Engine = (function() {
 			}
 		}
 		return true;
-	}
+	};
+
 	// Clears the highlighting from all cells on the grid.
 	function clearCells()
 	{
@@ -514,7 +563,7 @@ Namespace('HospitalSim').Engine = (function() {
 			activeCells[i].setAttribute('material', 'color', '#C1D2CC');
 		}
 		activeCells = [];
-	}
+	};
 
 	// Safely clones an asset object rather than use the one in the sidebar
 	function clone(obj)
@@ -536,7 +585,7 @@ Namespace('HospitalSim').Engine = (function() {
 		// keep all assets in same array.
 		assets.push(clonedObject);
 		return clonedObject;
-	}
+	};
 
 	function createAsset(details, x, z, isPermanent)
 	{
@@ -606,7 +655,7 @@ Namespace('HospitalSim').Engine = (function() {
 		attachAssetListeners(asset);
 		// Adds this asset to the array of assets, if object type.
 		if(x === null || x === undefined) assets.push(asset);
-	}
+	};
 
 	// Deletes a cloned asset from all places referenced.
 	function deleteAsset(obj)
@@ -623,7 +672,7 @@ Namespace('HospitalSim').Engine = (function() {
 			}
 		}
 		document.querySelector('a-scene').removeChild(obj);
-	}
+	};
 
 	// Highlights grid cells, typically when mouse hovers over them.
 	function highlightCells()
@@ -637,16 +686,7 @@ Namespace('HospitalSim').Engine = (function() {
 			var z = idContents[idContents.length-1];
 			if(checkBoundaries(false, idContents, x, z, activeElement.horizontal, activeElement.vertical))
 			{
-				/** Dan's ghost object code -- Start
-				**activeElement.element.setAttribute('position', {
-				**	x: Number(x),
-				**	y: 1,
-				**	z: Number(z),
-				**});
-				**activeElement.element.setAttribute('material', 'transparent', true);
-				**activeElement.element.setAttribute('material', 'opacity', '0.35');
-				**Dan's ghost object Code -- End **/
-				
+
 				for(var i = 0; i <= activeElement.horizontal; i++)
 				{
 					for(var j = 0; j <= activeElement.vertical; j++)
@@ -658,16 +698,8 @@ Namespace('HospitalSim').Engine = (function() {
 					}
 				}
 			}
-			/** Dan's ghost object code -- Start
-			// hide it
-			**else 
-			**{
-			**	activeElement.element.setAttribute('material', 'opacity', '0');
-			**}
-			**Dan's ghost object Code -- End **/
 		}
-	}
-
+	};
 	function rotate() {
 		var isClone = activeElement.isCloned;
 		// Adjust cell that will be occupied under new rotation.
@@ -745,7 +777,7 @@ Namespace('HospitalSim').Engine = (function() {
 		document.addEventListener('keydown', function(event)
 		{
 			const keyName = event.key;
-
+			// rotate
 			if (keyName === 'r' && !keyDown && !onGround)
 			{
 				keyDown = true;
@@ -759,7 +791,7 @@ Namespace('HospitalSim').Engine = (function() {
 				cam.setAttribute('position', {
 					x: cam.getAttribute('position').x,
 					y: cam.getAttribute('position').y,
-					z: cam.getAttribute('position').z + 1,
+					z: cam.getAttribute('position').z - 1,
 				});
 			}
 			// Move camera toward bottom of screen
@@ -769,7 +801,7 @@ Namespace('HospitalSim').Engine = (function() {
 				cam.setAttribute('position', {
 					x: cam.getAttribute('position').x,
 					y: cam.getAttribute('position').y,
-					z: cam.getAttribute('position').z - 1,
+					z: cam.getAttribute('position').z + 1,
 				});
 			}
 			// Move camera toward left of screen
@@ -777,7 +809,7 @@ Namespace('HospitalSim').Engine = (function() {
 			{
 				var cam = document.getElementById('camera');
 				cam.setAttribute('position', {
-					x: cam.getAttribute('position').x + 1,
+					x: cam.getAttribute('position').x - 1,
 					y: cam.getAttribute('position').y,
 					z: cam.getAttribute('position').z,
 				});
@@ -787,7 +819,7 @@ Namespace('HospitalSim').Engine = (function() {
 			{
 				var cam = document.getElementById('camera');
 				cam.setAttribute('position', {
-					x: cam.getAttribute('position').x - 1,
+					x: cam.getAttribute('position').x + 1,
 					y: cam.getAttribute('position').y,
 					z: cam.getAttribute('position').z,
 				});
@@ -798,7 +830,7 @@ Namespace('HospitalSim').Engine = (function() {
 				var cam = document.getElementById('camera');
 				cam.setAttribute('position', {
 					x: cam.getAttribute('position').x,
-					y: cam.getAttribute('position').y + 1,
+					y: cam.getAttribute('position').y - 1,
 					z: cam.getAttribute('position').z,
 				});
 			}
@@ -808,7 +840,7 @@ Namespace('HospitalSim').Engine = (function() {
 				var cam = document.getElementById('camera');
 				cam.setAttribute('position', {
 					x: cam.getAttribute('position').x,
-					y: cam.getAttribute('position').y - 1,
+					y: cam.getAttribute('position').y + 1,
 					z: cam.getAttribute('position').z,
 				});
 			}
@@ -824,12 +856,13 @@ Namespace('HospitalSim').Engine = (function() {
 			const keyName = event.key;
 			keyDown = false;
 		}, false);
-	}
+	};
+
 	// Creates and places the green plane beneath the active asset.
 	function makeActiveClicked()
 	{
 		var position;
-		var size = {}
+		var size = {};
 		position = activeElement.element.getAttribute('position');
 		var horizontal = Number(activeElement.element.getAttribute('horizontal'))
 		var vertical = Number(activeElement.element.getAttribute('vertical'));
@@ -854,13 +887,13 @@ Namespace('HospitalSim').Engine = (function() {
 		activeClicked.setAttribute('material', 'opacity', '0.5');
 		// Sometimes necessary to force the HTML DOM to redraw these pseudo-dom elements.
 		activeClicked.flushToDOM();
-	}
+	};
 
 	// Creates and places the yellow plane beneath the asset where the mouse is hovering.
 	function makeActiveHover(asset)
 	{
 		var position;
-		var size = {}
+		var size = {};
 		position = asset.getAttribute('position');
 		var horizontal = Number(asset.getAttribute('horizontal'))
 		var vertical = Number(asset.getAttribute('vertical'));
@@ -885,9 +918,11 @@ Namespace('HospitalSim').Engine = (function() {
 		activeHover.setAttribute('material', 'opacity', '0.5');
 		// Sometimes necessary to force the HTML DOM to redraw these pseudo-dom elements.
 		activeHover.flushToDOM();
-	}
+	};
 
-	function hideBuildUI() {
+	// Build UI is the default state, not in VR mode
+	function hideBuildUI()
+	{
 		var rightPanel = document.getElementById("UI-right-panel");
 		var bottomPanel = document.getElementById("UI-bottom-panel");
 
@@ -895,18 +930,33 @@ Namespace('HospitalSim').Engine = (function() {
 		bottomPanel.style.visibility = 'hidden';
 	}
 
-	function showBuildUI() {
+	function showBuildUI()
+	{
 		var rightPanel = document.getElementById("UI-right-panel");
 		var bottomPanel = document.getElementById("UI-bottom-panel");
 
 		rightPanel.style.visibility = 'visible';
 		bottomPanel.style.visibility = 'visible';
 	}
+	 // Ground UI is the VR mode
+	function hideGroundUI()
+	{
+		var topPanel = document.getElementById("ground-top-panel");
 
+		topPanel.style.visibility = 'hidden';
+	}
+
+	function showGroundUI()
+	{
+		var topPanel = document.getElementById("ground-top-panel");
+
+		topPanel.style.visibility = 'visible';
+	}
 	// Set up the PoV camera.
 	function placeCamera()
 	{
 		hideBuildUI();
+		showGroundUI();
 		camera = document.getElementById('camera');
 		povObj = document.getElementById('pov-camera');
 		cam_x_pos = povObj.getAttribute('position').x;
@@ -925,10 +975,56 @@ Namespace('HospitalSim').Engine = (function() {
 		});
 		var lookControls = document.createAttribute('look-controls');
 		camera.setAttributeNode(lookControls);
-		// camera.removeAttribute('mouse-cursor');
 		camera.flushToDOM();
 		onGround = true;
-	}
+		// Toggle the camera state.
+		// VR button should be shown now.
+		toggleCameraState();
+		// TODO We don't want the big green active selection box in VR.
+		// removeActiveClicked();
+	};
+
+	// Simple function to reset camera postion to original settings.
+	function resetCamera()
+	{
+		showBuildUI();
+		hideGroundUI();
+		camera = document.getElementById('camera');
+		// This looks like "funny" math, but we are trying to set the camera close
+		// enough on the Y axis to see some detail. The X is calculated as half the
+		// total number of column cells. The Z is centered on half the total number of 
+		// row cells, then bumped a few spots to compensate for the UI dock at the
+		// bottom of the screen. This isn't very scaleable, but for our first two
+		// room demo, it will work. We can look at new strategies when we get to the
+		// phase where we are trying to build multiple rooms. -Phil
+		camera.setAttribute('position', {
+			x: (data.gridLoader['columns'] / 2),
+			y: 15,
+			z: (data.gridLoader['rows'] / 2) + 2
+		});
+		camera.setAttribute('rotation', {
+			x: -90,
+			y: 0,
+			z: 0
+		});
+		camera.removeAttribute('look-controls');
+		camera.flushToDOM();
+		onGround = false;
+		// Reset the PoV object.
+		povObj = document.getElementById('pov-camera');
+		povObj.setAttribute('position', {
+			x: -100,
+			y: 0,
+			z: -100
+		});
+
+		// Toggle the camera state.
+		// VR Button should be hidden now.
+		toggleCameraState();
+		// TODO Remove the cell selection highlight.
+		// removeActiveClicked();
+	};
+
 	// Removes the active class from any object that has it
 	function removeActive()
 	{
@@ -940,40 +1036,24 @@ Namespace('HospitalSim').Engine = (function() {
 			swapMaterials(assets[i]);
 			assets[i].classList.remove('active');
 		}
-	}
+	};
+
 	// Removes activeClicked from scene.
 	function removeActiveClicked()
 	{
 		var mainContainer = document.querySelector('a-scene');
 		mainContainer.removeChild(activeClicked);
 		activeClicked = null;
-	}
+	};
+
 	// Removes activeHover from scene.
 	function removeActiveHover()
 	{
 		var mainContainer = document.querySelector('a-scene');
 		mainContainer.removeChild(activeHover);
 		activeHover = null;
-	}
-	// Simple function to reset camera postion to original settings.
-	function resetCamera()
-	{
-		showBuildUI();
-		camera = document.getElementById('camera');
-		camera.setAttribute('position', {
-			x: (data.gridLoader['columns'] / 2),
-			y: 14,
-			z: (data.gridLoader['rows'] / 2)
-		});
-		camera.setAttribute('rotation', {
-			x: -90,
-			y: 0,
-			z: 0
-		});
-		camera.removeAttribute('look-controls');
-		camera.flushToDOM();
-		onGround = false;
-	}
+	};
+
 	// Resets cell states that an object used to have.
 	function resetCellStates(cells)
 	{
@@ -982,7 +1062,8 @@ Namespace('HospitalSim').Engine = (function() {
 			var coords = cells[i].split('-');
 			gridCellsState[coords[coords.length-1]][coords[coords.length-2]] = '0';
 		}
-	}
+	};
+
 	// Replaces 1st parameter's material properties with defaults of 2nd parameter,
 	// unless only one parameter then replace current material with default material
 	function swapMaterials(toBeReplaced, toBeReplacedWith)
@@ -1016,6 +1097,17 @@ Namespace('HospitalSim').Engine = (function() {
 			}
 		}
 		toBeReplaced.flushToDOM();
+	};
+
+	function toggleCameraState() {
+		// We call this whenever swtiching camera views.
+		// Get the body tag.
+		var body = document.getElementsByTagName("body")[0];
+		// Default state for the view mode is iso, with button hidden.
+		// View-mode-iso hides the enter vr button.
+		body.classList.toggle("view-mode-iso");
+		// view-mode-pov shows the enter vr button.
+		body.classList.toggle("view-mode-pov");
 	}
 
 	// Sets up an function {func} that fires every {delay} on HTML element {element} while the mouse is held down
@@ -1034,16 +1126,17 @@ Namespace('HospitalSim').Engine = (function() {
 
 	// update the assetpicker icons by advancing assetIndex forward or backward via change variable
 	function updateAssetPicker(change) {
-		var updatedIndex = Math.max(0, Math.min(assetIndex + change, assetCatalog.length - assetsShown));
+		var currentAssetCatalog = assetCatalog[currentAssetCategory];
+		var updatedIndex = Math.max(0, Math.min(assetIndex + change, currentAssetCatalog.length - assetsShown));
 		// TODO only update if updatedIndex is different then assetIndex ??
 		assetIndex = updatedIndex;
 		var j = assetIndex;
 		var assetList = document.getElementsByClassName('asset');
 		for (i = 0; i < assetList.length; i++) {
 			assetList[i].dataset.index = j;
-			assetList[i].innerHTML = assetCatalog[j].name;
-			assetList[i].id = assetCatalog[j].details.id;
-			assetList[i].style.background = "url(" + assetCatalog[j].details.buttonSource + ") no-repeat center center";
+			assetList[i].innerHTML = currentAssetCatalog[j].name;
+			assetList[i].id = currentAssetCatalog[j].details.id;
+			assetList[i].style.background = "url(" + currentAssetCatalog[j].details.buttonSource + ") no-repeat center center";
 			assetList[i].style.backgroundSize = "100% 100%";
 			j++;
 		}
