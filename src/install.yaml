@@ -2,8 +2,8 @@
 general:
   name: Hospital Sim
   group: Materia
-  height: 600
-  width: 800
+  height: 920
+  width: 1080
   in_catalog: Yes
   is_editable: Yes
   is_playable: Yes
