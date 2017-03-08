@@ -32,9 +32,9 @@ button {
 #UI-right-panel {
 	position: absolute;
 	top: 5px;
-	right: 0;
+	right: 5px ;
 
-	padding: 25px;
+	padding: 10px;
 	background: rgba(255, 255, 255, 0.7);
 	border-radius: 5px;
 }
@@ -45,7 +45,7 @@ button {
 	width: 100%;
 
 	margin: 10px 0px;
-	padding: 5px 10px;
+	padding: 5px 5px;
 
 	text-align: center;
 
@@ -101,30 +101,34 @@ button {
 #UI-bottom-panel {
 	/* Not sure why, but 107% seems to fill the browser. */
 	position: absolute;
-	width: 107%;
-	height: 160px;
+	width: 100%;
+	height: 120px;
 	bottom: 0;
 	left: 0;
 
-	padding: 10px 10% 20px 10%;
+	padding: 10px 0px;
+
+	/*padding: 10px 15px 10px 15px;*/
 
 	background: rgba(255, 255, 255, 0.7);
 	border-radius: 5px;
 }
 #asset-toggle {
-	display: inline-block;
-	/*position: relative;*/
-	width: 9%;
-	margin-right: 1%;
+	display: block;
+	float: left;
+	width: 80px;
+	margin-left: 15px;
+	margin-right: 15px;
 }
 
 #asset-toggle button {
-	background: #A9A9A9;
+	background: #FFFFFF;
 	margin-bottom: 2px;
+	cursor: pointer;
 }
 
 #asset-toggle button.active-category {
-	background: #FFFFFF;
+	background: #d1ebff;
 }
 
 #asset-toggle button:hover, #asset-toggle button.active-category:hover {
@@ -132,9 +136,11 @@ button {
 }
 
 #asset-picker {
-	display: inline-block;
-	width: 70%;
+	display: block;
+	/*width: 100%;*/
 	height: 100%;
+
+	overflow: auto;
 
 	vertical-align: top;
 }
@@ -144,7 +150,7 @@ button {
 	float: left;
 	height: 50%;
 
-	font-size: 24px;
+	font-size: 18px;
 	font-weight: bold;
 }
 
