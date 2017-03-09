@@ -37,7 +37,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			"scale": {"x": 1, "y": 1, "z": 1},
 			"tag": "a-obj-model",
 			"type": "object",
-			"vertical": 1
+			"vertical": 1,
+			"category" : "beds"
 		},
 		"bed-2": {
 			"assetRotationState": 0,
@@ -59,7 +60,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			"scale": {"x": 0.1, "y": 0.1, "z": 0.1},
 			"tag": "a-obj-model",
 			"type": "object",
-			"vertical": 1
+			"vertical": 1,
+			"category" : "beds"
 		},
 		"bed-3": {
 			"assetRotationState": 0,
@@ -81,7 +83,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			"scale": {"x": 0.1, "y": 0.1, "z": 0.1},
 			"tag": "a-obj-model",
 			"type": "object",
-			"vertical": 1
+			"vertical": 1,
+			"category" : "beds"
 		},
 		"crashcart": {
 			"assetRotationState": 0,
@@ -103,7 +106,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			"scale": {"x": 0.025, "y": 0.025, "z": 0.025},
 			"tag": "a-obj-model",
 			"type": "object",
-			"vertical": 0
+			"vertical": 0,
+			"category" : "equipment"
 		},
 		"computer": {
 			"assetRotationState": 0,
@@ -125,7 +129,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			"scale": {"x": 0.025, "y": 0.025, "z": 0.025},
 			"tag": "a-obj-model",
 			"type": "object",
-			"vertical": 0
+			"vertical": 0,
+			"category" : "equipment"
 		},
 		"door-1": {
 			"assetRotationState": 0,
@@ -147,7 +152,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			"scale": {"x":1, "y":3, "z":1},
 			"tag": "a-box",
 			"type": "door",
-			"vertical": 0
+			"vertical": 0,
+			"category" : "walls"
 		},
 		"door-2": {
 			"assetRotationState": 0,
@@ -169,7 +175,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			"scale": {"x":1, "y":3, "z":1},
 			"tag": "a-box",
 			"type": "door",
-			"vertical": 0
+			"vertical": 0,
+			"category" : "walls"
 		},
 		"iv": {
 			"assetRotationState": 0,
@@ -191,7 +198,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			"scale": {"x": 0.025, "y": 0.025, "z": 0.025},
 			"tag": "a-obj-model",
 			"type": "object",
-			"vertical": 0
+			"vertical": 0,
+			"category" : "equipment"
 		},
 		"largeBox": {
 			"assetRotationState": 0,
@@ -211,7 +219,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			"scale": {"x": 2, "y": 1, "z": 2},
 			"tag": "a-box",
 			"type": "object",
-			"vertical": 1
+			"vertical": 1,
+			"category" : "equipment"
 		},
 		"trashcan": {
 			"assetRotationState": 0,
@@ -233,7 +242,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			"scale": {"x": 0.4, "y": 0.4, "z": 0.4},
 			"tag": "a-obj-model",
 			"type": "object",
-			"vertical": 0
+			"vertical": 0,
+			"category" : "equipment"
 		},
 		"viewer": {
 			"assetRotationState": 0,
@@ -255,7 +265,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			"scale": {"x":0.0008, "y":0.0008, "z":0.0008},
 			"tag": "a-obj-model",
 			"type": "view",
-			"vertical": 0
+			"vertical": 0,
+			"category" : "equipment"
 		},
 		"wall-1": {
 			"assetRotationState": 0,
@@ -275,7 +286,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			"scale": {"x":1, "y":3, "z":1},
 			"tag": "a-box",
 			"type": "wall",
-			"vertical": 0
+			"vertical": 0,
+			"category" : "walls"
 		},
 		"wall-2": {
 			"assetRotationState": 0,
@@ -295,7 +307,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			"scale": {"x":1, "y":3, "z":1},
 			"tag": "a-box",
 			"type": "wall",
-			"vertical": 0
+			"vertical": 0,
+			"category" : "walls"
 		},
 		"wall-3": {
 			"assetRotationState": 0,
@@ -315,7 +328,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			"scale": {"x":1, "y":3, "z":1},
 			"tag": "a-box",
 			"type": "wall",
-			"vertical": 0
+			"vertical": 0,
+			"category" : "walls"
 		},
 		"wheelchair": {
 			"assetRotationState": 0,
@@ -337,9 +351,12 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			"scale": {"x": 0.025, "y": 0.025, "z": 0.025},
 			"tag": "a-obj-model",
 			"type": "object",
-			"vertical": 0
+			"vertical": 0,
+			"category" : "equipment"
 		}
 	}
+
+	qset.options.categories = [ "beds", "equipment", "walls" ];
 
 	qset.options.gridLoader = {
 		"columns": 30,
