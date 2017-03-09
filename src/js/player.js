@@ -30,10 +30,13 @@ Namespace('HospitalSim').Engine = (function() {
 
 	// Object that holds all preset asset data
 	var data = {}
+	var activeCategory;
 
 	function start(instance, qset, version) {
-		data.assetsFromFile = qset.options.assets
-		data.gridLoader = qset.options.gridLoader
+		data.assetsFromFile = qset.options.assets;
+		data.categories = qset.options.categories;
+		data.gridLoader = qset.options.gridLoader;
+
 		init();
 	}
 
@@ -52,7 +55,7 @@ Namespace('HospitalSim').Engine = (function() {
 		// phase where we are trying to build multiple rooms. -Phil
 		cam.setAttribute('position', {
 			x: (data.gridLoader['columns'] / 2),
-			y: 15,
+			y: 16,
 			z: (data.gridLoader['rows'] / 2) + 2
 		});
 		cam.flushToDOM();
@@ -74,14 +77,14 @@ Namespace('HospitalSim').Engine = (function() {
 	// attach click listeners to all the UI / non 3D elements
 	function attachUIListeners()
 	{
-		var floorBTN = document.getElementById('floor');
-		var wallBTN = document.getElementById('wall');
+		// var floorBTN = document.getElementById('floor');
+		// var wallBTN = document.getElementById('wall');
 
-		var prev = document.getElementById("previous-asset");
-		var next = document.getElementById("next-asset");
+		// var prev = document.getElementById("previous-asset");
+		// var next = document.getElementById("next-asset");
 
-		heldDown(prev, function(){ updateAssetPicker(-1); }, 500);
-		heldDown(next, function(){ updateAssetPicker(1); }, 500);
+		// heldDown(prev, function(){ updateAssetPicker(-1); }, 500);
+		// heldDown(next, function(){ updateAssetPicker(1); }, 500);
 
 		var screenshot = document.getElementById("screenshot");
 		var rotateBTN = document.getElementById("rotate");
@@ -96,27 +99,27 @@ Namespace('HospitalSim').Engine = (function() {
 
 		var backBTN = document.getElementById('back');
 
-		floorBTN.addEventListener('click', function(e) {
-			if(currentAssetCategory === 'floor')
-				return;
+		// floorBTN.addEventListener('click', function(e) {
+		// 	if(currentAssetCategory === 'floor')
+		// 		return;
 
-			wallBTN.classList.remove("active-category");
-			floorBTN.classList.add("active-category");
-			assetIndex = 0;
-			currentAssetCategory = "floor";
-			updateAssetPicker(0);
-		});
+		// 	wallBTN.classList.remove("active-category");
+		// 	floorBTN.classList.add("active-category");
+		// 	assetIndex = 0;
+		// 	currentAssetCategory = "floor";
+		// 	updateAssetPicker(0);
+		// });
 
-		wallBTN.addEventListener('click', function(e) {
-			if(currentAssetCategory === 'wall')
-				return;
+		// wallBTN.addEventListener('click', function(e) {
+		// 	if(currentAssetCategory === 'wall')
+		// 		return;
 
-			wallBTN.classList.add("active-category");
-			floorBTN.classList.remove("active-category");
-			assetIndex = 0;
-			currentAssetCategory = "wall";
-			updateAssetPicker(0);
-		});
+		// 	wallBTN.classList.add("active-category");
+		// 	floorBTN.classList.remove("active-category");
+		// 	assetIndex = 0;
+		// 	currentAssetCategory = "wall";
+		// 	updateAssetPicker(0);
+		// });
 
 		backBTN.addEventListener('click', function(e) {
 			resetCamera();
@@ -167,32 +170,29 @@ Namespace('HospitalSim').Engine = (function() {
 			});
 		}, 200);
 
-		var i;
-		var assetList = document.getElementsByClassName('asset');
+		var webVRButton = document.getElementById("vr-viewer-mode");
+		webVRButton.addEventListener('click', function(e) {
 
-		for(i = 0; i < assetList.length; i++) {
-			var assetEl = assetList[i];
-			assetEl.addEventListener('click', function(e){
-				var asset = assetCatalog[currentAssetCategory][this.dataset.index];
-				var elem = document.getElementById(asset.details.id);
-				// Activates the selected asset after deactivating all others.
-				if(activeElement.activated === true) removeActive();
-				this.classList.add('active');
-				activeElement.element = elem;
-				activeElement.activated = true;
-				activeElement.isCloned = elem.getAttribute('isCloned');
-				activeElement.assetRotationState = elem.getAttribute('assetRotationState');
-				activeElement.canReplace = elem.getAttribute('canReplace');
-				activeElement.cellsOwned = elem.getAttribute('cellsOwned');
-				activeElement.horizontal = elem.getAttribute('horizontal');
-				activeElement.vertical = elem.getAttribute('vertical');
+			var elem = document.getElementById("pov-camera");
 
-				if(activeHover !== null) removeActiveHover();
-				// This places the big green target under the placed asset.
-				// TODO this currently fires for the PoV camera, let's disable that.
-				makeActiveClicked();
-			});
-		}
+			if (activeElement.activated === true) removeActive();
+			this.classList.add('active');
+			activeElement.element = elem;
+			activeElement.activated = true;
+			activeElement.isCloned = elem.getAttribute('isCloned');
+			activeElement.assetRotationState = elem.getAttribute('assetRotationState');
+			activeElement.canReplace = elem.getAttribute('canReplace');
+			activeElement.cellsOwned = elem.getAttribute('cellsOwned');
+			activeElement.horizontal = elem.getAttribute('horizontal');
+			activeElement.vertical = elem.getAttribute('vertical');
+
+			if(activeHover !== null) removeActiveHover();
+			// This places the big green target under the placed asset.
+			// TODO this currently fires for the PoV camera, let's disable that.
+			makeActiveClicked();
+
+		});
+
 		document.addEventListener('mouseup', function(){
 			clearTimeout(mouseHoldTimeout);
 		});
@@ -357,24 +357,67 @@ Namespace('HospitalSim').Engine = (function() {
 	function buildAssets()
 	{
 		var assetContainer = document.getElementById('asset-picker');
-		var assetItems = document.getElementsByClassName('asset');
-		assetsShown = assetItems.length;
+		var selectionContainer = document.getElementById('asset-selection-menu');
 
-		for(var index in data.assetsFromFile) 
+		// Dynamically create asset category button elements
+		for (var index in data.categories)
+		{
+			var category = data.categories[index];
+			var element = document.createElement("button");
+			element.classList.add("asset-category");
+			element.setAttribute("data-category",category);
+			element.innerHTML = category;
+
+			selectionContainer.appendChild(element);
+
+			element.addEventListener('click', function(e) {
+
+				var category = this.getAttribute("data-category");
+				setCurrentCategory(category);
+			});
+		}
+
+		for(var index in data.assetsFromFile)
 		{
 			if (data.assetsFromFile.hasOwnProperty(index))
 			{
-				var attr = data.assetsFromFile[index];
-				createAsset(attr);
-				// console.log(attr);
-				if(attr.type == 'object')
-					assetCatalog['floor'].push({'name': index, 'details': attr});
-				else
-					assetCatalog['wall'].push({'name': index, 'details': attr});
+				var item = data.assetsFromFile[index];
+				createAsset(item);
+
+				var asset = document.createElement("button");
+				asset.classList.add("asset");
+				asset.setAttribute("alt", item.id);
+				asset.setAttribute("id", item.id);
+				asset.setAttribute("data-category",item.category);
+				asset.style.background = "url(" + item.buttonSource + ") no-repeat center center";
+				asset.style.backgroundSize = "100% 100%";
+
+				assetContainer.appendChild(asset);
+
+				asset.addEventListener('click', function(e) {
+
+					var elem = document.getElementById(this.id);
+
+					if (activeElement.activated === true) removeActive();
+					this.classList.add('active');
+					activeElement.element = elem;
+					activeElement.activated = true;
+					activeElement.isCloned = elem.getAttribute('isCloned');
+					activeElement.assetRotationState = elem.getAttribute('assetRotationState');
+					activeElement.canReplace = elem.getAttribute('canReplace');
+					activeElement.cellsOwned = elem.getAttribute('cellsOwned');
+					activeElement.horizontal = elem.getAttribute('horizontal');
+					activeElement.vertical = elem.getAttribute('vertical');
+
+					if(activeHover !== null) removeActiveHover();
+					// This places the big green target under the placed asset.
+					// TODO this currently fires for the PoV camera, let's disable that.
+					makeActiveClicked();
+				});
 			}
 		}
-		console.log(assetCatalog);
-		updateAssetPicker(0);
+
+		setCurrentCategory(data.categories[0]);
 	};
 	function buildCell(i, j)
 	{
@@ -999,7 +1042,7 @@ Namespace('HospitalSim').Engine = (function() {
 		// phase where we are trying to build multiple rooms. -Phil
 		camera.setAttribute('position', {
 			x: (data.gridLoader['columns'] / 2),
-			y: 15,
+			y: 16,
 			z: (data.gridLoader['rows'] / 2) + 2
 		});
 		camera.setAttribute('rotation', {
@@ -1124,21 +1167,39 @@ Namespace('HospitalSim').Engine = (function() {
 		});
 	}
 
-	// update the assetpicker icons by advancing assetIndex forward or backward via change variable
-	function updateAssetPicker(change) {
-		var currentAssetCatalog = assetCatalog[currentAssetCategory];
-		var updatedIndex = Math.max(0, Math.min(assetIndex + change, currentAssetCatalog.length - assetsShown));
-		// TODO only update if updatedIndex is different then assetIndex ??
-		assetIndex = updatedIndex;
-		var j = assetIndex;
-		var assetList = document.getElementsByClassName('asset');
-		for (i = 0; i < assetList.length; i++) {
-			assetList[i].dataset.index = j;
-			assetList[i].innerHTML = currentAssetCatalog[j].name;
-			assetList[i].id = currentAssetCatalog[j].details.id;
-			assetList[i].style.background = "url(" + currentAssetCatalog[j].details.buttonSource + ") no-repeat center center";
-			assetList[i].style.backgroundSize = "100% 100%";
-			j++;
+	function setCurrentCategory(category) {
+		var categoryAssets = document.getElementsByClassName('asset-category');
+
+		for (var i=0; i < data.categories.length; i++)
+		{
+			var asset = categoryAssets[i];
+			if (asset.getAttribute("data-category") == category)
+			{
+				asset.classList.add("active-category");
+			}
+			else
+			{
+				if (asset.classList.contains("active-category")) asset.classList.remove("active-category");
+			}
+		}
+
+		activeCategory = category;
+		updateAssetDisplay();
+	}
+
+	function updateAssetDisplay() {
+		var assets = document.getElementsByClassName('asset');
+
+		for (var i=0; i< assets.length; i++)
+		{
+			if (assets[i].getAttribute("data-category") != activeCategory)
+			{
+				assets[i].style.display = "none";
+			}
+			else
+			{
+				assets[i].style.display = "inline-block";
+			}
 		}
 	}
 
