@@ -1,0 +1,56 @@
+<html>
+	<head>
+		<script src="https://aframe.io/releases/0.4.0/aframe.min.js"></script>
+		<script src="https://rawgit.com/dbradleyfl/aframe-gridhelper/master/dist/aframe-gridhelper-component.min.js"></script>
+		<script src="https://rawgit.com/mayognaise/aframe-mouse-cursor-component/master/dist/aframe-mouse-cursor-component.min.js"></script>
+		<script type="text/javascript" src="data.json"></script>
+		<script type="text/javascript" src="js/player.js"></script>
+
+		<link rel="stylesheet" type="text/css" href="player.css">
+	</head>
+	<!-- State listener: view-mode-pov or view-mode-iso -->
+	<body class="view-mode-iso" > 
+		<a-scene antialias="true" vr-mode-ui="enabled: true">
+			<a-plane id="blueprint" height="500" color="#BFFDF5" position="0 -1 0" rotation="-90 0 0" width="500"></a-plane>
+			<!-- Your main camera. It starts high, and is looking straight down. Actual positon in the player.js file. -->
+			<a-entity id="camera" camera position="0 0 0" rotation="-90 0 0" mouse-cursor>
+			</a-entity>
+		</a-scene>
+		<div id="ground-top-panel">
+			<button id="back">Back</button>
+		</div>
+		<div id="UI-right-panel">
+			<span class="label">Object Selection</span>
+			<div id="top-buttons">
+				<button id="deselect">Deselect</button>
+				<button id="rotate">Rotate</button>
+			</div>
+			<span class="label">Camera</span>
+			<div id="camera-move">
+				<button id="camera-up">&uarr;</button>
+				<div id="camera-move-horizontal">
+					<button id="camera-left">&larr;</button>
+					<button id="camera-right">&rarr;</button>
+				</div>
+				<button id="camera-down">&darr;</button>
+			</div>
+			<button id="screenshot">Take a Screenshot</button>
+
+		</div>
+		<div id="UI-bottom-panel">
+			<div id="asset-toggle">
+				<button class="assetType active-category" id="floor">Floor</button>
+				<button class="assetType" id="wall">Wall</button>
+			</div>
+			<div id="asset-picker">
+				<button id="previous-asset">&lt;</button>
+				<button class="asset">1</button>
+				<button class="asset">2</button>
+				<button class="asset">3</button>
+				<button class="asset">4</button>
+				<button id="next-asset">&gt;</button>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript">init();</script>
+</html>
