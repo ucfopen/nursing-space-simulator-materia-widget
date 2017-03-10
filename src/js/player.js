@@ -170,6 +170,23 @@ Namespace('HospitalSim').Engine = (function() {
 			});
 		}, 200);
 
+		var menuToggle = document.getElementsByClassName('drawer-toggle')[0];
+		menuToggle.addEventListener('click', function(e) {
+			var container = document.getElementById("UI-bottom-panel");
+			if (container.classList.contains("open"))
+			{
+				container.classList.remove("open");
+				container.classList.add("closed");
+				this.innerHTML = "[Open Menu]"
+			}
+			else
+			{
+				container.classList.remove("closed");
+				container.classList.add("open");
+				this.innerHTML = "[Close Menu]"
+			}
+		});
+
 		var webVRButton = document.getElementById("vr-viewer-mode");
 		webVRButton.addEventListener('click', function(e) {
 
@@ -296,6 +313,7 @@ Namespace('HospitalSim').Engine = (function() {
 			// Mouse cursor has clicked the cell.
 			cells[i].addEventListener('click', function ()
 			{
+				if (activeElement.element == null) return;
 				if(onGround || activeElement.activated === 'false' || activeElement.element.getAttribute('isPermanent') === 'true') return;
 				else if(activeElement.activated && activeElement.element.getAttribute('movable') === 'false') return;
 				// If asset has been activated, place it on this cell.
