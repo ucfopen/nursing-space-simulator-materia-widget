@@ -743,6 +743,8 @@ Namespace('HospitalSim').Engine = (function() {
 		else if(activeElement.activated)
 		{
 			var idContents = this.id.split('-');
+			// console.log(idContents);
+			console.log(activeElement);
 			var x = idContents[idContents.length-2];
 			var z = idContents[idContents.length-1];
 			if(checkBoundaries(false, idContents, x, z, activeElement.horizontal, activeElement.vertical))
