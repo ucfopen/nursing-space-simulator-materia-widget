@@ -9,6 +9,8 @@ var activeElement = {
 	isCloned: 'false',
 	vertical: 0
 };
+var activeClicked = null;
+var activeHover = null;
 var activeCells = [];
 // 0 means unoccupied, 1 mean occupied.
 var gridCellsState = [];
@@ -16,16 +18,31 @@ var cellSpacing = 0.05;
 var assets = [];
 var keyDown = false;
 var onGround = false;
+
+var assetIndex = 0;
+var assetsShown = 4;
+var assetCatalog = { 'floor': [], 'wall': [] };
+var currentAssetCategory = "floor";
+
+var mouseHoldTimeout;
+
 // The one function to rule them all.
 function init()
 {
 	buildScene();
 	keyboardEventSetup();
 	var cam = document.getElementById('camera');
+	// This looks like "funny" math, but we are trying to set the camera close
+	// enough on the Y axis to see some detail. The X is calculated as half the
+	// total number of column cells. The Z is centered on half the total number of 
+	// row cells, then bumped a few spots to compensate for the UI dock at the
+	// bottom of the screen. This isn't very scaleable, but for our first two
+	// room demo, it will work. We can look at new strategies when we get to the
+	// phase where we are trying to build multiple rooms. -Phil
 	cam.setAttribute('position', {
 		x: (data.gridLoader['columns'] / 2),
-		y: 25,
-		z: (data.gridLoader['rows'] / 2)
+		y: 15,
+		z: (data.gridLoader['rows'] / 2) + 2
 	});
 	cam.flushToDOM();
 	// Create an observer to observe camera attributes (meant for POV).
@@ -42,6 +59,131 @@ function init()
 		}
 	});
 };
+
+// attach click listeners to all the UI / non 3D elements
+function attachUIListeners() 
+{
+	var floorBTN = document.getElementById('floor');
+	var wallBTN = document.getElementById('wall');
+
+	var prev = document.getElementById("previous-asset");
+	var next = document.getElementById("next-asset");
+
+	heldDown(prev, function(){ updateAssetPicker(-1); }, 500);
+	heldDown(next, function(){ updateAssetPicker(1); }, 500);
+
+	var screenshot = document.getElementById("screenshot");
+	var rotateBTN = document.getElementById("rotate");
+	var deselect = document.getElementById("deselect");
+
+	var cameraLeft = document.getElementById('camera-left');
+	var cameraUp = document.getElementById('camera-up');
+	var cameraRight = document.getElementById('camera-right');
+	var cameraDown = document.getElementById('camera-down');
+
+	var cam = document.getElementById('camera');
+
+	var backBTN = document.getElementById('back');
+
+	floorBTN.addEventListener('click', function(e) {
+		if(currentAssetCategory === 'floor')
+			return;
+
+		wallBTN.classList.remove("active-category");
+		floorBTN.classList.add("active-category");
+		assetIndex = 0;
+		currentAssetCategory = "floor";
+		updateAssetPicker(0);
+	});
+	
+	wallBTN.addEventListener('click', function(e) {
+		if(currentAssetCategory === 'wall')
+			return;
+
+		wallBTN.classList.add("active-category");
+		floorBTN.classList.remove("active-category");
+		assetIndex = 0;
+		currentAssetCategory = "wall";
+		updateAssetPicker(0);
+	});
+
+	backBTN.addEventListener('click', function(e) {
+		resetCamera();
+	});
+
+	screenshot.addEventListener('click', function(e) {
+		document.querySelector('a-scene').components.screenshot.capture('perspective');
+	});
+
+	rotateBTN.addEventListener('click', function(e) {
+		rotate();
+	});
+
+	deselect.addEventListener('click', function(e) {
+		// If an object in the tray or on the stage is selected, deselect it.
+		if(activeElement.activated === true) removeActive();
+	});
+
+	heldDown(cameraLeft, function() {
+		cam.setAttribute('position', {
+			x: cam.getAttribute('position').x - 1,
+			y: cam.getAttribute('position').y,
+			z: cam.getAttribute('position').z,
+		});
+	}, 200);
+
+	heldDown(cameraUp, function() {
+		cam.setAttribute('position', {
+			x: cam.getAttribute('position').x,
+			y: cam.getAttribute('position').y,
+			z: cam.getAttribute('position').z - 1,
+		});
+	}, 200);
+
+	heldDown(cameraRight, function() {
+		cam.setAttribute('position', {
+			x: cam.getAttribute('position').x + 1,
+			y: cam.getAttribute('position').y,
+			z: cam.getAttribute('position').z,
+		});
+	}, 200);
+
+	heldDown(cameraDown, function() {
+		cam.setAttribute('position', {
+			x: cam.getAttribute('position').x,
+			y: cam.getAttribute('position').y,
+			z: cam.getAttribute('position').z + 1,
+		});
+	}, 200);
+
+
+	for(var assetEl of document.getElementsByClassName('asset')) {
+		assetEl.addEventListener('click', function(e){ 
+			var asset = assetCatalog[currentAssetCategory][this.dataset.index];
+			var elem = document.getElementById(asset.details.id);
+			// Activates the selected asset after deactivating all others.
+			if(activeElement.activated === true) removeActive();
+			this.classList.add('active');
+			activeElement.element = elem;
+			activeElement.activated = true;
+			activeElement.isCloned = elem.getAttribute('isCloned');
+			activeElement.assetRotationState = elem.getAttribute('assetRotationState');
+			activeElement.canReplace = elem.getAttribute('canReplace');
+			activeElement.cellsOwned = elem.getAttribute('cellsOwned');
+			activeElement.horizontal = elem.getAttribute('horizontal');
+			activeElement.vertical = elem.getAttribute('vertical');
+
+			if(activeHover !== null) removeActiveHover();
+			// This places the big green target under the placed asset.
+			// TODO this currently fires for the PoV camera, let's disable that.
+			makeActiveClicked();
+		});
+	}
+	document.addEventListener('mouseup', function(){
+		clearTimeout(mouseHoldTimeout);
+	});
+}
+
 // Mouse events functionality on the assets
 function attachAssetListeners(obj)
 {
@@ -54,14 +196,15 @@ function attachAssetListeners(obj)
 		// If nothing is active AND asset os permanent fixture loaded from gridString (ie. wall), don't change color.
 		if(onGround) return;
 		else if(this.classList.contains('active')) return;
-		else if(activeElement.activated === true && activeElement.element.getAttribute('canReplace').indexOf(this.getAttribute('type')) <= -1) return;
+		else if(activeElement.activated === true && activeElement.element.getAttribute('canReplace').indexOf(this.getAttribute('type')) <= -1 && this.getAttribute('isCloned') === 'true') return;
 		else if(activeElement.activated === false && this.getAttribute('isPermanent') === 'true') return;
-		this.setAttribute('material', 'color', 'red');
+		makeActiveHover(this);
 	});
 	// No longer hovering over asset
 	obj.addEventListener('mouseleave', function ()
 	{
 		if(this.classList.contains('active') || onGround) return;
+		if(activeHover !== null) removeActiveHover();
 		swapMaterials(this);
 	});
 	// Clicked on asset
@@ -82,6 +225,8 @@ function attachAssetListeners(obj)
 		else if(this.classList.contains('active') && this.getAttribute('isCloned') === 'true' && this.getAttribute('isPermanent') === 'false')
 		{
 			resetCellStates(activeElement.cellsOwned.split(','));
+			if(activeHover !== null) removeActiveHover();
+			if(activeClicked !== null) removeActiveClicked();
 			activeElement.element = null;
 			activeElement.activated = false;
 			deleteAsset(this);
@@ -103,7 +248,6 @@ function attachAssetListeners(obj)
 			if(this.getAttribute('movable') === 'false') return;
 			// Activates the selected asset after deactivating all others.
 			if(activeElement.activated === true) removeActive();
-			this.setAttribute('material', 'color', '#00FF00');
 			this.classList.add('active');
 			activeElement.element = this;
 			activeElement.activated = true;
@@ -113,34 +257,14 @@ function attachAssetListeners(obj)
 			activeElement.cellsOwned = this.getAttribute('cellsOwned');
 			activeElement.horizontal = this.getAttribute('horizontal');
 			activeElement.vertical = this.getAttribute('vertical');
+
+			if(activeHover !== null) removeActiveHover();
+			makeActiveClicked();
 		}
 		// Manually ensure a-frame pushes changes to the HTML DOM.
 		this.flushToDOM();
 	});
-}
-function highlightCells() {
-	if(onGround) return;
-	// Highlight other cells that the asset would otherwise occupy.
-	else if(activeElement.activated)
-	{
-		var idContents = this.id.split('-');
-		var x = idContents[idContents.length-2];
-		var z = idContents[idContents.length-1];
-		if(checkBoundaries(false, idContents, x, z, activeElement.horizontal, activeElement.vertical))
-		{
-			for(var i = 0; i <= activeElement.horizontal; i++)
-			{
-				for(var j = 0; j <= activeElement.vertical; j++)
-				{
-					var id = 'cell-' + (Number(x) + i) + '-' + (Number(z) + j);
-					var cellToHighlight = document.getElementById(id);
-					cellToHighlight.setAttribute('material', 'color', '#CC4500');
-					activeCells.push(cellToHighlight);
-				}
-			}
-		}
-	}
-}
+};
 function attachGridCellEventListeners()
 {
 	// Attaches mouse events to the grid cells.
@@ -176,7 +300,7 @@ function attachGridCellEventListeners()
 				// Stand-in variable in case we're not using the active asset.
 				var theElementToMove = activeElement.element;
 				// If active object wasn't a clone, make a clone, unless it was a 'structure object, or viewer.
-				if(activeElement.isCloned === 'false' && activeElement.element.id !== "pov-camera")
+				if(activeElement.isCloned === 'false' && activeElement.element.id !== 'pov-camera')
 				{
 					// Remove the active color and related class.
 					swapMaterials(activeElement.element);
@@ -184,8 +308,6 @@ function attachGridCellEventListeners()
 					changeCellsOwned(this, false);
 					// Clone the asset.
 					theElementToMove = clone(activeElement.element);
-					// Make the clone the active asset
-					activeElement.element.setAttribute('material', 'color', '#00FF00');
 					// Remove activeElement's cells owned now.
 					activeElement.cellsOwned = '';
 				}
@@ -195,9 +317,9 @@ function attachGridCellEventListeners()
 					changeCellsOwned(this, false);
 				}
 				// Place the clone in the scene on top of clicked grid cell.
-				// We add one to the horizontal and vertical because of the discrepancies between "size"
-				// and "scale" when dealing with imported object assets. Since one blobk is 0 and two blocks
-				// is one in either direction, we must first add one to express it's proper "size" in that direction.
+				// We add one to the horizontal and vertical because of the discrepancies between 'size'
+				// and 'scale' when dealing with imported object assets. Since one block is 0 and two blocks
+				// is one in either direction, we must first add one to express it's proper 'size' in that direction.
 				theElementToMove.setAttribute('position', {
 					x: cellPosition.x + ((Number(theElementToMove.getAttribute('horizontal')) + 1) / 2.0) - 0.5,
 					y: assetPosY,
@@ -205,8 +327,10 @@ function attachGridCellEventListeners()
 				});
 				// Make sure clone is manually pushed to HTML DOM.
 				theElementToMove.flushToDOM();
+				if(activeClicked !== null) removeActiveClicked();
+				makeActiveClicked();
 				// If this is the PoV camera object.
-				if(activeElement.element.id === "pov-camera")
+				if(activeElement.element.id === 'pov-camera')
 				{
 					// Calling placeCamera to handle camera arrangements.
 					placeCamera();
@@ -218,14 +342,24 @@ function attachGridCellEventListeners()
 };
 function buildAssets()
 {
+	var assetContainer = document.getElementById('asset-picker');
+	var assetItems = document.getElementsByClassName('asset');
+	assetsShown = assetItems.length;
+
 	for(var index in data.assetsFromFile) 
 	{
 		if (data.assetsFromFile.hasOwnProperty(index))
 		{
 			var attr = data.assetsFromFile[index];
 			createAsset(attr);
+			if(attr.type == 'object')
+				assetCatalog['floor'].push({'name': index, 'details': attr});
+			else
+				assetCatalog['wall'].push({'name': index, 'details': attr});
+
 		}
 	}
+	updateAssetPicker(0);
 };
 function buildCell(i, j)
 {
@@ -262,12 +396,12 @@ function buildCeiling()
 	});
 	// Renders face of plane downward, invisible from above, but visible at ground-level.
 	ceiling.setAttribute('rotation', {x: 90, y: 0, z: 0});
-	// Uses the gridLoader string to determine the full dimensions of the "rooms" portion of scene.
+	// Uses the gridLoader string to determine the full dimensions of the 'rooms' portion of scene.
 	ceiling.setAttribute('height', data.gridLoader['rows']);
 	ceiling.setAttribute('width', data.gridLoader['columns']);
 	// Try to use texture with dimensions at power of 2 (ie. 128x128, 256x256, 512x512).
 	ceiling.setAttribute('material', 'src', 'assets/CEILING_TILE.jpg');
-	// Again use powers of 2 for best results (ie. "1 1", "2 2", "4 4", "8 8", etc.).
+	// Again use powers of 2 for best results (ie. '1 1', '2 2', '4 4', '8 8', etc.).
 	ceiling.setAttribute('material', 'repeat', '16 16');
 	// Sometimes necessary to force the HTML DOM to redraw these pseudo-dom elements.
 	ceiling.flushToDOM();
@@ -336,13 +470,16 @@ function buildScene()
 	attachGridCellEventListeners();
 	buildCeiling();
 	buildAssets();
+	attachUIListeners();
 };
+
 function changeAttribute(attribute, value)
 {
 	activeElement.element.setAttribute(attribute, value);
 	activeElement[attribute] = value;
 	activeElement.element.flushToDOM();
 };
+
 function checkBoundaries(isRotation, idContents, x, z, horizontal, vertical)
 {
 	var cells = activeElement.cellsOwned.split(',');
@@ -372,6 +509,7 @@ function checkBoundaries(isRotation, idContents, x, z, horizontal, vertical)
 	}
 	return true;
 };
+
 // Changes cells asset owns unless out of bounds.
 function changeCellsOwned(activeCell, isRotation)
 {
@@ -401,6 +539,7 @@ function changeCellsOwned(activeCell, isRotation)
 	}
 	return true;
 };
+
 // Clears the highlighting from all cells on the grid.
 function clearCells()
 {
@@ -410,6 +549,7 @@ function clearCells()
 	}
 	activeCells = [];
 };
+
 // Safely clones an asset object rather than use the one in the sidebar
 function clone(obj)
 {
@@ -430,7 +570,8 @@ function clone(obj)
 	// keep all assets in same array.
 	assets.push(clonedObject);
 	return clonedObject;
-}
+};
+
 function createAsset(details, x, z, isPermanent)
 {
 	var mainContainer = document.querySelector('a-scene');
@@ -500,6 +641,7 @@ function createAsset(details, x, z, isPermanent)
 	// Adds this asset to the array of assets, if object type.
 	if(x === null || x === undefined) assets.push(asset);
 };
+
 // Deletes a cloned asset from all places referenced.
 function deleteAsset(obj)
 {
@@ -516,81 +658,115 @@ function deleteAsset(obj)
 	}
 	document.querySelector('a-scene').removeChild(obj);
 };
+
+// Highlights grid cells, typically when mouse hovers over them.
+function highlightCells()
+{
+	if(onGround) return;
+	// Highlight other cells that the asset would otherwise occupy.
+	else if(activeElement.activated)
+	{
+		var idContents = this.id.split('-');
+		var x = idContents[idContents.length-2];
+		var z = idContents[idContents.length-1];
+		if(checkBoundaries(false, idContents, x, z, activeElement.horizontal, activeElement.vertical))
+		{
+			
+			for(var i = 0; i <= activeElement.horizontal; i++)
+			{
+				for(var j = 0; j <= activeElement.vertical; j++)
+				{
+					var id = 'cell-' + (Number(x) + i) + '-' + (Number(z) + j);
+					var cellToHighlight = document.getElementById(id);
+					cellToHighlight.setAttribute('material', 'color', '#CC4500');
+					activeCells.push(cellToHighlight);
+				}
+			}
+		}
+	}
+};
+function rotate() {
+	var isClone = activeElement.isCloned;
+	// Adjust cell that will be occupied under new rotation.
+	var horizontal = activeElement.horizontal;
+	var vertical = activeElement.vertical;
+	changeAttribute('horizontal', vertical);
+	changeAttribute('vertical', horizontal);
+	if(isClone === 'true')
+	{
+		// Place the clone in the scene on top left grid cell.
+		var cornerCell = document.getElementById(activeElement.cellsOwned.split(',')[0]);
+		var cellPosition = cornerCell.getAttribute('position');
+		var assetPosY = activeElement.element.getAttribute('position').y;
+
+		var idContents = cornerCell.id.split('-');
+		var x = idContents[idContents.length-2];
+		var z = idContents[idContents.length-1];
+		var horizontal = activeElement.horizontal;
+		var vertical = activeElement.vertical;
+		var inBounds = checkBoundaries(true, idContents, x, z, horizontal, vertical);
+		if(!inBounds)
+		{
+			// New position is out of bounds. Change back.
+			var horizontal = activeElement.element.getAttribute('horizontal');
+			var vertical = activeElement.element.getAttribute('vertical');
+			changeAttribute('horizontal', vertical);
+			changeAttribute('vertical', horizontal);
+		}
+		else
+		{
+			changeCellsOwned(cornerCell, true);
+		}
+	}
+	// If clone, Make sure new rotation position is within bounds before rotation.
+	if(isClone === 'false' || inBounds)
+	{
+		// Rotate the actual asset.
+		var rotation = activeElement.element.getAttribute('rotation');
+		activeElement.element.setAttribute('rotation', {x: rotation.x, y: (rotation.y + 90), z: rotation.z});
+		// Increments to the next rotation state (used to calculate horizontal and vertical shape change).
+		activeElement.assetRotationState++;
+		if(activeElement.assetRotationState >= 4) activeElement.assetRotationState = 0;
+		changeAttribute('assetRotationState', activeElement.assetRotationState);
+	}
+	// If not a clone, stop here. Keep original asset position the same.
+	if(isClone === 'true' && inBounds)
+	{
+		// We add one to the horizontal and vertical because of the discrepancies between 'size'
+		// and 'scale' when dealing with imported object assets. Since one blobk is 0 and two blocks
+		// is one in either direction, we must first add one to express it's proper 'size' in that direction.
+		activeElement.element.setAttribute('position', {
+			x: cellPosition.x + ((Number(activeElement.horizontal) + 1) / 2.0) - 0.5,
+			y: assetPosY,
+			z: cellPosition.z + ((Number(activeElement.vertical) + 1) / 2.0) - 0.5
+		});
+	}
+	// clear and rehighlight cells on rotation
+	var originCell;
+	if(activeCells.length > 0) {
+		// Origin Cell is assumed to be first in list (usually horz and vert = 0)
+		originCell = activeCells[0];
+		clearCells();
+		// call highlightCells() using the originCell as the 'this'
+		highlightCells.apply(originCell);
+	}
+
+	activeElement.element.flushToDOM();
+	if(activeClicked !== null) removeActiveClicked();
+	makeActiveClicked();
+}
+
+// All keyboard events are handled here.
 function keyboardEventSetup()
 {
 	document.addEventListener('keydown', function(event)
 	{
 		const keyName = event.key;
-
+		// rotate
 		if (keyName === 'r' && !keyDown && !onGround)
 		{
 			keyDown = true;
-			var isClone = activeElement.isCloned;
-			// Adjust cell that will be occupied under new rotation.
-			var horizontal = activeElement.horizontal;
-			var vertical = activeElement.vertical;
-			changeAttribute('horizontal', vertical);
-			changeAttribute('vertical', horizontal);
-			if(isClone === 'true')
-			{
-				// Place the clone in the scene on top left grid cell.
-				var cornerCell = document.getElementById(activeElement.cellsOwned.split(',')[0]);
-				var cellPosition = cornerCell.getAttribute('position');
-				var assetPosY = activeElement.element.getAttribute('position').y;
-
-				var idContents = cornerCell.id.split('-');
-				var x = idContents[idContents.length-2];
-				var z = idContents[idContents.length-1];
-				var horizontal = activeElement.horizontal;
-				var vertical = activeElement.vertical;
-				var inBounds = checkBoundaries(true, idContents, x, z, horizontal, vertical);
-				if(!inBounds)
-				{
-					// New position is out of bounds. Change back.
-					var horizontal = activeElement.element.getAttribute('horizontal');
-					var vertical = activeElement.element.getAttribute('vertical');
-					changeAttribute('horizontal', vertical);
-					changeAttribute('vertical', horizontal);
-				}
-				else
-				{
-					changeCellsOwned(cornerCell, true);
-				}
-			}
-			// If clone, Make sure new rotation position is within bounds before rotation.
-			if(isClone === 'false' || inBounds)
-			{
-				// Rotate the actual asset.
-				var rotation = activeElement.element.getAttribute('rotation');
-				activeElement.element.setAttribute('rotation', {x: rotation.x, y: (rotation.y + 90), z: rotation.z});
-				// Increments to the next rotation state (used to calculate horizontal and vertical shape change).
-				activeElement.assetRotationState++;
-				if(activeElement.assetRotationState >= 4) activeElement.assetRotationState = 0;
-				changeAttribute('assetRotationState', activeElement.assetRotationState);
-			}
-			// If not a clone, stop here. Keep original asset position the same.
-			if(isClone === 'true' && inBounds)
-			{
-				// We add one to the horizontal and vertical because of the discrepancies between "size"
-				// and "scale" when dealing with imported object assets. Since one blobk is 0 and two blocks
-				// is one in either direction, we must first add one to express it's proper "size" in that direction.
-				activeElement.element.setAttribute('position', {
-					x: cellPosition.x + ((Number(activeElement.horizontal) + 1) / 2.0) - 0.5,
-					y: assetPosY,
-					z: cellPosition.z + ((Number(activeElement.vertical) + 1) / 2.0) - 0.5
-				});
-			}
-			// clear and rehighlight cells on rotation
-			var originCell;
-			if(activeCells.length > 0) {
-				// Origin Cell is assumed to be first in list (usually horz and vert = 0)
-				originCell = activeCells[0];
-				clearCells();
-				// call highlightCells() using the originCell as the 'this'
-				highlightCells.apply(originCell);
-			}
-
-			activeElement.element.flushToDOM();
+			rotate();
 			return;
 		}
 		// Move camera toward top of screen
@@ -666,21 +842,106 @@ function keyboardEventSetup()
 		keyDown = false;
 	}, false);
 };
-// Removes the active class from any object that has it
-function removeActive()
+
+// Creates and places the green plane beneath the active asset.
+function makeActiveClicked()
 {
-	activeElement.element = null;
-	activeElement.activated = false;
-	for(var i = 0; i < assets.length; i++)
-	{
-		swapMaterials(assets[i]);
-		assets[i].classList.remove('active');
-	}
+	var position;
+	var size = {};
+	position = activeElement.element.getAttribute('position');
+	var horizontal = Number(activeElement.element.getAttribute('horizontal'))
+	var vertical = Number(activeElement.element.getAttribute('vertical'));
+	if(horizontal === 0) size.x = 1.5;
+	else size.x = 1 + ((horizontal + 1) * 0.5);
+	if(vertical === 0) size.y = 1.5;
+	else size.y = 1 + ((vertical + 1) * 0.5);
+	size.z = 1;
+
+	var mainContainer = document.querySelector('a-scene');
+	activeClicked = document.createElement('a-plane');
+	activeClicked.id = 'active-hover';
+	activeClicked.setAttribute('material', 'color', '#00FF00');
+	activeClicked.setAttribute('rotation', {x: -90, y: 0, z: 0 });
+	activeClicked.setAttribute('width', size.x);
+	activeClicked.setAttribute('height', size.y);
+	mainContainer.appendChild(activeClicked);
+
+	activeClicked.setAttribute('position', {x: position.x, y: 0, z: position.z});
+	activeClicked.setAttribute('scale', {x: size.x, y: size.y, z: size.z});
+	activeClicked.setAttribute('material', 'transparent', true);
+	activeClicked.setAttribute('material', 'opacity', '0.5');
+	// Sometimes necessary to force the HTML DOM to redraw these pseudo-dom elements.
+	activeClicked.flushToDOM();
 };
 
+// Creates and places the yellow plane beneath the asset where the mouse is hovering.
+function makeActiveHover(asset)
+{
+	var position;
+	var size = {};
+	position = asset.getAttribute('position');
+	var horizontal = Number(asset.getAttribute('horizontal'))
+	var vertical = Number(asset.getAttribute('vertical'));
+	if(horizontal === 0) size.x = 1.5;
+	else size.x = 1 + ((horizontal + 1) * 0.5);
+	if(vertical === 0) size.y = 1.5;
+	else size.y = 1 + ((vertical + 1) * 0.5);
+	size.z = 1;
+
+	var mainContainer = document.querySelector('a-scene');
+	activeHover = document.createElement('a-plane');
+	activeHover.id = 'active-hover';
+	activeHover.setAttribute('material', 'color', 'yellow');
+	activeHover.setAttribute('rotation', {x: -90, y: 0, z: 0 });
+	activeHover.setAttribute('width', size.x);
+	activeHover.setAttribute('height', size.y);
+	mainContainer.appendChild(activeHover);
+
+	activeHover.setAttribute('position', {x: position.x, y: 0, z: position.z});
+	activeHover.setAttribute('scale', {x: size.x, y: size.y, z: size.z});
+	activeHover.setAttribute('material', 'transparent', true);
+	activeHover.setAttribute('material', 'opacity', '0.5');
+	// Sometimes necessary to force the HTML DOM to redraw these pseudo-dom elements.
+	activeHover.flushToDOM();
+};
+
+// Build UI is the default state, not in VR mode
+function hideBuildUI() 
+{
+	var rightPanel = document.getElementById("UI-right-panel");
+	var bottomPanel = document.getElementById("UI-bottom-panel");
+
+	rightPanel.style.visibility = 'hidden';
+	bottomPanel.style.visibility = 'hidden';
+}
+
+function showBuildUI() 
+{
+	var rightPanel = document.getElementById("UI-right-panel");
+	var bottomPanel = document.getElementById("UI-bottom-panel");
+
+	rightPanel.style.visibility = 'visible';
+	bottomPanel.style.visibility = 'visible';
+}
+ // Ground UI is the VR mode
+function hideGroundUI() 
+{
+	var topPanel = document.getElementById("ground-top-panel");
+
+	topPanel.style.visibility = 'hidden';
+}
+
+function showGroundUI()
+{
+	var topPanel = document.getElementById("ground-top-panel");
+
+	topPanel.style.visibility = 'visible';
+}
 // Set up the PoV camera.
 function placeCamera()
 {
+	hideBuildUI();
+	showGroundUI();
 	camera = document.getElementById('camera');
 	povObj = document.getElementById('pov-camera');
 	cam_x_pos = povObj.getAttribute('position').x;
@@ -699,18 +960,32 @@ function placeCamera()
 	});
 	var lookControls = document.createAttribute('look-controls');
 	camera.setAttributeNode(lookControls);
-	// camera.removeAttribute('mouse-cursor');
 	camera.flushToDOM();
 	onGround = true;
+	// Toggle the camera state.
+	// VR button should be shown now.
+	toggleCameraState();
+	// TODO We don't want the big green active selection box in VR.
+	// removeActiveClicked();
 };
+
 // Simple function to reset camera postion to original settings.
 function resetCamera()
 {
+	showBuildUI();
+	hideGroundUI();
 	camera = document.getElementById('camera');
+	// This looks like "funny" math, but we are trying to set the camera close
+	// enough on the Y axis to see some detail. The X is calculated as half the
+	// total number of column cells. The Z is centered on half the total number of 
+	// row cells, then bumped a few spots to compensate for the UI dock at the
+	// bottom of the screen. This isn't very scaleable, but for our first two
+	// room demo, it will work. We can look at new strategies when we get to the
+	// phase where we are trying to build multiple rooms. -Phil
 	camera.setAttribute('position', {
 		x: (data.gridLoader['columns'] / 2),
-		y: 25,
-		z: (data.gridLoader['rows'] / 2)
+		y: 15,
+		z: (data.gridLoader['rows'] / 2) + 2
 	});
 	camera.setAttribute('rotation', {
 		x: -90,
@@ -720,7 +995,50 @@ function resetCamera()
 	camera.removeAttribute('look-controls');
 	camera.flushToDOM();
 	onGround = false;
-}
+	// Reset the PoV object.
+	povObj = document.getElementById('pov-camera');
+	povObj.setAttribute('position', {
+		x: -100,
+		y: 0,
+		z: -100
+	});
+	
+	// Toggle the camera state.
+	// VR Button should be hidden now.
+	toggleCameraState();
+	// TODO Remove the cell selection highlight.
+	// removeActiveClicked();
+};
+
+// Removes the active class from any object that has it
+function removeActive()
+{
+	activeElement.element = null;
+	activeElement.activated = false;
+	if(activeClicked !== null) removeActiveClicked();
+	for(var i = 0; i < assets.length; i++)
+	{
+		swapMaterials(assets[i]);
+		assets[i].classList.remove('active');
+	}
+};
+
+// Removes activeClicked from scene.
+function removeActiveClicked()
+{
+	var mainContainer = document.querySelector('a-scene');
+	mainContainer.removeChild(activeClicked);
+	activeClicked = null;
+};
+
+// Removes activeHover from scene.
+function removeActiveHover()
+{
+	var mainContainer = document.querySelector('a-scene');
+	mainContainer.removeChild(activeHover);
+	activeHover = null;
+};
+
 // Resets cell states that an object used to have.
 function resetCellStates(cells)
 {
@@ -730,6 +1048,7 @@ function resetCellStates(cells)
 		gridCellsState[coords[coords.length-1]][coords[coords.length-2]] = '0';
 	}
 };
+
 // Replaces 1st parameter's material properties with defaults of 2nd parameter,
 // unless only one parameter then replace current material with default material
 function swapMaterials(toBeReplaced, toBeReplacedWith)
@@ -763,4 +1082,46 @@ function swapMaterials(toBeReplaced, toBeReplacedWith)
 		}
 	}
 	toBeReplaced.flushToDOM();
+};
+
+function toggleCameraState() {
+	// We call this whenever swtiching camera views.
+	// Get the body tag.
+	var body = document.getElementsByTagName("body")[0];
+	// Default state for the view mode is iso, with button hidden.
+	// View-mode-iso hides the enter vr button.
+	body.classList.toggle("view-mode-iso");
+	// view-mode-pov shows the enter vr button.
+	body.classList.toggle("view-mode-pov");
+}
+
+// Sets up an function {func} that fires every {delay} on HTML element {element} while the mouse is held down
+function heldDown(element, func, delay) {
+	// clear existing timeout
+	clearTimeout(mouseHoldTimeout);
+	var repeat = function() {
+		func();
+		mouseHoldTimeout = setTimeout(repeat, delay);
+	};
+
+	element.addEventListener('mousedown', function(){
+		repeat();
+	});
+}
+
+// update the assetpicker icons by advancing assetIndex forward or backward via change variable
+function updateAssetPicker(change) {
+	var currentAssetCatalog = assetCatalog[currentAssetCategory];
+	var updatedIndex = Math.max(0, Math.min(assetIndex + change, currentAssetCatalog.length - assetsShown));
+	// TODO only update if updatedIndex is different then assetIndex ??
+	assetIndex = updatedIndex;
+	var i = assetIndex;
+	for(var assetEl of document.getElementsByClassName('asset')) {
+		assetEl.dataset.index = i;
+		assetEl.innerHTML = currentAssetCatalog[i].name;
+		assetEl.id = currentAssetCatalog[i].details.id;
+		assetEl.style.background = "url(" + currentAssetCatalog[i].details.buttonSource + ") no-repeat center center";
+		assetEl.style.backgroundSize = "100% 100%";
+		i++;
+	}
 }
