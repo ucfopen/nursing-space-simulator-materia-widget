@@ -19,12 +19,12 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	qset.options.assets = {
 		"bed": {
 			"assetRotationState": 0,
-			"buttonSource":"assets/HOSPITAL_BED_2D.png",
+			"buttonSource":"assets/icons/icon_bed.png",
 			"canReplace": [],
 			"cellsOwned": "",
 			"clonable": "false",
 			"defaultColor": "#376AD3",
-			"horizontal": 0,
+			"horizontal": 1,
 			"id": "bed-1",
 			"isCloned": "false",
 			"isPermanent": "false",
@@ -34,61 +34,61 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			"objectSource": "assets/bed/mesh_bed.obj",
 			"position": {"x": -100, "y": 0, "z": -100},
 			"rotation": {"x": 0, "y": -90, "z": 0},
-			"scale": {"x": 1, "y": 1, "z": 1},
+			"scale": {"x": 0.35, "y": 0.35, "z": 0.35},
 			"tag": "a-obj-model",
 			"type": "object",
-			"vertical": 1,
-			"category" : "beds"
+			"vertical": 0,
+			"category": "beds"
 		},
-		"bed-2": {
+		"bedside-table": {
 			"assetRotationState": 0,
-			"buttonSource":"assets/HOSPITAL_BED_2D_2.png",
+			"buttonSource":"assets/icons/icon_bedsidetable.png",
 			"canReplace": [],
 			"cellsOwned": "",
 			"clonable": "false",
-			"defaultColor": "#B5848A",
+			"defaultColor": "#376AD3",
 			"horizontal": 0,
-			"id": "bed-2",
+			"id": "bedside-table",
 			"isCloned": "false",
 			"isPermanent": "false",
-			"materialSource": "",
+			"materialSource": "assets/bedsidetable/mesh_bedsidetable.mtl",
 			"materialType": "complex",
 			"movable": "true",
-			"objectSource": "assets/HOSPITAL_BED.obj",
+			"objectSource": "assets/bedsidetable/mesh_bedsidetable.obj",
 			"position": {"x": -100, "y": 0, "z": -100},
 			"rotation": {"x": 0, "y": -90, "z": 0},
-			"scale": {"x": 0.1, "y": 0.1, "z": 0.1},
+			"scale": {"x": 0.35, "y": 0.35, "z": 0.35},
 			"tag": "a-obj-model",
 			"type": "object",
 			"vertical": 1,
-			"category" : "beds"
+			"category": "beds"
 		},
-		"bed-3": {
+		"chair": {
 			"assetRotationState": 0,
-			"buttonSource":"assets/HOSPITAL_BED_2D_3.png",
+			"buttonSource":"assets/icons/icon_chair.png",
 			"canReplace": [],
 			"cellsOwned": "",
 			"clonable": "false",
-			"defaultColor": "#54A898",
+			"defaultColor": "#376AD3",
 			"horizontal": 0,
-			"id": "bed-3",
+			"id": "chair",
 			"isCloned": "false",
 			"isPermanent": "false",
-			"materialSource": "",
+			"materialSource": "assets/chair/mesh_chair.mtl",
 			"materialType": "complex",
 			"movable": "true",
-			"objectSource": "assets/HOSPITAL_BED.obj",
+			"objectSource": "assets/chair/mesh_chair.obj",
 			"position": {"x": -100, "y": 0, "z": -100},
 			"rotation": {"x": 0, "y": -90, "z": 0},
-			"scale": {"x": 0.1, "y": 0.1, "z": 0.1},
+			"scale": {"x": 0.35, "y": 0.35, "z": 0.35},
 			"tag": "a-obj-model",
 			"type": "object",
-			"vertical": 1,
-			"category" : "beds"
+			"vertical": 0,
+			"category": "equipment"
 		},
 		"crashcart": {
 			"assetRotationState": 0,
-			"buttonSource":"assets/wheelchair/WHEELCHAIR_1_2D.png",
+			"buttonSource":"assets/icons/icon_crashcart.png",
 			"canReplace": [],
 			"cellsOwned": "",
 			"clonable": "false",
@@ -97,21 +97,21 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			"id": "crashcart",
 			"isCloned": "false",
 			"isPermanent": "false",
-			"materialSource": "assets/crashcart/mesh_crashcart.mtl",
+			"materialSource": "assets/crashcart/mesh_crashcart2.mtl",
 			"materialType": "complex",
 			"movable": "true",
-			"objectSource": "assets/crashcart/mesh_crashcart.obj",
+			"objectSource": "assets/crashcart/mesh_crashcart2.obj",
 			"position": {"x": -100, "y": 0, "z": -100},
 			"rotation": {"x": 0, "y": 0, "z": 0},
-			"scale": {"x": 0.025, "y": 0.025, "z": 0.025},
+			"scale": {"x": 0.35, "y": 0.35, "z": 0.35},
 			"tag": "a-obj-model",
 			"type": "object",
 			"vertical": 0,
-			"category" : "equipment"
+			"category": "equipment"
 		},
 		"computer": {
 			"assetRotationState": 0,
-			"buttonSource":"assets/wheelchair/WHEELCHAIR_1_2D.png",
+			"buttonSource":"assets/icons/icon_computer.png",
 			"canReplace": [],
 			"cellsOwned": "",
 			"clonable": "false",
@@ -126,11 +126,11 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			"objectSource": "assets/computer-stand/mesh_computerstand.obj",
 			"position": {"x": -100, "y": 0, "z": -100},
 			"rotation": {"x": 0, "y": 0, "z": 0},
-			"scale": {"x": 0.025, "y": 0.025, "z": 0.025},
+			"scale": {"x": 0.35, "y": 0.35, "z": 0.35},
 			"tag": "a-obj-model",
 			"type": "object",
 			"vertical": 0,
-			"category" : "equipment"
+			"category": "equipment"
 		},
 		"door-1": {
 			"assetRotationState": 0,
@@ -153,7 +153,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			"tag": "a-box",
 			"type": "door",
 			"vertical": 0,
-			"category" : "walls"
+			"category": "walls"
 		},
 		"door-2": {
 			"assetRotationState": 0,
@@ -176,11 +176,11 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			"tag": "a-box",
 			"type": "door",
 			"vertical": 0,
-			"category" : "walls"
+			"category": "walls"
 		},
 		"iv": {
 			"assetRotationState": 0,
-			"buttonSource":"assets/wheelchair/WHEELCHAIR_1_2D.png",
+			"buttonSource":"assets/icons/icon_iv.png",
 			"canReplace": [],
 			"cellsOwned": "",
 			"clonable": "false",
@@ -195,36 +195,38 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			"objectSource": "assets/iv/mesh_iv.obj",
 			"position": {"x": -100, "y": 0, "z": -100},
 			"rotation": {"x": 0, "y": 0, "z": 0},
-			"scale": {"x": 0.025, "y": 0.025, "z": 0.025},
+			"scale": {"x": 0.35, "y": 0.35, "z": 0.35},
 			"tag": "a-obj-model",
 			"type": "object",
 			"vertical": 0,
-			"category" : "equipment"
+			"category": "equipment"
 		},
-		"largeBox": {
+		"table": {
 			"assetRotationState": 0,
-			"buttonSource":"assets/LARGE_BOX_2D.png",
+			"buttonSource":"assets/icons/icon_table.png",
 			"canReplace": [],
 			"cellsOwned": "",
 			"clonable": "false",
-			"defaultColor": "#FF00FF",
+			"defaultColor": "#376AD3",
 			"horizontal": 1,
-			"id": "largeBox-2",
+			"id": "table",
 			"isCloned": "false",
 			"isPermanent": "false",
-			"materialType": "primitive",
+			"materialSource": "assets/table/mesh_table.mtl",
+			"materialType": "complex",
 			"movable": "true",
+			"objectSource": "assets/table/mesh_table.obj",
 			"position": {"x": -100, "y": 0, "z": -100},
-			"rotation": {"x": 0, "y": 0, "z": 0},
-			"scale": {"x": 2, "y": 1, "z": 2},
-			"tag": "a-box",
+			"rotation": {"x": 0, "y": -90, "z": 0},
+			"scale": {"x": 0.35, "y": 0.35, "z": 0.35},
+			"tag": "a-obj-model",
 			"type": "object",
 			"vertical": 1,
-			"category" : "equipment"
+			"category": "equipment"
 		},
 		"trashcan": {
 			"assetRotationState": 0,
-			"buttonSource":"assets/trashcan/TRASHCAN_1_2D.png",
+			"buttonSource":"assets/icons/icon_trashcan.png",
 			"canReplace": [],
 			"cellsOwned": "",
 			"clonable": "false",
@@ -239,11 +241,34 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			"objectSource": "assets/trashcan/mesh_trashcan.obj",
 			"position": {"x": -100, "y": 0, "z": -100},
 			"rotation": {"x": 0, "y": 0, "z": 0},
-			"scale": {"x": 0.4, "y": 0.4, "z": 0.4},
+			"scale": {"x": 0.35, "y": 0.35, "z": 0.35},
 			"tag": "a-obj-model",
 			"type": "object",
 			"vertical": 0,
-			"category" : "equipment"
+			"category": "equipment"
+		},
+		"trashcan-bio": {
+			"assetRotationState": 0,
+			"buttonSource":"assets/icons/icon_trashcan_bio.png",
+			"canReplace": [],
+			"cellsOwned": "",
+			"clonable": "false",
+			"defaultColor": "",
+			"horizontal": 0,
+			"id": "trashcan-bio",
+			"isCloned": "false",
+			"isPermanent": "false",
+			"materialSource": "assets/trashcan/trashcan_bio.mtl",
+			"materialType": "complex",
+			"movable": "true",
+			"objectSource": "assets/trashcan/mesh_trashcan.obj",
+			"position": {"x": -100, "y": 0, "z": -100},
+			"rotation": {"x": 0, "y": 0, "z": 0},
+			"scale": {"x": 0.35, "y": 0.35, "z": 0.35},
+			"tag": "a-obj-model",
+			"type": "object",
+			"vertical": 0,
+			"category": "equipment"
 		},
 		"viewer": {
 			"assetRotationState": 0,
@@ -266,7 +291,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			"tag": "a-obj-model",
 			"type": "view",
 			"vertical": 0,
-			"category" : "equipment"
+			"category": "equipment"
 		},
 		"wall-1": {
 			"assetRotationState": 0,
@@ -287,7 +312,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			"tag": "a-box",
 			"type": "wall",
 			"vertical": 0,
-			"category" : "walls"
+			"category": "walls"
 		},
 		"wall-2": {
 			"assetRotationState": 0,
@@ -308,11 +333,11 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			"tag": "a-box",
 			"type": "wall",
 			"vertical": 0,
-			"category" : "walls"
+			"category": "walls"
 		},
 		"wall-3": {
 			"assetRotationState": 0,
-			"buttonSource":"assets/WALL_2D_3.png",
+			"buttonSource":"assets/wall_fireextinguisher.jpg",
 			"canReplace": ["wall"],
 			"cellsOwned": "",
 			"clonable": "false",
@@ -322,6 +347,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			"isCloned": "false",
 			"isPermanent": "false",
 			"materialType": "primitive",
+			"materialSource": "assets/wall_fireextinguisher.jpg",
 			"movable": "false",
 			"position": {"x": -100, "y": 0, "z": -100},
 			"rotation": {"x": 0, "y": 0, "z": 0},
@@ -329,7 +355,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			"tag": "a-box",
 			"type": "wall",
 			"vertical": 0,
-			"category" : "walls"
+			"category": "walls"
 		},
 		"wheelchair": {
 			"assetRotationState": 0,
@@ -348,11 +374,11 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			"objectSource": "assets/wheelchair/wheelchair.obj",
 			"position": {"x": -100, "y": 0, "z": -100},
 			"rotation": {"x": 0, "y": 0, "z": 0},
-			"scale": {"x": 0.025, "y": 0.025, "z": 0.025},
+			"scale": {"x": 0.035, "y": 0.035, "z": 0.035},
 			"tag": "a-obj-model",
 			"type": "object",
 			"vertical": 0,
-			"category" : "equipment"
+			"category": "equipment"
 		}
 	}
 
