@@ -38,7 +38,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			"tag": "a-obj-model",
 			"type": "object",
 			"vertical": 0,
-			"category": "beds"
+			"category": "beds",
+			"title": "Bed"
 		},
 		"bedside-table": {
 			"assetRotationState": 0,
@@ -61,7 +62,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			"tag": "a-obj-model",
 			"type": "object",
 			"vertical": 1,
-			"category": "beds"
+			"category": "beds",
+			"title": "Bedside Table"
 		},
 		"chair": {
 			"assetRotationState": 0,
@@ -84,7 +86,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			"tag": "a-obj-model",
 			"type": "object",
 			"vertical": 0,
-			"category": "equipment"
+			"category": "equipment",
+			"title": "Chair"
 		},
 		"crashcart": {
 			"assetRotationState": 0,
@@ -107,7 +110,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			"tag": "a-obj-model",
 			"type": "object",
 			"vertical": 0,
-			"category": "equipment"
+			"category": "equipment",
+			"title": "Crash Cart"
 		},
 		"computer": {
 			"assetRotationState": 0,
@@ -130,7 +134,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			"tag": "a-obj-model",
 			"type": "object",
 			"vertical": 0,
-			"category": "equipment"
+			"category": "equipment",
+			"title": "Computer Stand"
 		},
 		"door-1": {
 			"assetRotationState": 0,
@@ -153,7 +158,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			"tag": "a-box",
 			"type": "door",
 			"vertical": 0,
-			"category": "walls"
+			"category": "walls",
+			"title": "Door (1)"
 		},
 		"door-2": {
 			"assetRotationState": 0,
@@ -176,7 +182,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			"tag": "a-box",
 			"type": "door",
 			"vertical": 0,
-			"category": "walls"
+			"category": "walls",
+			"title": "Door (2)"
 		},
 		"iv": {
 			"assetRotationState": 0,
@@ -199,7 +206,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			"tag": "a-obj-model",
 			"type": "object",
 			"vertical": 0,
-			"category": "equipment"
+			"category": "equipment",
+			"title": "IV Stand"
 		},
 		"table": {
 			"assetRotationState": 0,
@@ -222,7 +230,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			"tag": "a-obj-model",
 			"type": "object",
 			"vertical": 1,
-			"category": "equipment"
+			"category": "equipment",
+			"title": "Table"
 		},
 		"trashcan": {
 			"assetRotationState": 0,
@@ -245,7 +254,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			"tag": "a-obj-model",
 			"type": "object",
 			"vertical": 0,
-			"category": "equipment"
+			"category": "equipment",
+			"title": "Trash Can"
 		},
 		"trashcan-bio": {
 			"assetRotationState": 0,
@@ -268,7 +278,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			"tag": "a-obj-model",
 			"type": "object",
 			"vertical": 0,
-			"category": "equipment"
+			"category": "equipment",
+			"title": "Biohazard Waste"
 		},
 		"viewer": {
 			"assetRotationState": 0,
@@ -291,7 +302,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			"tag": "a-obj-model",
 			"type": "view",
 			"vertical": 0,
-			"category": "equipment"
+			"category": "equipment",
+			"title": "PoV Viewer"
 		},
 		"wall-1": {
 			"assetRotationState": 0,
@@ -312,7 +324,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			"tag": "a-box",
 			"type": "wall",
 			"vertical": 0,
-			"category": "walls"
+			"category": "walls",
+			"title": "Wall (1)"
 		},
 		"wall-2": {
 			"assetRotationState": 0,
@@ -333,7 +346,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			"tag": "a-box",
 			"type": "wall",
 			"vertical": 0,
-			"category": "walls"
+			"category": "walls",
+			"title": "Wall (2)"
 		},
 		"wall-3": {
 			"assetRotationState": 0,
@@ -355,7 +369,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			"tag": "a-box",
 			"type": "wall",
 			"vertical": 0,
-			"category": "walls"
+			"category": "walls",
+			"title": "Wall (3)"
 		},
 		"wheelchair": {
 			"assetRotationState": 0,
@@ -378,7 +393,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			"tag": "a-obj-model",
 			"type": "object",
 			"vertical": 0,
-			"category": "equipment"
+			"category": "equipment",
+			"title": "Wheelchair"
 		}
 	}
 
