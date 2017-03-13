@@ -38,12 +38,9 @@
 			<button id="back">Back</button>
 		</div>
 		<div id="UI-right-panel">
-			<!-- <span class="label">Object Selection</span> -->
 			<div id="top-buttons">
-				<button id="deselect">Deselect</button>
-				<button id="rotate">Rotate</button>
 			</div>
-			<!-- <span class="label">Camera</span> -->
+			<button id="screenshot">Take a Screenshot</button>
 			<div id="camera-move">
 				<button id="camera-up">&uarr;</button>
 				<div id="camera-move-horizontal">
@@ -52,8 +49,12 @@
 				</div>
 				<button id="camera-down">&darr;</button>
 			</div>
-			<button id="screenshot">Take a Screenshot</button>
-
+		</div>
+		<div id="UI-selected-asset-options">
+			<span class="selected-asset-label-title">Currently selected:</span>
+			<span id="selected-asset-label"></span>
+			<button id="deselect">Deselect</button>
+			<button id="rotate">Rotate</button>
 		</div>
 		<div id="UI-bottom-panel" class="open">
 			<button class="drawer-toggle">[Close Menu]</button>

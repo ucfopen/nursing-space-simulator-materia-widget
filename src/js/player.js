@@ -136,6 +136,7 @@ Namespace('HospitalSim').Engine = (function() {
 		deselect.addEventListener('click', function(e) {
 			// If an object in the tray or on the stage is selected, deselect it.
 			if(activeElement.activated === true) removeActive();
+			document.getElementById("UI-selected-asset-options").style.display = "none";
 		});
 
 		heldDown(cameraLeft, function() {
@@ -288,12 +289,16 @@ Namespace('HospitalSim').Engine = (function() {
 				activeElement.cellsOwned = this.getAttribute('cellsOwned');
 				activeElement.horizontal = this.getAttribute('horizontal');
 				activeElement.vertical = this.getAttribute('vertical');
+				activeElement.title = this.getAttribute('title');
 
 				if(activeHover !== null) removeActiveHover();
 				makeActiveClicked();
 			}
 			// Manually ensure a-frame pushes changes to the HTML DOM.
 			this.flushToDOM();
+
+			document.getElementById("UI-selected-asset-options").style.display = "block";
+			document.getElementById("selected-asset-label").innerHTML = activeElement.title;
 		});
 	};
 	function attachGridCellEventListeners()
@@ -404,7 +409,7 @@ Namespace('HospitalSim').Engine = (function() {
 
 				var asset = document.createElement("button");
 				asset.classList.add("asset");
-				asset.setAttribute("alt", item.id);
+				asset.setAttribute("data-title", item.title);
 				asset.setAttribute("id", item.id);
 				asset.setAttribute("data-category",item.category);
 				asset.style.background = "url(" + item.buttonSource + ") no-repeat center center";
@@ -426,12 +431,15 @@ Namespace('HospitalSim').Engine = (function() {
 					activeElement.cellsOwned = elem.getAttribute('cellsOwned');
 					activeElement.horizontal = elem.getAttribute('horizontal');
 					activeElement.vertical = elem.getAttribute('vertical');
+					activeElement.title = elem.getAttribute('title');
 
 					if(activeHover !== null) removeActiveHover();
 					// This places the big green target under the placed asset.
 					// TODO this currently fires for the PoV camera, let's disable that.
 					makeActiveClicked();
-				});
+
+					document.getElementById("UI-selected-asset-options").style.display = "block";
+					document.getElementById("selected-asset-label").innerHTML = activeElement.title;				});
 			}
 		}
 
@@ -709,6 +717,8 @@ Namespace('HospitalSim').Engine = (function() {
 		asset.setAttribute('type', details['type']);
 		asset.setAttribute('defaultColor', details['defaultColor']);
 		asset.setAttribute('canReplace', details['canReplace']);
+
+		asset.setAttribute('title', details['title']);
 		// If this asset was created from the gridLoader, set isPermanent to true, otherwise false is default.
 		if(isPermanent) asset.setAttribute('isPermanent', 'true');
 		// Sometimes necessary to force the HTML DOM to redraw these pseudo-dom elements.
@@ -743,8 +753,6 @@ Namespace('HospitalSim').Engine = (function() {
 		else if(activeElement.activated)
 		{
 			var idContents = this.id.split('-');
-			// console.log(idContents);
-			console.log(activeElement);
 			var x = idContents[idContents.length-2];
 			var z = idContents[idContents.length-1];
 			if(checkBoundaries(false, idContents, x, z, activeElement.horizontal, activeElement.vertical))
@@ -950,6 +958,9 @@ Namespace('HospitalSim').Engine = (function() {
 		activeClicked.setAttribute('material', 'opacity', '0.5');
 		// Sometimes necessary to force the HTML DOM to redraw these pseudo-dom elements.
 		activeClicked.flushToDOM();
+
+		// document.getElementById("UI-selected-asset-options").style.display = "block";
+		// document.getElementById("selected-asset-label").innerHTML = activeClicked.title;
 	};
 
 	// Creates and places the yellow plane beneath the asset where the mouse is hovering.
@@ -988,18 +999,22 @@ Namespace('HospitalSim').Engine = (function() {
 	{
 		var rightPanel = document.getElementById("UI-right-panel");
 		var bottomPanel = document.getElementById("UI-bottom-panel");
+		var leftPanel = document.getElementById("UI-selected-asset-options");
 
 		rightPanel.style.visibility = 'hidden';
 		bottomPanel.style.visibility = 'hidden';
+		leftPanel.style.visibility = 'hidden';
 	}
 
 	function showBuildUI()
 	{
 		var rightPanel = document.getElementById("UI-right-panel");
 		var bottomPanel = document.getElementById("UI-bottom-panel");
+		var leftPanel = document.getElementById("UI-selected-asset-options");
 
 		rightPanel.style.visibility = 'visible';
 		bottomPanel.style.visibility = 'visible';
+		leftPanel.style.visibility = 'visible';
 	}
 	 // Ground UI is the VR mode
 	function hideGroundUI()
