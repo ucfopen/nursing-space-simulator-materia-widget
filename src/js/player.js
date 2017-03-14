@@ -77,18 +77,10 @@ Namespace('HospitalSim').Engine = (function() {
 	// attach click listeners to all the UI / non 3D elements
 	function attachUIListeners()
 	{
-		// var floorBTN = document.getElementById('floor');
-		// var wallBTN = document.getElementById('wall');
-
-		// var prev = document.getElementById("previous-asset");
-		// var next = document.getElementById("next-asset");
-
-		// heldDown(prev, function(){ updateAssetPicker(-1); }, 500);
-		// heldDown(next, function(){ updateAssetPicker(1); }, 500);
-
 		var screenshot = document.getElementById("screenshot");
 		var rotateBTN = document.getElementById("rotate");
 		var deselect = document.getElementById("deselect");
+		var remove = document.getElementById("remove");
 
 		var cameraLeft = document.getElementById('camera-left');
 		var cameraUp = document.getElementById('camera-up');
@@ -98,28 +90,6 @@ Namespace('HospitalSim').Engine = (function() {
 		var cam = document.getElementById('camera');
 
 		var backBTN = document.getElementById('back');
-
-		// floorBTN.addEventListener('click', function(e) {
-		// 	if(currentAssetCategory === 'floor')
-		// 		return;
-
-		// 	wallBTN.classList.remove("active-category");
-		// 	floorBTN.classList.add("active-category");
-		// 	assetIndex = 0;
-		// 	currentAssetCategory = "floor";
-		// 	updateAssetPicker(0);
-		// });
-
-		// wallBTN.addEventListener('click', function(e) {
-		// 	if(currentAssetCategory === 'wall')
-		// 		return;
-
-		// 	wallBTN.classList.add("active-category");
-		// 	floorBTN.classList.remove("active-category");
-		// 	assetIndex = 0;
-		// 	currentAssetCategory = "wall";
-		// 	updateAssetPicker(0);
-		// });
 
 		backBTN.addEventListener('click', function(e) {
 			resetCamera();
@@ -131,6 +101,22 @@ Namespace('HospitalSim').Engine = (function() {
 
 		rotateBTN.addEventListener('click', function(e) {
 			rotate();
+		});
+
+		remove.addEventListener('click', function(e) {
+
+			var elem = activeElement.element;
+			if (elem == null) return;
+			if(elem.classList.contains('active') && elem.getAttribute('isCloned') === 'true' && elem.getAttribute('isPermanent') === 'false') {
+				resetCellStates(activeElement.cellsOwned.split(','));
+				if(activeHover !== null) removeActiveHover();
+				if(activeClicked !== null) removeActiveClicked();
+				activeElement.element = null;
+				activeElement.activated = false;
+				deleteAsset(elem);
+
+				document.getElementById("UI-selected-asset-options").style.display = "none";
+			}
 		});
 
 		deselect.addEventListener('click', function(e) {
@@ -203,11 +189,16 @@ Namespace('HospitalSim').Engine = (function() {
 			activeElement.cellsOwned = elem.getAttribute('cellsOwned');
 			activeElement.horizontal = elem.getAttribute('horizontal');
 			activeElement.vertical = elem.getAttribute('vertical');
+			activeElement.title = elem.getAttribute('title');
 
 			if(activeHover !== null) removeActiveHover();
 			// This places the big green target under the placed asset.
 			// TODO this currently fires for the PoV camera, let's disable that.
 			makeActiveClicked();
+
+			document.getElementById("UI-selected-asset-options").style.display = "block";
+			document.getElementById("selected-asset-label").innerHTML = activeElement.title;
+			document.getElementById("remove").style.display = "none";
 
 		});
 
@@ -253,16 +244,7 @@ Namespace('HospitalSim').Engine = (function() {
 				activeElement.element = null;
 				activeElement.activated = false;
 			}
-			// Clicking on an active asset that isn't loaded from gridLoader and is also a clone will delete that clone.
-			else if(this.classList.contains('active') && this.getAttribute('isCloned') === 'true' && this.getAttribute('isPermanent') === 'false')
-			{
-				resetCellStates(activeElement.cellsOwned.split(','));
-				if(activeHover !== null) removeActiveHover();
-				if(activeClicked !== null) removeActiveClicked();
-				activeElement.element = null;
-				activeElement.activated = false;
-				deleteAsset(this);
-			}
+
 			// Asset wasn't active before, and some (not cloned) asset types can replace it.
 			else if(activeElement.activated === true &&
 					activeElement.canReplace.indexOf(this.getAttribute('type')) > -1 &&
@@ -299,6 +281,7 @@ Namespace('HospitalSim').Engine = (function() {
 
 			document.getElementById("UI-selected-asset-options").style.display = "block";
 			document.getElementById("selected-asset-label").innerHTML = activeElement.title;
+			document.getElementById("remove").style.display = "inline-block";
 		});
 	};
 	function attachGridCellEventListeners()
@@ -439,7 +422,9 @@ Namespace('HospitalSim').Engine = (function() {
 					makeActiveClicked();
 
 					document.getElementById("UI-selected-asset-options").style.display = "block";
-					document.getElementById("selected-asset-label").innerHTML = activeElement.title;				});
+					document.getElementById("selected-asset-label").innerHTML = activeElement.title;
+					document.getElementById("remove").style.display = "none";
+				});
 			}
 		}
 
