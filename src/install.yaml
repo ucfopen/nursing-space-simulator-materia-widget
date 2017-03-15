@@ -1,9 +1,9 @@
 ---
 general:
-  name: Hospital Sim
+  name: Nursing Simulation Builder
   group: Materia
-  height: 920
-  width: 1080
+  height: 720
+  width: 960
   in_catalog: Yes
   is_editable: Yes
   is_playable: Yes
@@ -25,8 +25,8 @@ meta_data:
   supported_data:
     - Multiple Choice
   about: >
-    A 3D hospital simulation builder
+    Design a 3D nursing simulation space by filling rooms with an inventory of items such as beds, IVs, Crash Carts, and seating.
 
   # The text displayed on the widget catalog page.
   excerpt: >
-    A 3D hospital simulation builder
+    Design a 3D nursing simulation space by filling rooms with an inventory of items such as beds, IVs, Crash Carts, and seating.

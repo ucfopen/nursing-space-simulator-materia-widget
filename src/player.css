@@ -176,17 +176,17 @@ button {
 }
 
 #UI-bottom-panel.open {
-	height: 200px;
+	height: 215px;
 }
 
 #UI-bottom-panel.closed {
-	height: 20px;
+	height: 35px;
 	overflow: hidden;
 }
 
 #UI-bottom-panel .drawer-toggle {
 	position: relative;
-	height: 20px;
+	height: 35px;
 	width: 100%;
 
 	padding: 0px;
