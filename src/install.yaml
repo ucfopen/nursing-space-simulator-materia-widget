@@ -16,17 +16,14 @@ files:
   player: player.html
   flash_version: 0
 score:
-  is_scorable: Yes
+  is_scorable: No
   score_module: HospitalSim
 meta_data:
   features:
     - Customizable
-    - Scorable
   supported_data:
-    - Multiple Choice
   about: >
     Design a 3D nursing simulation space by filling rooms with an inventory of items such as beds, IVs, Crash Carts, and seating.
-
   # The text displayed on the widget catalog page.
   excerpt: >
     Design a 3D nursing simulation space by filling rooms with an inventory of items such as beds, IVs, Crash Carts, and seating.
