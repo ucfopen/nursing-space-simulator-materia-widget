@@ -4,7 +4,7 @@ general:
   group: Materia
   height: 720
   width: 960
-  in_catalog: Yes
+  in_catalog: No
   is_editable: Yes
   is_playable: Yes
   is_qset_encrypted: Yes
@@ -22,6 +22,7 @@ meta_data:
   features:
     - Customizable
   supported_data:
+    - Custom
   about: >
     Design a 3D nursing simulation space by filling rooms with an inventory of items such as beds, IVs, Crash Carts, and seating.
   # The text displayed on the widget catalog page.
