@@ -362,30 +362,6 @@
 						"vertical": 0,
 						"category": "walls",
 						"title": "Wall (3)"
-					},
-					"wheelchair": {
-						"assetRotationState": 0,
-						"buttonSource":"assets/wheelchair/WHEELCHAIR_1_2D.png",
-						"canReplace": [],
-						"cellsOwned": "",
-						"clonable": "false",
-						"defaultColor": "",
-						"horizontal": 0,
-						"id": "wheelchair-1",
-						"isCloned": "false",
-						"isPermanent": "false",
-						"materialSource": "assets/wheelchair/wheelchair.mtl",
-						"materialType": "complex",
-						"movable": "true",
-						"objectSource": "assets/wheelchair/wheelchair.obj",
-						"position": {"x": -100, "y": 0, "z": -100},
-						"rotation": {"x": 0, "y": 0, "z": 0},
-						"scale": {"x": 0.035, "y": 0.035, "z": 0.035},
-						"tag": "a-obj-model",
-						"type": "object",
-						"vertical": 0,
-						"category": "equipment",
-						"title": "Wheelchair"
 					}
 				},
 				"gridLoader": {

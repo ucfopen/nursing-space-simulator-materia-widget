@@ -54,8 +54,8 @@ Namespace('HospitalSim').Engine = (function() {
 		// room demo, it will work. We can look at new strategies when we get to the
 		// phase where we are trying to build multiple rooms. -Phil
 		cam.setAttribute('position', {
-			x: (data.gridLoader['columns'] / 2),
-			y: 16,
+			x: (data.gridLoader['columns'] / 2) - 0.5,
+			y: 14,
 			z: (data.gridLoader['rows'] / 2) + 2
 		});
 		cam.flushToDOM();
@@ -86,6 +86,10 @@ Namespace('HospitalSim').Engine = (function() {
 		var cameraUp = document.getElementById('camera-up');
 		var cameraRight = document.getElementById('camera-right');
 		var cameraDown = document.getElementById('camera-down');
+		var cameraIn = document.getElementById('camera-zoom-in');
+		var cameraOut = document.getElementById('camera-zoom-out');
+
+		var cameraReset = document.getElementById('camera-position-reset');
 
 		var cam = document.getElementById('camera');
 
@@ -156,6 +160,30 @@ Namespace('HospitalSim').Engine = (function() {
 				z: cam.getAttribute('position').z + 1,
 			});
 		}, 200);
+
+		heldDown(cameraIn, function() {
+			cam.setAttribute('position', {
+				x: cam.getAttribute('position').x,
+				y: cam.getAttribute('position').y - 1,
+				z: cam.getAttribute('position').z,
+			});
+		}, 200);
+
+		heldDown(cameraOut, function() {
+			cam.setAttribute('position', {
+				x: cam.getAttribute('position').x,
+				y: cam.getAttribute('position').y + 1,
+				z: cam.getAttribute('position').z,
+			});
+		}, 200);
+
+		cameraReset.addEventListener('click', function(e) {
+			cam.setAttribute('position', {
+				x: (data.gridLoader['columns'] / 2) - 0.5,
+				y: 14,
+				z: (data.gridLoader['rows'] / 2) + 2
+			});
+		});
 
 		var menuToggle = document.getElementsByClassName('drawer-toggle')[0];
 		menuToggle.addEventListener('click', function(e) {
@@ -1061,8 +1089,8 @@ Namespace('HospitalSim').Engine = (function() {
 		// room demo, it will work. We can look at new strategies when we get to the
 		// phase where we are trying to build multiple rooms. -Phil
 		camera.setAttribute('position', {
-			x: (data.gridLoader['columns'] / 2),
-			y: 16,
+			x: (data.gridLoader['columns'] / 2) - 0.5,
+			y: 14,
 			z: (data.gridLoader['rows'] / 2) + 2
 		});
 		camera.setAttribute('rotation', {

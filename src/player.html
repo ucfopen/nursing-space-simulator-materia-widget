@@ -27,7 +27,7 @@
 		<link rel="stylesheet" type="text/css" href="player.css">
 	</head>
 	<!-- State listener: view-mode-pov or view-mode-iso -->
-	<body class="view-mode-iso" > 
+	<body class="view-mode-iso" >
 		<a-scene antialias="true" vr-mode-ui="enabled: true">
 			<a-plane id="blueprint" height="500" color="#BFFDF5" position="0 -1 0" rotation="-90 0 0" width="500"></a-plane>
 			<!-- Your main camera. It starts high, and is looking straight down. Actual positon in the player.js file. -->
@@ -49,6 +49,9 @@
 				</div>
 				<button id="camera-down">&darr;</button>
 			</div>
+			<button id="camera-zoom-in">+</button>
+			<button id="camera-zoom-out">-</button>
+			<button id="camera-position-reset">Reset</button>
 		</div>
 		<div id="UI-selected-asset-options">
 			<span class="selected-asset-label-title">Currently selected:</span>
