@@ -467,6 +467,7 @@ Namespace('HospitalSim').Engine = (function() {
 
 		plane.setAttribute('position', {x: i, y: 0, z: j});
 		plane.setAttribute('rotation', {x: -90, y: 0, z: 0});
+		plane.setAttribute('wireframe', true);
 		plane.setAttribute('material', 'color', '#C1D2CC');
 		// Necessary for event listeners.
 		plane.classList.add('grid');
