@@ -21,6 +21,7 @@ score:
 meta_data:
   features:
     - Customizable
+    - Fullscreen
   supported_data:
     - Custom
   about: >
