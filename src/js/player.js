@@ -467,7 +467,6 @@ Namespace('HospitalSim').Engine = (function() {
 
 		plane.setAttribute('position', {x: i, y: 0, z: j});
 		plane.setAttribute('rotation', {x: -90, y: 0, z: 0});
-		plane.setAttribute('wireframe', true);
 		plane.setAttribute('material', 'color', '#C1D2CC');
 		// Necessary for event listeners.
 		plane.classList.add('grid');
@@ -679,6 +678,8 @@ Namespace('HospitalSim').Engine = (function() {
 		// Makes adjustments to the asset based off loadString load string or clonable assets.
 		if(x === null || x === undefined)
 		{
+			console.log("undefined");
+			console.log(details["type"]);
 			asset.setAttribute('position', {
 				x: details['position'].x,
 				y: details['position'].y,
@@ -692,9 +693,11 @@ Namespace('HospitalSim').Engine = (function() {
 		}
 		else
 		{
+			console.log("defined");
+			console.log(details["type"]);
 			asset.setAttribute('position', {
 				x: x,
-				y: (details['scale'].y / 2),
+				y: details['position'].y,
 				z: z
 			});
 			asset.setAttribute('clonable', 'false');
