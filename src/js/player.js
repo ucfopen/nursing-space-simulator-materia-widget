@@ -130,35 +130,19 @@ Namespace('HospitalSim').Engine = (function() {
 		});
 
 		heldDown(cameraLeft, function() {
-			cam.setAttribute('position', {
-				x: cam.getAttribute('position').x - 1,
-				y: cam.getAttribute('position').y,
-				z: cam.getAttribute('position').z,
-			});
+			movePlacedObject(-1, 0);
 		}, 200);
 
 		heldDown(cameraUp, function() {
-			cam.setAttribute('position', {
-				x: cam.getAttribute('position').x,
-				y: cam.getAttribute('position').y,
-				z: cam.getAttribute('position').z - 1,
-			});
+			movePlacedObject(0, -1);
 		}, 200);
 
 		heldDown(cameraRight, function() {
-			cam.setAttribute('position', {
-				x: cam.getAttribute('position').x + 1,
-				y: cam.getAttribute('position').y,
-				z: cam.getAttribute('position').z,
-			});
+			movePlacedObject(1, 0);
 		}, 200);
 
 		heldDown(cameraDown, function() {
-			cam.setAttribute('position', {
-				x: cam.getAttribute('position').x,
-				y: cam.getAttribute('position').y,
-				z: cam.getAttribute('position').z + 1,
-			});
+			movePlacedObject(0, 1);
 		}, 200);
 
 		heldDown(cameraIn, function() {
@@ -347,23 +331,9 @@ Namespace('HospitalSim').Engine = (function() {
 
 					// Stand-in variable in case we're not using the active asset.
 					var theElementToMove = activeElement.element;
-					// If active object wasn't a clone, make a clone, unless it was a 'structure object, or viewer.
-					if(activeElement.isCloned === 'false' && activeElement.element.id !== 'pov-camera')
-					{
-						// Remove the active color and related class.
-						swapMaterials(activeElement.element);
-						// Update cells owned by this asset.
-						changeCellsOwned(this, false);
-						// Clone the asset.
-						theElementToMove = clone(activeElement.element);
-						// Remove activeElement's cells owned now.
-						activeElement.cellsOwned = '';
-					}
-					else
-					{
-						// Update cells owned by this asset.
-						changeCellsOwned(this, false);
-					}
+					// Update cells owned by this asset.
+					changeCellsOwned(this, false);
+					
 					// Place the clone in the scene on top of clicked grid cell.
 					// We add one to the horizontal and vertical because of the discrepancies between 'size'
 					// and 'scale' when dealing with imported object assets. Since one block is 0 and two blocks
@@ -784,6 +754,46 @@ Namespace('HospitalSim').Engine = (function() {
 			}
 		}
 	};
+	function movePlacedObject(x_shift, z_shift) {
+		console.log(activeElement);
+		var cornerCell = document.getElementById(activeElement.cellsOwned.split(',')[0]);
+		var cellPosition = cornerCell.getAttribute('position');
+		var assetPosY = activeElement.element.getAttribute('position').y;
+
+		var idContents = cornerCell.id.split('-');
+		var x = Number(idContents[idContents.length-2]) + x_shift;
+		var z = Number(idContents[idContents.length-1]) + z_shift;
+		var horizontal = activeElement.horizontal;
+		var vertical = activeElement.vertical;
+		var inBounds = checkBoundaries(true, idContents, x, z, horizontal, vertical);
+
+		if(inBounds)
+		{
+			var newCornerCell = document.getElementById("cell-" + x + "-"+z);
+			changeCellsOwned(newCornerCell, true);
+			activeElement.element.setAttribute('position', {
+				x: cellPosition.x + x_shift + ((Number(activeElement.horizontal) + 1) / 2.0) - 0.5,
+				y: assetPosY,
+				z: cellPosition.z + z_shift + ((Number(activeElement.vertical) + 1) / 2.0) - 0.5
+			});
+			// clear and rehighlight cells after being moved
+			var originCell;
+			if(activeCells.length > 0) {
+				// Origin Cell is assumed to be first in list (usually horz and vert = 0)
+				originCell = activeCells[0];
+				clearCells();
+				// call highlightCells() using the originCell as the 'this'
+				highlightCells.apply(originCell);
+			}
+				activeElement.element.flushToDOM();
+				if(activeClicked !== null) removeActiveClicked();
+				makeActiveClicked();
+		}
+		else 
+		{
+			console.log("Couldn't move object because it didnt land in bounds");
+		}
+	}
 	function rotate() {
 		var isClone = activeElement.isCloned;
 		// Adjust cell that will be occupied under new rotation.
