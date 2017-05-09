@@ -678,8 +678,6 @@ Namespace('HospitalSim').Engine = (function() {
 		// Makes adjustments to the asset based off loadString load string or clonable assets.
 		if(x === null || x === undefined)
 		{
-			console.log("undefined");
-			console.log(details["type"]);
 			asset.setAttribute('position', {
 				x: details['position'].x,
 				y: details['position'].y,
@@ -693,8 +691,6 @@ Namespace('HospitalSim').Engine = (function() {
 		}
 		else
 		{
-			console.log("defined");
-			console.log(details["type"]);
 			asset.setAttribute('position', {
 				x: x,
 				y: details['position'].y,
