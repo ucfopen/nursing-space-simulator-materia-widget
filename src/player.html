@@ -19,55 +19,15 @@
 		<script src='//cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.16/angular-sanitize.min.js'></script> -->
 		<!-- A Frame -->
 		<!-- <script src="https://aframe.io/releases/0.4.0/aframe.min.js"></script> -->
-		<script src="https://aframe.io/releases/0.5.0/aframe.min.js"></script>
+		<!--<script src="https://aframe.io/releases/0.5.0/aframe.min.js"></script>
 		<script src="https://rawgit.com/dbradleyfl/aframe-gridhelper/master/dist/aframe-gridhelper-component.min.js"></script>
-		<script src="https://rawgit.com/mayognaise/aframe-mouse-cursor-component/master/dist/aframe-mouse-cursor-component.min.js"></script>
+		<script src="https://rawgit.com/mayognaise/aframe-mouse-cursor-component/master/dist/aframe-mouse-cursor-component.min.js"></script>-->
 
 		<!-- MAIN APP -->
-		<script type="text/javascript" src="js/player.js"></script>
 		<link rel="stylesheet" type="text/css" href="player.css">
 	</head>
-	<!-- State listener: view-mode-pov or view-mode-iso -->
-	<body class="view-mode-iso" >
-		<a-scene antialias="true" vr-mode-ui="enabled: true">
-			<a-plane id="blueprint" height="500" color="#BFFDF5" position="0 -1 0" rotation="-90 0 0" width="500"></a-plane>
-			<!-- Your main camera. It starts high, and is looking straight down. Actual positon in the player.js file. -->
-			<a-entity id="camera" camera position="0 0 0" rotation="-90 0 0" mouse-cursor>
-			</a-entity>
-		</a-scene>
-		<div id="ground-top-panel">
-			<button id="back">Back</button>
-		</div>
-		<div id="UI-right-panel">
-			<div id="top-buttons">
-			</div>
-			<button id="screenshot">Take a Screenshot</button>
-			<div id="camera-move">
-				<button id="camera-up">&uarr;</button>
-				<div id="camera-move-horizontal">
-					<button id="camera-left">&larr;</button>
-					<button id="camera-right">&rarr;</button>
-				</div>
-				<button id="camera-down">&darr;</button>
-			</div>
-			<button id="camera-zoom-in">+</button>
-			<button id="camera-zoom-out">-</button>
-			<button id="camera-position-reset">Reset</button>
-		</div>
-		<div id="UI-selected-asset-options">
-			<span class="selected-asset-label-title">Currently selected:</span>
-			<span id="selected-asset-label"></span>
-			<button id="deselect">Deselect</button>
-			<button id="rotate">Rotate</button>
-			<button id="remove">Remove</button>
-		</div>
-		<div id="UI-bottom-panel" class="open">
-			<button class="drawer-toggle">[Close Menu]</button>
-			<div id="asset-selection-menu">
-				<button id="vr-viewer-mode">First-Person Viewer</button>
-			</div>
-			<div id="asset-picker">
-			</div>
-		</div>
+	<body>
+		<div id="sceneContainer" style="height: 100%; width: 100%"></div>
+		<script src="js/player.js"></script>
 	</body>
 </html>
