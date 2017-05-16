@@ -166,13 +166,13 @@ gulp.task('sass', function()
 
 // Transpiles ES6 code to ES5, and uglifies the source
 gulp.task('babel', function () {
-    return browserify({entries: './src/js/player.js', debug: true})
-        .transform("babelify", { presets: ["es2015", "react"] })
+    return browserify({entries: sourceString + 'src/js/player.js', debug: true})
+        .transform(babelify, { presets: ["es2015", "react"] })
         .bundle()
         .pipe(source('player.js'))
         .pipe(buffer())
         .pipe(uglify())
-        .pipe(gulp.dest(buildLocation + 'js'));
+        .pipe(gulp.dest(sourceString + buildLocation + "js"));
 });
 
 /**
@@ -375,7 +375,7 @@ exports["gulp"] = function(widget, minify, mangle, embed, callback)
 	buildLocation = '.build/';
 
 	console.log("widget: ", widget, "\nEmbed: ", embed, "\nMangle: ", mangle, "\nMinify: ", minify);
-
+	
 	Embedding = (embed === "false") ? false : true;
 	Mangling = (mangle === "false") ? false : true;
 	Minifying = (minify === "false") ? false : true;
@@ -407,15 +407,70 @@ exports["gulp"] = function(widget, minify, mangle, embed, callback)
         'replace:build',
         'compress',
         'rename:ext',
-		'clean:package'
+		'clean:package',
+        'callback'
 	);
 };
+
+exports["install"] = function(callback)
+{
+	return fullExport(callback);
+}
 
 /**
  * Extraneous Functions
  * 
  * Functions used in the gulp tasks organized alphabetically
  */
+
+var fullExport = function(callback)
+{
+	var widgetPackagePostFix = Date.now();
+
+	var totalCommand = "cd " + __dirname.slice(0, -widget.length) +
+	" && find " + configs.materia_docker_location + "/app/fuel/app/tmp/widget_packages -name '" + widget + "*.wigt' -delete" +
+	" && cd " + configs.materia_docker_location +
+	" && cp " + __dirname.slice(0, -(widget.length+8)) + 'sandbox/' + widget + "/.build/_output/" + widget + ".wigt app/fuel/app/tmp/widget_packages/" + widget + "-" + widgetPackagePostFix + ".wigt" +
+	" && eval $(docker-machine env " + configs.materia_docker_machine_name + ")" +
+	" && ./install_widget.sh " + widget + "-" + widgetPackagePostFix + ".wigt";
+
+	return exec(totalCommand, function(err, stdout, stderr)
+	{
+		//TODO: Convert to a match with new docker install responses.
+		var match = stdout.match(/installed\:\ ([A-Za-z0-9\-]+)/);
+		// If user doesn't edit their config.json file's materia-docker path properly to match their local machine, this will tell them, and how to fix it.
+		var badFilePathError = new RegExp("find\:\ " + configs.materia_docker_location + "\/app\/fuel\/app\/tmp\/widget_packages", "g");
+		var match2 = stderr.match(badFilePathError);
+		// If user doesn't edit their config.json file's docker-machine name properly to match their local machine, this will tell them, and how to fix it.
+		var invalidHostName = new RegExp("Host does not exist: \"" + configs.materia_docker_machine_name + "\"", "g");
+		var match3 = stderr.match(invalidHostName);
+		// Installed correctly?
+		if (match && match[1])
+		{
+			gutil.log(match[1]);
+			return callback(match[1]);
+		}
+		// Bad path in config.json.
+		else if (match2 && match2[0])
+		{
+			gutil.log("Bad File Path in config.json (see README.txt, item \#2 -- bullet 3)");
+			return callback("", "Bad File Path in config.json (see README.txt, item \#2 -- bullet 3)");
+		}
+		// Invalid docker-machine name in config.json.
+		else if (match3 && match3[0])
+		{
+			gutil.log("Invalid Host Name in config.json (see README.txt, item \#2 -- bullet 5)");
+			return callback("", "Invalid Host Name in config.json (see README.txt, item \#2 -- bullet 5)");
+		}
+		// Default to catch everything else that goes wrong.
+		else
+		{
+			gutil.log(stdout + stderr);
+			return callback("", stderr);
+		}
+	});
+};
+
 function minifyCss(htmlName)
 {
 	var assets = [];
