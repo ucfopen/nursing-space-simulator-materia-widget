@@ -15,7 +15,7 @@ function loadGrid(gridString, gLen, gWid) {
         grid[i] = new Array(gWid);
         for(let j = 0; j < gWid; j++) {
             counter++;
-            grid[i][j] = tempGrid[counter] === "w1" ? true : false;
+            grid[i][j] = tempGrid[counter];
         }
     }
 

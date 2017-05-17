@@ -8,9 +8,11 @@ export default class HUD extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            category: this.props.categories[0]
+            category: this.props.categories[0],
+            showMenu: true,
         }
     }
+
     render () {
         const assets = this.props.assetsFromFile;
         const curCategory = this.state.category;
@@ -42,8 +44,8 @@ export default class HUD extends React.Component {
                     <button id="rotate">Rotate</button>
                     <button id="remove">Remove</button>
                 </div>
-                <div id="UI-bottom-panel" className="open">
-                    <button className="drawer-toggle">[Close Menu]</button>
+                <div id="UI-bottom-panel" className={this.state.showMenu ? "open" : "closed"}>
+                    <button onClick={this.toggleMenu.bind(this)} className="drawer-toggle">{this.state.showMenu ? "[Close Menu]" : "[Open Menu]"}</button>
                     <div id="asset-selection-menu">
                         <button id="vr-viewer-mode" onClick={this.props.toggleCamera}>First-Person Viewer</button>
                         {
@@ -67,6 +69,10 @@ export default class HUD extends React.Component {
         );
     }
 
+    toggleMenu() {
+        const showMenu = this.state.showMenu;
+        this.setState({showMenu: !showMenu});
+    }
     setCurrentCategory(category) {
         this.setState({category: category});
     }

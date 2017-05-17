@@ -7,7 +7,7 @@ export default class FloorUnit extends React.Component {
         return (
             <Entity
                 primitive="a-plane"
-                material={{color: this.props.color}}
+                material={{color: "green"}}
                 position={{x: this.props.x, y:"-1", z:this.props.y}} 
                 rotation={{x: "-90", y:"0", z:"0"}}
                 scale={{x: "1", y: "1", z: "1"}}
