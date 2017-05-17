@@ -1,9 +1,20 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import CategoryButton from './ui/category_button'
+import AssetButton from './ui/asset_button'
 //import './hud.css';
 
 export default class HUD extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            category: this.props.categories[0]
+        }
+    }
     render () {
+        const assets = this.props.assetsFromFile;
+        const curCategory = this.state.category;
+
         return (
             <div>
                 <div id="ground-top-panel">
@@ -35,11 +46,28 @@ export default class HUD extends React.Component {
                     <button className="drawer-toggle">[Close Menu]</button>
                     <div id="asset-selection-menu">
                         <button id="vr-viewer-mode" onClick={this.props.toggleCamera}>First-Person Viewer</button>
+                        {
+                        this.props.categories.map((category, index) => (
+                            <CategoryButton onClick={this.setCurrentCategory.bind(this, category)} key={index} category={category}/>
+                        ))
+                        }
                     </div>
                 <div id="asset-picker">
+                    {
+                    Object.keys(assets).map(function(asset) {
+                        if(curCategory === assets[asset].category)
+                            return (
+                                <AssetButton key={asset} item={assets[asset]}/>
+                            );
+                    })
+                    }
                 </div>
             </div>
         </div>
         );
+    }
+
+    setCurrentCategory(category) {
+        this.setState({category: category});
     }
 }

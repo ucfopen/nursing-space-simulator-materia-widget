@@ -27,8 +27,17 @@ function loadGrid(gridString, gLen, gWid) {
 */
 Namespace('HospitalSim').Engine = (function() {
     var start = function(instance, qset, version) {
-        let data = {gridLoader : qset.options.gridLoader};
-        ReactDOM.render(<App map={loadGrid(data.gridLoader.content, data.gridLoader.rows, data.gridLoader.columns)}/>, document.querySelector('#sceneContainer'));
+        let data = {
+            assetsFromFile : qset.options.assets,
+            categories : qset.options.categories,
+            gridLoader : qset.options.gridLoader
+        };
+        ReactDOM.render(
+            <App 
+                map={loadGrid(data.gridLoader.content, data.gridLoader.rows, data.gridLoader.columns)}
+                categories={data.categories}
+                assetsFromFile={data.assetsFromFile} />, 
+            document.querySelector('#sceneContainer'));
     };
 
     // Public.
