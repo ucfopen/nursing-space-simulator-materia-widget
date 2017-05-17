@@ -27,6 +27,8 @@ export default class VRScene extends React.Component {
                         <WallUnit x={rowIndex} z={colIndex}/> ||
                         <FloorUnit 
                             x={rowIndex} y={colIndex}
+                            onClick={this.props.onClick.bind(this, rowIndex, colIndex)}
+                            color="red"
                         />
                 ))
             ))

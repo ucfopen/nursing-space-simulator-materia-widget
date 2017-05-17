@@ -6,6 +6,7 @@ var buffer      = require('vinyl-buffer');
 var clean       = require('gulp-clean');
 var concat      = require('gulp-concat');
 var cssmin      = require('gulp-cssmin');
+var exec        = require('child_process').exec;
 var fs          = require('fs');
 var gulp        = require('gulp');
 var gutil       = require('gulp-util');
