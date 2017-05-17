@@ -23,13 +23,12 @@ export default class VRScene extends React.Component {
         {
             this.props.grid.map((row, rowIndex) => (
                 row.map((column, colIndex) => (
-                    this.props.grid[rowIndex][colIndex] === true &&
+                    this.props.grid[rowIndex][colIndex] === "w" &&
                         <WallUnit x={rowIndex} z={colIndex}/> ||
                         <FloorUnit 
                             x={rowIndex} y={colIndex}
                             onClick={this.props.onClick.bind(this, rowIndex, colIndex)}
-                            color="red"
-                        />
+                            color="red"/>
                 ))
             ))
         }
