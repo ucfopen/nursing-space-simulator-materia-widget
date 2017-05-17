@@ -3,9 +3,7 @@ import ReactDOM from 'react-dom';
 
 import App from "./components/app";
 
-let map = "w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-x-x-0-0-0-0-0-0-0-0-0-0-0-w1-w1-0-0-0-0-0-0-0-0-0-0-0-x-x-w1-w1-x-x-0-0-0-0-0-0-0-0-0-0-0-w1-w1-0-0-0-0-0-0-0-0-0-0-0-x-x-w1-w1-x-x-0-0-0-0-0-0-0-0-0-0-0-w1-w1-0-0-0-0-0-0-0-0-0-0-0-x-x-w1-w1-x-x-0-0-0-0-0-0-0-0-0-0-0-w1-w1-0-0-0-0-0-0-0-0-0-0-0-x-x-w1-w1-x-x-0-0-0-0-0-0-0-0-0-0-0-w1-w1-0-0-0-0-0-0-0-0-0-0-0-x-x-w1-w1-x-x-0-0-0-0-0-0-0-0-0-0-0-w1-w1-0-0-0-0-0-0-0-0-0-0-0-x-x-w1-w1-x-x-0-0-0-0-0-0-0-0-0-0-0-w1-w1-0-0-0-0-0-0-0-0-0-0-0-x-x-w1-w1-x-x-0-0-0-0-0-0-0-0-0-0-0-w1-w1-0-0-0-0-0-0-0-0-0-0-x-x-x-w1-w1-x-x-0-0-0-0-0-0-0-0-0-0-0-w1-w1-0-0-0-0-0-0-0-0-0-0-0-x-x-w1-w1-x-x-0-0-0-0-0-0-0-0-0-0-0-w1-w1-0-0-0-0-0-0-0-0-0-0-x-x-x-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1";
-
-function generateGrid(gridString, gLen, gWid) {
+function loadGrid(gridString, gLen, gWid) {
     var grid;
     var tempGrid;
     var counter = -1;
@@ -24,4 +22,16 @@ function generateGrid(gridString, gLen, gWid) {
     return grid;
 }
 
-ReactDOM.render(<App map={generateGrid(map, 12, 30)}/>, document.querySelector('#sceneContainer'));
+/*
+** Places the first--and main--React element in the document.
+*/
+Namespace('HospitalSim').Engine = (function() {
+    var start = function(instance, qset, version) {
+        let data = {gridLoader : qset.options.gridLoader};
+        ReactDOM.render(<App map={loadGrid(data.gridLoader.content, data.gridLoader.rows, data.gridLoader.columns)}/>, document.querySelector('#sceneContainer'));
+    };
+
+    // Public.
+    return {start:start};
+})();
+    
