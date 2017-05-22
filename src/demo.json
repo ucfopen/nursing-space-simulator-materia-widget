@@ -367,6 +367,30 @@
 						"vertical": 0,
 						"category": "walls",
 						"title": "Wall (2)"
+					},
+					"tv-wall": {
+						"assetRotationState": 0,
+						"buttonSource":"assets/WALL_2D_1.png",
+						"canReplace": ["wall"],
+						"cellsOwned": "",
+						"clonable": "false",
+						"defaultColor": "#9FCDB1",
+						"horizontal": 0,
+						"id": "tv-wall-1",
+						"isCloned": "false",
+						"isPermanent": "false",
+						"materialType": "complex",
+						"materialSource": "assets/mesh_tv_wall.mtl",
+						"objectSource": "assets/mesh_tv_wall.obj",
+						"movable": "false",
+						"position": {"x": 0, "y": 0, "z": 0},
+						"rotation": {"x": 0, "y": 0, "z": 0},
+						"scale": {"x":0.5, "y":0.5, "z":0.5},
+						"tag": "a-obj-model",
+						"type": "wall",
+						"vertical": 0,
+						"category": "walls",
+						"title": "TV Wall"
 					}
 				},
 				"gridLoader": {

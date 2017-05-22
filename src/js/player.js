@@ -256,7 +256,7 @@ Namespace('HospitalSim').Engine = (function() {
 		{
 			if(this.classList.contains('active') || onGround) return;
 			if(activeHover !== null) removeActiveHover();
-			swapMaterials(this);
+			//swapMaterials(this);
 		});
 		// Clicked on asset
 		obj.addEventListener('click', function ()
@@ -276,7 +276,7 @@ Namespace('HospitalSim').Engine = (function() {
 			// Asset wasn't active before, and some (not cloned) asset types can replace it.
 			else if(activeElement.activated === true &&
 					activeElement.canReplace.indexOf(this.getAttribute('type')) > -1 &&
-					activeElement.isCloned === 'false' &&
+					//activeElement.isCloned === 'false' &&
 					this.getAttribute('isCloned') === 'true')
 			{
 				this.setAttribute('vertical', activeElement.vertical);
@@ -293,7 +293,7 @@ Namespace('HospitalSim').Engine = (function() {
 				this.classList.add('active');
 				activeElement.element = this;
 				activeElement.activated = true;
-				activeElement.isCloned = this.getAttribute('isCloned');
+				activeElement.isCloned = false;
 				activeElement.assetRotationState = this.getAttribute('assetRotationState');
 				activeElement.canReplace = this.getAttribute('canReplace');
 				activeElement.cellsOwned = this.getAttribute('cellsOwned');
@@ -732,8 +732,6 @@ Namespace('HospitalSim').Engine = (function() {
 		asset.setAttribute('canReplace', details['canReplace']);
 
 		asset.setAttribute('title', details['title']);
-		// If this asset was created from the gridLoader, set isPermanent to true, otherwise false is default.
-		if(isPermanent) asset.setAttribute('isPermanent', 'true');
 		// Sometimes necessary to force the HTML DOM to redraw these pseudo-dom elements.
 		asset.flushToDOM();
 		attachAssetListeners(asset);
@@ -1176,6 +1174,9 @@ Namespace('HospitalSim').Engine = (function() {
 		}
 		else
 		{
+            if(toBeReplaced.getAttribute('src') !== '' && toBeReplaced.getAttribute('src') !== null) {
+                toBeReplaced.setAttribute('src', toBeReplacedWith.getAttribute('src'));
+            }
 			if(toBeReplaced.getAttribute('materialSource') !== '' && toBeReplaced.getAttribute('materialSource') !== null)
 			{
 				toBeReplaced.setAttribute('mtl', toBeReplacedWith.getAttribute('materialSource'));
