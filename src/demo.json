@@ -8,7 +8,7 @@
 			"options": {
 				"categories" : [ "beds", "equipment", "walls" ],
 				"assets": {
-					"bed": {
+					"bed-1": {
 						"assetRotationState": 0,
 						"buttonSource":"assets/icons/icon_bed.png",
 						"canReplace": [],
@@ -19,10 +19,10 @@
 						"id": "bed-1",
 						"isCloned": "false",
 						"isPermanent": "false",
-						"materialSource": "assets/bed/mesh_bed.mtl",
+						"materialSource": "mtl: url(assets/bed/mesh_bed.mtl);",
 						"materialType": "complex",
 						"movable": "true",
-						"objectSource": "assets/bed/mesh_bed.obj",
+						"object": "obj: url(assets/bed/mesh_bed.obj); mtl: url(assets/bed/mesh_bed.mtl);",
 						"position": {"x": -100, "y": 0, "z": -100},
 						"rotation": {"x": 0, "y": 0, "z": 0},
 						"scale": {"x": 0.35, "y": 0.35, "z": 0.35},
@@ -43,10 +43,9 @@
 						"id": "bedside-table",
 						"isCloned": "false",
 						"isPermanent": "false",
-						"materialSource": "assets/bedsidetable/mesh_bedsidetable.mtl",
 						"materialType": "complex",
 						"movable": "true",
-						"objectSource": "assets/bedsidetable/mesh_bedsidetable.obj",
+						"object": "obj: url(assets/bedsidetable/mesh_bedsidetable.obj); mtl: url(assets/bedsidetable/mesh_bedsidetable.mtl);",
 						"position": {"x": -100, "y": 0, "z": -100},
 						"rotation": {"x": 0, "y": -90, "z": 0},
 						"scale": {"x": 0.35, "y": 0.35, "z": 0.35},
@@ -104,7 +103,7 @@
 						"category": "equipment",
 						"title": "Crash Cart"
 					},
-					"computer": {
+					"computer-1": {
 						"assetRotationState": 0,
 						"buttonSource":"assets/icons/icon_computer.png",
 						"canReplace": [],
@@ -176,7 +175,7 @@
 						"category": "walls",
 						"title": "Door (2)"
 					},
-					"iv": {
+					"iv-1": {
 						"assetRotationState": 0,
 						"buttonSource":"assets/icons/icon_iv.png",
 						"canReplace": [],
@@ -224,7 +223,7 @@
 						"category": "equipment",
 						"title": "Table"
 					},
-					"trashcan": {
+					"trashcan-1": {
 						"assetRotationState": 0,
 						"buttonSource":"assets/icons/icon_trashcan.png",
 						"canReplace": [],
@@ -333,7 +332,7 @@
 						"movable": "false",
 						"position": {"x": -100, "y": 0, "z": -100},
 						"rotation": {"x": 0, "y": 0, "z": 0},
-						"scale": {"x":1, "y":3, "z":1},
+						"scale": {"x":1, "y":4, "z":1},
 						"tag": "a-box",
 						"type": "wall",
 						"vertical": 0,
@@ -343,7 +342,7 @@
 				},
 				"gridLoader": {
 					"columns": 30,
-					"content": "w-w-w-w-w-w-w-w-w-w-w-w-w-w-w-w-w-w-w-w-w-w-w-w-w-w-w-w-w-w-w-x-x-0-0-0-0-0-0-0-0-0-0-0-w-w-0-0-0-0-0-0-0-0-0-0-0-x-x-w-w-x-x-0-0-0-0-0-0-0-0-0-0-0-w-w-0-0-0-0-0-0-0-0-0-0-0-x-x-w-w-x-x-0-0-0-0-0-0-0-0-0-0-0-w-w-0-0-0-0-0-0-0-0-0-0-0-x-x-w-w-x-x-0-0-0-0-0-0-0-0-0-0-0-w-w-0-0-0-0-0-0-0-0-0-0-0-x-x-w-w-x-x-0-0-0-0-0-0-0-0-0-0-0-w-w-0-0-0-0-0-0-0-0-0-0-0-x-x-w-w-x-x-0-0-0-0-0-0-0-0-0-0-0-w-w-0-0-0-0-0-0-0-0-0-0-0-x-x-w-w-x-x-0-0-0-0-0-0-0-0-0-0-0-w-w-0-0-0-0-0-0-0-0-0-0-0-x-x-w-w-x-x-0-0-0-0-0-0-0-0-0-0-0-w-w-0-0-0-0-0-0-0-0-0-0-x-x-x-w-w-x-x-0-0-0-0-0-0-0-0-0-0-0-w-w-0-0-0-0-0-0-0-0-0-0-0-x-x-w-w-x-x-0-0-0-0-0-0-0-0-0-0-0-w-w-0-0-0-0-0-0-0-0-0-0-x-x-x-w-w-w-w-w-w-w-w-w-w-w-w-w-w-w-w-w-w-w-w-w-w-w-w-w-w-w-w-w-w-w",
+					"content": "wall-1 wall-1 wall-1 wall-1 wall-1 wall-1 wall-1 wall-1 wall-1 wall-1 wall-1 wall-1 wall-1 wall-1 wall-1 wall-1 wall-1 wall-1 wall-1 wall-1 wall-1 wall-1 wall-1 wall-1 wall-1 wall-1 wall-1 wall-1 wall-1 wall-1 wall-1 0 0 0 0 0 0 0 0 0 0 0 0 0 wall-1 wall-1 0 0 0 0 0 0 0 0 0 0 0 0 0 wall-1 wall-1 0 0 0 0 0 0 0 0 0 0 0 0 0 wall-1 wall-1 0 0 0 0 0 0 0 0 0 0 0 0 0 wall-1 wall-1 0 0 0 0 0 0 0 0 0 0 0 0 0 wall-1 wall-1 0 0 0 0 0 0 0 0 0 0 0 0 0 wall-1 wall-1 0 0 0 0 0 0 0 0 0 0 0 0 0 wall-1 wall-1 0 0 0 0 0 0 0 0 0 0 0 0 0 wall-1 wall-1 0 0 0 0 0 0 0 0 0 0 0 0 0 wall-1 wall-1 0 0 0 0 0 0 0 0 0 0 0 0 0 wall-1 wall-1 0 0 0 0 0 0 0 0 0 0 0 0 0 wall-1 wall-1 0 0 0 0 0 0 0 0 0 0 0 0 0 wall-1 wall-1 0 0 0 0 0 0 0 0 0 0 0 0 0 wall-1 wall-1 0 0 0 0 0 0 0 0 0 0 0 0 0 wall-1 wall-1 0 0 0 0 0 0 0 0 0 0 0 0 0 wall-1 wall-1 0 0 0 0 0 0 0 0 0 0 0 0 0 wall-1 wall-1 0 0 0 0 0 0 0 0 0 0 0 0 0 wall-1 wall-1 0 0 0 0 0 0 0 0 0 0 0 0 0 wall-1 wall-1 0 0 0 0 0 0 0 0 0 0 0 0 0 wall-1 wall-1 0 0 0 0 0 0 0 0 0 0 0 0 0 wall-1 wall-1 wall-1 wall-1 wall-1 wall-1 wall-1 wall-1 wall-1 wall-1 wall-1 wall-1 wall-1 wall-1 wall-1 wall-1 wall-1 wall-1 wall-1 wall-1 wall-1 wall-1 wall-1 wall-1 wall-1 wall-1 wall-1 wall-1 wall-1 wall-1 wall-1",
 					"rows": 12
 				}
 			}
