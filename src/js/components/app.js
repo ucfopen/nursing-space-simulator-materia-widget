@@ -15,6 +15,7 @@ export default class App extends React.Component {
         this.state = {
             grid: this.props.map,
             position: {x: 2.5, y: 18, z: 14},
+            selectedAsset: "",
             thirdPerson: true,
         }
     }
@@ -22,10 +23,20 @@ export default class App extends React.Component {
     handleClick(x, y) {
         const grid = this.state.grid;
 
-        grid[x][y] = !grid[x][y];
+        if(!this.state.selectedAsset)
+            return;
 
-        this.setState({grid: grid});
-        console.log(x + "," + y);
+        grid[x][y] = this.state.selectedAsset.id;
+        console.log("Grid: " + grid[x][y]+ " @ " + "(" + x + "," + y + ")");
+        this.setState({grid:grid});
+    }
+
+    selectAsset(asset) {
+        if(!asset)
+            return;
+
+        console.log(asset);
+        this.setState({selectedAsset: asset});
     }
 
     toggleCamera() {
@@ -48,14 +59,15 @@ export default class App extends React.Component {
         return (
             <div>
                 <VRScene 
+                    assetsFromFile={this.props.assetsFromFile}
                     grid={this.state.grid}
                     thirdPerson={this.state.thirdPerson}
                     position={this.state.position}
-                    onClick={this.handleClick.bind(this)}
-                    />
+                    onClick={this.handleClick.bind(this)}/>
                 <HUD
                     categories={this.props.categories}
                     assetsFromFile={this.props.assetsFromFile}
+                    selectAsset={this.selectAsset.bind(this)}
                     xUp={this.updatePosition.bind(this, "x", 1, false)}
                     xDown={this.updatePosition.bind(this, "x", -1, false)}
                     yUp={this.updatePosition.bind(this, "y", 1, false)}
@@ -63,7 +75,7 @@ export default class App extends React.Component {
                     zUp={this.updatePosition.bind(this, "z", -1, false)}
                     zDown={this.updatePosition.bind(this, "z", 1, false)}
                     resetPosition={this.updatePosition.bind(this, "y", 0, true)}
-                    toggleCamera={this.toggleCamera.bind(this)} />
+                    toggleCamera={this.toggleCamera.bind(this)}/>
             </div>
         );
     }

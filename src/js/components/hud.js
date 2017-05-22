@@ -16,6 +16,7 @@ export default class HUD extends React.Component {
     render () {
         const assets = this.props.assetsFromFile;
         const curCategory = this.state.category;
+        const selectAsset = this.props.selectAsset;
 
         return (
             <div>
@@ -48,6 +49,7 @@ export default class HUD extends React.Component {
                     <button onClick={this.toggleMenu.bind(this)} className="drawer-toggle">{this.state.showMenu ? "[Close Menu]" : "[Open Menu]"}</button>
                     <div id="asset-selection-menu">
                         <button id="vr-viewer-mode" onClick={this.props.toggleCamera}>First-Person Viewer</button>
+                        <button id="vr-viewer-mode" onClick={this.props.toggleCamera}>First-Person Viewer</button>
                         {
                         this.props.categories.map((category, index) => (
                             <CategoryButton onClick={this.setCurrentCategory.bind(this, category)} key={index} category={category}/>
@@ -59,7 +61,7 @@ export default class HUD extends React.Component {
                     Object.keys(assets).map(function(asset) {
                         if(curCategory === assets[asset].category)
                             return (
-                                <AssetButton key={asset} item={assets[asset]}/>
+                                <AssetButton key={asset} item={assets[asset]} onClick={selectAsset.bind(this, assets[asset])}/>
                             );
                     })
                     }

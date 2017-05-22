@@ -6,7 +6,7 @@ import React from 'react';
 import Ceiling from './assets/ceiling';
 import CameraTP from './assets/camera_tp';
 import CameraFP from './assets/camera_fp';
-import WallUnit from './assets/wall_unit';
+import QsetAsset from './assets/qset_asset';
 import FloorUnit from './assets/floor_unit';
 
 export default class VRScene extends React.Component {
@@ -23,12 +23,12 @@ export default class VRScene extends React.Component {
         {
             this.props.grid.map((row, rowIndex) => (
                 row.map((column, colIndex) => (
-                    this.props.grid[rowIndex][colIndex] === "w" &&
-                        <WallUnit x={rowIndex} z={colIndex}/> ||
+                    this.props.grid[rowIndex][colIndex] === "0" &&
                         <FloorUnit 
                             x={rowIndex} y={colIndex}
                             onClick={this.props.onClick.bind(this, rowIndex, colIndex)}
                             color="red"/>
+                        || <QsetAsset x={rowIndex} z={colIndex} data={this.props.assetsFromFile[this.props.grid[rowIndex][colIndex]]}/>
                 ))
             ))
         }

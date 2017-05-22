@@ -8,7 +8,7 @@ function loadGrid(gridString, gLen, gWid) {
     var tempGrid;
     var counter = -1;
 
-    tempGrid = gridString.split('-');
+    tempGrid = gridString.split(' ');
     grid = new Array(gLen);
 
     for(let i = 0; i < gLen; i++) {
