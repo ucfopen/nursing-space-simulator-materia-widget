@@ -14,45 +14,11 @@ export default class App extends React.Component {
         super(props);
         this.state = {
             grid: this.props.map,
-            position: {x: 2.5, y: 18, z: 14},
+            placementMode: false,
+            position: {x: 2.5, y: 18, z: 14}, //TODO: make these variable dynamic based on map from qset
             selectedAsset: "",
             thirdPerson: true,
         }
-    }
-
-    handleClick(x, y) {
-        const grid = this.state.grid;
-
-        if(!this.state.selectedAsset)
-            return;
-
-        grid[x][y] = this.state.selectedAsset.id;
-        console.log("Grid: " + grid[x][y]+ " @ " + "(" + x + "," + y + ")");
-        this.setState({grid:grid});
-    }
-
-    selectAsset(asset) {
-        if(!asset)
-            return;
-
-        console.log(asset);
-        this.setState({selectedAsset: asset});
-    }
-
-    toggleCamera() {
-        const thirdPerson = this.state.thirdPerson;
-        this.setState({thirdPerson: !this.state.thirdPerson});
-    }
-
-    updatePosition(direction, distance, reset) {
-        let position = this.state.position;
-
-        if(reset)
-            position = {x: 2.5, y: 18, z: 14};
-        else
-            position[direction] += distance;
-            
-        this.setState({position:position});
     }
 
     render() {
@@ -78,6 +44,45 @@ export default class App extends React.Component {
                     toggleCamera={this.toggleCamera.bind(this)}/>
             </div>
         );
+    }
+
+    handleClick(x, y) {
+        const grid = this.state.grid;
+
+        if(!this.state.selectedAsset || !this.state.thirdPerson) return;
+
+        grid[x][y] = this.state.selectedAsset.id;
+        this.setState({grid:grid});
+    }
+
+    selectAsset(asset) {
+        if(!asset) return;
+
+        this.setState({selectedAsset: asset});
+        this.setState({placementMode: true});
+    }
+
+    shouldComponentUpdate(nextProps, nextState) {
+        if(this.state.grid !== nextState.grid) return true;
+        if(this.state.postition !== nextState.position) return true;
+
+        return false;
+    }
+
+    toggleCamera() {
+        const thirdPerson = this.state.thirdPerson;
+        this.setState({thirdPerson: !this.state.thirdPerson});
+    }
+
+    updatePosition(direction, distance, reset) {
+        let position = this.state.position;
+
+        if(reset)
+            position = {x: 2.5, y: 18, z: 14};
+        else
+            position[direction] += distance;
+            
+        this.setState({position:position});
     }
    
 }
