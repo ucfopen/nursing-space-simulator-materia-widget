@@ -325,7 +325,7 @@
 						"movable": "false",
 						"position": {"x": -100, "y": 0, "z": -100},
 						"rotation": {"x": 0, "y": 0, "z": 0},
-						"scale": {"x":1, "y":4, "z":1},
+						"scale": {"x":1, "y":3, "z":1},
 						"tag": "a-box",
 						"type": "wall",
 						"vertical": 0,

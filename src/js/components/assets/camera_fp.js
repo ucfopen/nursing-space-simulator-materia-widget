@@ -8,6 +8,7 @@ export default class CameraFP extends React.Component
         return (
             <Entity
                 camera={{active: this.props.active}}
+                position={{x: 1, y: 1, z: 1}}
                 look-controls
                 wasd-controls/>
         )

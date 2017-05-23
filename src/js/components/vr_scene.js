@@ -3,7 +3,7 @@ import {Scene} from 'aframe-react';
 import React from 'react';
 
 // Scene Assets
-import Ceiling from './assets/ceiling';
+import CeilingUnit from './assets/ceiling_unit';
 import CameraTP from './assets/camera_tp';
 import CameraFP from './assets/camera_fp';
 import QsetAsset from './assets/qset_asset';
@@ -17,18 +17,33 @@ export default class VRScene extends React.Component {
           <img id="ceilingTexture" alt="sorry" src="assets/CEILING_TILE.jpg"/>
           <img id="wallTexture" alt="sorry" src="assets/WALL_2D_1.png"/>
         </a-assets>
-        <Ceiling />
         <CameraFP active={!this.props.thirdPerson} position={this.props.position}/>
         <CameraTP active={this.props.thirdPerson} position={this.props.position}/>
         {
-            this.props.grid.map((row, rowIndex) => (
+          // Draw the floor and the assets to the screen
+          this.props.grid.map((row, rowIndex) => (
+              row.map((column, colIndex) => (
+                  this.props.grid[rowIndex][colIndex] !== "0" &&
+                      <QsetAsset x={rowIndex} z={colIndex} data={this.props.assetsFromFile[this.props.grid[rowIndex][colIndex]]}/>
+              ))
+          ))
+        }
+        {
+          // Draw the ceiling (tile by tile) to the scene
+          this.props.grid.map((row, rowIndex) => (
                 row.map((column, colIndex) => (
-                    this.props.grid[rowIndex][colIndex] === "0" &&
-                        <FloorUnit 
-                            x={rowIndex} y={colIndex}
-                            onClick={this.props.onClick.bind(this, rowIndex, colIndex)}
-                            color="red"/>
-                        || <QsetAsset x={rowIndex} z={colIndex} data={this.props.assetsFromFile[this.props.grid[rowIndex][colIndex]]}/>
+                    <FloorUnit 
+                          x={rowIndex} y={colIndex}
+                          onClick={this.props.onClick.bind(this, rowIndex, colIndex)}
+                          color="red"/>
+                ))
+            ))
+        }
+        {
+          // Draw the ceiling (tile by tile) to the scene
+          this.props.grid.map((row, rowIndex) => (
+                row.map((column, colIndex) => (
+                    <CeilingUnit x={rowIndex} z={colIndex}/>
                 ))
             ))
         }
