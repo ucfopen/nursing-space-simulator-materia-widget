@@ -3,6 +3,18 @@ import ReactDOM from 'react-dom';
 
 import App from "./components/app";
 
+function getAssetInfo(gridValue) {
+    if(gridValue === "0")
+        return "0";
+
+    let assetInfo = gridValue.split(".");
+
+    return {
+        id: assetInfo[0],
+        rotation: parseInt(assetInfo[1]),
+    };
+}
+
 function loadGrid(gridString, gLen, gWid) {
     var grid;
     var tempGrid;
@@ -15,7 +27,7 @@ function loadGrid(gridString, gLen, gWid) {
         grid[i] = new Array(gWid);
         for(let j = 0; j < gWid; j++) {
             counter++;
-            grid[i][j] = tempGrid[counter];
+            grid[i][j] = getAssetInfo(tempGrid[counter]);
         }
     }
 
