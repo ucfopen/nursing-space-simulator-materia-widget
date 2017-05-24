@@ -25,7 +25,7 @@ export default class App extends React.Component {
     handleClick(x, y) {
         const grid = this.state.grid;
 
-        if(!this.state.selectedAsset || !this.state.thirdPerson) return;
+        if(!this.state.selectedAsset.asset || !this.state.thirdPerson) return;
 
         grid[x][y] = {
             id: this.state.selectedAsset.asset.id,
