@@ -43,7 +43,7 @@ export default class HUD extends React.Component {
                     <span className="selected-asset-label-title">Currently selected: {this.props.selectedAsset.asset.title}</span>
                     <span id="selected-asset-label"></span>
                     <button id="deselect" onClick={this.props.manipulateAsset.bind(this, this.props.selectedAsset.asset, "deselect", this.props.selectedAsset.x, this.props.selectedAsset.y)}>Deselect</button>
-                    <button id="rotate">Rotate</button>
+                    <button id="rotate" onClick={this.props.manipulateAsset.bind(this, this.props.selectedAsset.asset, "rotate", this.props.selectedAsset.x, this.props.selectedAsset.y)}>Rotate</button>
                     <button id="remove" onClick={this.props.manipulateAsset.bind(this, this.props.selectedAsset.asset, "remove", this.props.selectedAsset.x, this.props.selectedAsset.y)}>Remove</button>
                 </div>
                 <div id="UI-bottom-panel" className={this.state.showMenu ? "open" : "closed"}>

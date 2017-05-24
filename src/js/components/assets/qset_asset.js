@@ -17,7 +17,7 @@ export default class QsetAsset extends React.Component {
                 *   To do this, the position of the box must be shifted upward half of the total scaling value.
                 */
                 position={{x: this.props.x, y: yScaleFactor, z:this.props.z}}
-                rotation={this.props.data.rotation}
+                rotation={{x: 0, y: this.props.rotation, z: 0}}
                 scale={this.props.data.scale}/>
         )
     }

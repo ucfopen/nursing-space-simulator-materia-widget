@@ -26,8 +26,9 @@ export default class VRScene extends React.Component {
                   this.props.grid[rowIndex][colIndex] !== "0" 
                     ? <QsetAsset
                       x={rowIndex} z={colIndex}
-                      onClick={this.props.manipulateAsset.bind(this, this.props.assetsFromFile[this.props.grid[rowIndex][colIndex]], "select", rowIndex, colIndex)}
-                      data={this.props.assetsFromFile[this.props.grid[rowIndex][colIndex]]}/>
+                      onClick={this.props.manipulateAsset.bind(this, this.props.assetsFromFile[this.props.grid[rowIndex][colIndex].id], "select", rowIndex, colIndex)}
+                      data={this.props.assetsFromFile[this.props.grid[rowIndex][colIndex].id]}
+                      rotation={this.props.grid[rowIndex][colIndex].rotation}/>
                     : null
               ))
           ))
