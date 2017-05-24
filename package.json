@@ -3,6 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "main": "app.js",
+  "browserify-shim": {
+    "react": "global:React",
+    "react-dom": "global:ReactDOM",
+    "aframe": "global:AFRAME"
+  },
   "dependencies": {
     "aframe": "^0.5.0",
     "aframe-mouse-cursor-component": "^0.4.1",
@@ -39,6 +44,7 @@
     "angular-loader": "^1.5.9",
     "angular-mocks": "^1.5.9",
     "angular-sanitize": "^1.5.9",
+    "browserify-shim": "^3.8.14",
     "gulp-replace-task": "^0.11.0",
     "http-server": "^0.9.0",
     "jasmine-core": "^2.4.1",

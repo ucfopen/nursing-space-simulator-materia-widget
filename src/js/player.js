@@ -43,4 +43,3 @@ Namespace('HospitalSim').Engine = (function() {
     // Public.
     return {start:start};
 })();
-    

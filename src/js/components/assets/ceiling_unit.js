@@ -1,4 +1,4 @@
-import 'aframe';
+import AFRAME from 'aframe';
 import {Entity} from 'aframe-react';
 import React from 'react';
 

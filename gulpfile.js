@@ -1,24 +1,25 @@
-var argv        = require('yargs').argv;
-var autoprefix  = require('gulp-autoprefixer');
-var babelify    = require('babelify');
-var browserify  = require('browserify');
-var buffer      = require('vinyl-buffer');
-var clean       = require('gulp-clean');
-var concat      = require('gulp-concat');
-var cssmin      = require('gulp-cssmin');
-var exec        = require('child_process').exec;
-var fs          = require('fs');
-var gulp        = require('gulp');
-var gutil       = require('gulp-util');
-var print       = require('gulp-print');
-var rename      = require('gulp-rename');
-var replace     = require('gulp-replace');
-var replaceTask = require('gulp-replace-task');
-var runSequence = require('run-sequence');
-var sass        = require('gulp-sass');
-var source      = require('vinyl-source-stream');
-var uglify      = require('gulp-uglify');
-var zip         = require('gulp-zip');
+var argv           = require('yargs').argv;
+var autoprefix     = require('gulp-autoprefixer');
+var babelify       = require('babelify');
+var browserify     = require('browserify');
+var browserifyshim = require('browserify-shim');
+var buffer         = require('vinyl-buffer');
+var clean          = require('gulp-clean');
+var concat         = require('gulp-concat');
+var cssmin         = require('gulp-cssmin');
+var exec           = require('child_process').exec;
+var fs             = require('fs');
+var gulp           = require('gulp');
+var gutil          = require('gulp-util');
+var print          = require('gulp-print');
+var rename         = require('gulp-rename');
+var replace        = require('gulp-replace');
+var replaceTask    = require('gulp-replace-task');
+var runSequence    = require('run-sequence');
+var sass           = require('gulp-sass');
+var source         = require('vinyl-source-stream');
+var uglify         = require('gulp-uglify');
+var zip            = require('gulp-zip');
 
 // If built outside of devmateria, avoid looking for the config file.
 var configs = null;
@@ -167,12 +168,14 @@ gulp.task('sass', function()
 
 // Transpiles ES6 code to ES5, and uglifies the source
 gulp.task('babel', function () {
-    return browserify({entries: sourceString + 'src/js/player.js', debug: true})
+    return browserify({entries: sourceString + 'src/js/player.js'})
+		.external(['aframe'])
         .transform(babelify, { presets: ["es2015", "react"] })
+		.transform(browserifyshim)
         .bundle()
         .pipe(source('player.js'))
         .pipe(buffer())
-        .pipe(uglify())
+        //.pipe(uglify())
         .pipe(gulp.dest(sourceString + buildLocation + "js"));
 });
 
