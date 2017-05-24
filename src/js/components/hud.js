@@ -5,6 +5,7 @@ import AssetButton from './ui/asset_button'
 //import './hud.css';
 
 export default class HUD extends React.Component {
+
     constructor(props) {
         super(props);
         this.state = {

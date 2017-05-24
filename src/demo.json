@@ -22,7 +22,7 @@
 						"materialSource": "mtl: url(assets/bed/mesh_bed.mtl);",
 						"materialType": "complex",
 						"movable": "true",
-						"object": "obj: url(assets/bed/mesh_bed.obj); mtl: url(assets/bed/mesh_bed.mtl);",
+						"object": "obj: url(assets/bed/mesh_bed_pos.obj); mtl: url(assets/bed/mesh_bed_pos.mtl);",
 						"position": {"x": -100, "y": 0, "z": -100},
 						"rotation": {"x": 0, "y": 0, "z": 0},
 						"scale": {"x": 0.35, "y": 0.35, "z": 0.35},

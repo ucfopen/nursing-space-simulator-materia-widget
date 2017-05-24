@@ -1,4 +1,4 @@
-import 'aframe';
+import AFRAME from 'aframe';
 import {Scene} from 'aframe-react';
 import React from 'react';
 
@@ -12,7 +12,7 @@ import FloorUnit from './assets/floor_unit';
 export default class VRScene extends React.Component {
   render () {
     return (
-      <Scene>
+      <Scene stats>
         <a-assets>
           <img id="ceilingTexture" alt="sorry" src="assets/CEILING_TILE.jpg"/>
           <img id="wallTexture" alt="sorry" src="assets/WALL_2D_1.png"/>
@@ -23,8 +23,9 @@ export default class VRScene extends React.Component {
           // Draw the floor and the assets to the screen
           this.props.grid.map((row, rowIndex) => (
               row.map((column, colIndex) => (
-                  this.props.grid[rowIndex][colIndex] !== "0" &&
-                      <QsetAsset x={rowIndex} z={colIndex} data={this.props.assetsFromFile[this.props.grid[rowIndex][colIndex]]}/>
+                  this.props.grid[rowIndex][colIndex] !== "0" 
+                    ? <QsetAsset x={rowIndex} z={colIndex} data={this.props.assetsFromFile[this.props.grid[rowIndex][colIndex]]}/>
+                    : null
               ))
           ))
         }
@@ -35,7 +36,7 @@ export default class VRScene extends React.Component {
                     <FloorUnit 
                           x={rowIndex} y={colIndex}
                           onClick={this.props.onClick.bind(this, rowIndex, colIndex)}
-                          color="red"/>
+                          color="red"/> 
                 ))
             ))
         }
@@ -43,7 +44,9 @@ export default class VRScene extends React.Component {
           // Draw the ceiling (tile by tile) to the scene
           this.props.grid.map((row, rowIndex) => (
                 row.map((column, colIndex) => (
-                    <CeilingUnit x={rowIndex} z={colIndex}/>
+                    this.props.thirdPerson 
+                      ? null 
+                      : <CeilingUnit x={rowIndex} z={colIndex}/>
                 ))
             ))
         }

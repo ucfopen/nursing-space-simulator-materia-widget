@@ -1,4 +1,4 @@
-import 'aframe';
+import AFRAME from 'aframe';
 import 'aframe-mouse-cursor-component';
 import {Entity} from 'aframe-react';
 import React from 'react';
