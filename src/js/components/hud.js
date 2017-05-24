@@ -39,17 +39,16 @@ export default class HUD extends React.Component {
                     <button id="camera-zoom-out" onClick={this.props.yUp}>-</button>
                     <button id="camera-position-reset" onClick={this.props.resetPosition}>Reset</button>
                 </div>
-                <div id="UI-selected-asset-options">
-                    <span className="selected-asset-label-title">Currently selected:</span>
+                <div id="UI-selected-asset-options" style={{display: this.props.manipulationMode ? "inline" : "none"}}>
+                    <span className="selected-asset-label-title">Currently selected: {this.props.selectedAsset.asset.title}</span>
                     <span id="selected-asset-label"></span>
-                    <button id="deselect">Deselect</button>
+                    <button id="deselect" onClick={this.props.manipulateAsset.bind(this, this.props.selectedAsset.asset, "deselect", this.props.selectedAsset.x, this.props.selectedAsset.y)}>Deselect</button>
                     <button id="rotate">Rotate</button>
-                    <button id="remove">Remove</button>
+                    <button id="remove" onClick={this.props.manipulateAsset.bind(this, this.props.selectedAsset.asset, "remove", this.props.selectedAsset.x, this.props.selectedAsset.y)}>Remove</button>
                 </div>
                 <div id="UI-bottom-panel" className={this.state.showMenu ? "open" : "closed"}>
                     <button onClick={this.toggleMenu.bind(this)} className="drawer-toggle">{this.state.showMenu ? "[Close Menu]" : "[Open Menu]"}</button>
                     <div id="asset-selection-menu">
-                        <button id="vr-viewer-mode" onClick={this.props.toggleCamera}>First-Person Viewer</button>
                         <button id="vr-viewer-mode" onClick={this.props.toggleCamera}>First-Person Viewer</button>
                         {
                         this.props.categories.map((category, index) => (
