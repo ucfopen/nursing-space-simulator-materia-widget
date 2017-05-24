@@ -8,6 +8,7 @@ export default class QsetAsset extends React.Component {
 
         return (
             <Entity
+                events={{click: this.props.onClick}}
                 primitive={this.props.data.tag}
                 material={{color: this.props.data.defaultColor}}
                 obj-model={this.props.data.object}
