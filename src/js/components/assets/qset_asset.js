@@ -4,7 +4,7 @@ import { Entity } from 'aframe-react';
 
 export default class QsetAsset extends Component {
     render() {
-        let yScaleFactor = (this.props.data.category === "walls") ? this.props.data.scale.y / 2: 0;
+        const yScaleFactor = (this.props.data.category === "walls") ? this.props.data.scale.y / 2: 0;
         return (
             <Entity
                 events={{click: this.props.onClick}}
@@ -16,7 +16,7 @@ export default class QsetAsset extends Component {
                 * The scale property grows an a-box in the +-y direction, but we want it to seem like the box is just growing in the +y direction. 
                 *   To do this, the position of the box must be shifted upward half of the total scaling value.
                 */
-                position={{x: this.props.x, y: yScaleFactor, z:this.props.z}}
+                position={{x: this.props.x, y: yScaleFactor, z: this.props.z}}
                 rotation={{x: 0, y: this.props.rotation, z: 0}}
                 scale={this.props.data.scale}/>
         )
