@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Loads Components Camera renders aframe Camera 1`] = `<a-entity />`;
