@@ -5,12 +5,12 @@ import React from 'react';
 export default class QsetAsset extends React.Component {
     render () {
         let yScaleFactor = (this.props.data.category === "walls") ? this.props.data.scale.y / 2: 0;
-
         return (
             <Entity
                 events={{click: this.props.onClick}}
                 primitive={this.props.data.tag}
-                material={{color: this.props.data.defaultColor}}
+                // If an assets contains an .mtl (defined in qset), aframe will use obj-model. Otherwise, aframe will use material src 
+                material={{src: this.props.data.object, color: this.props.data.defaultColor}}
                 obj-model={this.props.data.object}
                 /** 
                 * The scale property grows an a-box in the +-y direction, but we want it to seem like the box is just growing in the +y direction. 
