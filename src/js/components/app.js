@@ -14,57 +14,91 @@ export default class App extends React.Component {
         super(props);
         this.state = {
             grid: this.props.map,
+            manipulationMode: false,
             placementMode: false,
             position: {x: 2.5, y: 18, z: 14}, //TODO: make these variable dynamic based on map from qset
-            selectedAsset: "",
+            selectedAsset: {asset: "", x: "", y: ""},
             thirdPerson: true,
         }
-    }
-
-    render() {
-        return (
-            <div>
-                <VRScene 
-                    assetsFromFile={this.props.assetsFromFile}
-                    grid={this.state.grid}
-                    thirdPerson={this.state.thirdPerson}
-                    position={this.state.position}
-                    onClick={this.handleClick.bind(this)}/>
-                <HUD
-                    categories={this.props.categories}
-                    assetsFromFile={this.props.assetsFromFile}
-                    selectAsset={this.selectAsset.bind(this)}
-                    xUp={this.updatePosition.bind(this, "x", 1, false)}
-                    xDown={this.updatePosition.bind(this, "x", -1, false)}
-                    yUp={this.updatePosition.bind(this, "y", 1, false)}
-                    yDown={this.updatePosition.bind(this, "y", -1, false)}
-                    zUp={this.updatePosition.bind(this, "z", -1, false)}
-                    zDown={this.updatePosition.bind(this, "z", 1, false)}
-                    resetPosition={this.updatePosition.bind(this, "y", 0, true)}
-                    toggleCamera={this.toggleCamera.bind(this)}/>
-            </div>
-        );
     }
 
     handleClick(x, y) {
         const grid = this.state.grid;
 
-        if(!this.state.selectedAsset || !this.state.thirdPerson) return;
+        if(!this.state.selectedAsset.asset || !this.state.thirdPerson) return;
 
-        grid[x][y] = this.state.selectedAsset.id;
-        this.setState({grid:grid});
+        grid[x][y] = {
+            id: this.state.selectedAsset.asset.id,
+            rotation: 0
+        }
+
+        if(this.state.manipulationMode && this.state.selectedAsset.x > 0 && this.state.selectedAsset.y > 0) {
+            grid[this.state.selectedAsset.x][this.state.selectedAsset.y] = "0";
+        }
+
+        this.setState(
+            {
+                grid: grid,
+                manipulationMode: true,
+                selectedAsset: {asset: this.state.selectedAsset.asset, x: x, y: y},
+            }
+        );
     }
 
-    selectAsset(asset) {
+    manipulateAsset(asset, action, x, y) {
+        let grid = this.state.grid;
+
+        this.selectAsset(asset, x, y);
+
+        if(action === "select") {
+            this.setState({manipulationMode: true})
+        }
+
+        if(action === "deselect") {
+            this.setState(
+                {
+                    manipulationMode: false,
+                    selectedAsset: {asset: "", x: "", y: ""},
+                }
+            );
+        }
+
+        if(action === "remove") {
+            grid[x][y] = "0";
+            this.setState(
+                {
+                    grid: grid,
+                    manipulationMode: false,
+                }
+            );
+        }
+
+        if(action === "rotate") {
+            grid[x][y].rotation = (grid[x][y].rotation + 90) % 360;
+            this.setState(
+                {
+                    grid: grid,
+                }
+            );
+        }
+    }
+
+    selectAsset(asset, x, y) {
         if(!asset) return;
 
-        this.setState({selectedAsset: asset});
-        this.setState({placementMode: true});
+        if(!x) x = -1;
+        if(!y) y = -1;
+
+        this.setState({selectedAsset: {asset: asset, x: x, y: y}});
+
+        if(x < 0 || y < 0)
+            this.setState({manipulationMode: false});
     }
 
     shouldComponentUpdate(nextProps, nextState) {
         if(this.state.grid !== nextState.grid) return true;
         if(this.state.postition !== nextState.position) return true;
+        if(this.state.manipulationMode !== nextState.manipulationMode) return true;
 
         return false;
     }
@@ -84,5 +118,33 @@ export default class App extends React.Component {
             
         this.setState({position:position});
     }
-   
+
+    render() {
+        return (
+            <div>
+                <VRScene 
+                    assetsFromFile={this.props.assetsFromFile}
+                    manipulateAsset={this.manipulateAsset.bind(this)}
+                    grid={this.state.grid}
+                    thirdPerson={this.state.thirdPerson}
+                    position={this.state.position}
+                    onClick={this.handleClick.bind(this)}/>
+                <HUD
+                    manipulateAsset={this.manipulateAsset.bind(this)}
+                    manipulationMode={this.state.manipulationMode}
+                    categories={this.props.categories}
+                    assetsFromFile={this.props.assetsFromFile}
+                    selectAsset={this.selectAsset.bind(this)}
+                    selectedAsset={this.state.selectedAsset}
+                    xUp={this.updatePosition.bind(this, "x", 1, false)}
+                    xDown={this.updatePosition.bind(this, "x", -1, false)}
+                    yUp={this.updatePosition.bind(this, "y", 1, false)}
+                    yDown={this.updatePosition.bind(this, "y", -1, false)}
+                    zUp={this.updatePosition.bind(this, "z", -1, false)}
+                    zDown={this.updatePosition.bind(this, "z", 1, false)}
+                    resetPosition={this.updatePosition.bind(this, "y", 0, true)}
+                    toggleCamera={this.toggleCamera.bind(this)}/>
+            </div>
+        );
+    }
 }
