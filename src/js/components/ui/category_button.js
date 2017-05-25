@@ -1,14 +1,14 @@
-import React from 'react';
+import React, { Component } from 'react';
 
-export default class CategoryButton extends React.Component {
-    render () {
+export default class CategoryButton extends Component {
+    render() {
         return (
             <button 
                 className="asset-category" 
                 data-category={this.props.category}
                 onClick={this.props.onClick}>
-                    {this.props.category}
-                </button>
+                {this.props.category}
+            </button>
         )
     }
 }

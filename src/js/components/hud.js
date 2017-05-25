@@ -1,10 +1,8 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React, { Component } from 'react';
 import CategoryButton from './ui/category_button'
 import AssetButton from './ui/asset_button'
-//import './hud.css';
 
-export default class HUD extends React.Component {
+export default class HUD extends Component {
 
     constructor(props) {
         super(props);
@@ -14,7 +12,16 @@ export default class HUD extends React.Component {
         }
     }
 
-    render () {
+    toggleMenu() {
+        const showMenu = this.state.showMenu;
+        this.setState({showMenu: !showMenu});
+    }
+
+    setCurrentCategory(category) {
+        this.setState({ category });
+    }
+
+    render() {
         const assets = this.props.assetsFromFile;
         const curCategory = this.state.category;
         const selectAsset = this.props.selectAsset;
@@ -59,23 +66,16 @@ export default class HUD extends React.Component {
                 <div id="asset-picker">
                     {
                     Object.keys(assets).map(function(asset) {
-                        if(curCategory === assets[asset].category)
+                        if (curCategory === assets[asset].category) {
                             return (
                                 <AssetButton key={asset} item={assets[asset]} onClick={selectAsset.bind(this, assets[asset])}/>
                             );
+                        }
                     })
                     }
                 </div>
             </div>
         </div>
         );
-    }
-
-    toggleMenu() {
-        const showMenu = this.state.showMenu;
-        this.setState({showMenu: !showMenu});
-    }
-    setCurrentCategory(category) {
-        this.setState({category: category});
     }
 }

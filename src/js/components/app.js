@@ -1,6 +1,4 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-
+import React, { Component } from 'react';
 import HUD from './hud';
 import VRScene from "./vr_scene";
 
@@ -9,7 +7,7 @@ import VRScene from "./vr_scene";
  * 
  * @param map array Holds the 2D representation of the grid that represents the simulation's map
  */
-export default class App extends React.Component {
+export default class App extends Component {
     constructor (props) {
         super(props);
         this.state = {
@@ -22,27 +20,36 @@ export default class App extends React.Component {
         }
     }
 
-    handleClick(x, y) {
-        const grid = this.state.grid;
+    shouldComponentUpdate(nextProps, nextState) {
+        if (this.state.grid !== nextState.grid)
+            return true;
+        if (this.state.postition !== nextState.position)
+            return true;
+        if (this.state.manipulationMode !== nextState.manipulationMode)
+            return true;
 
-        if(!this.state.selectedAsset.asset || !this.state.thirdPerson) return;
+        return false;
+    }
+
+    handleClick(x, y) {
+        let grid = this.state.grid;
+
+        if (!this.state.selectedAsset.asset || !this.state.thirdPerson)
+            return;
 
         grid[x][y] = {
             id: this.state.selectedAsset.asset.id,
             rotation: 0
         }
 
-        if(this.state.manipulationMode && this.state.selectedAsset.x > 0 && this.state.selectedAsset.y > 0) {
+        if (this.state.manipulationMode && this.state.selectedAsset.x > 0 && this.state.selectedAsset.y > 0)
             grid[this.state.selectedAsset.x][this.state.selectedAsset.y] = "0";
-        }
 
-        this.setState(
-            {
-                grid: grid,
+        this.setState({
+                grid,
                 manipulationMode: true,
                 selectedAsset: {asset: this.state.selectedAsset.asset, x: x, y: y},
-            }
-        );
+        });
     }
 
     manipulateAsset(asset, action, x, y) {
@@ -50,57 +57,42 @@ export default class App extends React.Component {
 
         this.selectAsset(asset, x, y);
 
-        if(action === "select") {
+        if (action === "select")
             this.setState({manipulationMode: true})
-        }
 
-        if(action === "deselect") {
-            this.setState(
-                {
+        if (action === "deselect") {
+            this.setState({
                     manipulationMode: false,
                     selectedAsset: {asset: "", x: "", y: ""},
-                }
-            );
+            });
         }
 
-        if(action === "remove") {
+        if (action === "remove") {
             grid[x][y] = "0";
-            this.setState(
-                {
-                    grid: grid,
+            this.setState({
+                    grid,
                     manipulationMode: false,
-                }
-            );
+            });
         }
 
-        if(action === "rotate") {
+        if (action === "rotate") {
             grid[x][y].rotation = (grid[x][y].rotation + 90) % 360;
-            this.setState(
-                {
-                    grid: grid,
-                }
-            );
+            this.setState({ grid });
         }
     }
 
     selectAsset(asset, x, y) {
-        if(!asset) return;
-
-        if(!x) x = -1;
-        if(!y) y = -1;
+        if (!asset)
+            return;
+        if (!x)
+            x = -1;
+        if (!y)
+            y = -1;
 
         this.setState({selectedAsset: {asset: asset, x: x, y: y}});
 
-        if(x < 0 || y < 0)
+        if (x < 0 || y < 0)
             this.setState({manipulationMode: false});
-    }
-
-    shouldComponentUpdate(nextProps, nextState) {
-        if(this.state.grid !== nextState.grid) return true;
-        if(this.state.postition !== nextState.position) return true;
-        if(this.state.manipulationMode !== nextState.manipulationMode) return true;
-
-        return false;
     }
 
     toggleCamera() {
@@ -116,7 +108,7 @@ export default class App extends React.Component {
         else
             position[direction] += distance;
             
-        this.setState({position:position});
+        this.setState({ position });
     }
 
     render() {

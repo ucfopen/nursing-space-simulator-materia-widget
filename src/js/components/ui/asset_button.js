@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { Component } from 'react';
 
-export default class AssetButton extends React.Component {
-    render () {
+export default class AssetButton extends Component {
+    render() {
         return (
             <button 
                 className="asset" 

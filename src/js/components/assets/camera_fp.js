@@ -1,10 +1,10 @@
+import React, { Component } from 'react';
 import AFRAME from 'aframe';
-import {Entity} from 'aframe-react';
-import React from 'react';
+import { Entity } from 'aframe-react';
 
-export default class CameraFP extends React.Component
+export default class CameraFP extends Component
 {
-    render () {
+    render() {
         return (
             <Entity
                 camera={{active: this.props.active}}

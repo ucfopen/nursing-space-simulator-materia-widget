@@ -1,9 +1,9 @@
+import React, { Component } from 'react';
 import AFRAME from 'aframe';
 import {Entity} from 'aframe-react';
-import React from 'react';
 
-export default class CeilingUnit extends React.Component {
-    render () {
+export default class CeilingUnit extends Component {
+    render() {
         return (
             <Entity 
                 primitive="a-plane" 
