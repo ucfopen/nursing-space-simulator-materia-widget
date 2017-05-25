@@ -103,7 +103,7 @@ export default class App extends Component {
     updatePosition(direction, distance, reset) {
         let position = this.state.position;
 
-        if(reset)
+        if (reset)
             position = {x: 2.5, y: 18, z: 14};
         else
             position[direction] += distance;
