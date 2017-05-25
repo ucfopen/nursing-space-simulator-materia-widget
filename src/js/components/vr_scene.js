@@ -12,7 +12,7 @@ import FloorUnit from './assets/floor_unit';
 export default class VRScene extends React.Component {
   render () {
     return (
-      <Scene stats>
+      <Scene>
         <a-assets>
           <img id="ceilingTexture" alt="sorry" src="assets/CEILING_TILE.jpg"/>
           <img id="wallTexture" alt="sorry" src="assets/WALL_2D_1.png"/>
@@ -24,7 +24,11 @@ export default class VRScene extends React.Component {
           this.props.grid.map((row, rowIndex) => (
               row.map((column, colIndex) => (
                   this.props.grid[rowIndex][colIndex] !== "0" 
-                    ? <QsetAsset x={rowIndex} z={colIndex} data={this.props.assetsFromFile[this.props.grid[rowIndex][colIndex]]}/>
+                    ? <QsetAsset
+                      x={rowIndex} z={colIndex}
+                      onClick={this.props.manipulateAsset.bind(this, this.props.assetsFromFile[this.props.grid[rowIndex][colIndex].id], "select", rowIndex, colIndex)}
+                      data={this.props.assetsFromFile[this.props.grid[rowIndex][colIndex].id]}
+                      rotation={this.props.grid[rowIndex][colIndex].rotation}/>
                     : null
               ))
           ))
