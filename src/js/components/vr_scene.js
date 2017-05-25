@@ -1,6 +1,6 @@
+import React, { Component } from 'react';
 import AFRAME from 'aframe';
-import {Scene} from 'aframe-react';
-import React from 'react';
+import { Scene } from 'aframe-react';
 
 // Scene Assets
 import CeilingUnit from './assets/ceiling_unit';
@@ -9,8 +9,8 @@ import CameraFP from './assets/camera_fp';
 import QsetAsset from './assets/qset_asset';
 import FloorUnit from './assets/floor_unit';
 
-export default class VRScene extends React.Component {
-  render () {
+export default class VRScene extends Component {
+render() {
     return (
       <Scene>
         <a-assets>

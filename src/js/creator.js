@@ -6,8 +6,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 		options: {}
 	};
 
-	var widget =
-	{
+	var widget = {
 		engineName: '',
 		title: ''
 	};
