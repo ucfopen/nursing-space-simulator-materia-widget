@@ -1,11 +1,11 @@
+import React, { Component } from 'react';
 import AFRAME from 'aframe';
+import { Entity } from 'aframe-react';
 import 'aframe-mouse-cursor-component';
-import {Entity} from 'aframe-react';
-import React from 'react';
 
-export default class CameraTP extends React.Component
+export default class CameraTP extends Component
 {
-    render () {
+    render() {
         return (
             <Entity
                 camera={{active: this.props.active}}

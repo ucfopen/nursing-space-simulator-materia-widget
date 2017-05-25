@@ -1,16 +1,13 @@
+import React, { Component } from 'react';
 import AFRAME from 'aframe';
-import {Entity} from 'aframe-react';
-import React from 'react';
-import ReactDOM from 'react-dom';
+import { Entity } from 'aframe-react';
 
 
-export default class FloorUnit extends React.Component {
+export default class FloorUnit extends Component {
     constructor(props) {
         super(props);
-        
-        this.state = {
-            active: false
-        };
+
+        this.state = {active: false};
     }
 
     onMouseEnter() {
@@ -21,7 +18,7 @@ export default class FloorUnit extends React.Component {
         this.setState({active: false});
     }
 
-    render () {
+    render() {
         return (
             <Entity
                 primitive="a-plane"

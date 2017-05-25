@@ -1,9 +1,9 @@
+import React, { Component } from 'react';
 import AFRAME from 'aframe';
-import {Entity} from 'aframe-react';
-import React from 'react';
+import { Entity } from 'aframe-react';
 
-export default class QsetAsset extends React.Component {
-    render () {
+export default class QsetAsset extends Component {
+    render() {
         let yScaleFactor = (this.props.data.category === "walls") ? this.props.data.scale.y / 2: 0;
         return (
             <Entity
