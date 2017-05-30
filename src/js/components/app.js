@@ -14,6 +14,7 @@ export default class App extends React.Component {
         super(props);
         this.state = {
             grid: this.props.map,
+            hoveredAsset: null,
             manipulationMode: false,
             placementMode: false,
             position: {x: 2.5, y: 18, z: 14}, //TODO: make these variable dynamic based on map from qset
@@ -32,6 +33,7 @@ export default class App extends React.Component {
             rotation: 0
         }
 
+        // Moving an existing asset
         if(this.state.manipulationMode && this.state.selectedAsset.x > 0 && this.state.selectedAsset.y > 0) {
             grid[this.state.selectedAsset.x][this.state.selectedAsset.y] = "0";
         }
@@ -45,8 +47,34 @@ export default class App extends React.Component {
         );
     }
 
+    // Tracks current assets being hovered over 
+    hoverAsset(asset) {
+        const hoveredAsset = this.state.hoveredAsset;
+
+        this.setState({hoveredAsset: asset});
+    }
+
     manipulateAsset(asset, action, x, y) {
         let grid = this.state.grid;
+
+        // First check if the user is replacing
+        if(this.state.hoveredAsset !== null) {
+            console.log(this.state.hoveredAsset);
+            if(!asset.canReplace.includes(this.state.hoveredAsset.category)) return;
+
+            grid[x][y] = {
+                id: this.state.selectedAsset.asset.id,
+                rotation: grid[x][y].rotation
+            }
+
+            this.setState(
+                {
+                    grid: grid,
+                }
+            );
+
+            return;
+        }
 
         this.selectAsset(asset, x, y);
 
@@ -126,6 +154,7 @@ export default class App extends React.Component {
                     assetsFromFile={this.props.assetsFromFile}
                     manipulateAsset={this.manipulateAsset.bind(this)}
                     grid={this.state.grid}
+                    hoverAsset={this.hoverAsset.bind(this)}
                     thirdPerson={this.state.thirdPerson}
                     position={this.state.position}
                     onClick={this.handleClick.bind(this)}/>
