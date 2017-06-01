@@ -1,15 +1,19 @@
-import React, { Component } from 'react';
+import React from "react"
 
-export default class AssetButton extends Component {
-    render() {
-        return (
-            <button 
-                className="asset" 
-                data-category={this.props.item.category}
-                data-title={this.props.item.title}
-                id={this.props.item.id}
-                onClick={this.props.onClick}
-                style={{background: 'url(' + this.props.item.buttonSource + ') no-repeat center center', backgroundSize: "100% 100%"}}/>
-        )
-    }
+export default props => {
+  return (
+    <button
+      className="asset"
+      data-category={props.item.category}
+      data-title={props.item.title}
+      id={props.item.id}
+      onClick={props.onClick}
+      style={{
+        background: "url(" +
+          props.item.buttonSource +
+          ") no-repeat center center",
+        backgroundSize: "100% 100%"
+      }}
+    />
+  )
 }
