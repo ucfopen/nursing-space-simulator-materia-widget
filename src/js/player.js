@@ -1,45 +1,31 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React from "react"
+import ReactDOM from "react-dom"
+import { Provider } from "react-redux"
+import { createStore, applyMiddleware } from "redux"
 
-import App from "./components/app";
+import App from "./components/app"
+import reducers from "./reducers"
 
-function getAssetInfo(gridValue) {
-    if (gridValue === "0")
-        return gridValue;
-    const assetInfo = gridValue.split(".");
-    return {
-        id: assetInfo[0],
-        rotation: parseInt(assetInfo[1]),
-    };
-}
-
-function loadGrid(gridString, rows, columns) {
-    let tempGrid = gridString.split(' ');
-    return [...Array(rows)].map(() => {
-        return tempGrid.splice(0, columns).map((gridItem) => {
-            return getAssetInfo(gridItem)
-        });
-    });
-}
+const createStoreWithMiddleware = applyMiddleware()(createStore)
 
 /*
 ** Places the first--and main--React element in the document.
 */
-Namespace('HospitalSim').Engine = (function() {
-    var start = function(instance, qset, version) {
-        const data = {
-            assetsFromFile : qset.options.assets,
-            categories : qset.options.categories,
-            gridLoader : qset.options.gridLoader
-        };
-        ReactDOM.render(
-            <App 
-                map={loadGrid(data.gridLoader.content, data.gridLoader.rows, data.gridLoader.columns)}
-                categories={data.categories}
-                assetsFromFile={data.assetsFromFile} />, 
-            document.querySelector('#sceneContainer'));
-    };
+Namespace("HospitalSim").Engine = (function() {
+  var start = function(instance, qset, version) {
+    ReactDOM.render(
+      <Provider
+        store={createStoreWithMiddleware(
+          reducers,
+          window.__REDUX_DEVTOOLS_EXTENSION__ &&
+            window.__REDUX_DEVTOOLS_EXTENSION__()
+        )}>
+        <App qset={qset} />
+      </Provider>,
+      document.querySelector("#sceneContainer")
+    )
+  }
 
-    // Public
-    return { start };
-})();
+  // Public
+  return { start }
+})()
