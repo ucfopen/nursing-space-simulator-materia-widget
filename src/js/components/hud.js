@@ -8,7 +8,6 @@ import { toggleMenuVisibility, setCategory } from "../actions/menu_actions"
 
 import {
   selectAssetType,
-  selectObject,
   deselectObject,
   rotateObject,
   removeObject
@@ -16,12 +15,9 @@ import {
 
 class HUD extends Component {
   render() {
-    const assets = this.props.data.assets
-    const currentCategory = this.props.menu.currentCategory
-
-    if (!this.props.data.categories || !this.props.placement)
+    if (!this.props.categories || !this.props.assets) {
       return <div>Loading</div>
-    else
+    } else {
       return (
         <div>
           <div id="ground-top-panel">
@@ -73,11 +69,11 @@ class HUD extends Component {
           <div
             id="UI-selected-asset-options"
             style={{
-              display: this.props.placement.manipulationMode ? "inline" : "none"
+              display: this.props.manipulationMode ? "inline" : "none"
             }}>
-            {this.props.placement.selectedAsset
+            {this.props.selectedAsset
               ? <span className="selected-asset-label-title">
-                  Currently selected: {this.props.placement.selectedAsset.title}
+                  Currently selected: {this.props.selectedAsset.title}
                 </span>
               : null}
             <span id="selected-asset-label" />
@@ -88,20 +84,29 @@ class HUD extends Component {
               id="rotate"
               onClick={() =>
                 this.props.rotateObject(
-                  this.props.placement.selectedAsset,
-                  this.props.placement.currentX,
-                  this.props.placement.currentY
+                  this.props.selectedAsset,
+                  this.props.currentX,
+                  this.props.currentY
                 )}>
               Rotate
+            </button>
+            <button
+              id="remove"
+              onClick={() =>
+                this.props.removeObject(
+                  this.props.currentX,
+                  this.props.currentY
+                )}>
+              Remove
             </button>
           </div>
           <div
             id="UI-bottom-panel"
-            className={this.props.menu.visible ? "open" : "closed"}>
+            className={this.props.visible ? "open" : "closed"}>
             <button
               onClick={() => this.props.toggleMenuVisibility()}
               className="drawer-toggle">
-              {this.props.menu.visible ? "[Close Menu]" : "[Open Menu]"}
+              {this.props.visible ? "[Close Menu]" : "[Open Menu]"}
             </button>
             <div id="asset-selection-menu">
               <button
@@ -109,7 +114,7 @@ class HUD extends Component {
                 onClick={() => this.props.toggleCameraType()}>
                 First-Person Viewer
               </button>
-              {this.props.data.categories.map((category, index) => (
+              {this.props.categories.map((category, index) => (
                 <CategoryButton
                   onClick={() => this.props.setCategory(category)}
                   key={index}
@@ -118,13 +123,17 @@ class HUD extends Component {
               ))}
             </div>
             <div id="asset-picker">
-              {Object.keys(assets).map(asset => {
-                if (currentCategory === assets[asset].category)
+              {Object.keys(this.props.assets).map(asset => {
+                if (
+                  this.props.currentCategory ===
+                  this.props.assets[asset].category
+                )
                   return (
                     <AssetButton
                       key={asset}
-                      item={assets[asset]}
-                      onClick={() => this.props.selectAssetType(assets[asset])}
+                      item={this.props.assets[asset]}
+                      onClick={() =>
+                        this.props.selectAssetType(this.props.assets[asset])}
                     />
                   )
               })}
@@ -132,14 +141,20 @@ class HUD extends Component {
           </div>
         </div>
       )
+    } //end else
   }
 }
 
 function mapStateToProps({ menu, data, placement }) {
   return {
-    menu,
-    data,
-    placement
+    assets: data.assets,
+    selectedAsset: placement.selectedAsset,
+    currentX: placement.currentX,
+    currentY: placement.currentY,
+    manipulationMode: placement.manipulationMode,
+    categories: data.categories,
+    currentCategory: menu.currentCategory,
+    visible: menu.visible
   }
 }
 
@@ -150,5 +165,6 @@ export default connect(mapStateToProps, {
   setCategory,
   selectAssetType,
   deselectObject,
-  rotateObject
+  rotateObject,
+  removeObject
 })(HUD)

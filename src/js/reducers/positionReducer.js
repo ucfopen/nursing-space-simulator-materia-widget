@@ -1,9 +1,9 @@
-import { POSITION_UPDATE } from "../actions/camera_actions"
+import { POSITION_UPDATE, CAMERA_TOGGLE } from "../actions/camera_actions"
 
-export default function(state = { x: 2.5, y: 18, z: 14 }, action) {
-  // const command = Object.keys(action.payload).reduce(
-  //   (a,b) => a.concat(b)
-  // )
+export default function(
+  state = { x: 2.5, y: 18, z: 14, thirdPerson: true },
+  action
+) {
   switch (action.type) {
     case POSITION_UPDATE:
       switch (action.payload) {
@@ -22,6 +22,8 @@ export default function(state = { x: 2.5, y: 18, z: 14 }, action) {
         case "reset":
           return { ...state, y: 2 }
       }
+    case CAMERA_TOGGLE:
+      return { ...state, thirdPerson: !state.thirdPerson }
     default:
       return state
   }

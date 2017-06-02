@@ -18,38 +18,14 @@ function loadGrid(gridString, rows, columns) {
   })
 }
 
-// function getGrid(grid) {
-//   return {
-//     type: INIT_GRID,
-//     payload: grid
-//   }
-// }
-
-// function getCategories(categories) {
-//   return {
-//     type: INIT_GRID,
-//     payload: categories
-//   }
-// }
-
-// function getAssets(assets) {
-//   return {
-//     type: INIT_GRID,
-//     payload: categories
-//   }
-// }
-
 export function initData(qset) {
   const grid = loadGrid(
     qset.options.gridLoader.content,
     qset.options.gridLoader.rows,
     qset.options.gridLoader.columns
   )
-  // getGrid(grid)
   const categories = qset.options.categories
-  // getCategories(categories)
   const assets = qset.options.assets
-  // getAssets(assets)
 
   return {
     type: INIT_DATA,

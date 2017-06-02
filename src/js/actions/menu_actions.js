@@ -13,17 +13,3 @@ export function setCategory(category) {
     payload: category
   }
 }
-
-// export function selectAsset(asset, x, y) {
-//         if (!asset)
-//             return;
-//         if (!x)
-//             x = -1;
-//         if (!y)
-//             y = -1;
-
-//         this.setState({selectedAsset: {asset: asset, x: x, y: y}});
-
-//         if (x < 0 || y < 0)
-//             this.setState({manipulationMode: false});
-// }
