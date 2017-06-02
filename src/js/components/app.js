@@ -66,7 +66,8 @@ export default class App extends React.Component {
 
         // First check if the user is replacing
         if(this.state.hoveredAsset !== null) {
-            if(!asset.canReplace.includes(this.state.hoveredAsset.category)) return;
+
+            if(!this.state.selectedAsset.asset.canReplace.includes(this.state.hoveredAsset.category)) return;
 
             grid[x][y] = {
                 id: this.state.selectedAsset.asset.id,
