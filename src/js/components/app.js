@@ -32,16 +32,18 @@ export default class App extends React.Component {
             rotation: 0
         }
 
-        if(this.state.manipulationMode && this.state.selectedAsset.x > 0 && this.state.selectedAsset.y > 0) {
-            grid[x][y].rotation = grid[this.state.selectedAsset.x][this.state.selectedAsset.y].rotation;
-            grid[this.state.selectedAsset.x][this.state.selectedAsset.y] = "0";
+        if(this.state.selectedAsset.asset.category !== "walls") {
+            if(this.state.manipulationMode && this.state.selectedAsset.x > -1 && this.state.selectedAsset.y > -1) {
+                grid[x][y].rotation = grid[this.state.selectedAsset.x][this.state.selectedAsset.y].rotation;
+                grid[this.state.selectedAsset.x][this.state.selectedAsset.y] = "0";
+            }
+
+            this.selectAsset(this.state.selectedAsset.asset, x, y);
         }
 
         this.setState(
             {
                 grid: grid,
-                manipulationMode: true,
-                selectedAsset: {asset: this.state.selectedAsset.asset, x: x, y: y},
             }
         );
 
@@ -50,10 +52,8 @@ export default class App extends React.Component {
     manipulateAsset(asset, action, x, y) {
         let grid = this.state.grid;
 
-        this.selectAsset(asset, x, y);
-
         if(action === "select") {
-            this.setState({manipulationMode: true})
+            this.selectAsset(asset, x, y);
         }
 
         if(action === "deselect") {
@@ -91,7 +91,12 @@ export default class App extends React.Component {
         if(!x) x = -1;
         if(!y) y = -1;
 
-        this.setState({selectedAsset: {asset: asset, x: x, y: y}});
+        this.setState(
+            {
+                selectedAsset: {asset: asset, x: x, y: y},
+                manipulationMode: true
+            }
+        );
 
         if(x < 0 || y < 0)
             this.setState({manipulationMode: false});
