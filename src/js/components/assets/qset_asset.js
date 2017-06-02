@@ -9,8 +9,7 @@ export default class QsetAsset extends React.Component {
             <Entity
                 events={{click: this.props.onClick}}
                 primitive={this.props.data.tag}
-                // TODO: fix this hack - If an assets contains an .mtl (defined in qset), aframe will use obj-model. Otherwise, aframe will use material src 
-                material={{src: this.props.data.object, color: this.props.data.defaultColor}}
+                material={{color: this.props.data.defaultColor}}
                 obj-model={this.props.data.object}
                 /** 
                 * The scale property grows an a-box in the +-y direction, but we want it to seem like the box is just growing in the +y direction. 
