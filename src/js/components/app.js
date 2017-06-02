@@ -44,6 +44,7 @@ export default class App extends React.Component {
                 selectedAsset: {asset: this.state.selectedAsset.asset, x: x, y: y},
             }
         );
+
     }
 
     manipulateAsset(asset, action, x, y) {
@@ -120,6 +121,34 @@ export default class App extends React.Component {
         this.setState({position:position});
     }
 
+    updateSelectedAssetPosition(x_distance, y_distance) {
+        if (!this.state.thirdPerson || !this.state.selectedAsset.asset) return;
+        const old_x = this.state.selectedAsset.x;
+        const old_y = this.state.selectedAsset.y;
+        const asset = this.state.selectedAsset.asset;
+
+        const grid = this.state.grid;
+
+        // is the tile open?
+        if(grid[old_x+x_distance][old_y+y_distance] == "0") 
+        {
+            grid[old_x][old_y] = "0";
+            grid[old_x + x_distance][old_y + y_distance] =  {
+                id: asset.id,
+                rotation: grid[old_x][old_y].rotation
+            };
+            this.setState({
+                grid: grid,
+                selectedAsset: {
+                    asset: asset,
+                    x: old_x + x_distance,
+                    y: old_y + y_distance
+                }
+            });
+        }
+
+    }
+
     render() {
         return (
             <div>
@@ -137,12 +166,12 @@ export default class App extends React.Component {
                     assetsFromFile={this.props.assetsFromFile}
                     selectAsset={this.selectAsset.bind(this)}
                     selectedAsset={this.state.selectedAsset}
-                    xUp={this.updatePosition.bind(this, "x", 1, false)}
-                    xDown={this.updatePosition.bind(this, "x", -1, false)}
+                    xUp={this.updateSelectedAssetPosition.bind(this, 1, 0)}
+                    xDown={this.updateSelectedAssetPosition.bind(this, -1, 0)}
                     yUp={this.updatePosition.bind(this, "y", 1, false)}
                     yDown={this.updatePosition.bind(this, "y", -1, false)}
-                    zUp={this.updatePosition.bind(this, "z", -1, false)}
-                    zDown={this.updatePosition.bind(this, "z", 1, false)}
+                    zUp={this.updateSelectedAssetPosition.bind(this, 0, -1)}
+                    zDown={this.updateSelectedAssetPosition.bind(this, 0, 1)}
                     resetPosition={this.updatePosition.bind(this, "y", 0, true)}
                     toggleCamera={this.toggleCamera.bind(this)}/>
             </div>
