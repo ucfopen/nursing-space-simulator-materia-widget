@@ -39,13 +39,17 @@ export default class HUD extends React.Component {
                     <button id="camera-zoom-out" onClick={this.props.yUp}>-</button>
                     <button id="camera-position-reset" onClick={this.props.resetPosition}>Reset</button>
                 </div>
-                <div id="UI-selected-asset-options" style={{display: this.props.manipulationMode ? "inline" : "none"}}>
-                    <span className="selected-asset-label-title">Currently selected: {this.props.selectedAsset.asset.title}</span>
-                    <span id="selected-asset-label"></span>
-                    <button id="deselect" onClick={this.props.manipulateAsset.bind(this, this.props.selectedAsset.asset, "deselect", this.props.selectedAsset.x, this.props.selectedAsset.y)}>Deselect</button>
-                    <button id="rotate" onClick={this.props.manipulateAsset.bind(this, this.props.selectedAsset.asset, "rotate", this.props.selectedAsset.x, this.props.selectedAsset.y)}>Rotate</button>
-                    <button id="remove" onClick={this.props.manipulateAsset.bind(this, this.props.selectedAsset.asset, "remove", this.props.selectedAsset.x, this.props.selectedAsset.y)}>Remove</button>
-                </div>
+                {
+                this.props.selectedAsset
+                    ? <div id="UI-selected-asset-options" style={{display: this.props.manipulationMode ? "inline" : "none"}}>
+                        <span className="selected-asset-label-title">Currently selected: {this.props.selectedAsset.asset.title}</span>
+                        <span id="selected-asset-label"></span>
+                        <button id="deselect" onClick={this.props.manipulateAsset.bind(this, this.props.selectedAsset.asset, "deselect", this.props.selectedAsset.x, this.props.selectedAsset.y)}>Deselect</button>
+                        <button id="rotate" onClick={this.props.manipulateAsset.bind(this, this.props.selectedAsset.asset, "rotate", this.props.selectedAsset.x, this.props.selectedAsset.y)}>Rotate</button>
+                        <button id="remove" onClick={this.props.manipulateAsset.bind(this, this.props.selectedAsset.asset, "remove", this.props.selectedAsset.x, this.props.selectedAsset.y)}>Remove</button>
+                    </div>
+                    : null
+                }
                 <div id="UI-bottom-panel" className={this.state.showMenu ? "open" : "closed"}>
                     <button onClick={this.toggleMenu.bind(this)} className="drawer-toggle">{this.state.showMenu ? "[Close Menu]" : "[Open Menu]"}</button>
                     <div id="asset-selection-menu">
@@ -61,7 +65,8 @@ export default class HUD extends React.Component {
                     Object.keys(assets).map(function(asset) {
                         if(curCategory === assets[asset].category)
                             return (
-                                <AssetButton key={asset} item={assets[asset]} onClick={selectAsset.bind(this, assets[asset])}/>
+                                // Since this asset is non-exsistent before placing, the x and y coordinates are null 
+                                <AssetButton key={asset} item={assets[asset]} onClick={selectAsset.bind(this, assets[asset], null, null)}/>
                             );
                     })
                     }
