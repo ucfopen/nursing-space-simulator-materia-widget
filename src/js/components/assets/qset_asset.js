@@ -9,7 +9,6 @@ export default class QsetAsset extends React.Component {
             <Entity
                 events={{click: this.props.onClick}}
                 primitive={this.props.data.tag}
-                // If an assets contains an .mtl (defined in qset), aframe will use obj-model. Otherwise, aframe will use material src 
                 material={{color: this.props.data.defaultColor}}
                 obj-model={this.props.data.object}
                 /** 
