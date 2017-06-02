@@ -1,38 +1,34 @@
 <!DOCTYPE html>
-<!-- INJECTS IE CLASSES ONTO HTML TAG -->
-<!--[if IE 8 ]>    <html class="IE8"> <![endif]-->
-<!--[if IE 9 ]>    <html class="IE9"> <![endif]-->
-<!--[if (gt IE 9)|!(IE)]><!--> <html class=""> <!--<![endif]-->
-	<head>
-		<title>Hospital Sim</title>
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<html class="">
 
-		<!-- STYLESHEETS -->
-		<link rel="stylesheet" type="text/css" href="player.css">
+<head>
+	<title>Hospital Sim</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
-		<!-- REQUIRED MATERIA JAVASCRIPT -->
-		<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-		<script src="materia.enginecore.js"></script>
+	<!-- STYLESHEETS -->
+	<link rel="stylesheet" type="text/css" href="player.css">
 
-		<!-- YOUR PREREQUISITES -->
-		<!-- <script src='//cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.16/angular.min.js'></script>
-		<script src='//cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.16/angular-sanitize.min.js'></script> -->
-		<!-- A Frame -->
-		<!--<script src="https://aframe.io/releases/0.4.0/aframe.min.js"></script>-->
-		<script src="//aframe.io/releases/0.5.0/aframe.min.js"></script>
-		<!--<script src="//rawgit.com/dbradleyfl/aframe-gridhelper/master/dist/aframe-gridhelper-component.min.js"></script>-->
-		<!--<script src="https://rawgit.com/mayognaise/aframe-mouse-cursor-component/master/dist/aframe-mouse-cursor-component.min.js"></script>-->
-		<script src="//cdnjs.cloudflare.com/ajax/libs/react/15.5.4/react.min.js"></script>
-		<script src="//cdnjs.cloudflare.com/ajax/libs/react/15.5.4/react-dom.min.js"></script>
+	<!-- REQUIRED MATERIA JAVASCRIPT -->
+	<script src="materia.enginecore.js"></script>
 
-		<!-- MAIN APP -->
-		<link rel="stylesheet" type="text/css" href="player.css">
-	</head>
-	<body>
-		<div id="sceneContainer" style="height: 100%; width: 100%"></div>
-		<script src="js/player.js"></script>
+	<!-- YOUR PREREQUISITES -->
+	<script src="//aframe.io/releases/0.5.0/aframe.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/react/15.5.4/react.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/react/15.5.4/react-dom.min.js"></script>
 
-		<!--Initialize the application-->
-		<script>Materia.Engine.start(HospitalSim.Engine);</script>
-	</body>
+	<!-- MAIN APP -->
+	<link rel="stylesheet" type="text/css" href="player.css">
+	<script src="js/player.js"></script>
+
+</head>
+
+<body>
+	<div id="sceneContainer" style="height: 100%; width: 100%"></div>
+
+	<!--Initialize the application-->
+	<script>
+		Materia.Engine.start(HospitalSim.Engine);
+	</script>
+</body>
+
 </html>

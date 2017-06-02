@@ -22,6 +22,7 @@ export default function(
     case SELECT_OBJECT:
       return {
         ...state,
+        selectedAsset: action.payload.asset,
         manipulationMode: true,
         currentX: action.payload.x,
         currentY: action.payload.y
@@ -30,22 +31,30 @@ export default function(
       return {
         ...state,
         manipulationMode: false,
-        selectedAsset: null,
         currentX: null,
         currentY: null
       }
     case ROTATE_OBJECT: {
-      let gridWithRotation = state.grid
-      let currentRotation =
-        state.grid[action.payload.x][action.payload.y].rotation
+      let gridWithRotation = [...state.grid]
+      const currentRotation =
+        gridWithRotation[action.payload.x][action.payload.y].rotation
       gridWithRotation[action.payload.x][action.payload.y] = {
         id: action.payload.asset.id,
         rotation: (currentRotation + 90) % 360
       }
       return { ...state, grid: gridWithRotation }
     }
+    case REMOVE_OBJECT: {
+      let gridWithObjectRemoved = [...state.grid]
+      gridWithObjectRemoved[action.payload.x][action.payload.y] = "0"
+      return {
+        ...state,
+        grid: gridWithObjectRemoved,
+        manipulationMode: false
+      }
+    }
     case UPDATE_GRID:
-      let updatedGrid = state.grid
+      let updatedGrid = [...state.grid]
       updatedGrid[action.payload.x][action.payload.y] = {
         id: action.payload.asset.id,
         rotation: 0

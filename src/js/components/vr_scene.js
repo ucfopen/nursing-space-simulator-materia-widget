@@ -13,14 +13,53 @@ import QsetAsset from "./assets/qset_asset"
 import FloorUnit from "./assets/floor_unit"
 
 class VRScene extends Component {
+  renderAssets() {
+    const mappedAssets = this.props.grid.map((row, rowIndex) =>
+      row.map((column, colIndex) => {
+        return column !== "0"
+          ? <QsetAsset
+              x={rowIndex}
+              z={colIndex}
+              onClick={() =>
+                this.props.selectObject(
+                  this.props.assets[column.id],
+                  rowIndex,
+                  colIndex
+                )}
+              data={this.props.assets[column.id]}
+              rotation={column.rotation}
+            />
+          : null
+      })
+    )
+    return mappedAssets
+  }
+
+  renderCeiling() {
+    if (this.props.thirdPerson) return null
+    const mappedCeiling = this.props.grid.map((row, rowIndex) =>
+      row.map((column, colIndex) => <CeilingUnit x={rowIndex} z={colIndex} />)
+    )
+    return mappedCeiling
+  }
+
+  renderFloor() {
+    const mappedFloor = this.props.grid.map((row, rowIndex) =>
+      row.map((column, colIndex) => (
+        <FloorUnit
+          x={rowIndex}
+          y={colIndex}
+          onClick={() =>
+            this.props.updateGrid(rowIndex, colIndex, this.props.selectedAsset)}
+          color="red"
+        />
+      ))
+    )
+    return mappedFloor
+  }
+
   render() {
-    const assets = this.props.data.assets
-    const grid = this.props.placement.grid
-
-    const position = this.props.position
-    const thirdPerson = this.props.thirdPerson
-
-    if (!grid || !position || !thirdPerson || !assets || !this.props.placement)
+    if (!this.props.grid || !this.props.position || !this.props.assets)
       return <div>Loading</div>
     else {
       return (
@@ -34,64 +73,30 @@ class VRScene extends Component {
             <img id="wallTexture" alt="sorry" src="assets/WALL_2D_1.png" />
           </a-assets>
 
-          <CameraFP active={!thirdPerson} position={position} />
-          <CameraTP active={thirdPerson} position={position} />
-
-          {// Draw the assets to the screen
-          grid.map((row, rowIndex) =>
-            row.map(
-              (column, colIndex) =>
-                grid[rowIndex][colIndex] !== "0"
-                  ? <QsetAsset
-                      x={rowIndex}
-                      z={colIndex}
-                      onClick={() =>
-                        this.props.selectObject(
-                          this.props.placement.selectedAsset,
-                          rowIndex,
-                          colIndex
-                        )}
-                      data={assets[grid[rowIndex][colIndex].id]}
-                      rotation={grid[rowIndex][colIndex].rotation}
-                    />
-                  : null
-            )
-          )}
-          {// Draw the floor (tile by tile) to the scene
-          grid.map((row, rowIndex) =>
-            row.map((column, colIndex) => (
-              <FloorUnit
-                x={rowIndex}
-                y={colIndex}
-                onClick={() =>
-                  this.props.updateGrid(
-                    rowIndex,
-                    colIndex,
-                    this.props.placement.selectedAsset
-                  )}
-                color="red"
-              />
-            ))
-          )}
-          {// Draw the ceiling (tile by tile) to the scene
-          grid.map((row, rowIndex) =>
-            row.map(
-              (column, colIndex) =>
-                thirdPerson ? null : <CeilingUnit x={rowIndex} z={colIndex} />
-            )
-          )}
+          <CameraFP
+            active={!this.props.thirdPerson}
+            position={{ x: 5, y: 1, z: 10 }}
+          />
+          <CameraTP
+            active={this.props.thirdPerson}
+            position={this.props.position}
+          />
+          {this.renderFloor()}
+          {this.renderAssets()}
+          {this.renderCeiling()}
         </Scene>
       )
     } //end else
   }
 }
 
-function mapStateToProps({ position, thirdPerson, data, placement }) {
+function mapStateToProps({ position, data, placement }) {
   return {
-    position,
-    thirdPerson,
-    data,
-    placement
+    position: { x: position.x, y: position.y, z: position.z },
+    thirdPerson: position.thirdPerson,
+    assets: data.assets,
+    grid: placement.grid,
+    selectedAsset: placement.selectedAsset
   }
 }
 
