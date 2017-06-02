@@ -35,7 +35,8 @@ export function rotateObject(asset, x, y) {
 
 export function removeObject(x, y) {
   return {
-    type: REMOVE_OBJECT
+    type: REMOVE_OBJECT,
+    payload: { x, y }
   }
 }
 
