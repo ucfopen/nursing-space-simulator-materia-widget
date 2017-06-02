@@ -64,8 +64,13 @@ export default class App extends React.Component {
         let grid = _.cloneDeep(this.state.grid);
 
         // First check if the user is replacing
-        if(this.state.hoveredAsset !== null && this.state.selectedAsset !== null && !this.state.manipulationMode) {
+        if(this.state.hoveredAsset !== null && this.state.selectedAsset !== null) {
             if(!this.state.selectedAsset.asset.canReplace.includes(this.state.hoveredAsset.category)) return;
+
+            // Removes old asset if moving an already exsisting asset
+            if(this.state.selectedAsset.x > -1 && this.state.selectedAsset.x > -1) {
+                grid[this.state.selectedAsset.x][this.state.selectedAsset.y] = "0";
+            }
 
             grid[x][y] = {
                 id: this.state.selectedAsset.asset.id,
@@ -122,8 +127,8 @@ export default class App extends React.Component {
     selectAsset(asset, x, y) {
         if(!asset) return;
 
-        if(!x) x = -1;
-        if(!y) y = -1;
+        if(x === null) x = -1;
+        if(y === null) y = -1;
 
         this.setState({selectedAsset: {asset: asset, x: x, y: y}});
 
