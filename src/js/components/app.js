@@ -19,7 +19,7 @@ export default class App extends React.Component {
             manipulationMode: false,
             placementMode: false,
             position: {x: 2.5, y: 18, z: 14}, //TODO: make these variable dynamic based on map from qset
-            selectedAsset: {asset: "", x: "", y: ""},
+            selectedAsset: null,
             thirdPerson: true,
         }
     }
@@ -27,7 +27,7 @@ export default class App extends React.Component {
     handleClick(x, y) {
         let grid = _.cloneDeep(this.state.grid);
 
-        if(!this.state.selectedAsset.asset || !this.state.thirdPerson) return;
+        if(!this.state.selectedAsset || !this.state.thirdPerson) return;
 
         grid[x][y] = {
             id: this.state.selectedAsset.asset.id,
@@ -51,7 +51,6 @@ export default class App extends React.Component {
     // Tracks current assets being hovered over 
     mouseEnterAsset(asset) {
         const hoveredAsset = this.state.hoveredAsset;
-
         this.setState({hoveredAsset: asset});
     }
 
@@ -65,8 +64,7 @@ export default class App extends React.Component {
         let grid = _.cloneDeep(this.state.grid);
 
         // First check if the user is replacing
-        if(this.state.hoveredAsset !== null) {
-
+        if(this.state.hoveredAsset !== null && this.state.selectedAsset !== null && !this.state.manipulationMode) {
             if(!this.state.selectedAsset.asset.canReplace.includes(this.state.hoveredAsset.category)) return;
 
             grid[x][y] = {
@@ -74,9 +72,12 @@ export default class App extends React.Component {
                 rotation: grid[x][y].rotation
             }
 
+            this.selectAsset(this.state.selectedAsset.asset, x, y);
+
             this.setState(
                 {
                     grid: grid,
+                    manipulationMode: true,
                 }
             );
 
@@ -93,7 +94,7 @@ export default class App extends React.Component {
             this.setState(
                 {
                     manipulationMode: false,
-                    selectedAsset: {asset: "", x: "", y: ""},
+                    selectedAsset: null,
                 }
             );
         }
