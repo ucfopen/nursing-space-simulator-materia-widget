@@ -33,6 +33,7 @@ export default class App extends React.Component {
         }
 
         if(this.state.manipulationMode && this.state.selectedAsset.x > 0 && this.state.selectedAsset.y > 0) {
+            grid[x][y].rotation = grid[this.state.selectedAsset.x][this.state.selectedAsset.y].rotation;
             grid[this.state.selectedAsset.x][this.state.selectedAsset.y] = "0";
         }
 
