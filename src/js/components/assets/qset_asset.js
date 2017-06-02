@@ -7,7 +7,7 @@ export default class QsetAsset extends React.Component {
         let yScaleFactor = (this.props.data.category === "walls") ? this.props.data.scale.y / 2: 0;
         return (
             <Entity
-                events={{click: this.props.onClick, mouseenter: this.props.onMouseEnter}}
+                events={{click: this.props.onClick, mouseenter: this.props.onMouseEnter, mouseleave: this.props.onMouseLeave}}
                 primitive={this.props.data.tag}
                 // If an assets contains an .mtl (defined in qset), aframe will use obj-model. Otherwise, aframe will use material src 
                 material={{src: this.props.data.object, color: this.props.data.defaultColor}}

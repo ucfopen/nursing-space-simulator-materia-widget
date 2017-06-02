@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
@@ -24,7 +25,7 @@ export default class App extends React.Component {
     }
 
     handleClick(x, y) {
-        const grid = this.state.grid;
+        let grid = _.cloneDeep(this.state.grid);
 
         if(!this.state.selectedAsset.asset || !this.state.thirdPerson) return;
 
@@ -48,18 +49,23 @@ export default class App extends React.Component {
     }
 
     // Tracks current assets being hovered over 
-    hoverAsset(asset) {
+    mouseEnterAsset(asset) {
         const hoveredAsset = this.state.hoveredAsset;
 
         this.setState({hoveredAsset: asset});
     }
 
+    mouseExitAsset() {
+        const hoveredAsset = this.state.hoveredAsset;
+
+        this.setState({hoveredAsset: null});
+    }
+
     manipulateAsset(asset, action, x, y) {
-        let grid = this.state.grid;
+        let grid = _.cloneDeep(this.state.grid);
 
         // First check if the user is replacing
         if(this.state.hoveredAsset !== null) {
-            console.log(this.state.hoveredAsset);
             if(!asset.canReplace.includes(this.state.hoveredAsset.category)) return;
 
             grid[x][y] = {
@@ -124,11 +130,19 @@ export default class App extends React.Component {
     }
 
     shouldComponentUpdate(nextProps, nextState) {
-        if(this.state.grid !== nextState.grid) return true;
-        if(this.state.postition !== nextState.position) return true;
-        if(this.state.manipulationMode !== nextState.manipulationMode) return true;
+        if (!_.isEqual(this.state.grid, nextState.grid)) {
+            return true;
+        }
 
-        return false;
+        if (this.state.position !== nextState.position) {
+            return true;
+        }
+
+        if (this.state.manipulationMode !== nextState.manipulationMode) {
+            return true;
+        }
+
+        return false
     }
 
     toggleCamera() {
@@ -137,24 +151,25 @@ export default class App extends React.Component {
     }
 
     updatePosition(direction, distance, reset) {
-        let position = this.state.position;
+        let position = Object.assign({}, this.state.position);
 
         if(reset)
             position = {x: 2.5, y: 18, z: 14};
         else
             position[direction] += distance;
-            
+
         this.setState({position:position});
     }
 
     render() {
         return (
             <div>
-                <VRScene 
+                <VRScene
                     assetsFromFile={this.props.assetsFromFile}
                     manipulateAsset={this.manipulateAsset.bind(this)}
                     grid={this.state.grid}
-                    hoverAsset={this.hoverAsset.bind(this)}
+                    mouseEnterAsset={this.mouseEnterAsset.bind(this)}
+                    mouseExitAsset={this.mouseExitAsset.bind(this)}
                     thirdPerson={this.state.thirdPerson}
                     position={this.state.position}
                     onClick={this.handleClick.bind(this)}/>
