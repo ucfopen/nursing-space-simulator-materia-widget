@@ -1,6 +1,5 @@
 export const SELECT_ASSET_TYPE = "select_asset_type"
 export const UPDATE_GRID = "update_grid"
-export const UPDATE_GRID_NULL = "update_grid_null"
 export const SELECT_OBJECT = "select_object"
 export const DESELECT_OBJECT = "deselect_object"
 export const ROTATE_OBJECT = "rotate_object"
@@ -40,18 +39,12 @@ export function removeObject(x, y) {
   }
 }
 
-export function updateGrid(x, y, asset) {
-  if (asset)
-    return {
-      type: UPDATE_GRID,
-      payload: {
-        x,
-        y,
-        asset
-      }
+export function updateGrid(x, y) {
+  return {
+    type: UPDATE_GRID,
+    payload: {
+      x,
+      y
     }
-  else
-    return {
-      type: UPDATE_GRID_NULL
-    }
+  }
 }
