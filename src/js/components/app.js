@@ -70,8 +70,10 @@ export default class App extends React.Component {
             if(!this.state.selectedAsset.asset.canReplace.includes(this.state.hoveredAsset.category)) return;
 
             // Removes old asset if moving an already exsisting asset
-            if(this.state.selectedAsset.x > -1 && this.state.selectedAsset.x > -1) {
-                grid[this.state.selectedAsset.x][this.state.selectedAsset.y] = "0";
+            if(this.state.selectedAsset.asset.category !== "walls") {
+                if(this.state.selectedAsset.x > -1 && this.state.selectedAsset.x > -1) {
+                    grid[this.state.selectedAsset.x][this.state.selectedAsset.y] = "0";
+                }
             }
 
             grid[x][y] = {
