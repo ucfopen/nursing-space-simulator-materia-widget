@@ -34,17 +34,18 @@ export default class App extends React.Component {
             rotation: 0
         }
 
-        // Moving an existing asset
-        if(this.state.manipulationMode && this.state.selectedAsset.x > -1 && this.state.selectedAsset.y > -1) {
-            grid[x][y].rotation = grid[this.state.selectedAsset.x][this.state.selectedAsset.y].rotation;
-            grid[this.state.selectedAsset.x][this.state.selectedAsset.y] = "0";
+        if(this.state.selectedAsset.asset.category !== "walls") {
+            if(this.state.manipulationMode && this.state.selectedAsset.x > -1 && this.state.selectedAsset.y > -1) {
+                grid[x][y].rotation = grid[this.state.selectedAsset.x][this.state.selectedAsset.y].rotation;
+                grid[this.state.selectedAsset.x][this.state.selectedAsset.y] = "0";
+            }
         }
+
+        this.selectAsset(this.state.selectedAsset.asset, x, y);
 
         this.setState(
             {
                 grid: grid,
-                manipulationMode: true,
-                selectedAsset: {asset: this.state.selectedAsset.asset, x: x, y: y},
             }
         );
 
@@ -66,9 +67,7 @@ export default class App extends React.Component {
         let grid = _.cloneDeep(this.state.grid);
 
         // First check if the user is replacing
-        if(this.state.hoveredAsset !== null && this.state.selectedAsset !== null) {
-            if(!this.state.selectedAsset.asset.canReplace.includes(this.state.hoveredAsset.category)) return;
-
+        if(this.state.hoveredAsset !== null && this.state.selectedAsset !== null && this.state.selectedAsset.asset.canReplace.includes(this.state.hoveredAsset.category)) {
             // Removes old asset if moving an already exsisting asset
             if(this.state.selectedAsset.asset.category !== "walls") {
                 if(this.state.selectedAsset.x > -1 && this.state.selectedAsset.x > -1) {
@@ -81,22 +80,20 @@ export default class App extends React.Component {
                 rotation: grid[x][y].rotation
             }
 
+
             this.selectAsset(this.state.selectedAsset.asset, x, y);
 
             this.setState(
                 {
                     grid: grid,
-                    manipulationMode: true,
                 }
             );
 
             return;
         }
 
-        this.selectAsset(asset, x, y);
-
         if(action === "select") {
-            this.setState({manipulationMode: true})
+            this.selectAsset(asset, x, y);
         }
 
         if(action === "deselect") {
@@ -109,7 +106,7 @@ export default class App extends React.Component {
         }
 
         if(action === "remove") {
-            grid[x][y] = "0";
+            grid[this.state.selectedAsset.x][this.state.selectedAsset.y] = "0";
             this.setState(
                 {
                     grid: grid,
@@ -119,7 +116,7 @@ export default class App extends React.Component {
         }
 
         if(action === "rotate") {
-            grid[x][y].rotation = (grid[x][y].rotation + 90) % 360;
+            grid[this.state.selectedAsset.x][this.state.selectedAsset.y].rotation = (grid[this.state.selectedAsset.x][this.state.selectedAsset.y].rotation + 90) % 360;
             this.setState(
                 {
                     grid: grid,
@@ -134,10 +131,12 @@ export default class App extends React.Component {
         if(x === null) x = -1;
         if(y === null) y = -1;
 
-        this.setState({selectedAsset: {asset: asset, x: x, y: y}});
-
-        if(x < 0 || y < 0)
-            this.setState({manipulationMode: false});
+        this.setState(
+            {
+                selectedAsset: {asset: asset, x: x, y: y},
+                manipulationMode: (x < 0 || y < 0) ? false : true
+            }
+        );
     }
 
     shouldComponentUpdate(nextProps, nextState) {
