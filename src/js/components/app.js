@@ -35,7 +35,7 @@ export default class App extends React.Component {
         }
 
         // Moving an existing asset
-        if(this.state.manipulationMode && this.state.selectedAsset.x > 0 && this.state.selectedAsset.y > 0) {
+        if(this.state.manipulationMode && this.state.selectedAsset.x > -1 && this.state.selectedAsset.y > -1) {
             grid[x][y].rotation = grid[this.state.selectedAsset.x][this.state.selectedAsset.y].rotation;
             grid[this.state.selectedAsset.x][this.state.selectedAsset.y] = "0";
         }
@@ -180,7 +180,7 @@ export default class App extends React.Component {
         const old_y = this.state.selectedAsset.y;
         const asset = this.state.selectedAsset.asset;
 
-        const grid = this.state.grid;
+        const grid = _.cloneDeep(this.state.grid);
 
         // is the tile open?
         if(grid[old_x+x_distance][old_y+y_distance] == "0") 
