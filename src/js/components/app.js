@@ -103,6 +103,7 @@ export default class App extends React.Component {
                     selectedAsset: null,
                 }
             );
+            this.selectAsset(this.state.selectedAsset.asset, null, null);
         }
 
         if(action === "remove") {
@@ -113,6 +114,7 @@ export default class App extends React.Component {
                     manipulationMode: false,
                 }
             );
+            this.selectAsset(this.state.selectedAsset.asset, null, null);
         }
 
         if(action === "rotate") {
