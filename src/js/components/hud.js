@@ -66,7 +66,10 @@ export default class HUD extends React.Component {
                         if(curCategory === assets[asset].category)
                             return (
                                 // Since this asset is non-exsistent before placing, the x and y coordinates are null 
-                                <AssetButton key={asset} item={assets[asset]} onClick={selectAsset.bind(this, assets[asset], null, null)}/>
+                                <AssetButton 
+                                    key={asset}
+                                    item={assets[asset]}
+                                    onClick={selectAsset.bind(this, assets[asset], null, null)} />
                             );
                     })
                     }
