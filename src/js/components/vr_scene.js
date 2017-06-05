@@ -49,8 +49,7 @@ class VRScene extends Component {
         <FloorUnit
           x={rowIndex}
           y={colIndex}
-          onClick={() =>
-            this.props.updateGrid(rowIndex, colIndex, this.props.selectedAsset)}
+          onClick={() => this.props.updateGrid(rowIndex, colIndex)}
           color="red"
         />
       ))
