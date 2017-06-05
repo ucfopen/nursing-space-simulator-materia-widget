@@ -132,11 +132,13 @@ export default class App extends React.Component {
         // is the tile open?
         if(grid[old_x+x_distance][old_y+y_distance] == "0") 
         {
-            grid[old_x][old_y] = "0";
             grid[old_x + x_distance][old_y + y_distance] =  {
                 id: asset.id,
                 rotation: grid[old_x][old_y].rotation
             };
+
+            grid[old_x][old_y] = "0";
+
             this.setState({
                 grid: grid,
                 selectedAsset: {
@@ -146,7 +148,6 @@ export default class App extends React.Component {
                 }
             });
         }
-
     }
 
     render() {
