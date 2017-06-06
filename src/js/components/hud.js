@@ -47,7 +47,7 @@ export default class HUD extends React.Component {
                         <div id="UI-bottom-panel" className={this.state.showMenu ? "open" : "closed"}>
                             <button onClick={this.toggleMenu.bind(this)} className="drawer-toggle">{this.state.showMenu ? "[Close Menu]" : "[Open Menu]"}</button>
                             <div id="asset-selection-menu">
-                                <button id="vr-viewer-mode" onClick={selectAsset.bind(this, 'fp_camera', null, null)}>First-Person Viewer</button>
+                                <button id="vr-viewer-mode" onClick={selectAsset.bind(this, {id: 'pov_camera', title: 'POV Camera'}, null, null)}>First-Person Viewer</button>
                                 {
                                 this.props.categories.map((category, index) => (
                                     <CategoryButton onClick={this.setCurrentCategory.bind(this, category)} key={index} category={category}/>
