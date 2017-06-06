@@ -38,6 +38,7 @@ export default class VRScene extends React.Component {
           this.props.grid.map((row, rowIndex) => (
                 row.map((column, colIndex) => (
                     <FloorUnit 
+                          thirdPerson={this.props.thirdPerson}
                           x={rowIndex} y={colIndex}
                           onClick={this.props.onClick.bind(this, rowIndex, colIndex)}
                           color="red"/> 
