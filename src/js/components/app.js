@@ -28,7 +28,7 @@ export default class App extends React.Component {
         if(!this.state.selectedAsset.asset || !this.state.thirdPerson) return;
 
         // Check if the user is entering first person mode
-        if(this.state.selectedAsset.asset === 'fp_camera')
+        if(this.state.selectedAsset.asset.id === 'pov_camera')
         {
             this.setState({
                 thirdPerson: false,
@@ -64,7 +64,7 @@ export default class App extends React.Component {
         this.selectAsset(asset, x, y);
 
         if(action === "select") {
-            this.setState({manipulationMode: true})
+            this.selectAsset(asset, x, y);
         }
 
         if(action === "deselect") {
@@ -77,6 +77,8 @@ export default class App extends React.Component {
         }
 
         if(action === "remove") {
+            if(x < 0 || y < 0) return;
+
             grid[x][y] = "0";
             this.setState(
                 {
@@ -87,6 +89,8 @@ export default class App extends React.Component {
         }
 
         if(action === "rotate") {
+            if(x < 0 || y < 0) return;
+
             grid[x][y].rotation = (grid[x][y].rotation + 90) % 360;
             this.setState(
                 {
@@ -99,13 +103,15 @@ export default class App extends React.Component {
     selectAsset(asset, x, y) {
         if(!asset) return;
 
-        if(!x) x = -1;
-        if(!y) y = -1;
+        if(x === null) x = -1;
+        if(y === null) y = -1;
 
-        this.setState({selectedAsset: {asset: asset, x: x, y: y}});
-
-        if(x < 0 || y < 0)
-            this.setState({manipulationMode: false});
+        this.setState(
+            {
+                selectedAsset: {asset: asset, x: x, y: y},
+                manipulationMode: true
+            }
+        );
     }
 
     shouldComponentUpdate(nextProps, nextState) {
