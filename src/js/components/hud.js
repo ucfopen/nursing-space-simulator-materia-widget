@@ -20,54 +20,55 @@ export default class HUD extends React.Component {
         const selectAsset = this.props.selectAsset;
 
         return (
-            <div>
-                <div id="ground-top-panel">
-                    <button id="back">Back</button>
-                </div>
-                <div id="UI-right-panel">
-                    <div id="top-buttons"></div>
-                    <button id="screenshot">Take a Screenshot</button>
-                    <div id="camera-move">
-                        <button id="camera-up" onClick={this.props.xUp}>&uarr;</button>
-                        <div id="camera-move-horizontal">
-                            <button id="camera-left" onClick={this.props.zUp}>&larr;</button>
-                            <button id="camera-right" onClick={this.props.zDown} >&rarr;</button>
+            this.props.thirdPerson
+                ? <div>
+                        <div id="UI-right-panel">
+                            <div id="top-buttons"></div>
+                            <button id="screenshot">Take a Screenshot</button>
+                            <div id="camera-move">
+                                <button id="camera-up" onClick={this.props.xUp}>&uarr;</button>
+                                <div id="camera-move-horizontal">
+                                    <button id="camera-left" onClick={this.props.zUp}>&larr;</button>
+                                    <button id="camera-right" onClick={this.props.zDown} >&rarr;</button>
+                                </div>
+                                <button id="camera-down" onClick={this.props.xDown}>&darr;</button>
+                            </div>
+                            <button id="camera-zoom-in" onClick={this.props.yDown}>+</button>
+                            <button id="camera-zoom-out" onClick={this.props.yUp}>-</button>
+                            <button id="camera-position-reset" onClick={this.props.resetPosition}>Reset</button>
                         </div>
-                        <button id="camera-down" onClick={this.props.xDown}>&darr;</button>
+                        <div id="UI-selected-asset-options" style={{display: this.props.manipulationMode ? "inline" : "none"}}>
+                            <span className="selected-asset-label-title">Currently selected: {this.props.selectedAsset.asset.title}</span>
+                            <span id="selected-asset-label"></span>
+                            <button id="deselect" onClick={this.props.manipulateAsset.bind(this, this.props.selectedAsset.asset, "deselect", this.props.selectedAsset.x, this.props.selectedAsset.y)}>Deselect</button>
+                            <button id="rotate" onClick={this.props.manipulateAsset.bind(this, this.props.selectedAsset.asset, "rotate", this.props.selectedAsset.x, this.props.selectedAsset.y)}>Rotate</button>
+                            <button id="remove" onClick={this.props.manipulateAsset.bind(this, this.props.selectedAsset.asset, "remove", this.props.selectedAsset.x, this.props.selectedAsset.y)}>Remove</button>
+                        </div>
+                        <div id="UI-bottom-panel" className={this.state.showMenu ? "open" : "closed"}>
+                            <button onClick={this.toggleMenu.bind(this)} className="drawer-toggle">{this.state.showMenu ? "[Close Menu]" : "[Open Menu]"}</button>
+                            <div id="asset-selection-menu">
+                                <button id="vr-viewer-mode" onClick={selectAsset.bind(this, 'fp_camera', null, null)}>First-Person Viewer</button>
+                                {
+                                this.props.categories.map((category, index) => (
+                                    <CategoryButton onClick={this.setCurrentCategory.bind(this, category)} key={index} category={category}/>
+                                ))
+                                }
+                            </div>
+                        <div id="asset-picker">
+                            {
+                            Object.keys(assets).map(function(asset) {
+                                if(curCategory === assets[asset].category)
+                                    return (
+                                        <AssetButton key={asset} item={assets[asset]} onClick={selectAsset.bind(this, assets[asset], null, null)}/>
+                                    );
+                            })
+                            }
+                        </div>
                     </div>
-                    <button id="camera-zoom-in" onClick={this.props.yDown}>+</button>
-                    <button id="camera-zoom-out" onClick={this.props.yUp}>-</button>
-                    <button id="camera-position-reset" onClick={this.props.resetPosition}>Reset</button>
-                </div>
-                <div id="UI-selected-asset-options" style={{display: this.props.manipulationMode ? "inline" : "none"}}>
-                    <span className="selected-asset-label-title">Currently selected: {this.props.selectedAsset.asset.title}</span>
-                    <span id="selected-asset-label"></span>
-                    <button id="deselect" onClick={this.props.manipulateAsset.bind(this, this.props.selectedAsset.asset, "deselect", this.props.selectedAsset.x, this.props.selectedAsset.y)}>Deselect</button>
-                    <button id="rotate" onClick={this.props.manipulateAsset.bind(this, this.props.selectedAsset.asset, "rotate", this.props.selectedAsset.x, this.props.selectedAsset.y)}>Rotate</button>
-                    <button id="remove" onClick={this.props.manipulateAsset.bind(this, this.props.selectedAsset.asset, "remove", this.props.selectedAsset.x, this.props.selectedAsset.y)}>Remove</button>
-                </div>
-                <div id="UI-bottom-panel" className={this.state.showMenu ? "open" : "closed"}>
-                    <button onClick={this.toggleMenu.bind(this)} className="drawer-toggle">{this.state.showMenu ? "[Close Menu]" : "[Open Menu]"}</button>
-                    <div id="asset-selection-menu">
-                        <button id="vr-viewer-mode" onClick={this.props.toggleCamera}>First-Person Viewer</button>
-                        {
-                        this.props.categories.map((category, index) => (
-                            <CategoryButton onClick={this.setCurrentCategory.bind(this, category)} key={index} category={category}/>
-                        ))
-                        }
-                    </div>
-                <div id="asset-picker">
-                    {
-                    Object.keys(assets).map(function(asset) {
-                        if(curCategory === assets[asset].category)
-                            return (
-                                <AssetButton key={asset} item={assets[asset]} onClick={selectAsset.bind(this, assets[asset])}/>
-                            );
-                    })
-                    }
-                </div>
-            </div>
-        </div>
+                   </div>
+            :  <div id="ground-top-panel">
+                  <button id="back" onClick={this.props.toggleCamera.bind(this)}>Back</button>
+               </div>
         );
     }
 
