@@ -10,7 +10,7 @@ import {
 import { INIT_DATA } from "../actions"
 
 export default function(
-  state = { manipulationMode: false, selectedAsset: null },
+  state = { manipulationMode: false, selectedAsset: "none" },
   action
 ) {
   switch (action.type) {
@@ -33,7 +33,7 @@ export default function(
         oldSelectedAsset.id !== action.payload.asset.id &&
         oldSelectedAsset !== "none"
       ) {
-        let gridWithReplacedObject = [...state.grid]
+        let gridWithReplacedObject = JSON.parse(JSON.stringify(state.grid))
         gridWithReplacedObject[action.payload.x][action.payload.y] = {
           id: oldSelectedAsset.id,
           rotation: 0
@@ -47,7 +47,7 @@ export default function(
           grid: gridWithReplacedObject
         }
       } else {
-        let gridWithReplacedObject = [...state.grid]
+        let gridWithReplacedObject = JSON.parse(JSON.stringify(state.grid))
         gridWithReplacedObject[action.payload.x][action.payload.y] = {
           id: action.payload.asset.id,
           rotation: 0
@@ -70,7 +70,7 @@ export default function(
         currentY: null
       }
     case ROTATE_OBJECT: {
-      let gridWithRotation = [...state.grid]
+      let gridWithRotation = JSON.parse(JSON.stringify(state.grid))
       const currentRotation =
         gridWithRotation[action.payload.x][action.payload.y].rotation
       gridWithRotation[action.payload.x][action.payload.y].rotation =
@@ -78,7 +78,7 @@ export default function(
       return { ...state, grid: gridWithRotation }
     }
     case REMOVE_OBJECT: {
-      let gridWithObjectRemoved = [...state.grid]
+      let gridWithObjectRemoved = JSON.parse(JSON.stringify(state.grid))
       gridWithObjectRemoved[action.payload.x][action.payload.y] = "0"
       return {
         ...state,
@@ -94,7 +94,7 @@ export default function(
         return {
           ...state
         }
-      let updatedGrid = [...state.grid]
+      let updatedGrid = JSON.parse(JSON.stringify(state.grid))
       updatedGrid[action.payload.x][action.payload.y] = {
         id: state.selectedAsset.id,
         rotation: 0
