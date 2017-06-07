@@ -158,6 +158,10 @@ export default class App extends React.Component {
             return true;
         }
 
+        if (this.state.selectedAsset !== nextState.thirdPerson) {
+            return true;
+        }
+
         return false
     }
 
