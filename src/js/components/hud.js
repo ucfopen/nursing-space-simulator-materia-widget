@@ -1,7 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import CategoryButton from './ui/category_button'
-import AssetButton from './ui/asset_button'
+import CategoryButton from './ui/category_button';
+import AssetButton from './ui/asset_button';
+import MovementControls from './ui/movement_controls';
 //import './hud.css';
 
 export default class HUD extends React.Component {
@@ -24,21 +25,13 @@ export default class HUD extends React.Component {
                 <div id="ground-top-panel">
                     <button id="back">Back</button>
                 </div>
-                <div id="UI-right-panel">
-                    <div id="top-buttons"></div>
-                    <button id="screenshot">Take a Screenshot</button>
-                    <div id="camera-move">
-                        <button id="camera-up" onClick={this.props.xUp}>&uarr;</button>
-                        <div id="camera-move-horizontal">
-                            <button id="camera-left" onClick={this.props.zUp}>&larr;</button>
-                            <button id="camera-right" onClick={this.props.zDown} >&rarr;</button>
-                        </div>
-                        <button id="camera-down" onClick={this.props.xDown}>&darr;</button>
-                    </div>
-                    <button id="camera-zoom-in" onClick={this.props.yDown}>+</button>
-                    <button id="camera-zoom-out" onClick={this.props.yUp}>-</button>
-                    <button id="camera-position-reset" onClick={this.props.resetPosition}>Reset</button>
-                </div>
+                <MovementControls
+                    xUp={this.props.xUp.bind(this)}
+                    xDown={this.props.xDown.bind(this)}
+                    yUp={this.props.yUp.bind(this)}
+                    yDown={this.props.yDown.bind(this)}
+                    zUp={this.props.zUp.bind(this)}
+                    zDown={this.props.zDown.bind(this)} />
                 {
                 this.props.selectedAsset
                     ? <div id="UI-selected-asset-options" style={{display: this.props.manipulationMode ? "inline" : "none"}}>
