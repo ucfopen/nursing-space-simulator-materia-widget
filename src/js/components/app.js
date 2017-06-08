@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
@@ -14,18 +15,19 @@ export default class App extends React.Component {
         super(props);
         this.state = {
             grid: this.props.map,
+            hoveredAsset: null,
             manipulationMode: false,
             placementMode: false,
             position: {x: 2.5, y: 18, z: 14}, //TODO: make these variable dynamic based on map from qset
-            selectedAsset: {asset: "", x: "", y: ""},
+            selectedAsset: null,
             thirdPerson: true,
         }
     }
 
     handleClick(x, y) {
-        const grid = this.state.grid;
+        let grid = _.cloneDeep(this.state.grid);
 
-        if(!this.state.selectedAsset.asset || !this.state.thirdPerson) return;
+        if(!this.state.selectedAsset || !this.state.thirdPerson) return;
 
         // Check if the user is entering first person mode
         if(this.state.selectedAsset.asset.id === 'pov_camera')
@@ -43,25 +45,63 @@ export default class App extends React.Component {
             rotation: 0
         }
 
-        if(this.state.manipulationMode && this.state.selectedAsset.x > 0 && this.state.selectedAsset.y > 0) {
-            grid[x][y].rotation = grid[this.state.selectedAsset.x][this.state.selectedAsset.y].rotation;
-            grid[this.state.selectedAsset.x][this.state.selectedAsset.y] = "0";
+        if(this.state.selectedAsset.asset.category !== "walls") {
+            if(this.state.manipulationMode && this.state.selectedAsset.x > -1 && this.state.selectedAsset.y > -1) {
+                grid[x][y].rotation = grid[this.state.selectedAsset.x][this.state.selectedAsset.y].rotation;
+                grid[this.state.selectedAsset.x][this.state.selectedAsset.y] = "0";
+            }
         }
+
+        this.selectAsset(this.state.selectedAsset.asset, x, y);
 
         this.setState(
             {
                 grid: grid,
-                manipulationMode: true,
-                selectedAsset: {asset: this.state.selectedAsset.asset, x: x, y: y},
             }
         );
 
     }
 
-    manipulateAsset(asset, action, x, y) {
-        let grid = this.state.grid;
+    // Tracks current assets being hovered over 
+    mouseEnterAsset(asset) {
+        const hoveredAsset = this.state.hoveredAsset;
+        this.setState({hoveredAsset: asset});
+    }
 
-        this.selectAsset(asset, x, y);
+    mouseExitAsset() {
+        const hoveredAsset = this.state.hoveredAsset;
+
+        this.setState({hoveredAsset: null});
+    }
+
+    manipulateAsset(asset, action, x, y) {
+        let grid = _.cloneDeep(this.state.grid);
+
+        // First check if the user is replacing
+        if(this.state.hoveredAsset !== null && this.state.selectedAsset !== null && this.state.selectedAsset.asset.canReplace.includes(this.state.hoveredAsset.category)) {
+            // Removes old asset if moving an already exsisting asset
+            if(this.state.selectedAsset.asset.category !== "walls") {
+                if(this.state.selectedAsset.x > -1 && this.state.selectedAsset.x > -1) {
+                    grid[this.state.selectedAsset.x][this.state.selectedAsset.y] = "0";
+                }
+            }
+
+            grid[x][y] = {
+                id: this.state.selectedAsset.asset.id,
+                rotation: grid[x][y].rotation
+            }
+
+
+            this.selectAsset(this.state.selectedAsset.asset, x, y);
+
+            this.setState(
+                {
+                    grid: grid,
+                }
+            );
+
+            return;
+        }
 
         if(action === "select") {
             this.selectAsset(asset, x, y);
@@ -71,7 +111,7 @@ export default class App extends React.Component {
             this.setState(
                 {
                     manipulationMode: false,
-                    selectedAsset: {asset: "", x: "", y: ""},
+                    selectedAsset: null,
                 }
             );
         }
@@ -79,7 +119,8 @@ export default class App extends React.Component {
         if(action === "remove") {
             if(x < 0 || y < 0) return;
 
-            grid[x][y] = "0";
+            grid[this.state.selectedAsset.x][this.state.selectedAsset.y] = "0";
+
             this.setState(
                 {
                     grid: grid,
@@ -91,7 +132,8 @@ export default class App extends React.Component {
         if(action === "rotate") {
             if(x < 0 || y < 0) return;
 
-            grid[x][y].rotation = (grid[x][y].rotation + 90) % 360;
+            grid[this.state.selectedAsset.x][this.state.selectedAsset.y].rotation = (grid[this.state.selectedAsset.x][this.state.selectedAsset.y].rotation + 90) % 360;
+
             this.setState(
                 {
                     grid: grid,
@@ -115,11 +157,27 @@ export default class App extends React.Component {
     }
 
     shouldComponentUpdate(nextProps, nextState) {
-        if(this.state.grid !== nextState.grid) return true;
-        if(this.state.postition !== nextState.position) return true;
-        if(this.state.manipulationMode !== nextState.manipulationMode) return true;
+        if (!_.isEqual(this.state.grid, nextState.grid)) {
+            return true;
+        }
 
-        return false;
+        if (this.state.position !== nextState.position) {
+            return true;
+        }
+
+        if (this.state.manipulationMode !== nextState.manipulationMode) {
+            return true;
+        }
+
+        if (this.state.thirdPerson !== nextState.thirdPerson) {
+            return true;
+        }
+
+        if (this.state.selectedAsset !== nextState.selectedAsset) {
+            return true;
+        }
+
+        return false
     }
 
     toggleCamera() {
@@ -133,13 +191,13 @@ export default class App extends React.Component {
     }
 
     updatePosition(direction, distance, reset) {
-        let position = this.state.position;
+        let position = Object.assign({}, this.state.position);
 
         if(reset)
             position = {x: 2.5, y: 18, z: 14};
         else
             position[direction] += distance;
-            
+
         this.setState({position:position});
     }
 
@@ -149,7 +207,7 @@ export default class App extends React.Component {
         const old_y = this.state.selectedAsset.y;
         const asset = this.state.selectedAsset.asset;
 
-        const grid = this.state.grid;
+        const grid = _.cloneDeep(this.state.grid);
 
         // is the tile open?
         if(grid[old_x+x_distance][old_y+y_distance] == "0") 
@@ -175,10 +233,12 @@ export default class App extends React.Component {
     render() {
         return (
             <div>
-                <VRScene 
+                <VRScene
                     assetsFromFile={this.props.assetsFromFile}
                     manipulateAsset={this.manipulateAsset.bind(this)}
                     grid={this.state.grid}
+                    mouseEnterAsset={this.mouseEnterAsset.bind(this)}
+                    mouseExitAsset={this.mouseExitAsset.bind(this)}
                     thirdPerson={this.state.thirdPerson}
                     position={this.state.position}
                     onClick={this.handleClick.bind(this)} />

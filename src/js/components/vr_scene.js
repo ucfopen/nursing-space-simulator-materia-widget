@@ -27,6 +27,8 @@ export default class VRScene extends React.Component {
                     ? <QsetAsset
                       x={rowIndex} z={colIndex}
                       onClick={this.props.manipulateAsset.bind(this, this.props.assetsFromFile[this.props.grid[rowIndex][colIndex].id], "select", rowIndex, colIndex)}
+                      onMouseEnter={this.props.mouseEnterAsset.bind(this, this.props.assetsFromFile[this.props.grid[rowIndex][colIndex].id])}
+                      onMouseLeave={this.props.mouseExitAsset.bind(this)}
                       data={this.props.assetsFromFile[this.props.grid[rowIndex][colIndex].id]}
                       rotation={this.props.grid[rowIndex][colIndex].rotation}/>
                     : null
@@ -38,6 +40,7 @@ export default class VRScene extends React.Component {
           this.props.grid.map((row, rowIndex) => (
                 row.map((column, colIndex) => (
                     <FloorUnit 
+                          thirdPerson={this.props.thirdPerson}
                           x={rowIndex} y={colIndex}
                           onClick={this.props.onClick.bind(this, rowIndex, colIndex)}
                           color="red"/> 

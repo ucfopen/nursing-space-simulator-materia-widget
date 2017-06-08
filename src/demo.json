@@ -127,7 +127,7 @@
 					"door-1": {
 						"assetRotationState": 0,
 						"buttonSource":"assets/DOOR_1_2D.png",
-						"canReplace": ["door"],
+						"canReplace": ["walls"],
 						"cellsOwned": "",
 						"clonable": "false",
 						"defaultColor": "",
@@ -151,7 +151,7 @@
 					"door-2": {
 						"assetRotationState": 0,
 						"buttonSource":"assets/DOOR_2_2D.png",
-						"canReplace": ["door"],
+						"canReplace": ["walls"],
 						"cellsOwned": "",
 						"clonable": "false",
 						"defaultColor": "",
@@ -337,7 +337,7 @@
 					"wall-1": {
 						"assetRotationState": 0,
 						"buttonSource":"assets/WALL_2D_1.png",
-						"canReplace": ["wall"],
+						"canReplace": ["walls"],
 						"cellsOwned": "",
 						"clonable": "false",
 						"defaultColor": "#9FCDB1",
@@ -359,7 +359,7 @@
 					"wall-2": {
 						"assetRotationState": 0,
 						"buttonSource":"assets/WALL_2D_2.png",
-						"canReplace": ["wall"],
+						"canReplace": ["walls"],
 						"cellsOwned": "",
 						"clonable": "false",
 						"defaultColor": "#CBC99D",
