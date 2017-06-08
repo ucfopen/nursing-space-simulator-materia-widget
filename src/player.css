@@ -104,7 +104,6 @@ button {
 /* Selected asset options */
 
 #UI-selected-asset-options {
-	display: none;
 	position: absolute;
 	top: 30px;
 	left: 20px;
