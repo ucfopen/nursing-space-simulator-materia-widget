@@ -70,9 +70,9 @@ export default class HUD extends React.Component {
                         </div>
                     </div>
                    </div>
-            :  <div id="ground-top-panel">
-                  <button id="back" onClick={this.props.toggleCamera.bind(this)}>Back</button>
-               </div>
+            :   <div id="ground-top-panel">
+                    <button id="back" onClick={this.props.toggleCamera.bind(this)}>Back</button>
+                </div>
         );
     }
 

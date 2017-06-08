@@ -1,12 +1,5 @@
 
 /* State listener. Iso is default view, PoV is first person view. */
-.view-mode-pov .a-enter-vr {
-	display: block;
-}
-
-.view-mode-iso .a-enter-vr {
-	display: none;
-}
 
 * {
 	font-family: sans-serif;
