@@ -125,6 +125,7 @@ export default class App extends React.Component {
                 {
                     grid: grid,
                     manipulationMode: false,
+                    selectedAsset: null,
                 }
             );
         }
