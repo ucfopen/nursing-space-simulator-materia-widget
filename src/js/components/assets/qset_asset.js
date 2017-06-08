@@ -7,7 +7,7 @@ export default class QsetAsset extends React.Component {
         let yScaleFactor = (this.props.data.category === "walls") ? this.props.data.scale.y / 2: 0;
         return (
             <Entity
-                events={{click: this.props.onClick}}
+                events={{click: this.props.onClick, mouseenter: this.props.onMouseEnter, mouseleave: this.props.onMouseLeave}}
                 primitive={this.props.data.tag}
                 material={{color: this.props.data.defaultColor}}
                 obj-model={this.props.data.object}
