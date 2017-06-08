@@ -20,7 +20,7 @@ export default class QsetAsset extends React.Component {
                 events={{click: this.props.onClick, mouseenter: this.props.onMouseEnter, mouseleave: this.props.onMouseLeave}}
                 primitive={this.props.data.tag}
                 // Material color is used when an mtl is not provided
-                material={this.props.assetSelected ? {color: "green", opacity: 0.4} : {color: this.props.data.defaultColor}}
+                material={this.props.assetSelected ? {color: "green", opacity: 0.4} : {color: this.props.data.defaultColor, opacity: 1}}
                 obj-model={this.props.assetSelected ? this.highlightAsset() : this.props.data.object}
                 /** 
                 * The scale property grows an a-box in the +-y direction, but we want it to seem like the box is just growing in the +y direction. 
