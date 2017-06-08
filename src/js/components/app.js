@@ -29,6 +29,17 @@ export default class App extends React.Component {
 
         if(!this.state.selectedAsset || !this.state.thirdPerson) return;
 
+        // Check if the user is entering first person mode
+        if(this.state.selectedAsset.asset.id === 'pov_camera')
+        {
+            this.setState({
+                thirdPerson: false,
+                position: {x: x, y: 1, z: y},
+            });
+
+            return;
+        }
+
         grid[x][y] = {
             id: this.state.selectedAsset.asset.id,
             rotation: 0
@@ -103,22 +114,26 @@ export default class App extends React.Component {
                     selectedAsset: null,
                 }
             );
-            this.selectAsset(this.state.selectedAsset.asset, null, null);
         }
 
         if(action === "remove") {
+            if(x < 0 || y < 0) return;
+
             grid[this.state.selectedAsset.x][this.state.selectedAsset.y] = "0";
+
             this.setState(
                 {
                     grid: grid,
                     manipulationMode: false,
                 }
             );
-            this.selectAsset(this.state.selectedAsset.asset, null, null);
         }
 
         if(action === "rotate") {
+            if(x < 0 || y < 0) return;
+
             grid[this.state.selectedAsset.x][this.state.selectedAsset.y].rotation = (grid[this.state.selectedAsset.x][this.state.selectedAsset.y].rotation + 90) % 360;
+
             this.setState(
                 {
                     grid: grid,
@@ -136,7 +151,7 @@ export default class App extends React.Component {
         this.setState(
             {
                 selectedAsset: {asset: asset, x: x, y: y},
-                manipulationMode: (x < 0 || y < 0) ? false : true
+                manipulationMode: true
             }
         );
     }
@@ -158,7 +173,7 @@ export default class App extends React.Component {
             return true;
         }
 
-        if (this.state.selectedAsset !== nextState.thirdPerson) {
+        if (this.state.selectedAsset !== nextState.selectedAsset) {
             return true;
         }
 
@@ -167,7 +182,12 @@ export default class App extends React.Component {
 
     toggleCamera() {
         const thirdPerson = this.state.thirdPerson;
-        this.setState({thirdPerson: !this.state.thirdPerson});
+        this.setState(
+            {
+                position: {x: 2.5, y: 18, z: 14},
+                thirdPerson: !this.state.thirdPerson
+            }
+        );
     }
 
     updatePosition(direction, distance, reset) {
@@ -221,7 +241,7 @@ export default class App extends React.Component {
                     mouseExitAsset={this.mouseExitAsset.bind(this)}
                     thirdPerson={this.state.thirdPerson}
                     position={this.state.position}
-                    onClick={this.handleClick.bind(this)}/>
+                    onClick={this.handleClick.bind(this)} />
                 <HUD
                     manipulateAsset={this.manipulateAsset.bind(this)}
                     manipulationMode={this.state.manipulationMode}
@@ -236,6 +256,7 @@ export default class App extends React.Component {
                     zUp={this.updateSelectedAssetPosition.bind(this, 0, -1)}
                     zDown={this.updateSelectedAssetPosition.bind(this, 0, 1)}
                     resetPosition={this.updatePosition.bind(this, "y", 0, true)}
+                    thirdPerson ={this.state.thirdPerson}
                     toggleCamera={this.toggleCamera.bind(this)}/>
             </div>
         );
