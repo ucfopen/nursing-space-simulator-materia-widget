@@ -250,6 +250,7 @@ export default class App extends React.Component {
                     mouseExitAsset={this.mouseExitAsset.bind(this)}
                     thirdPerson={this.state.thirdPerson}
                     position={this.state.position}
+                    selectedAsset={this.state.selectedAsset}
                     onClick={this.handleClick.bind(this)} />
                 <HUD
                     manipulateAsset={this.manipulateAsset.bind(this)}
