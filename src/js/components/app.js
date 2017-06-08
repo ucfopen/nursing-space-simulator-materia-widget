@@ -103,7 +103,6 @@ export default class App extends React.Component {
                     selectedAsset: null,
                 }
             );
-            this.selectAsset(this.state.selectedAsset.asset, null, null);
         }
 
         if(action === "remove") {
@@ -114,7 +113,6 @@ export default class App extends React.Component {
                     manipulationMode: false,
                 }
             );
-            this.selectAsset(this.state.selectedAsset.asset, null, null);
         }
 
         if(action === "rotate") {
@@ -173,15 +171,23 @@ export default class App extends React.Component {
     updatePosition(direction, distance, reset) {
         let position = Object.assign({}, this.state.position);
 
-        if(reset)
+        if(reset) {
             position = {x: 2.5, y: 18, z: 14};
-        else
+        }
+        else if (this.state.selectedAsset !== null && direction !== "y") {
+            this.updateSelectedAssetPosition(direction, distance)
+            return;
+        } else {
             position[direction] += distance;
+        }
 
         this.setState({position:position});
     }
 
-    updateSelectedAssetPosition(x_distance, y_distance) {
+    updateSelectedAssetPosition(direction, distance) {
+        const x_distance = (direction === "x") ? distance : 0;
+        const y_distance = (direction === "z") ? distance : 0;
+
         if (!this.state.thirdPerson || !this.state.selectedAsset.asset) return;
         const old_x = this.state.selectedAsset.x;
         const old_y = this.state.selectedAsset.y;
@@ -229,12 +235,12 @@ export default class App extends React.Component {
                     assetsFromFile={this.props.assetsFromFile}
                     selectAsset={this.selectAsset.bind(this)}
                     selectedAsset={this.state.selectedAsset}
-                    xUp={this.updateSelectedAssetPosition.bind(this, 1, 0)}
-                    xDown={this.updateSelectedAssetPosition.bind(this, -1, 0)}
+                    xUp={this.updatePosition.bind(this, "x", 1, false)}
+                    xDown={this.updatePosition.bind(this, "x", -1, false)}
                     yUp={this.updatePosition.bind(this, "y", 1, false)}
                     yDown={this.updatePosition.bind(this, "y", -1, false)}
-                    zUp={this.updateSelectedAssetPosition.bind(this, 0, -1)}
-                    zDown={this.updateSelectedAssetPosition.bind(this, 0, 1)}
+                    zUp={this.updatePosition.bind(this, "z", -1, false)}
+                    zDown={this.updatePosition.bind(this, "z", 1, false)}
                     resetPosition={this.updatePosition.bind(this, "y", 0, true)}
                     toggleCamera={this.toggleCamera.bind(this)}/>
             </div>
