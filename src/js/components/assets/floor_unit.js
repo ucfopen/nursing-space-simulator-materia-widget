@@ -14,7 +14,10 @@ export default class FloorUnit extends React.Component {
     }
 
     onMouseEnter() {
-        this.setState({active: true});
+        if(this.props.thirdPerson)
+            this.setState({active: true});
+        else
+            this.setState({active: false});
     }
 
     onMouseLeave() {
