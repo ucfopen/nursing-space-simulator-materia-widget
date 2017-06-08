@@ -2,11 +2,17 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 export default class MovementControls extends React.Component {
+    // TODO: GET THIS OUT ASAP, this is only in for the demo on the week of 6/12/17
+    takeScreenShot() {
+        document.querySelector('a-scene').components.screenshot.capture('perspective');
+    }
+    // BAD ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
     render () {
         return (
             <div id="UI-right-panel">
                 <div id="top-buttons"></div>
-                <button id="screenshot">Take a Screenshot</button>
+                <button onClick={this.takeScreenShot.bind(this)} id="screenshot">Take a Screenshot</button>
                 <div id="camera-move">
                     <button id="camera-up" onClick={this.props.xUp}>&uarr;</button>
                     <div id="camera-move-horizontal">

@@ -8,6 +8,7 @@ import CameraTP from './assets/camera_tp';
 import CameraFP from './assets/camera_fp';
 import QsetAsset from './assets/qset_asset';
 import FloorUnit from './assets/floor_unit';
+import Skybox from './assets/skybox'
 
 export default class VRScene extends React.Component {
   render () {
@@ -17,6 +18,7 @@ export default class VRScene extends React.Component {
           <img id="ceilingTexture" alt="sorry" src="assets/CEILING_TILE.jpg"/>
           <img id="wallTexture" alt="sorry" src="assets/WALL_2D_1.png"/>
         </a-assets>
+        <Skybox />
         <CameraFP active={!this.props.thirdPerson} position={this.props.position}/>
         <CameraTP active={this.props.thirdPerson} position={this.props.position}/>
         {
