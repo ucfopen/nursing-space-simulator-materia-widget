@@ -59,7 +59,7 @@ export default class VRScene extends React.Component {
                     <FloorUnit 
                           thirdPerson={this.props.thirdPerson}
                           x={rowIndex} y={colIndex}
-                          onClick={this.props.onClick.bind(this, rowIndex, colIndex)} /> 
+                          onClick={this.props.onClick.bind(this, rowIndex, colIndex)} />
                 ))
             ))
         }
