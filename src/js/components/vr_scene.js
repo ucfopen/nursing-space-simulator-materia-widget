@@ -10,6 +10,21 @@ import QsetAsset from './assets/qset_asset';
 import FloorUnit from './assets/floor_unit';
 
 export default class VRScene extends React.Component {
+  isAssetSelected(tileXPosition, tileYPosition)
+  {
+    if(!this.props.selectedAsset || !this.props.selectedAsset.asset.id === "pov_camera") return false;
+
+    const assetXPosition = this.props.selectedAsset.x;
+    const assetYPosition = this.props.selectedAsset.y;
+
+    // Check if the asset covers this tile
+    if (assetXPosition === tileXPosition && assetYPosition === tileYPosition) {
+            return true;
+    }
+
+    return false;
+  }
+
   render () {
     return (
       <Scene>
@@ -25,6 +40,7 @@ export default class VRScene extends React.Component {
               row.map((column, colIndex) => (
                   this.props.grid[rowIndex][colIndex] !== "0" 
                     ? <QsetAsset
+                      assetSelected={this.isAssetSelected(rowIndex, colIndex)}
                       x={rowIndex} z={colIndex}
                       onClick={this.props.manipulateAsset.bind(this, this.props.assetsFromFile[this.props.grid[rowIndex][colIndex].id], "select", rowIndex, colIndex)}
                       onMouseEnter={this.props.mouseEnterAsset.bind(this, this.props.assetsFromFile[this.props.grid[rowIndex][colIndex].id])}
@@ -39,11 +55,11 @@ export default class VRScene extends React.Component {
           // Draw the floor (tile by tile) to the scene
           this.props.grid.map((row, rowIndex) => (
                 row.map((column, colIndex) => (
+
                     <FloorUnit 
                           thirdPerson={this.props.thirdPerson}
                           x={rowIndex} y={colIndex}
-                          onClick={this.props.onClick.bind(this, rowIndex, colIndex)}
-                          color="red"/> 
+                          onClick={this.props.onClick.bind(this, rowIndex, colIndex)} />
                 ))
             ))
         }
