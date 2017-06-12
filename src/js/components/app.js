@@ -133,7 +133,7 @@ export default class App extends React.Component {
         if(action === "rotate") {
             if(x < 0 || y < 0) return;
 
-            grid[this.state.selectedAsset.x][this.state.selectedAsset.y].rotation = (grid[this.state.selectedAsset.x][this.state.selectedAsset.y].rotation + 90) % 360;
+            grid[this.state.selectedAsset.x][this.state.selectedAsset.y].rotation = (grid[this.state.selectedAsset.x][this.state.selectedAsset.y].rotation - 90) % 360;
 
             this.setState(
                 {
@@ -250,6 +250,7 @@ export default class App extends React.Component {
                     mouseExitAsset={this.mouseExitAsset.bind(this)}
                     thirdPerson={this.state.thirdPerson}
                     position={this.state.position}
+                    selectedAsset={this.state.selectedAsset}
                     onClick={this.handleClick.bind(this)} />
                 <HUD
                     manipulateAsset={this.manipulateAsset.bind(this)}
