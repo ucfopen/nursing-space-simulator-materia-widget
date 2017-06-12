@@ -12,6 +12,11 @@ button {
 	outline: none;
 }
 
+#app{
+	height: 100%;
+	width: 100%;
+}
+
 #ground-top-panel {
 	position: absolute;
 	top: 10px;
