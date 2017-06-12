@@ -29,7 +29,7 @@ export default class AssetControls extends React.Component {
 						this.props.selectedAsset.x,
 						this.props.selectedAsset.y
 					)}>
-					Rotate
+					<img src="assets/icon-svgs/rotate.svg" width="50px" height="50px" />
 				</button>
 				<button
 					id="remove"
@@ -40,7 +40,7 @@ export default class AssetControls extends React.Component {
 						this.props.selectedAsset.x,
 						this.props.selectedAsset.y
 					)}>
-					Remove
+					<img src="assets/icon-svgs/delete.svg" width="50px" height="50px" />
 				</button>
 			</div>
 		);
