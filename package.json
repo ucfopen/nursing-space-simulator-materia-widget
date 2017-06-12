@@ -48,6 +48,7 @@
     "browserify-shim": "^3.8.14",
     "gulp-replace-task": "^0.11.0",
     "http-server": "^0.9.0",
+    "husky": "^0.13.4",
     "jasmine-core": "^2.4.1",
     "karma": "^0.13.22",
     "karma-coverage": "^0.5.5",
@@ -55,14 +56,22 @@
     "karma-jasmine": "^0.3.8",
     "karma-json-fixtures-preprocessor": "0.0.6",
     "karma-mocha-reporter": "^2.1.0",
-    "karma-phantomjs-launcher": "^1.0.2"
+    "karma-phantomjs-launcher": "^1.0.2",
+    "lint-staged": "^3.6.1"
   },
   "scripts": {
+    "precommit": "lint-staged",
     "pretest": "gulp build-readable",
     "test": "karma start ./karma.conf.js",
     "pretest-full": "gulp build-readable",
     "test-full": "karma start ./karma-full.conf.js",
     "build": "gulp"
+  },
+  "lint-staged": {
+    "*.js": [
+      "prettier --use-tabs --jsx-bracket-same-line --write",
+      "git add"
+    ]
   },
   "author": "New Media"
 }
