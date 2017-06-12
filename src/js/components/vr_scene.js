@@ -55,7 +55,6 @@ export default class VRScene extends React.Component {
           // Draw the floor (tile by tile) to the scene
           this.props.grid.map((row, rowIndex) => (
                 row.map((column, colIndex) => (
-
                     <FloorUnit 
                           thirdPerson={this.props.thirdPerson}
                           x={rowIndex} y={colIndex}
