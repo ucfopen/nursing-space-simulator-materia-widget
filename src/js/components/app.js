@@ -34,8 +34,8 @@ export default class App extends React.Component {
 				{
 					title: "Welcome to Hospital Sim",
 					text: "Select 'Next' to continue or 'Skip' to close the tour.",
-					selector: ".starter",
-					position: "top"
+					selector: "#app",
+					position: "bottom"
 				},
 				{
 					title: "Categories",
@@ -105,7 +105,7 @@ export default class App extends React.Component {
 						{
 							title: "VR Mode",
 							text:
-								"You can view the room from a more personal point of view by going into 'First-Person Viewer'.",
+								"You can view the room from a more personal point of view by selecting the 'First-Person Viewer'. After selecting 'First-Person' Viewer, click/touch somewhere in the room to take a look around",
 							selector: "#vr-viewer-mode",
 							position: "top",
 							type: "click"
@@ -231,7 +231,7 @@ export default class App extends React.Component {
 			if (x < 0 || y < 0) return;
 
 			grid[this.state.selectedAsset.x][this.state.selectedAsset.y].rotation =
-				(grid[this.state.selectedAsset.x][this.state.selectedAsset.y].rotation +
+				(grid[this.state.selectedAsset.x][this.state.selectedAsset.y].rotation -
 					90) %
 				360;
 
@@ -273,8 +273,6 @@ export default class App extends React.Component {
 		if (this.state.selectedAsset !== nextState.selectedAsset) {
 			return true;
 		}
-
-		if (this.state.stepIndex !== nextState.stepIndex) return true;
 
 		return false;
 	}
@@ -348,7 +346,10 @@ export default class App extends React.Component {
 		} = this.state;
 
 		return (
-			<div className="starter">
+			<div
+				id="app"
+				// When in first person, app container style must be modified to absolute position to support built in aframe UI
+				style={this.state.thirdPerson ? {} : { position: "absolute" }}>
 				<Joyride
 					ref={c => (this.joyride = c)}
 					debug={false}
@@ -377,6 +378,7 @@ export default class App extends React.Component {
 					position={this.state.position}
 					onClick={this.handleClick.bind(this)}
 					addSteps={this.addSteps.bind(this)}
+					selectedAsset={this.state.selectedAsset}
 				/>
 				<HUD
 					manipulateAsset={this.manipulateAsset.bind(this)}
@@ -394,7 +396,6 @@ export default class App extends React.Component {
 					resetPosition={this.updatePosition.bind(this, "y", 0, true)}
 					thirdPerson={this.state.thirdPerson}
 					toggleCamera={this.toggleCamera.bind(this)}
-					addSteps={this.addSteps.bind(this)}
 				/>
 			</div>
 		);
