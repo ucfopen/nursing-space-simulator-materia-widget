@@ -241,7 +241,8 @@ export default class App extends React.Component {
 
     render() {
         return (
-            <div>
+            // When in first person, app container style must be modified to absolute position to support built in aframe UI
+            <div id="app" style={this.state.thirdPerson ? {} : {position: "absolute" } }>
                 <VRScene
                     assetsFromFile={this.props.assetsFromFile}
                     manipulateAsset={this.manipulateAsset.bind(this)}
