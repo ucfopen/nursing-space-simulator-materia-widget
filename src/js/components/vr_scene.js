@@ -8,6 +8,7 @@ import CameraTP from "./assets/camera_tp";
 import CameraFP from "./assets/camera_fp";
 import QsetAsset from "./assets/qset_asset";
 import FloorUnit from "./assets/floor_unit";
+import Skybox from "./assets/skybox";
 
 export default class VRScene extends React.Component {
 	componentDidMount() {
@@ -17,11 +18,28 @@ export default class VRScene extends React.Component {
 				title: "VR Scene",
 				text: "Click/touch inside the room to place the object.",
 				selector: ".vr-scene",
-				position: "top",
+				position: "bottom",
 				trigger: ".vr-scene"
 			}
 		];
 		this.props.addSteps(stage2_vr);
+	}
+	isAssetSelected(tileXPosition, tileYPosition) {
+		if (
+			!this.props.selectedAsset ||
+			!this.props.selectedAsset.asset.id === "pov_camera"
+		)
+			return false;
+
+		const assetXPosition = this.props.selectedAsset.x;
+		const assetYPosition = this.props.selectedAsset.y;
+
+		// Check if the asset covers this tile
+		if (assetXPosition === tileXPosition && assetYPosition === tileYPosition) {
+			return true;
+		}
+
+		return false;
 	}
 
 	render() {
@@ -31,6 +49,7 @@ export default class VRScene extends React.Component {
 					<img id="ceilingTexture" alt="sorry" src="assets/CEILING_TILE.jpg" />
 					<img id="wallTexture" alt="sorry" src="assets/WALL_2D_1.png" />
 				</a-assets>
+				<Skybox />
 				<CameraFP
 					active={!this.props.thirdPerson}
 					position={this.props.position}
@@ -45,6 +64,7 @@ export default class VRScene extends React.Component {
 						(column, colIndex) =>
 							this.props.grid[rowIndex][colIndex] !== "0"
 								? <QsetAsset
+										assetSelected={this.isAssetSelected(rowIndex, colIndex)}
 										x={rowIndex}
 										z={colIndex}
 										onClick={this.props.manipulateAsset.bind(
@@ -77,12 +97,10 @@ export default class VRScene extends React.Component {
 				this.props.grid.map((row, rowIndex) =>
 					row.map((column, colIndex) =>
 						<FloorUnit
-							className="floor"
 							thirdPerson={this.props.thirdPerson}
 							x={rowIndex}
 							y={colIndex}
 							onClick={this.props.onClick.bind(this, rowIndex, colIndex)}
-							color="red"
 						/>
 					)
 				)}
