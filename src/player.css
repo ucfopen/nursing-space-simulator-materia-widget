@@ -11,7 +11,7 @@ button {
 	outline: none;
 }
 
-#app{
+#app {
 	height: 100%;
 	width: 100%;
 }
@@ -300,4 +300,10 @@ button {
 
 .joyride-tooltip__close.joyride-tooltip__close--header {
 	visibility: hidden;
+}
+
+#vr-gif {
+	display: block;
+	margin: 0 auto;
+	padding-top: 10px;
 }
