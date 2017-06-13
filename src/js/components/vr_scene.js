@@ -12,7 +12,6 @@ import Skybox from "./assets/skybox";
 
 export default class VRScene extends React.Component {
 	componentDidMount() {
-		let steps = [];
 		const stage2_vr = [
 			{
 				title: "VR Scene",
