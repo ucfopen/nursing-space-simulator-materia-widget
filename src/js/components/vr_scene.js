@@ -13,6 +13,7 @@ export default class VRScene extends React.Component {
   render () {
     return (
       <Scene>
+        <a-entity light="type: ambient; color: #FFF"></a-entity>
         <a-assets>
           <img id="ceilingTexture" alt="sorry" src="assets/CEILING_TILE.jpg"/>
           <img id="wallTexture" alt="sorry" src="assets/WALL_2D_1.png"/>
