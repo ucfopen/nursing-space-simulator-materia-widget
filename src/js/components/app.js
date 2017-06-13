@@ -82,6 +82,7 @@ export default class App extends React.Component {
 		if (
 			this.state.hoveredAsset !== null &&
 			this.state.selectedAsset !== null &&
+			this.state.selectedAsset.asset.id !== 'pov_camera' &&
 			this.state.selectedAsset.asset.canReplace.includes(
 				this.state.hoveredAsset.category
 			)
