@@ -10,18 +10,11 @@ import QsetAsset from "./assets/qset_asset";
 import FloorUnit from "./assets/floor_unit";
 import Skybox from "./assets/skybox";
 
+import { clickInScene } from "../steps";
+
 export default class VRScene extends React.Component {
 	componentDidMount() {
-		const stage2_vr = [
-			{
-				title: "VR Scene",
-				text: "Click/touch inside the room to place the object.",
-				selector: ".vr-scene",
-				position: "bottom",
-				trigger: ".vr-scene"
-			}
-		];
-		this.props.addSteps(stage2_vr);
+		this.props.addSteps(clickInScene);
 	}
 	isAssetSelected(tileXPosition, tileYPosition) {
 		if (
