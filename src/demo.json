@@ -277,7 +277,8 @@
 						"isPermanent": "false",
 						"materialType": "complex",
 						"movable": "true",
-						"object": "obj: url(assets/desk/mesh_desk.obj); mtl: url(assets/desk/mesh_desk.mtl);",
+						"mtlSrc": "assets/desk/mesh_desk.mtl",
+						"objSrc": "assets/desk/mesh_desk.obj",
 						"position": {
 							"x": -100,
 							"y": 0,
@@ -348,7 +349,8 @@
 						"isPermanent": "false",
 						"materialType": "complex",
 						"movable": "true",
-						"object": "obj: url(assets/computer-stand/mesh_computer2.obj); mtl: url(assets/computer-stand/mesh_computer2.mtl);",
+						"mtlSrc": "assets/computer-stand/mesh_computer.mtl",
+						"objSrc": "assets/computer-stand/mesh_computer.obj",
 						"position": {
 							"x": -100,
 							"y": 0,
