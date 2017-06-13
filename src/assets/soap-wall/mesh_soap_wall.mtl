@@ -1,7 +1,7 @@
-# Blender MTL File: 'mesh_trashcan_bio.blend'
+# Blender MTL File: 'mesh_soap_wall.blend'
 # Material Count: 1
 
-newmtl Material
+newmtl Material.002
 Ns 96.078431
 Ka 1.000000 1.000000 1.000000
 Kd 0.640000 0.640000 0.640000
@@ -10,4 +10,4 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
-map_Kd textures\\tex_trashcan_bio.png
+map_Kd soap_ao.png
