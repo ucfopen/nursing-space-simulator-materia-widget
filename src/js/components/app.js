@@ -42,8 +42,7 @@ export default class App extends React.Component {
 					text:
 						"Here are the categories of medical equipment. There are three categories to choose from.",
 					selector: "#asset-selection-menu",
-					position: "top",
-					allowClicksThruHole: "true"
+					position: "top"
 				},
 				{
 					title: "Models",
@@ -58,34 +57,13 @@ export default class App extends React.Component {
 		};
 	}
 
-	addSteps(steps, stage) {
-		let newSteps = steps;
-
-		if (!Array.isArray(newSteps)) {
-			newSteps = [newSteps];
-		}
-
-		if (!newSteps.length) {
-			return;
-		}
-
-		this.setState({
-			steps: this.state.steps.concat(newSteps),
-			currentStage: stage
-		});
-		this.joyride.start(true);
-	}
-
-	addTooltip(data) {
-		this.joyride.addTooltip(data);
-	}
-
-	next() {
-		this.joyride.next();
-	}
-
-	start() {
-		this.joyride.getProgress();
+	addSteps(steps) {
+		this.setState(
+			{
+				steps: this.state.steps.concat(steps)
+			},
+			this.joyride.start(true)
+		);
 	}
 
 	handleClick(x, y) {
@@ -99,23 +77,22 @@ export default class App extends React.Component {
 							text:
 								"After you select an object, you have the option to deselect, rotate and remove the object.",
 							selector: "#UI-selected-asset-options",
-							position: "right",
-							type: "click"
+							position: "right"
 						},
 						{
 							title: "VR Mode",
 							text:
 								"You can view the room from a more personal point of view by selecting the 'First-Person Viewer'. After selecting 'First-Person' Viewer, click/touch somewhere in the room to take a look around",
 							selector: "#vr-viewer-mode",
-							position: "top",
-							type: "click"
+							position: "top"
 						}
 					]),
-					stepIndex: 4
+					stepIndex: 4 //sets to "Object Options" step above
 				},
 				() => {
-					this.next();
-					this.joyride.start(true);
+					this.joyride.next();
+					//ensure next has finished executing before starting
+					setTimeout(() => this.joyride.start(true), 500);
 				}
 			);
 		}
