@@ -36,6 +36,7 @@ export default class VRScene extends React.Component {
 		return (
 			<Scene>
 				<a-assets>
+          <img id="ceilingTexture" alt="sorry" src="assets/CEILING_TILE.jpg" />
 					{Object.keys(assets).map(function(asset) {
             if(assets[asset].objSrc) {
                 console.log(asset + "-obj")
