@@ -38,6 +38,27 @@ export default class App extends React.Component {
 					position: "bottom"
 				},
 				{
+					title: "The Room",
+					text:
+						"This is the hospital room where various objects can be placed.",
+					// selector points to same element but joyride needs consecutive
+					// selectors to be different
+					selector: ".app-container",
+					position: "bottom"
+				},
+				{
+					title: "Moving the Camera",
+					text: "The camera can be adjusted using the buttons in this panel.",
+					selector: "#camera-controls",
+					position: "left"
+				},
+				{
+					title: "Taking a Screenshot",
+					text: "Click/touch this button to take a screenshot of the room.",
+					selector: "#screenshot",
+					position: "left"
+				},
+				{
 					title: "Categories",
 					text:
 						"Here are the categories of medical equipment. There are three categories to choose from.",
@@ -80,14 +101,28 @@ export default class App extends React.Component {
 							position: "right"
 						},
 						{
-							title: "VR Mode",
+							title: "Object Options",
 							text:
-								"You can view the room from a more personal point of view by selecting the 'First-Person Viewer'. After selecting 'First-Person' Viewer, click/touch somewhere in the room to take a look around",
+								"When an object is selected, the arrow keys can be used to move the object around inside the room.",
+							selector: "#camera-move",
+							position: "left"
+						},
+						{
+							title: "First-Person Viewer",
+							text:
+								"You can view the room from a more personal point of view by selecting the 'First-Person Viewer'. After selecting 'First-Person' Viewer, click/touch somewhere in the room to take a look around.",
 							selector: "#vr-viewer-mode",
 							position: "top"
+						},
+						{
+							title: "Fullscreen / VR Mode",
+							text:
+								"Select here to activate Fullscreen mode. If on a supported mobile device, VR mode will also activate! <img id='vr-gif' align='middle' height='250' width='350' src='assets/cardboard_vr.gif'></img>",
+							selector: ".a-enter-vr-button",
+							position: "bottom"
 						}
 					]),
-					stepIndex: 4 //sets to "Object Options" step above
+					stepIndex: 7 //sets to "Object Options" step above
 				},
 				() => {
 					this.joyride.next();
@@ -325,6 +360,8 @@ export default class App extends React.Component {
 		return (
 			<div
 				id="app"
+				// Needed for joyride step
+				className="app-container"
 				// When in first person, app container style must be modified to absolute position to support built in aframe UI
 				style={this.state.thirdPerson ? {} : { position: "absolute" }}>
 				<Joyride
