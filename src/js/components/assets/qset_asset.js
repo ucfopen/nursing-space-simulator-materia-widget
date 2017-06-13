@@ -3,16 +3,6 @@ import { Entity } from "aframe-react";
 import React from "react";
 
 export default class QsetAsset extends React.Component {
-	// To highlight an asset, this method will strip the mtl.
-	highlightAsset() {
-		if (this.props.data.category === "walls") return;
-
-		const model = this.props.data.object.split(";");
-
-		// Model[0] = obj filepath
-		return model[0];
-	}
-
 	render() {
 		let yScaleFactor = this.props.data.category === "walls"
 			? this.props.data.scale.y / 2
@@ -33,8 +23,8 @@ export default class QsetAsset extends React.Component {
 				}
 				obj-model={
 					this.props.assetSelected
-						? this.highlightAsset()
-						: this.props.data.object
+						? "obj: #"+this.props.data.id+"-obj;"
+						: "obj: #"+this.props.data.id+"-obj;" + "mtl: #"+this.props.data.id+"-mtl;" 
 				}
 				/** 
                 * The scale property grows an a-box in the +-y direction, but we want it to seem like the box is just growing in the +y direction. 
