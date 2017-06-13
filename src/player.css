@@ -1,12 +1,4 @@
-
 /* State listener. Iso is default view, PoV is first person view. */
-.view-mode-pov .a-enter-vr {
-	display: block;
-}
-
-.view-mode-iso .a-enter-vr {
-	display: none;
-}
 
 * {
 	font-family: sans-serif;
@@ -17,6 +9,11 @@ button {
 	border-radius: 5px;
 	box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.2);
 	outline: none;
+}
+
+#app{
+	height: 100%;
+	width: 100%;
 }
 
 #ground-top-panel {
@@ -104,7 +101,6 @@ button {
 /* Selected asset options */
 
 #UI-selected-asset-options {
-	display: none;
 	position: absolute;
 	top: 30px;
 	left: 20px;
