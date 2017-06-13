@@ -3,14 +3,17 @@
 	"qset": {
 		"version": 1,
 		"data": {
-			"items": [
-			],
+			"items": [],
 			"options": {
-				"categories" : [ "beds", "equipment", "walls" ],
+				"categories": [
+					"beds",
+					"equipment",
+					"walls"
+				],
 				"assets": {
 					"bed-1": {
 						"assetRotationState": 0,
-						"buttonSource":"assets/icons/icon_bed.png",
+						"buttonSource": "assets/icons/icon_bed.png",
 						"canReplace": [],
 						"cellsOwned": "",
 						"clonable": "false",
@@ -21,10 +24,23 @@
 						"isPermanent": "false",
 						"materialType": "complex",
 						"movable": "true",
-						"object": "obj: url(assets/bed/mesh_bed.obj); mtl: url(assets/bed/mesh_bed.mtl);",
-						"position": {"x": -100, "y": 0, "z": -100},
-						"rotation": {"x": 0, "y": 0, "z": 0},
-						"scale": {"x": 0.25, "y": 0.25, "z": 0.25},
+						"mtlSrc": "assets/bed/mesh_bed.mtl",
+						"objSrc": "assets/bed/mesh_bed.obj",
+						"position": {
+							"x": -100,
+							"y": 0,
+							"z": -100
+						},
+						"rotation": {
+							"x": 0,
+							"y": 0,
+							"z": 0
+						},
+						"scale": {
+							"x": 0.25,
+							"y": 0.25,
+							"z": 0.25
+						},
 						"tag": "a-obj-model",
 						"type": "object",
 						"vertical": 1,
@@ -33,7 +49,7 @@
 					},
 					"chair": {
 						"assetRotationState": 0,
-						"buttonSource":"assets/icons/icon_chair.png",
+						"buttonSource": "assets/icons/icon_chair.png",
 						"canReplace": [],
 						"cellsOwned": "",
 						"clonable": "false",
@@ -44,10 +60,23 @@
 						"isPermanent": "false",
 						"materialType": "complex",
 						"movable": "true",
-						"object": "obj: url(assets/chair/mesh_chair.obj); mtl: url(assets/chair/mesh_chair.mtl);",
-						"position": {"x": -100, "y": 0, "z": -100},
-						"rotation": {"x": 0, "y": 0, "z": 0},
-						"scale": {"x": 0.25, "y": 0.25, "z": 0.25},
+						"mtlSrc": "assets/chair/mesh_chair.mtl",
+						"objSrc": "assets/chair/mesh_chair.obj",
+						"position": {
+							"x": -100,
+							"y": 0,
+							"z": -100
+						},
+						"rotation": {
+							"x": 0,
+							"y": 0,
+							"z": 0
+						},
+						"scale": {
+							"x": 0.25,
+							"y": 0.25,
+							"z": 0.25
+						},
 						"tag": "a-obj-model",
 						"type": "object",
 						"vertical": 0,
@@ -56,7 +85,7 @@
 					},
 					"curtain": {
 						"assetRotationState": 0,
-						"buttonSource":"assets/icons/icon_chair.png",
+						"buttonSource": "assets/icons/icon_chair.png",
 						"canReplace": [],
 						"cellsOwned": "",
 						"clonable": "false",
@@ -67,10 +96,23 @@
 						"isPermanent": "false",
 						"materialType": "complex",
 						"movable": "true",
-						"object": "obj: url(assets/curtain/mesh_curtain.obj); mtl: url(assets/curtain/mesh_curtain.mtl);",
-						"position": {"x": -100, "y": 0, "z": -100},
-						"rotation": {"x": 0, "y": 0, "z": 0},
-						"scale": {"x": 0.25, "y": 0.25, "z": 0.25},
+						"mtlSrc": "assets/curtain/mesh_curtain.mtl",
+						"objSrc": "assets/curtain/mesh_curtain.obj",
+						"position": {
+							"x": -100,
+							"y": 0,
+							"z": -100
+						},
+						"rotation": {
+							"x": 0,
+							"y": 0,
+							"z": 0
+						},
+						"scale": {
+							"x": 0.25,
+							"y": 0.25,
+							"z": 0.25
+						},
 						"tag": "a-obj-model",
 						"type": "object",
 						"vertical": 0,
@@ -79,7 +121,7 @@
 					},
 					"counter": {
 						"assetRotationState": 0,
-						"buttonSource":"assets/icons/icon_chair.png",
+						"buttonSource": "assets/icons/icon_chair.png",
 						"canReplace": [],
 						"cellsOwned": "",
 						"clonable": "false",
@@ -90,10 +132,23 @@
 						"isPermanent": "false",
 						"materialType": "complex",
 						"movable": "true",
-						"object": "obj: url(assets/counter/mesh_counter.obj); mtl: url(assets/counter/mesh_counter.mtl);",
-						"position": {"x": -100, "y": 0, "z": -100},
-						"rotation": {"x": 0, "y": 0, "z": 0},
-						"scale": {"x": 0.25, "y": 0.25, "z": 0.25},
+						"mtlSrc": "assets/counter/mesh_counter.mtl",
+						"objSrc": "assets/counter/mesh_counter.obj",
+						"position": {
+							"x": -100,
+							"y": 0,
+							"z": -100
+						},
+						"rotation": {
+							"x": 0,
+							"y": 0,
+							"z": 0
+						},
+						"scale": {
+							"x": 0.25,
+							"y": 0.25,
+							"z": 0.25
+						},
 						"tag": "a-obj-model",
 						"type": "object",
 						"vertical": 0,
@@ -102,7 +157,7 @@
 					},
 					"crashcart": {
 						"assetRotationState": 0,
-						"buttonSource":"assets/icons/icon_crashcart.png",
+						"buttonSource": "assets/icons/icon_crashcart.png",
 						"canReplace": [],
 						"cellsOwned": "",
 						"clonable": "false",
@@ -113,10 +168,23 @@
 						"isPermanent": "false",
 						"materialType": "complex",
 						"movable": "true",
-						"object": "obj: url(assets/cart/mesh_medical_cart.obj); mtl: url(assets/cart/mesh_medical_cart.mtl);",
-						"position": {"x": -100, "y": 0, "z": -100},
-						"rotation": {"x": 0, "y": 180, "z": 0},
-						"scale": {"x": 0.25, "y": 0.25, "z": 0.25},
+						"mtlSrc": "assets/cart/mesh_medical_cart.mtl",
+						"objSrc": "assets/cart/mesh_medical_cart.obj",
+						"position": {
+							"x": -100,
+							"y": 0,
+							"z": -100
+						},
+						"rotation": {
+							"x": 0,
+							"y": 180,
+							"z": 0
+						},
+						"scale": {
+							"x": 0.25,
+							"y": 0.25,
+							"z": 0.25
+						},
 						"tag": "a-obj-model",
 						"type": "object",
 						"vertical": 0,
@@ -125,7 +193,7 @@
 					},
 					"monitor-1": {
 						"assetRotationState": 0,
-						"buttonSource":"assets/icons/icon_computer.png",
+						"buttonSource": "assets/icons/icon_computer.png",
 						"canReplace": [],
 						"cellsOwned": "",
 						"clonable": "false",
@@ -136,10 +204,23 @@
 						"isPermanent": "false",
 						"materialType": "complex",
 						"movable": "true",
-						"object": "obj: url(assets/monitor/mesh_monitor.obj); mtl: url(assets/monitor/mesh_monitor.mtl);",
-						"position": {"x": -100, "y": 0, "z": -100},
-						"rotation": {"x": 0, "y": -90, "z": 0},
-						"scale": {"x": 0.25, "y": 0.25, "z": 0.25},
+						"mtlSrc": "assets/monitor/mesh_monitor.mtl",
+						"objSrc": "assets/monitor/mesh_monitor.obj",
+						"position": {
+							"x": -100,
+							"y": 0,
+							"z": -100
+						},
+						"rotation": {
+							"x": 0,
+							"y": -90,
+							"z": 0
+						},
+						"scale": {
+							"x": 0.25,
+							"y": 0.25,
+							"z": 0.25
+						},
 						"tag": "a-obj-model",
 						"type": "object",
 						"vertical": 0,
@@ -148,7 +229,7 @@
 					},
 					"sink-1": {
 						"assetRotationState": 0,
-						"buttonSource":"assets/icons/icon_computer.png",
+						"buttonSource": "assets/icons/icon_computer.png",
 						"canReplace": [],
 						"cellsOwned": "",
 						"clonable": "false",
@@ -159,10 +240,23 @@
 						"isPermanent": "false",
 						"materialType": "complex",
 						"movable": "true",
-						"object": "obj: url(assets/sink/mesh_sink.obj); mtl: url(assets/sink/mesh_sink.mtl);",
-						"position": {"x": -100, "y": 0, "z": -100},
-						"rotation": {"x": 0, "y": -90, "z": 0},
-						"scale": {"x": 0.25, "y": 0.25, "z": 0.25},
+						"mtlSrc": "assets/sink/mesh_sink.mtl",
+						"objSrc": "assets/sink/mesh_sink.obj",
+						"position": {
+							"x": -100,
+							"y": 0,
+							"z": -100
+						},
+						"rotation": {
+							"x": 0,
+							"y": -90,
+							"z": 0
+						},
+						"scale": {
+							"x": 0.25,
+							"y": 0.25,
+							"z": 0.25
+						},
 						"tag": "a-obj-model",
 						"type": "object",
 						"vertical": 0,
@@ -171,8 +265,10 @@
 					},
 					"door-1": {
 						"assetRotationState": 0,
-						"buttonSource":"assets/DOOR_1_2D.png",
-						"canReplace": ["walls"],
+						"buttonSource": "assets/DOOR_1_2D.png",
+						"canReplace": [
+							"walls"
+						],
 						"cellsOwned": "",
 						"clonable": "false",
 						"defaultColor": "",
@@ -182,11 +278,24 @@
 						"isPermanent": "false",
 						"materialType": "complex",
 						"movable": "false",
-						"object": "obj: url(assets/door/mesh_door.obj); mtl: url(assets/door/mesh_door.mtl);",
-						"position": {"x": -100, "y": 0, "z": -100},
-						"rotation": {"x": 0, "y": 0, "z": 0},
+						"mtlSrc": "assets/iv/mesh_iv.mtl",
+						"objSrc": "assets/door/mesh_door.obj",
+						"position": {
+							"x": -100,
+							"y": 0,
+							"z": -100
+						},
+						"rotation": {
+							"x": 0,
+							"y": 0,
+							"z": 0
+						},
 						"repeat": "1 1",
-						"scale": {"x":0.25, "y":0.25, "z":0.25},
+						"scale": {
+							"x": 0.25,
+							"y": 0.25,
+							"z": 0.25
+						},
 						"tag": "a-box",
 						"type": "door",
 						"vertical": 0,
@@ -195,7 +304,7 @@
 					},
 					"iv-1": {
 						"assetRotationState": 0,
-						"buttonSource":"assets/icons/icon_iv.png",
+						"buttonSource": "assets/icons/icon_iv.png",
 						"canReplace": [],
 						"cellsOwned": "",
 						"clonable": "false",
@@ -206,10 +315,23 @@
 						"isPermanent": "false",
 						"materialType": "complex",
 						"movable": "true",
-						"object": "obj: url(assets/iv/mesh_iv.obj); mtl: url(assets/iv/mesh_iv.mtl);",
-						"position": {"x": -100, "y": 0, "z": -100},
-						"rotation": {"x": 0, "y": 0, "z": 0},
-						"scale": {"x": 0.25, "y": 0.25, "z": 0.25},
+						"mtlSrc": "assets/iv/mesh_iv.mtl",
+						"objSrc": "assets/iv/mesh_iv.obj",
+						"position": {
+							"x": -100,
+							"y": 0,
+							"z": -100
+						},
+						"rotation": {
+							"x": 0,
+							"y": 0,
+							"z": 0
+						},
+						"scale": {
+							"x": 0.25,
+							"y": 0.25,
+							"z": 0.25
+						},
 						"tag": "a-obj-model",
 						"type": "object",
 						"vertical": 0,
@@ -218,7 +340,7 @@
 					},
 					"table": {
 						"assetRotationState": 0,
-						"buttonSource":"assets/icons/icon_table.png",
+						"buttonSource": "assets/icons/icon_table.png",
 						"canReplace": [],
 						"cellsOwned": "",
 						"clonable": "false",
@@ -229,10 +351,23 @@
 						"isPermanent": "false",
 						"materialType": "complex",
 						"movable": "true",
-						"object": "obj: url(assets/table/mesh_table.obj); mtl: url(assets/table/mesh_table.mtl);",
-						"position": {"x": -100, "y": 0, "z": -100},
-						"rotation": {"x": 0, "y": -90, "z": 0},
-						"scale": {"x": 0.25, "y": 0.25, "z": 0.25},
+						"mtlSrc": "assets/table/mesh_table.mtl",
+						"objSrc": "assets/table/mesh_table.obj",
+						"position": {
+							"x": -100,
+							"y": 0,
+							"z": -100
+						},
+						"rotation": {
+							"x": 0,
+							"y": -90,
+							"z": 0
+						},
+						"scale": {
+							"x": 0.25,
+							"y": 0.25,
+							"z": 0.25
+						},
 						"tag": "a-obj-model",
 						"type": "object",
 						"vertical": 1,
@@ -241,7 +376,7 @@
 					},
 					"trashcan-1": {
 						"assetRotationState": 0,
-						"buttonSource":"assets/icons/icon_trashcan.png",
+						"buttonSource": "assets/icons/icon_trashcan.png",
 						"canReplace": [],
 						"cellsOwned": "",
 						"clonable": "false",
@@ -252,10 +387,23 @@
 						"isPermanent": "false",
 						"materialType": "complex",
 						"movable": "true",
-						"object": "obj: url(assets/trashcan/mesh_trashcan.obj); mtl: url(assets/trashcan/mesh_trashcan.mtl)",
-						"position": {"x": -100, "y": 0, "z": -100},
-						"rotation": {"x": 0, "y": 0, "z": 0},
-						"scale": {"x": 0.25, "y": 0.25, "z": 0.25},
+						"mtlSrc": "assets/trashcan/mesh_trashcan.mtl",
+						"objSrc": "assets/trashcan/mesh_trashcan.obj",
+						"position": {
+							"x": -100,
+							"y": 0,
+							"z": -100
+						},
+						"rotation": {
+							"x": 0,
+							"y": 0,
+							"z": 0
+						},
+						"scale": {
+							"x": 0.25,
+							"y": 0.25,
+							"z": 0.25
+						},
 						"tag": "a-obj-model",
 						"type": "object",
 						"vertical": 0,
@@ -264,7 +412,7 @@
 					},
 					"trashcan-bio": {
 						"assetRotationState": 0,
-						"buttonSource":"assets/icons/icon_trashcan_bio.png",
+						"buttonSource": "assets/icons/icon_trashcan_bio.png",
 						"canReplace": [],
 						"cellsOwned": "",
 						"clonable": "false",
@@ -275,10 +423,23 @@
 						"isPermanent": "false",
 						"materialType": "complex",
 						"movable": "true",
-						"object": "obj: url(assets/trashcan_bio/mesh_trashcan_bio.obj); mtl: url(assets/trashcan_bio/mesh_trashcan_bio.mtl);",
-						"position": {"x": -100, "y": 0, "z": -100},
-						"rotation": {"x": 0, "y": 0, "z": 0},
-						"scale": {"x": 0.25, "y": 0.25, "z": 0.25},
+						"mtlSrc": "assets/trashcan_bio/mesh_trashcan_bio.mtl",
+						"objSrc": "assets/trashcan_bio/mesh_trashcan_bio.obj",
+						"position": {
+							"x": -100,
+							"y": 0,
+							"z": -100
+						},
+						"rotation": {
+							"x": 0,
+							"y": 0,
+							"z": 0
+						},
+						"scale": {
+							"x": 0.25,
+							"y": 0.25,
+							"z": 0.25
+						},
 						"tag": "a-obj-model",
 						"type": "object",
 						"vertical": 0,
@@ -287,8 +448,10 @@
 					},
 					"fire-wall": {
 						"assetRotationState": 0,
-						"buttonSource":"assets/icons/icon_trashcan_bio.png",
-						"canReplace": ["walls"],
+						"buttonSource": "assets/icons/icon_trashcan_bio.png",
+						"canReplace": [
+							"walls"
+						],
 						"cellsOwned": "",
 						"clonable": "false",
 						"defaultColor": "",
@@ -298,42 +461,32 @@
 						"isPermanent": "false",
 						"materialType": "complex",
 						"movable": "true",
-						"object": "obj: url(assets/fire-wall/mesh_wall_fire.obj); mtl: url(assets/fire-wall/mesh_wall_fire.mtl);",
-						"position": {"x": -100, "y": 0, "z": -100},
-						"rotation": {"x": 0, "y": 0, "z": 0},
-						"scale": {"x": 0.25, "y": 0.25, "z": 0.25},
+						"mtlSrc": "assets/fire-wall/mesh_wall_fire.mtl",
+						"objSrc": "assets/fire-wall/mesh_wall_fire.obj",
+						"position": {
+							"x": -100,
+							"y": 0,
+							"z": -100
+						},
+						"rotation": {
+							"x": 0,
+							"y": 0,
+							"z": 0
+						},
+						"scale": {
+							"x": 0.25,
+							"y": 0.25,
+							"z": 0.25
+						},
 						"tag": "a-obj-model",
 						"type": "object",
 						"vertical": 0,
 						"category": "walls",
 						"title": "Fire Wall"
 					},
-					"glove-wall": {
-						"assetRotationState": 0,
-						"buttonSource":"assets/icons/icon_trashcan_bio.png",
-						"canReplace": ["walls"],
-						"cellsOwned": "",
-						"clonable": "false",
-						"defaultColor": "",
-						"horizontal": 0,
-						"id": "glove-wall",
-						"isCloned": "false",
-						"isPermanent": "false",
-						"materialType": "complex",
-						"movable": "true",
-						"object": "obj: url(assets/mesh_glove_wall.obj); mtl: url(assets/mesh_glove_wall.mtl);",
-						"position": {"x": -100, "y": 0, "z": -100},
-						"rotation": {"x": 0, "y": 0, "z": 0},
-						"scale": {"x": 0.25, "y": 0.25, "z": 0.25},
-						"tag": "a-obj-model",
-						"type": "object",
-						"vertical": 0,
-						"category": "walls",
-						"title": "Glove Wall"
-					},
 					"viewer": {
 						"assetRotationState": 0,
-						"buttonSource":"assets/icons/icon_camera.png",
+						"buttonSource": "assets/icons/icon_camera.png",
 						"canReplace": [],
 						"cellsOwned": "",
 						"clonable": "false",
@@ -346,9 +499,21 @@
 						"materialType": "complex",
 						"movable": "true",
 						"objectSource": "",
-						"position": {"x": -100, "y": 0, "z": -100},
-						"rotation": {"x": 0, "y": 0, "z": 0},
-						"scale": {"x":0.25, "y":0.25, "z":0.25},
+						"position": {
+							"x": -100,
+							"y": 0,
+							"z": -100
+						},
+						"rotation": {
+							"x": 0,
+							"y": 0,
+							"z": 0
+						},
+						"scale": {
+							"x": 0.25,
+							"y": 0.25,
+							"z": 0.25
+						},
 						"tag": "a-obj-model",
 						"type": "view",
 						"vertical": 0,
@@ -357,8 +522,10 @@
 					},
 					"wall-1": {
 						"assetRotationState": 0,
-						"buttonSource":"assets/WALL_2D_1.png",
-						"canReplace": ["walls"],
+						"buttonSource": "assets/WALL_2D_1.png",
+						"canReplace": [
+							"walls"
+						],
 						"cellsOwned": "",
 						"clonable": "false",
 						"defaultColor": "#9FCDB1",
@@ -367,11 +534,24 @@
 						"isCloned": "false",
 						"isPermanent": "false",
 						"materialType": "complex",
-						"object": "obj: url(assets/wall/mesh_wall.obj); mtl: url(assets/wall/mesh_wall.mtl);",
+						"mtlSrc": "assets/wall/mesh_wall.mtl",
+						"objSrc": "assets/wall/mesh_wall.obj",
 						"movable": "false",
-						"position": {"x": -100, "y": 0, "z": -100},
-						"rotation": {"x": 0, "y": 0, "z": 0},
-						"scale": {"x":0.25, "y":0.25, "z":0.25},
+						"position": {
+							"x": -100,
+							"y": 0,
+							"z": -100
+						},
+						"rotation": {
+							"x": 0,
+							"y": 0,
+							"z": 0
+						},
+						"scale": {
+							"x": 0.25,
+							"y": 0.25,
+							"z": 0.25
+						},
 						"tag": "a-box",
 						"type": "wall",
 						"vertical": 0,
@@ -380,8 +560,10 @@
 					},
 					"wall-2": {
 						"assetRotationState": 0,
-						"buttonSource":"assets/WALL_2D_2.png",
-						"canReplace": ["walls"],
+						"buttonSource": "assets/WALL_2D_2.png",
+						"canReplace": [
+							"walls"
+						],
 						"cellsOwned": "",
 						"clonable": "false",
 						"defaultColor": "#CBC99D",
@@ -391,9 +573,21 @@
 						"isPermanent": "false",
 						"materialType": "primitive",
 						"movable": "false",
-						"position": {"x": -100, "y": 0, "z": -100},
-						"rotation": {"x": 0, "y": 0, "z": 0},
-						"scale": {"x":1, "y":3, "z":1},
+						"position": {
+							"x": -100,
+							"y": 0,
+							"z": -100
+						},
+						"rotation": {
+							"x": 0,
+							"y": 0,
+							"z": 0
+						},
+						"scale": {
+							"x": 1,
+							"y": 3,
+							"z": 1
+						},
 						"tag": "a-box",
 						"type": "wall",
 						"vertical": 0,
