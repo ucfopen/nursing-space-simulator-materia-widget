@@ -564,8 +564,8 @@
 						"isPermanent": "false",
 						"materialType": "complex",
 						"movable": "true",
-						"mtlSrc": "assets/trashcan_bio/mesh_trashcan_bio.mtl",
-						"objSrc": "assets/trashcan_bio/mesh_trashcan_bio.obj",
+						"mtlSrc": "assets/trashcan_bio/mesh_trashcan.mtl",
+						"objSrc": "assets/trashcan_bio/mesh_trashcan.obj",
 						"position": {
 							"x": -100,
 							"y": 0,
@@ -675,7 +675,8 @@
 						"isCloned": "false",
 						"isPermanent": "false",
 						"materialType": "complex",
-						"object": "obj: url(assets/tv_wall/mesh.tv_wall.obj); mtl: url(assets/tv_wall/mesh.tv_wall.mtl);",
+						"mtlSrc": "assets/tv_wall/mesh.tv_wall.mtl",
+						"objSrc": "assets/tv_wall/mesh.tv_wall.obj",
 						"movable": "false",
 						"position": {
 							"x": -100,
