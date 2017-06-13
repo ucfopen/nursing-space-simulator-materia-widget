@@ -11,6 +11,7 @@ import FloorUnit from "./assets/floor_unit";
 import Skybox from "./assets/skybox";
 
 export default class VRScene extends React.Component {
+
 	isAssetSelected(tileXPosition, tileYPosition) {
 		if (
 			!this.props.selectedAsset ||
