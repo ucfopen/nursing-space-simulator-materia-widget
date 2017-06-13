@@ -205,7 +205,8 @@
 						"isPermanent": "false",
 						"materialType": "complex",
 						"movable": "true",
-						"object": "obj: url(assets/doctor/mesh_doc.obj); mtl: url(assets/doctor/mesh_doc.mtl);",
+						"mtlSrc": "assets/doctor/mesh_doc.mtl",
+						"objSrc": "assets/doctor/mesh_doc.obj",
 						"position": {
 							"x": -100,
 							"y": 0,
@@ -240,7 +241,8 @@
 						"isPermanent": "false",
 						"materialType": "complex",
 						"movable": "true",
-						"object": "obj: url(assets/nurse/mesh_peep.obj); mtl: url(assets/nurse/mesh_peep.mtl);",
+						"mtlSrc": "assets/nurse/mesh_peep.mtl",
+						"objSrc": "assets/nurse/mesh_peep.obj",
 						"position": {
 							"x": -100,
 							"y": 0,
