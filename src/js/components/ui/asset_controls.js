@@ -1,5 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import DeleteSVG from "../assets/icon-svgs/delete"
+import RotateSVG from "../assets/icon-svgs/rotate"
+import DeselectSVG from "../assets/icon-svgs/deselect"
 
 export default class AssetControls extends React.Component {
 	render() {
@@ -18,7 +21,7 @@ export default class AssetControls extends React.Component {
 						this.props.selectedAsset.x,
 						this.props.selectedAsset.y
 					)}>
-					Deselect
+					<DeselectSVG />
 				</button>
 				<button
 					id="rotate"
@@ -29,7 +32,7 @@ export default class AssetControls extends React.Component {
 						this.props.selectedAsset.x,
 						this.props.selectedAsset.y
 					)}>
-					<img src="assets/icon-svgs/rotate.svg" width="50px" height="50px" />
+					<RotateSVG />
 				</button>
 				<button
 					id="remove"
@@ -40,7 +43,7 @@ export default class AssetControls extends React.Component {
 						this.props.selectedAsset.x,
 						this.props.selectedAsset.y
 					)}>
-					<img src="assets/icon-svgs/delete.svg" width="50px" height="50px" />
+					<DeleteSVG />
 				</button>
 			</div>
 		);
