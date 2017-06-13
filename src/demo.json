@@ -8,7 +8,8 @@
 				"categories": [
 					"beds",
 					"equipment",
-					"walls"
+					"walls",
+					"people"
 				],
 				"assets": {
 					"bed-1": {
@@ -85,7 +86,7 @@
 					},
 					"curtain": {
 						"assetRotationState": 0,
-						"buttonSource": "assets/icons/icon_chair.png",
+						"buttonSource": "assets/icons/icon_curtain.png",
 						"canReplace": [],
 						"cellsOwned": "",
 						"clonable": "false",
@@ -121,7 +122,7 @@
 					},
 					"counter": {
 						"assetRotationState": 0,
-						"buttonSource": "assets/icons/icon_chair.png",
+						"buttonSource": "assets/icons/icon_counter.png",
 						"canReplace": [],
 						"cellsOwned": "",
 						"clonable": "false",
@@ -177,7 +178,7 @@
 						},
 						"rotation": {
 							"x": 0,
-							"y": 180,
+							"y": 0,
 							"z": 0
 						},
 						"scale": {
@@ -190,6 +191,111 @@
 						"vertical": 0,
 						"category": "equipment",
 						"title": "Crash Cart"
+					},
+					"doctor": {
+						"assetRotationState": 0,
+						"buttonSource": "assets/icons/icon_doc.png",
+						"canReplace": [],
+						"cellsOwned": "",
+						"clonable": "false",
+						"defaultColor": "",
+						"horizontal": 0,
+						"id": "doctor",
+						"isCloned": "false",
+						"isPermanent": "false",
+						"materialType": "complex",
+						"movable": "true",
+						"object": "obj: url(assets/doctor/mesh_doc.obj); mtl: url(assets/doctor/mesh_doc.mtl);",
+						"position": {
+							"x": -100,
+							"y": 0,
+							"z": -100
+						},
+						"rotation": {
+							"x": 0,
+							"y": 0,
+							"z": 0
+						},
+						"scale": {
+							"x": 0.25,
+							"y": 0.25,
+							"z": 0.25
+						},
+						"tag": "a-obj-model",
+						"type": "object",
+						"vertical": 0,
+						"category": "people",
+						"title": "Doctor"
+					},
+					"nurse": {
+						"assetRotationState": 0,
+						"buttonSource": "assets/icons/icon_nurse.png",
+						"canReplace": [],
+						"cellsOwned": "",
+						"clonable": "false",
+						"defaultColor": "",
+						"horizontal": 0,
+						"id": "nurse",
+						"isCloned": "false",
+						"isPermanent": "false",
+						"materialType": "complex",
+						"movable": "true",
+						"object": "obj: url(assets/nurse/mesh_peep.obj); mtl: url(assets/nurse/mesh_peep.mtl);",
+						"position": {
+							"x": -100,
+							"y": 0,
+							"z": -100
+						},
+						"rotation": {
+							"x": 0,
+							"y": 0,
+							"z": 0
+						},
+						"scale": {
+							"x": 0.25,
+							"y": 0.25,
+							"z": 0.25
+						},
+						"tag": "a-obj-model",
+						"type": "object",
+						"vertical": 0,
+						"category": "people",
+						"title": "Nurse"
+					},
+					"desk": {
+						"assetRotationState": 0,
+						"buttonSource": "assets/icons/icon_desk.png",
+						"canReplace": [],
+						"cellsOwned": "",
+						"clonable": "false",
+						"defaultColor": "",
+						"horizontal": 0,
+						"id": "desk",
+						"isCloned": "false",
+						"isPermanent": "false",
+						"materialType": "complex",
+						"movable": "true",
+						"object": "obj: url(assets/desk/mesh_desk.obj); mtl: url(assets/desk/mesh_desk.mtl);",
+						"position": {
+							"x": -100,
+							"y": 0,
+							"z": -100
+						},
+						"rotation": {
+							"x": 0,
+							"y": -90,
+							"z": 0
+						},
+						"scale": {
+							"x": 0.25,
+							"y": 0.25,
+							"z": 0.25
+						},
+						"tag": "a-obj-model",
+						"type": "object",
+						"vertical": 0,
+						"category": "equipment",
+						"title": "Desk"
 					},
 					"monitor-1": {
 						"assetRotationState": 0,
@@ -227,9 +333,44 @@
 						"category": "equipment",
 						"title": "Monitor Stand"
 					},
-					"sink-1": {
+					"computer": {
 						"assetRotationState": 0,
 						"buttonSource": "assets/icons/icon_computer.png",
+						"canReplace": [],
+						"cellsOwned": "",
+						"clonable": "false",
+						"defaultColor": "",
+						"horizontal": 0,
+						"id": "computer",
+						"isCloned": "false",
+						"isPermanent": "false",
+						"materialType": "complex",
+						"movable": "true",
+						"object": "obj: url(assets/computer-stand/mesh_computer2.obj); mtl: url(assets/computer-stand/mesh_computer2.mtl);",
+						"position": {
+							"x": -100,
+							"y": 0,
+							"z": -100
+						},
+						"rotation": {
+							"x": 0,
+							"y": -90,
+							"z": 0
+						},
+						"scale": {
+							"x": 0.25,
+							"y": 0.25,
+							"z": 0.25
+						},
+						"tag": "a-obj-model",
+						"type": "object",
+						"vertical": 0,
+						"category": "equipment",
+						"title": "Computer"
+					},
+					"sink-1": {
+						"assetRotationState": 0,
+						"buttonSource": "assets/icons/icon_sink.png",
 						"canReplace": [],
 						"cellsOwned": "",
 						"clonable": "false",
@@ -519,6 +660,43 @@
 						"vertical": 0,
 						"category": "equipment",
 						"title": "PoV Viewer"
+					},
+					"tv-wall": {
+						"assetRotationState": 0,
+						"buttonSource": "assets/WALL_2D_1.png",
+						"canReplace": [
+							"walls"
+						],
+						"cellsOwned": "",
+						"clonable": "false",
+						"defaultColor": "#9FCDB1",
+						"horizontal": 0,
+						"id": "tv-wall",
+						"isCloned": "false",
+						"isPermanent": "false",
+						"materialType": "complex",
+						"object": "obj: url(assets/tv_wall/mesh.tv_wall.obj); mtl: url(assets/tv_wall/mesh.tv_wall.mtl);",
+						"movable": "false",
+						"position": {
+							"x": -100,
+							"y": 0,
+							"z": -100
+						},
+						"rotation": {
+							"x": 0,
+							"y": 0,
+							"z": 0
+						},
+						"scale": {
+							"x": 0.25,
+							"y": 0.25,
+							"z": 0.25
+						},
+						"tag": "a-box",
+						"type": "wall",
+						"vertical": 0,
+						"category": "walls",
+						"title": "TV Wall"
 					},
 					"wall-1": {
 						"assetRotationState": 0,
