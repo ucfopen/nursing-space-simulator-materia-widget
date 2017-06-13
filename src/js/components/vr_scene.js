@@ -11,7 +11,6 @@ import FloorUnit from "./assets/floor_unit";
 import Skybox from "./assets/skybox";
 
 export default class VRScene extends React.Component {
-
 	isAssetSelected(tileXPosition, tileYPosition) {
 		if (
 			!this.props.selectedAsset ||
@@ -31,27 +30,27 @@ export default class VRScene extends React.Component {
 	}
 
 	render() {
-    let assets = this.props.assetsFromFile;
+		let assets = this.props.assetsFromFile;
 
 		return (
 			<Scene>
 				<a-assets>
-          <img id="ceilingTexture" alt="sorry" src="assets/CEILING_TILE.jpg" />
+					<img id="ceilingTexture" alt="sorry" src="assets/CEILING_TILE.jpg" />
 					{Object.keys(assets).map(function(asset) {
-            if(assets[asset].objSrc) {
-                console.log(asset + "-obj")
-                return (
-                  <a-asset-item id={asset + "-obj"} src={assets[asset].objSrc}></a-asset-item>
-                )
-            }
+						if (assets[asset].objSrc) {
+							console.log(asset + "-obj");
+							return (
+								<a-asset-item id={asset + "-obj"} src={assets[asset].objSrc} />
+							);
+						}
 					})}
-          {Object.keys(assets).map(function(asset) {
-            if(assets[asset].mtlSrc) {
-                console.log(assets[asset].mtlSrc)
-                return (
-                  <a-asset-item id={asset + "-mtl"} src={assets[asset].mtlSrc}></a-asset-item>
-                )
-            }
+					{Object.keys(assets).map(function(asset) {
+						if (assets[asset].mtlSrc) {
+							console.log(assets[asset].mtlSrc);
+							return (
+								<a-asset-item id={asset + "-mtl"} src={assets[asset].mtlSrc} />
+							);
+						}
 					})}
 				</a-assets>
 				<Skybox />
