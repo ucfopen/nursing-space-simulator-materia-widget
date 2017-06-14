@@ -6,7 +6,7 @@ import HUD from "./hud";
 import VRScene from "./vr_scene";
 
 import Joyride from "react-joyride";
-import { part1, part2 } from "../steps";
+import { part1, part2, clickCameraInScene, clickInScene } from "../steps";
 
 /**
  * App holds the state of the entire simulation. Calls the HUD and the VR Scene
@@ -25,6 +25,7 @@ export default class App extends React.Component {
 			selectedAsset: null,
 			thirdPerson: true,
 			vrSceneFirstClick: true,
+			vrSceneHaveEnteredFirstPerson: false,
 
 			joyrideOverlay: true,
 			joyrideType: "continuous",
@@ -35,28 +36,29 @@ export default class App extends React.Component {
 		};
 	}
 
-	addSteps(steps) {
-		this.setState(
-			{
-				steps: this.state.steps.concat(steps)
-			},
-			this.joyride.start(true)
+	componentDidMount() {
+		this.joyride.start(true);
+	}
+
+	applyNewSteps() {
+		this.joyride.setState({ index: 0 }, () =>
+			setTimeout(this.joyride.start(true), 500)
 		);
 	}
 
 	handleClick(x, y) {
-		if (this.state.vrSceneFirstClick && this.state.selectedAsset !== null) {
+		if (
+			this.state.vrSceneFirstClick &&
+			this.state.selectedAsset !== null &&
+			this.state.selectedAsset.asset.id !== "pov_camera"
+		) {
 			this.setState(
 				{
 					vrSceneFirstClick: false,
-					steps: this.state.steps.concat(part2),
-					stepIndex: 7 //sets to "Object Options" step above
+					steps: part2,
+					stepIndex: 0
 				},
-				() => {
-					this.joyride.next();
-					//ensure next has finished executing before starting
-					setTimeout(() => this.joyride.start(true), 500);
-				}
+				this.applyNewSteps.bind(this)
 			);
 		}
 		let grid = _.cloneDeep(this.state.grid);
@@ -64,12 +66,20 @@ export default class App extends React.Component {
 		if (!this.state.selectedAsset || !this.state.thirdPerson) return;
 
 		// Check if the user is entering first person mode
-		if (this.state.selectedAsset.asset.id === "pov_camera") {
-			this.setState({
-				thirdPerson: false,
-				position: { x: x, y: 1, z: y }
-			});
-
+		if (
+			this.state.selectedAsset.asset.id === "pov_camera" &&
+			this.state.vrSceneHaveEnteredFirstPerson === false
+		) {
+			this.setState(
+				{
+					thirdPerson: false,
+					position: { x: x, y: 1, z: y },
+					stepIndex: 0,
+					steps: clickCameraInScene,
+					vrSceneHaveEnteredFirstPerson: true
+				},
+				this.applyNewSteps.bind(this)
+			);
 			return;
 		}
 
@@ -187,10 +197,26 @@ export default class App extends React.Component {
 		if (x === null) x = -1;
 		if (y === null) y = -1;
 
-		this.setState({
-			selectedAsset: { asset: asset, x: x, y: y },
-			manipulationMode: true
-		});
+		if (
+			x === -1 &&
+			asset.id !== "pov_camera" &&
+			this.state.vrSceneFirstClick === true
+		)
+			this.setState(
+				{
+					selectedAsset: { asset: asset, x: x, y: y },
+					manipulationMode: true,
+					steps: clickInScene,
+					stepIndex: 0
+				},
+				this.applyNewSteps.bind(this)
+			);
+		else {
+			this.setState({
+				selectedAsset: { asset: asset, x: x, y: y },
+				manipulationMode: true
+			});
+		}
 	}
 
 	shouldComponentUpdate(nextProps, nextState) {
@@ -213,8 +239,7 @@ export default class App extends React.Component {
 		if (this.state.selectedAsset !== nextState.selectedAsset) {
 			return true;
 		}
-
-		return false;
+		return true;
 	}
 
 	toggleCamera() {
@@ -319,7 +344,6 @@ export default class App extends React.Component {
 					thirdPerson={this.state.thirdPerson}
 					position={this.state.position}
 					onClick={this.handleClick.bind(this)}
-					addSteps={this.addSteps.bind(this)}
 					selectedAsset={this.state.selectedAsset}
 				/>
 				<HUD

@@ -17,28 +17,33 @@ export const part1 = [
 		title: "Moving the Camera",
 		text: "The camera can be adjusted using the buttons in this panel.",
 		selector: "#camera-controls",
-		position: "left"
+		position: "left",
+		allowClicksThruHole: "true"
 	},
 	{
 		title: "Taking a Screenshot",
 		text: "Click/touch this button to take a screenshot of the room.",
 		selector: "#screenshot",
-		position: "left"
+		position: "left",
+		allowClicksThruHole: "true"
 	},
 	{
 		title: "Categories",
-		text:
-			"Here are the categories of medical equipment. There are three categories to choose from.",
-		selector: "#asset-selection-menu",
-		position: "top"
+		text: "Here are the categories of medical equipment to choose from.",
+		selector: "#categories-list",
+		position: "top",
+		allowClicksThruHole: "true"
 	},
 	{
 		title: "Models",
-		text: "Click/touch a model to select it and then hit 'Next' to continue.",
-		selector: "#bed-1",
+		text: "Click/touch a model to select it.",
+		selector: "#asset-picker button:first-child",
 		position: "right",
 		type: "click",
-		allowClicksThruHole: "true"
+		allowClicksThruHole: "true",
+		style: {
+			footer: { display: "none " }
+		}
 	}
 ];
 
@@ -48,7 +53,11 @@ export const clickInScene = [
 		text: "Click/touch inside the room to place the object.",
 		selector: ".vr-scene",
 		position: "bottom",
-		trigger: ".vr-scene"
+		type: "click",
+		allowClicksThruHole: "true",
+		style: {
+			footer: { display: "none " }
+		}
 	}
 ];
 
@@ -61,7 +70,7 @@ export const part2 = [
 		position: "right"
 	},
 	{
-		title: "Object Options",
+		title: "Object Movement",
 		text:
 			"When an object is selected, the arrow keys can be used to move the object around inside the room.",
 		selector: "#camera-move",
@@ -73,6 +82,15 @@ export const part2 = [
 			"You can view the room from a more personal point of view by selecting the 'First-Person Viewer'. After selecting 'First-Person' Viewer, click/touch somewhere in the room to take a look around.",
 		selector: "#vr-viewer-mode",
 		position: "top"
+	}
+];
+
+export const clickCameraInScene = [
+	{
+		title: "Welcome to First Person",
+		text: "You can click back.",
+		selector: "#back",
+		position: "bottom"
 	},
 	{
 		title: "Fullscreen / VR Mode",
