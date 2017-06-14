@@ -333,5 +333,5 @@ button svg.svg-icon:hover {
 }
 
 .asset-selected-icon {
-	border-color: red;
+	border: solid 3px #e8a26d;
 }
