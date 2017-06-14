@@ -24,6 +24,33 @@ export default class App extends React.Component {
 			selectedAsset: null,
 			thirdPerson: true
 		};
+		this.initialWallRotations();
+	}
+
+	// make sure walls/assets on the edges are rotated inwards
+	initialWallRotations() {
+		let grid = this.state.grid;
+		const height = grid.length;
+		if (height <= 0) return;
+		const width = grid[0].length;
+
+		let rotation = 0;
+		for (let i = 0; i < height; i++) {
+			for (let j = 0; j < width; j++) {
+				if (grid[i][j] == "0") continue;
+				rotation = 0;
+
+				if (i == 0) rotation = 0;
+				else if (i == height - 1) rotation = 180;
+				if (j == 0) rotation = 270;
+				else if (j == width - 1) rotation = 90;
+
+				grid[i][j].rotation = rotation;
+			}
+		}
+		this.setState({
+			grid: grid
+		});
 	}
 
 	handleClick(x, y) {
