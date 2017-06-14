@@ -302,7 +302,7 @@
 					},
 					"monitor-1": {
 						"assetRotationState": 0,
-						"buttonSource": "assets/icons/icon_computer.png",
+						"buttonSource": "assets/icons/icon_monitor.png",
 						"canReplace": [],
 						"cellsOwned": "",
 						"clonable": "false",
@@ -485,7 +485,7 @@
 					},
 					"trashcan-1": {
 						"assetRotationState": 0,
-						"buttonSource": "assets/icons/icon_trashcan.png",
+						"buttonSource": "assets/icons/icon_trash.png",
 						"canReplace": [],
 						"cellsOwned": "",
 						"clonable": "false",
@@ -521,7 +521,7 @@
 					},
 					"trashcan-bio": {
 						"assetRotationState": 0,
-						"buttonSource": "assets/icons/icon_trashcan_bio.png",
+						"buttonSource": "assets/icons/icon_trashbio.png",
 						"canReplace": [],
 						"cellsOwned": "",
 						"clonable": "false",
@@ -630,6 +630,44 @@
 						"vertical": 0,
 						"category": "walls",
 						"title": "TV Wall"
+					},
+					"window": {
+						"assetRotationState": 0,
+						"buttonSource": "assets/icons/icon_tv.png",
+						"canReplace": [
+							"walls"
+						],
+						"cellsOwned": "",
+						"clonable": "false",
+						"defaultColor": "#9FCDB1",
+						"horizontal": 0,
+						"id": "window",
+						"isCloned": "false",
+						"isPermanent": "false",
+						"materialType": "complex",
+						"mtlSrc": "assets/window/mesh_window.mtl",
+						"objSrc": "assets/window/mesh_window.obj",
+						"movable": "false",
+						"position": {
+							"x": -100,
+							"y": 0,
+							"z": -100
+						},
+						"rotation": {
+							"x": 0,
+							"y": 0,
+							"z": 0
+						},
+						"scale": {
+							"x": 0.25,
+							"y": 0.25,
+							"z": 0.25
+						},
+						"tag": "a-box",
+						"type": "wall",
+						"vertical": 0,
+						"category": "walls",
+						"title": "Window"
 					},
 					"soap-wall": {
 						"assetRotationState": 0,
