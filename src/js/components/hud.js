@@ -19,6 +19,7 @@ export default class HUD extends React.Component {
 						yDown={this.props.yDown.bind(this)}
 						zUp={this.props.zUp.bind(this)}
 						zDown={this.props.zDown.bind(this)}
+						resetPosition={this.props.resetPosition.bind(this)}
 					/>
 					{this.props.selectedAsset !== null
 						? <AssetControls
