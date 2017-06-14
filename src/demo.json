@@ -633,7 +633,7 @@
 					},
 					"window": {
 						"assetRotationState": 0,
-						"buttonSource": "assets/icons/icon_tv.png",
+						"buttonSource": "assets/icons/icon_window.png",
 						"canReplace": [
 							"walls"
 						],
