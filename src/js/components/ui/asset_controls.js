@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import DeleteSVG from "../assets/icon-svgs/delete";
+import DeselectSVG from "../assets/icon-svgs/deselect";
 import RotateSVG from "../assets/icon-svgs/rotate";
 import ConfirmSVG from "../assets/icon-svgs/confirm";
 
@@ -16,7 +17,7 @@ export default class AssetControls extends React.Component {
 				{this.props.manipulationMode
 					? <div>
 							<button
-								id="deselect"
+								id="confirm"
 								onClick={this.props.manipulateAsset.bind(
 									this,
 									this.props.selectedAsset.asset,
@@ -49,7 +50,17 @@ export default class AssetControls extends React.Component {
 								<DeleteSVG />
 							</button>
 						</div>
-					: null}
+					: <button
+							id="deselect"
+							onClick={this.props.manipulateAsset.bind(
+								this,
+								this.props.selectedAsset.asset,
+								"deselect",
+								this.props.selectedAsset.x,
+								this.props.selectedAsset.y
+							)}>
+							<DeselectSVG />
+						</button>}
 			</div>
 		);
 	}
