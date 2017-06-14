@@ -158,7 +158,9 @@ export default class App extends React.Component {
 
 		this.setState({
 			selectedAsset: { asset: asset, x: x, y: y },
-			manipulationMode: true
+			manipulationMode: asset.id === "pov_camera" || (x > -1 && y > -1)
+				? true
+				: false
 		});
 	}
 
