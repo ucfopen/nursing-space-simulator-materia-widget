@@ -30,11 +30,28 @@ export default class VRScene extends React.Component {
 	}
 
 	render() {
+		let assets = this.props.assetsFromFile;
+
 		return (
 			<Scene>
 				<a-assets>
 					<img id="ceilingTexture" alt="sorry" src="assets/CEILING_TILE.jpg" />
-					<img id="wallTexture" alt="sorry" src="assets/WALL_2D_1.png" />
+					{Object.keys(assets).map(function(asset) {
+						if (assets[asset].objSrc) {
+							console.log(asset + "-obj");
+							return (
+								<a-asset-item id={asset + "-obj"} src={assets[asset].objSrc} />
+							);
+						}
+					})}
+					{Object.keys(assets).map(function(asset) {
+						if (assets[asset].mtlSrc) {
+							console.log(assets[asset].mtlSrc);
+							return (
+								<a-asset-item id={asset + "-mtl"} src={assets[asset].mtlSrc} />
+							);
+						}
+					})}
 				</a-assets>
 				<Skybox />
 				<CameraFP
