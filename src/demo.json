@@ -423,7 +423,7 @@
 						"isPermanent": "false",
 						"materialType": "complex",
 						"movable": "false",
-						"mtlSrc": "assets/iv/mesh_iv.mtl",
+						"mtlSrc": "assets/door/mesh_door.mtl",
 						"objSrc": "assets/door/mesh_door.obj",
 						"position": {
 							"x": -100,
