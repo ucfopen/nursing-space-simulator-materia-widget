@@ -158,11 +158,11 @@ button svg.svg-icon:hover {
 	margin-top: 10px;
 }*/
 
-#UI-selected-asset-options button:hover svg path, #UI-selected-asset-options button:hover svg rect {
+#UI-selected-asset-options button:hover svg path, #UI-selected-asset-options button:hover svg rect, #UI-selected-asset-options button:hover svg polygon {
 	fill: #e8a26d;
 }
 
-#UI-selected-asset-options button:active svg path, #UI-selected-asset-options button:active svg rect {
+#UI-selected-asset-options button:active svg path, #UI-selected-asset-options button:active svg rect, #UI-selected-asset-options button:active svg polygon {
 	fill: #FFFFFF;
 }
 
