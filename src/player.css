@@ -307,3 +307,7 @@ button {
 	margin: 0 auto;
 	padding-top: 10px;
 }
+
+#categories-list {
+	width: 40%;
+}

@@ -13,9 +13,6 @@ import Skybox from "./assets/skybox";
 import { clickInScene } from "../steps";
 
 export default class VRScene extends React.Component {
-	componentDidMount() {
-		this.props.addSteps(clickInScene);
-	}
 	isAssetSelected(tileXPosition, tileYPosition) {
 		if (
 			!this.props.selectedAsset ||
