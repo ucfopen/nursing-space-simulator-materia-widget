@@ -1,17 +1,18 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import DeleteSVG from "../assets/icon-svgs/delete"
-import RotateSVG from "../assets/icon-svgs/rotate"
-import DeselectSVG from "../assets/icon-svgs/deselect"
+import DeleteSVG from "../assets/icon-svgs/delete";
+import RotateSVG from "../assets/icon-svgs/rotate";
+import DeselectSVG from "../assets/icon-svgs/deselect";
 
 export default class AssetControls extends React.Component {
 	render() {
 		return (
 			<div id="UI-selected-asset-options">
-				<span className="selected-asset-label-title">
-					Currently selected: {this.props.selectedAsset.asset.title}
+				<span id="selected-asset-label">
+					<span className="selected-asset-label-title">
+						Currently selected: {this.props.selectedAsset.asset.title}
+					</span>
 				</span>
-				<span id="selected-asset-label" />
 				<button
 					id="deselect"
 					onClick={this.props.manipulateAsset.bind(
