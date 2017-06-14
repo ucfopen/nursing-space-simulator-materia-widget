@@ -203,6 +203,8 @@ export default class App extends React.Component {
 			position = { x: 2.5, y: 18, z: 14 };
 		} else if (
 			this.state.selectedAsset !== null &&
+			this.state.selectedAsset.x > -1 &&
+			this.state.selectedAsset.y > -1 &&
 			direction !== "y" &&
 			this.state.selectedAsset.asset.id !== "pov_camera"
 		) {
