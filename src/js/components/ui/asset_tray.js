@@ -26,6 +26,7 @@ export default class AssetTray extends React.Component {
 		const assets = this.props.assetsFromFile;
 		const curCategory = this.state.category;
 		const selectAsset = this.props.selectAsset;
+		let selectedAsset = this.props.selectedAsset;
 
 		return (
 			<div
@@ -54,15 +55,17 @@ export default class AssetTray extends React.Component {
 					)}
 				</div>
 				<div id="asset-picker">
-					{Object.keys(assets).map(function(asset) {
-						if (curCategory === assets[asset].category)
+					{Object.keys(assets).map(asset => {
+						if (curCategory === assets[asset].category) {
 							return (
 								<AssetButton
 									key={asset}
 									item={assets[asset]}
+									selectedAsset={selectedAsset}
 									onClick={selectAsset.bind(this, assets[asset], null, null)}
 								/>
 							);
+						}
 					})}
 				</div>
 			</div>
