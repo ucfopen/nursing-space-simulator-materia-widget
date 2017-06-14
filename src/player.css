@@ -64,11 +64,6 @@ button svg.svg-icon:hover {
 	text-align: center;
 }
 
-/*#UI-right-panel #screenshot {
-	position: absolute;
-	right: 135px;
-}*/
-
 #UI-right-panel button {
 	padding: 2px 2px;
 	background: none;
@@ -77,10 +72,6 @@ button svg.svg-icon:hover {
 	box-shadow: none;
 
 	cursor: pointer;
-}
-
-#UI-right-panel button:hover {
-	/*background: #d1ebff;*/
 }
 
 #camera-move {
@@ -93,6 +84,23 @@ button svg.svg-icon:hover {
 #camera-move button {
 	text-align: center;
 }
+
+#camera-move button:hover svg path, #camera-move button:hover svg polygon, #camera-move button:hover svg rect {
+	fill: #e8a26d;
+}
+
+#camera-move button:active svg path, #camera-move button:active svg polygon, #camera-move button:active svg rect {
+	fill: #FFFFFF;
+}
+
+#camera-zoom-in:hover svg polygon, #camera-zoom-out:hover svg rect {
+	fill: #e8a26d;
+}
+
+#camera-zoom-in:active svg polygon, #camera-zoom-out:active svg rect {
+	fill: #FFFFFF;
+}
+
 
 #camera-move-horizontal {
 	position: relative;
@@ -132,29 +140,8 @@ button svg.svg-icon:hover {
 
 	width: 60px;
 
-	padding: 5px;
-
-	/*background: #FFFFFF;*/
-
-	/*border-radius: 5px;*/
-
-	/*background: background: rgba(255, 255, 255, 0.5);;*/
-	/*border-radius: 2px;*/
-
-	/*box-shadow: 0px 1px 1px 0px rgba(0,0,0,0.1);*/
+	padding: 15px 5px 5px 5px;
 }
-
-/*#UI-selected-asset-options #selected-asset-label {
-	position: absolute;
-	display: inline-block;
-
-	width: 300px;
-	padding: 10px;
-
-	margin-right: 7px;
-
-	border-radius: 5px;
-}*/
 
 #UI-selected-asset-options button {
 	display: block;
@@ -163,32 +150,36 @@ button svg.svg-icon:hover {
 	border-radius: 0px;
 	box-shadow: none;
 	background: none;
-	/*margin-right: 5px;*/
-
-	/*padding: 8px;*/
-
-	/*background: #FFFFFF;*/
 
 	cursor: pointer;
 }
 
-#UI-selected-asset-options button:hover {
-	/*background: #d1ebff;*/
+/*#UI-selected-asset-options button:first-child {
+	margin-top: 10px;
+}*/
+
+#UI-selected-asset-options button:hover svg path, #UI-selected-asset-options button:hover svg rect {
+	fill: #e8a26d;
 }
 
-#UI-selected-asset-options .selected-asset-label-title {
-	position: absolute;
-	top: -20px;
+#UI-selected-asset-options button:active svg path, #UI-selected-asset-options button:active svg rect {
+	fill: #FFFFFF;
+}
 
-	width: 250px;
+#UI-selected-asset-options #selected-asset-label {
+	position: absolute;
+	top: -10px;
+
+	width: 300px;
 
 	font-size: 16px;
 	z-index: 1;
+}
 
-	padding: 3px 5px;
-	/*background: #F9F9F9;*/
-
-	border-radius: 5px 5px 0px 0px;
+#UI-selected-asset-options #selected-asset-label .selected-asset-label-title {
+	padding: 5px 10px 5px 10px;
+	background: #ffffff;
+	border-radius: 5px;
 }
 
 /* Bottom panel */
@@ -237,7 +228,6 @@ button svg.svg-icon:hover {
 }
 
 #UI-bottom-panel #asset-selection-menu {
-	/*padding: 5px 10px 5px 10px;*/
 	margin-top: 10px;
 	padding-left: 15px;
 }
