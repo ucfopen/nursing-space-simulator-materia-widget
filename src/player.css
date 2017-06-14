@@ -7,11 +7,16 @@
 button {
 	border: solid 1px #A9A9A9;
 	border-radius: 5px;
-	box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.2);
+	box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.2);
 	outline: none;
 }
 
-#app{
+button svg.svg-icon:hover {
+	background: none;
+	box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.3);
+}
+
+#app {
 	height: 100%;
 	width: 100%;
 }
@@ -34,11 +39,11 @@ button {
 #UI-right-panel {
 	position: absolute;
 	top: 5px;
-	right: 5px ;
+	right: 5px;
 
-	padding: 10px;
-	background: rgba(255, 255, 255, 0.7);
-	border-radius: 5px;
+	padding: 0px;
+	background: none;
+	border-radius: 0px;
 
 	text-align: center;
 }
@@ -60,25 +65,44 @@ button {
 }
 
 #UI-right-panel button {
-	padding: 10px;
-	background: #FFFFFF;
-}
+	padding: 2px 2px;
+	background: none;
+	border: 0px;
+	border-radius: 0px;
+	box-shadow: none;
 
-#UI-right-panel button:hover {
-	background: #d1ebff;
+	cursor: pointer;
 }
 
 #camera-move {
 	width: 125px;
 	height: 85px;
-	margin-top: 15px;
 	margin-left: auto;
 	margin-right: auto;
 }
 
 #camera-move button {
 	text-align: center;
-	padding: 5px 10px;
+}
+
+#camera-move button:hover svg path,
+#camera-move button:hover svg polygon,
+#camera-move button:hover svg rect {
+	fill: #e8a26d;
+}
+
+#camera-move button:active svg path,
+#camera-move button:active svg polygon,
+#camera-move button:active svg rect {
+	fill: #FFFFFF;
+}
+
+#camera-zoom-in:hover svg polygon, #camera-zoom-out:hover svg rect {
+	fill: #e8a26d;
+}
+
+#camera-zoom-in:active svg polygon, #camera-zoom-out:active svg rect {
+	fill: #FFFFFF;
 }
 
 #camera-move-horizontal {
@@ -86,6 +110,7 @@ button {
 	float: left;
 	display: block;
 	width: 100%;
+	top: -15px;
 
 	text-align: center;
 }
@@ -95,7 +120,17 @@ button {
 #camera-up, #camera-down {
 	display: block;
 	margin-left: auto;
-	margin-right: auto ;
+	margin-right: auto;
+}
+#camera-down {
+	position: relative;
+	top: -30px;
+}
+
+#camera-zoom-in, #camera-zoom-out {
+	display: inline-block;
+	margin-top: 30px;
+	margin-right: 3px;
 }
 
 /* Selected asset options */
@@ -103,55 +138,55 @@ button {
 #UI-selected-asset-options {
 	position: absolute;
 	top: 30px;
-	left: 20px;
+	left: 5px;
 	z-index: 5;
 
-	padding: 5px;
+	width: 60px;
 
-	background: #FFFFFF;
-
-	border-radius: 5px;
-
-	/*background: background: rgba(255, 255, 255, 0.5);;*/
-	/*border-radius: 2px;*/
-
-	/*box-shadow: 0px 1px 1px 0px rgba(0,0,0,0.1);*/
-}
-
-#UI-selected-asset-options #selected-asset-label {
-	display: inline-block;
-	padding: 10px;
-
-	margin-right: 7px;
-
-	border-radius: 5px;
+	padding: 15px 5px 5px 5px;
 }
 
 #UI-selected-asset-options button {
-	display: inline-block;
-	margin-right: 5px;
+	display: block;
 
-	padding: 8px;
-
-	background: #FFFFFF;
+	border: 0px;
+	border-radius: 0px;
+	box-shadow: none;
+	background: none;
 
 	cursor: pointer;
 }
 
-#UI-selected-asset-options button:hover {
-	background: #d1ebff;
+/*#UI-selected-asset-options button:first-child {
+	margin-top: 10px;
+}*/
+
+#UI-selected-asset-options button:hover svg path,
+#UI-selected-asset-options button:hover svg rect,
+#UI-selected-asset-options button:hover svg polygon {
+	fill: #e8a26d;
 }
 
-#UI-selected-asset-options .selected-asset-label-title {
+#UI-selected-asset-options button:active svg path,
+#UI-selected-asset-options button:active svg rect,
+#UI-selected-asset-options button:active svg polygon {
+	fill: #FFFFFF;
+}
+
+#UI-selected-asset-options #selected-asset-label {
 	position: absolute;
-	top: -20px;
-	font-size: 10px;
+	top: -10px;
+
+	width: 300px;
+
+	font-size: 16px;
 	z-index: 1;
+}
 
-	padding: 3px 5px;
-	background: #F9F9F9;
-
-	border-radius: 5px 5px 0px 0px;
+#UI-selected-asset-options #selected-asset-label .selected-asset-label-title {
+	padding: 5px 10px 5px 10px;
+	background: #ffffff;
+	border-radius: 5px;
 }
 
 /* Bottom panel */
@@ -200,7 +235,6 @@ button {
 }
 
 #UI-bottom-panel #asset-selection-menu {
-	/*padding: 5px 10px 5px 10px;*/
 	margin-top: 10px;
 	padding-left: 15px;
 }
@@ -269,8 +303,7 @@ button {
 	font-weight: bold;
 }
 
-#asset-picker > button{
-
+#asset-picker > button {
 	display: inline-block;
 	height: 100%;
 
@@ -283,7 +316,7 @@ button {
 	background: #FFFFFF;
 
 	font-size: 32px;
- 	font-weight: bold;
+	font-weight: bold;
 }
 #previous-asset:hover, #next-asset:hover {
 	background: #d1ebff;
@@ -297,4 +330,8 @@ button {
 
 .active-category {
 	background-color: #b1a6a6;
+}
+
+.asset-selected-icon {
+	border: solid 3px #e8a26d;
 }
