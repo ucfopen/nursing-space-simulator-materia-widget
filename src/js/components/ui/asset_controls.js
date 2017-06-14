@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import DeleteSVG from "../assets/icon-svgs/delete";
 import RotateSVG from "../assets/icon-svgs/rotate";
-import DeselectSVG from "../assets/icon-svgs/deselect";
+import ConfirmSVG from "../assets/icon-svgs/confirm";
 
 export default class AssetControls extends React.Component {
 	render() {
@@ -24,7 +24,7 @@ export default class AssetControls extends React.Component {
 									this.props.selectedAsset.x,
 									this.props.selectedAsset.y
 								)}>
-								<DeselectSVG />
+								<ConfirmSVG />
 							</button>
 							<button
 								id="rotate"
