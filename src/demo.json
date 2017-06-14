@@ -607,8 +607,8 @@
 						"isCloned": "false",
 						"isPermanent": "false",
 						"materialType": "complex",
-						"mtlSrc": "assets/tv_wall/mesh.tv_wall.mtl",
-						"objSrc": "assets/tv_wall/mesh.tv_wall.obj",
+						"mtlSrc": "assets/tv_wall/mesh_tv_wall.mtl",
+						"objSrc": "assets/tv_wall/mesh_tv_wall.obj",
 						"movable": "false",
 						"position": {
 							"x": -100,
