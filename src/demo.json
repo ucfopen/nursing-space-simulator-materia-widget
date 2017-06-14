@@ -593,42 +593,6 @@
 						"category": "walls",
 						"title": "Fire Wall"
 					},
-					"viewer": {
-						"assetRotationState": 0,
-						"buttonSource": "assets/icons/icon_camera.png",
-						"canReplace": [],
-						"cellsOwned": "",
-						"clonable": "false",
-						"defaultColor": "",
-						"horizontal": 0,
-						"id": "pov-camera",
-						"isCloned": "false",
-						"isPermanent": "false",
-						"materialSource": "assets/body-armour/mesh_camera.mtl",
-						"materialType": "complex",
-						"movable": "true",
-						"objectSource": "",
-						"position": {
-							"x": -100,
-							"y": 0,
-							"z": -100
-						},
-						"rotation": {
-							"x": 0,
-							"y": 0,
-							"z": 0
-						},
-						"scale": {
-							"x": 0.25,
-							"y": 0.25,
-							"z": 0.25
-						},
-						"tag": "a-obj-model",
-						"type": "view",
-						"vertical": 0,
-						"category": "equipment",
-						"title": "PoV Viewer"
-					},
 					"tv-wall": {
 						"assetRotationState": 0,
 						"buttonSource": "assets/icons/icon_tv.png",
