@@ -32,6 +32,7 @@ export default class HUD extends React.Component {
 						assetsFromFile={this.props.assetsFromFile}
 						categories={this.props.categories}
 						selectAsset={this.props.selectAsset.bind(this)}
+						selectedAsset={this.props.selectedAsset}
 					/>
 				</div>
 			: <div id="ground-top-panel">

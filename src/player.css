@@ -7,16 +7,16 @@
 button {
 	border: solid 1px #A9A9A9;
 	border-radius: 5px;
-	box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.2);
+	box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.2);
 	outline: none;
 }
 
 button svg.svg-icon:hover {
 	background: none;
-	box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.3);
+	box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.3);
 }
 
-#app{
+#app {
 	height: 100%;
 	width: 100%;
 }
@@ -39,7 +39,7 @@ button svg.svg-icon:hover {
 #UI-right-panel {
 	position: absolute;
 	top: 5px;
-	right: 5px ;
+	right: 5px;
 
 	padding: 0px;
 	background: none;
@@ -85,11 +85,15 @@ button svg.svg-icon:hover {
 	text-align: center;
 }
 
-#camera-move button:hover svg path, #camera-move button:hover svg polygon, #camera-move button:hover svg rect {
+#camera-move button:hover svg path,
+#camera-move button:hover svg polygon,
+#camera-move button:hover svg rect {
 	fill: #e8a26d;
 }
 
-#camera-move button:active svg path, #camera-move button:active svg polygon, #camera-move button:active svg rect {
+#camera-move button:active svg path,
+#camera-move button:active svg polygon,
+#camera-move button:active svg rect {
 	fill: #FFFFFF;
 }
 
@@ -100,7 +104,6 @@ button svg.svg-icon:hover {
 #camera-zoom-in:active svg polygon, #camera-zoom-out:active svg rect {
 	fill: #FFFFFF;
 }
-
 
 #camera-move-horizontal {
 	position: relative;
@@ -117,7 +120,7 @@ button svg.svg-icon:hover {
 #camera-up, #camera-down {
 	display: block;
 	margin-left: auto;
-	margin-right: auto ;
+	margin-right: auto;
 }
 #camera-down {
 	position: relative;
@@ -158,11 +161,15 @@ button svg.svg-icon:hover {
 	margin-top: 10px;
 }*/
 
-#UI-selected-asset-options button:hover svg path, #UI-selected-asset-options button:hover svg rect, #UI-selected-asset-options button:hover svg polygon {
+#UI-selected-asset-options button:hover svg path,
+#UI-selected-asset-options button:hover svg rect,
+#UI-selected-asset-options button:hover svg polygon {
 	fill: #e8a26d;
 }
 
-#UI-selected-asset-options button:active svg path, #UI-selected-asset-options button:active svg rect, #UI-selected-asset-options button:active svg polygon {
+#UI-selected-asset-options button:active svg path,
+#UI-selected-asset-options button:active svg rect,
+#UI-selected-asset-options button:active svg polygon {
 	fill: #FFFFFF;
 }
 
@@ -296,8 +303,7 @@ button svg.svg-icon:hover {
 	font-weight: bold;
 }
 
-#asset-picker > button{
-
+#asset-picker > button {
 	display: inline-block;
 	height: 100%;
 
@@ -310,7 +316,7 @@ button svg.svg-icon:hover {
 	background: #FFFFFF;
 
 	font-size: 32px;
- 	font-weight: bold;
+	font-weight: bold;
 }
 #previous-asset:hover, #next-asset:hover {
 	background: #d1ebff;
@@ -324,4 +330,8 @@ button svg.svg-icon:hover {
 
 .active-category {
 	background-color: #b1a6a6;
+}
+
+.asset-selected-icon {
+	border-color: red;
 }
