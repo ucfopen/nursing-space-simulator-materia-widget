@@ -1,4 +1,6 @@
-import _ from "lodash";
+import cloneDeep from "lodash.clonedeep";
+import isEqual from "lodash/fp/isEqual";
+
 import React from "react";
 import ReactDOM from "react-dom";
 
@@ -25,7 +27,7 @@ export default class App extends React.Component {
 	}
 
 	handleClick(x, y) {
-		let grid = _.cloneDeep(this.state.grid);
+		let grid = cloneDeep(this.state.grid);
 
 		if (!this.state.selectedAsset || !this.state.thirdPerson) return;
 
@@ -76,12 +78,13 @@ export default class App extends React.Component {
 	}
 
 	manipulateAsset(asset, action, x, y) {
-		let grid = _.cloneDeep(this.state.grid);
+		let grid = cloneDeep(this.state.grid);
 
 		// First check if the user is replacing
 		if (
 			this.state.hoveredAsset !== null &&
 			this.state.selectedAsset !== null &&
+			this.state.selectedAsset.asset.id !== "pov_camera" &&
 			this.state.selectedAsset.asset.canReplace.includes(
 				this.state.hoveredAsset.category
 			)
@@ -160,7 +163,7 @@ export default class App extends React.Component {
 	}
 
 	shouldComponentUpdate(nextProps, nextState) {
-		if (!_.isEqual(this.state.grid, nextState.grid)) {
+		if (!isEqual(this.state.grid, nextState.grid)) {
 			return true;
 		}
 
@@ -219,7 +222,7 @@ export default class App extends React.Component {
 		const old_y = this.state.selectedAsset.y;
 		const asset = this.state.selectedAsset.asset;
 
-		const grid = _.cloneDeep(this.state.grid);
+		const grid = cloneDeep(this.state.grid);
 
 		// is the tile open?
 		if (grid[old_x + x_distance][old_y + y_distance] == "0") {
