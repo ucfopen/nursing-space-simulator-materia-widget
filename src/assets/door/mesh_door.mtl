@@ -1,8 +1,8 @@
-# Blender MTL File: 'mesh_door.blend'
+# Blender MTL File: 'mesh_door2.blend'
 # Material Count: 2
 
 newmtl Material.002
-Ns 96.078431
+Ns 94.117647
 Ka 1.000000 1.000000 1.000000
 Kd 0.640000 0.640000 0.640000
 Ks 0.500000 0.500000 0.500000
@@ -12,7 +12,7 @@ d 0.487500
 illum 2
 
 newmtl Material.017
-Ns 96.078431
+Ns 94.117647
 Ka 1.000000 1.000000 1.000000
 Kd 0.640000 0.640000 0.640000
 Ks 0.500000 0.500000 0.500000
@@ -20,4 +20,4 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
-map_Kd tex_door.png
+map_Kd tex_door3.png
