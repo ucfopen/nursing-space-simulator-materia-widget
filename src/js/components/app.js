@@ -24,8 +24,9 @@ export default class App extends React.Component {
 			position: { x: 2.5, y: 18, z: 14 }, //TODO: make these variable dynamic based on map from qset
 			selectedAsset: null,
 			thirdPerson: true,
-			vrSceneFirstClick: true,
+			vrSceneClicked: false,
 			vrSceneHaveEnteredFirstPerson: false,
+			tourFinished: false,
 
 			joyrideOverlay: true,
 			joyrideType: "continuous",
@@ -46,15 +47,20 @@ export default class App extends React.Component {
 		);
 	}
 
+	joyrideCallback(data) {
+		if (data.action === "skip") this.setState({ tourFinished: true });
+	}
+
 	handleClick(x, y) {
 		if (
-			this.state.vrSceneFirstClick &&
+			this.state.vrSceneClicked === false &&
 			this.state.selectedAsset !== null &&
-			this.state.selectedAsset.asset.id !== "pov_camera"
+			this.state.selectedAsset.asset.id !== "pov_camera" &&
+			this.state.tourFinished === false
 		) {
 			this.setState(
 				{
-					vrSceneFirstClick: false,
+					vrSceneClicked: true,
 					steps: part2,
 					stepIndex: 0
 				},
@@ -68,7 +74,8 @@ export default class App extends React.Component {
 		// Check if the user is entering first person mode
 		if (
 			this.state.selectedAsset.asset.id === "pov_camera" &&
-			this.state.vrSceneHaveEnteredFirstPerson === false
+			this.state.vrSceneHaveEnteredFirstPerson === false &&
+			this.state.tourFinished === false
 		) {
 			this.setState(
 				{
@@ -200,8 +207,9 @@ export default class App extends React.Component {
 		if (
 			x === -1 &&
 			asset.id !== "pov_camera" &&
-			this.state.vrSceneFirstClick === true
-		)
+			this.state.vrSceneClicked === false &&
+			this.state.tourFinished === false
+		) {
 			this.setState(
 				{
 					selectedAsset: { asset: asset, x: x, y: y },
@@ -211,7 +219,7 @@ export default class App extends React.Component {
 				},
 				this.applyNewSteps.bind(this)
 			);
-		else {
+		} else {
 			this.setState({
 				selectedAsset: { asset: asset, x: x, y: y },
 				manipulationMode: true
@@ -319,6 +327,7 @@ export default class App extends React.Component {
 				style={this.state.thirdPerson ? {} : { position: "absolute" }}>
 				<Joyride
 					ref={c => (this.joyride = c)}
+					callback={this.joyrideCallback.bind(this)}
 					debug={false}
 					showSkipButton={true}
 					showStepsProgress={true}
