@@ -92,56 +92,29 @@ export default class App extends React.Component {
 		});
 	}
 
-	// Tracks current assets being hovered over
-	mouseEnterAsset(asset) {
-		const hoveredAsset = this.state.hoveredAsset;
-		this.setState({ hoveredAsset: asset });
-	}
-
-	mouseExitAsset() {
-		const hoveredAsset = this.state.hoveredAsset;
-
-		this.setState({ hoveredAsset: null });
-	}
-
 	manipulateAsset(asset, action, x, y) {
 		let grid = cloneDeep(this.state.grid);
-
-		// First check if the user is replacing
-		if (
-			this.state.hoveredAsset !== null &&
-			this.state.selectedAsset !== null &&
-			this.state.selectedAsset.asset.id !== "pov_camera" &&
-			this.state.selectedAsset.asset.canReplace.includes(
-				this.state.hoveredAsset.category
-			)
-		) {
-			// Removes old asset if moving an already exsisting asset
-			if (this.state.selectedAsset.asset.category !== "walls") {
-				if (
-					this.state.selectedAsset.x > -1 &&
-					this.state.selectedAsset.x > -1
-				) {
-					grid[this.state.selectedAsset.x][this.state.selectedAsset.y] = "0";
-				}
-			}
-
-			grid[x][y] = {
-				id: this.state.selectedAsset.asset.id,
-				rotation: grid[x][y].rotation
-			};
-
-			this.selectAsset(this.state.selectedAsset.asset, x, y);
-
-			this.setState({
-				grid: grid
-			});
-
-			return;
-		}
-
 		if (action === "select") {
-			this.selectAsset(asset, x, y);
+			// Check if the user is replacing an asset
+			if (
+				this.state.selectedAsset &&
+				this.state.selectedAsset.asset.id !== "pov_camera" &&
+				this.state.selectedAsset.asset.id !== this.state.grid[x][y].id &&
+				this.state.selectedAsset.asset.canReplace.includes(asset.category)
+			) {
+				grid[x][y] = {
+					id: this.state.selectedAsset.asset.id,
+					rotation: grid[x][y].rotation
+				};
+
+				this.selectAsset(this.state.selectedAsset.asset, x, y, () =>
+					this.setState({
+						grid: grid
+					})
+				);
+			} else {
+				this.selectAsset(asset, x, y);
+			}
 		}
 
 		if (action === "deselect") {
@@ -177,18 +150,21 @@ export default class App extends React.Component {
 		}
 	}
 
-	selectAsset(asset, x, y) {
+	selectAsset(asset, x, y, cb) {
 		if (!asset) return;
 
 		if (x === null) x = -1;
 		if (y === null) y = -1;
 
-		this.setState({
-			selectedAsset: { asset: asset, x: x, y: y },
-			manipulationMode: asset.id === "pov_camera" || (x > -1 && y > -1)
-				? true
-				: false
-		});
+		this.setState(
+			{
+				selectedAsset: { asset: asset, x: x, y: y },
+				manipulationMode: asset.id === "pov_camera" || (x > -1 && y > -1)
+					? true
+					: false
+			},
+			() => (typeof cb === "function" ? cb() : {})
+		);
 	}
 
 	shouldComponentUpdate(nextProps, nextState) {
@@ -208,7 +184,7 @@ export default class App extends React.Component {
 			return true;
 		}
 
-		if (this.state.selectedAsset !== nextState.selectedAsset) {
+		if (!isEqual(this.state.selectedAsset, nextState.selectedAsset)) {
 			return true;
 		}
 
@@ -285,8 +261,6 @@ export default class App extends React.Component {
 					assetsFromFile={this.props.assetsFromFile}
 					manipulateAsset={this.manipulateAsset.bind(this)}
 					grid={this.state.grid}
-					mouseEnterAsset={this.mouseEnterAsset.bind(this)}
-					mouseExitAsset={this.mouseExitAsset.bind(this)}
 					thirdPerson={this.state.thirdPerson}
 					position={this.state.position}
 					selectedAsset={this.state.selectedAsset}
