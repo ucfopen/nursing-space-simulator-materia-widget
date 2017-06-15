@@ -206,7 +206,7 @@ button svg.svg-icon:hover {
 }
 
 #UI-bottom-panel.open {
-	height: 215px;
+	height: 235px;
 }
 
 #UI-bottom-panel.closed {
@@ -243,7 +243,7 @@ button svg.svg-icon:hover {
 	margin-right: 5px;
 
 	padding: 5px 10px;
-	font-size: 12px;
+	font-size: 15px;
 
 	background: #FFFFFF;
 	border: solid 1px #E0E0E0;
