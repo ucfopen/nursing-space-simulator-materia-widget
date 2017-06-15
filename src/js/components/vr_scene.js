@@ -14,7 +14,7 @@ export default class VRScene extends React.Component {
 	isAssetSelected(tileXPosition, tileYPosition) {
 		if (
 			!this.props.selectedAsset ||
-			!this.props.selectedAsset.asset.id === "pov_camera"
+			this.props.selectedAsset.asset.id === "pov_camera"
 		)
 			return false;
 
@@ -78,13 +78,6 @@ export default class VRScene extends React.Component {
 											rowIndex,
 											colIndex
 										)}
-										onMouseEnter={this.props.mouseEnterAsset.bind(
-											this,
-											this.props.assetsFromFile[
-												this.props.grid[rowIndex][colIndex].id
-											]
-										)}
-										onMouseLeave={this.props.mouseExitAsset.bind(this)}
 										data={
 											this.props.assetsFromFile[
 												this.props.grid[rowIndex][colIndex].id
