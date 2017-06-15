@@ -38,7 +38,6 @@ export default class VRScene extends React.Component {
 					<img id="ceilingTexture" alt="sorry" src="assets/CEILING_TILE.jpg" />
 					{Object.keys(assets).map(function(asset) {
 						if (assets[asset].objSrc) {
-							console.log(asset + "-obj");
 							return (
 								<a-asset-item id={asset + "-obj"} src={assets[asset].objSrc} />
 							);
@@ -46,7 +45,6 @@ export default class VRScene extends React.Component {
 					})}
 					{Object.keys(assets).map(function(asset) {
 						if (assets[asset].mtlSrc) {
-							console.log(assets[asset].mtlSrc);
 							return (
 								<a-asset-item id={asset + "-mtl"} src={assets[asset].mtlSrc} />
 							);
