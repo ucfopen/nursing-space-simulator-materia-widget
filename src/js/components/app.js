@@ -107,21 +107,27 @@ export default class App extends React.Component {
 		if (!this.state.selectedAsset || !this.state.thirdPerson) return;
 
 		// Check if the user is entering first person mode
-		if (
-			this.state.selectedAsset.asset.id === "pov_camera" &&
-			this.state.vrSceneHaveEnteredFirstPerson === false &&
-			this.state.tourFinished === false
-		) {
-			this.setState(
-				{
+		if (this.state.selectedAsset.asset.id === "pov_camera") {
+			if (
+				this.state.vrSceneHaveEnteredFirstPerson === false &&
+				this.state.tourFinished === false
+			) {
+				this.setState(
+					{
+						thirdPerson: false,
+						position: { x: x, y: 1, z: y },
+						stepIndex: 0,
+						steps: clickCameraInScene,
+						vrSceneHaveEnteredFirstPerson: true
+					},
+					this.applyNewSteps.bind(this)
+				);
+			} else {
+				this.setState({
 					thirdPerson: false,
-					position: { x: x, y: 1, z: y },
-					stepIndex: 0,
-					steps: clickCameraInScene,
-					vrSceneHaveEnteredFirstPerson: true
-				},
-				this.applyNewSteps.bind(this)
-			);
+					position: { x: x, y: 1, z: y }
+				});
+			}
 			return;
 		}
 
