@@ -41,7 +41,7 @@ export default class App extends React.Component {
 			isReady: true,
 			isRunning: true,
 			stepIndex: 0,
-			steps: [].concat(part1)
+			steps: part1
 		};
 		this.initialWallRotations();
 	}

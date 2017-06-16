@@ -340,22 +340,6 @@ button svg.svg-icon:hover {
 	width: 31%;
 }
 
-.joyride-tooltip__close.joyride-tooltip__close--header {
-	visibility: hidden;
-}
-
-.joyride-tooltip__header {
-	border-bottom: 1px solid #DC7627 !important;
-}
-
-.joyride-tooltip__button--primary {
-	background-color: #DC7627 !important;
-}
-
-.joyride-tooltip__button--secondary {
-	color: #DC7627 !important;
-}
-
 #vr-gif {
 	display: block;
 	margin: 0 auto;
