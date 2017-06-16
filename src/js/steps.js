@@ -34,7 +34,8 @@ export const part1 = [
 		title: "Categories",
 		text: "Here are the categories of medical equipment to choose from.",
 		selector: "#categories-list",
-		position: "top"
+		position: "top",
+		allowClicksThruHole: "true"
 	},
 	{
 		title: "Models",
@@ -81,10 +82,13 @@ export const part2 = [
 	{
 		title: "First-Person Viewer",
 		text:
-			"You can view the room from a more personal point of view by selecting the <strong>First-Person Viewer</strong>. After selecting <strong>First-Person Viewer</strong>, click/touch somewhere in the room to take a look around.",
+			"You can view the room from a more personal point of view by selecting the <strong>First-Person Viewer</strong>.",
 		selector: "#vr-viewer-mode",
 		position: "top",
-		allowClicksThruHole: "true"
+		allowClicksThruHole: "true",
+		style: {
+			footer: { display: "none " }
+		}
 	}
 ];
 
@@ -111,5 +115,18 @@ export const clickCameraInScene = [
 		selector: ".a-enter-vr-button",
 		position: "bottom",
 		allowClicksThruHole: "true"
+	}
+];
+
+export const clickFirstPersonViewer = [
+	{
+		title: "Go Into First-Person View",
+		text: "Click/touch inside the room to go into first-person mode.",
+		selector: ".a-canvas",
+		position: "bottom",
+		allowClicksThruHole: "true",
+		style: {
+			footer: { display: "none " }
+		}
 	}
 ];
