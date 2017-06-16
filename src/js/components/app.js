@@ -8,7 +8,13 @@ import HUD from "./hud";
 import VRScene from "./vr_scene";
 
 import Joyride from "react-joyride";
-import { part1, part2, clickCameraInScene, clickInScene } from "../steps";
+import {
+	part1,
+	part2,
+	clickCameraInScene,
+	clickInScene,
+	clickFirstPersonViewer
+} from "../steps";
 
 /**
  * App holds the state of the entire simulation. Calls the HUD and the VR Scene
@@ -207,19 +213,31 @@ export default class App extends React.Component {
 		if (x === null) x = -1;
 		if (y === null) y = -1;
 
-		if (
-			x === -1 &&
-			asset.id !== "pov_camera" &&
-			this.state.vrSceneClicked === false &&
-			this.state.tourFinished === false
-		) {
+		let runSteps = false;
+		let stepsToAdd;
+
+		if (x === -1 && this.state.tourFinished === false) {
+			if (asset.id !== "pov_camera" && this.state.vrSceneClicked === false) {
+				runSteps = true;
+				stepsToAdd = clickInScene;
+			}
+			if (
+				asset.id === "pov_camera" &&
+				this.state.vrSceneHaveEnteredFirstPerson === false
+			) {
+				runSteps = true;
+				stepsToAdd = clickFirstPersonViewer;
+			}
+		}
+
+		if (runSteps) {
 			this.setState(
 				{
 					selectedAsset: { asset: asset, x: x, y: y },
 					manipulationMode: asset.id === "pov_camera" || (x > -1 && y > -1)
 						? true
 						: false,
-					steps: clickInScene,
+					steps: stepsToAdd,
 					stepIndex: 0
 				},
 				() => {
