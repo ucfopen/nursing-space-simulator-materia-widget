@@ -1,6 +1,6 @@
 export const part1 = [
 	{
-		title: "Welcome to Hospital Sim",
+		title: "Welcome to the Nursing Simulation Builder!",
 		text:
 			"Select <strong>Next</strong> to continue or <strong>Skip</strong> to close the tour.",
 		selector: ".vr-scene",
@@ -11,14 +11,16 @@ export const part1 = [
 		}
 	},
 	{
-		title: "The Room",
-		text: "This is the hospital room where various objects can be placed.",
+		title: "The Simulation Space",
+		text:
+			"This is the empty space where various objects can be placed. You can place additional walls and doors to create individual rooms.",
 		selector: ".a-canvas",
 		position: "bottom"
 	},
 	{
 		title: "Moving the Camera",
-		text: "The camera can be adjusted using the buttons in this panel.",
+		text:
+			"The camera's position can be adjusted using the buttons in this panel.",
 		selector: "#camera-controls",
 		position: "left",
 		allowClicksThruHole: "true"
@@ -32,14 +34,15 @@ export const part1 = [
 	},
 	{
 		title: "Categories",
-		text: "Here are the categories of medical equipment to choose from.",
+		text:
+			"Here are the categories of objects and medical equipment to choose from.",
 		selector: "#categories-list",
 		position: "top",
 		allowClicksThruHole: "true"
 	},
 	{
-		title: "Models",
-		text: "Click/touch a model to select it.",
+		title: "Picking an Object",
+		text: "Click/touch an item to select it.",
 		selector: "#asset-picker button:first-child",
 		position: "right",
 		allowClicksThruHole: "true",
@@ -66,7 +69,7 @@ export const part2 = [
 	{
 		title: "Object Options",
 		text:
-			"After you select an object, you have the option to confirm the placement, rotate, and remove the object.",
+			"After you place an object, you have the option to confirm the placement, rotate, or remove the object.",
 		selector: "#UI-selected-asset-options",
 		position: "right",
 		allowClicksThruHole: "false"
@@ -74,7 +77,7 @@ export const part2 = [
 	{
 		title: "Object Movement",
 		text:
-			"When an object is selected, the arrow keys can be used to move the object around inside the room.",
+			"When an object is selected, the arrow keys can be used to move the object around inside the room. You can also click on another empty spot in the room to move it.",
 		selector: "#camera-controls",
 		position: "left",
 		allowClicksThruHole: "true"
@@ -96,7 +99,7 @@ export const clickCameraInScene = [
 	{
 		title: "Welcome to First Person",
 		text:
-			"Here you can look around in the room you created by dragging the screen.",
+			"Here you can look around the room you created by dragging the screen.",
 		selector: ".vr-scene",
 		position: "bottom",
 		allowClicksThruHole: "true"
