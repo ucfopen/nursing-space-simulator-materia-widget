@@ -5,7 +5,6 @@ export const part1 = [
 			"Select <strong>Next</strong> to continue or <strong>Skip</strong> to close the tour.",
 		selector: ".vr-scene",
 		position: "bottom",
-		allowClicksThruHole: "false",
 		style: {
 			hole: { visibility: "hidden" }
 		}
@@ -15,7 +14,12 @@ export const part1 = [
 		text:
 			"This is the empty space where various objects can be placed. You can place additional walls and doors to create individual rooms.",
 		selector: ".a-canvas",
-		position: "bottom"
+		position: "bottom",
+		style: {
+			beacon: {
+				offsetY: -450
+			}
+		}
 	},
 	{
 		title: "Moving the Camera",
@@ -95,6 +99,19 @@ export const part2 = [
 	}
 ];
 
+export const clickFirstPersonViewer = [
+	{
+		title: "Go Into First-Person View",
+		text: "Click/touch inside the room to go into first-person mode.",
+		selector: ".a-canvas",
+		position: "bottom",
+		allowClicksThruHole: "true",
+		style: {
+			footer: { display: "none " }
+		}
+	}
+];
+
 export const clickCameraInScene = [
 	{
 		title: "Welcome to First Person",
@@ -118,18 +135,5 @@ export const clickCameraInScene = [
 		selector: ".a-enter-vr-button",
 		position: "bottom",
 		allowClicksThruHole: "true"
-	}
-];
-
-export const clickFirstPersonViewer = [
-	{
-		title: "Go Into First-Person View",
-		text: "Click/touch inside the room to go into first-person mode.",
-		selector: ".a-canvas",
-		position: "bottom",
-		allowClicksThruHole: "true",
-		style: {
-			footer: { display: "none " }
-		}
 	}
 ];
