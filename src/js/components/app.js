@@ -1,4 +1,6 @@
-import _ from "lodash";
+import cloneDeep from "lodash.clonedeep";
+import isEqual from "lodash/fp/isEqual";
+
 import React from "react";
 import ReactDOM from "react-dom";
 
@@ -35,6 +37,33 @@ export default class App extends React.Component {
 			stepIndex: 0,
 			steps: [].concat(part1)
 		};
+		this.initialWallRotations();
+	}
+
+	// make sure walls/assets on the edges are rotated inwards
+	initialWallRotations() {
+		let grid = this.state.grid;
+		const height = grid.length;
+		if (height <= 0) return;
+		const width = grid[0].length;
+
+		let rotation = 0;
+		for (let i = 0; i < height; i++) {
+			for (let j = 0; j < width; j++) {
+				if (grid[i][j] == "0") continue;
+				rotation = 0;
+
+				if (i == 0) rotation = 0;
+				else if (i == height - 1) rotation = 180;
+				if (j == 0) rotation = 270;
+				else if (j == width - 1) rotation = 90;
+
+				grid[i][j].rotation = rotation;
+			}
+		}
+		this.setState({
+			grid: grid
+		});
 	}
 
 	componentDidMount() {
@@ -67,7 +96,7 @@ export default class App extends React.Component {
 				this.applyNewSteps.bind(this)
 			);
 		}
-		let grid = _.cloneDeep(this.state.grid);
+		let grid = cloneDeep(this.state.grid);
 
 		if (!this.state.selectedAsset || !this.state.thirdPerson) return;
 
@@ -114,55 +143,29 @@ export default class App extends React.Component {
 		});
 	}
 
-	// Tracks current assets being hovered over
-	mouseEnterAsset(asset) {
-		const hoveredAsset = this.state.hoveredAsset;
-		this.setState({ hoveredAsset: asset });
-	}
-
-	mouseExitAsset() {
-		const hoveredAsset = this.state.hoveredAsset;
-
-		this.setState({ hoveredAsset: null });
-	}
-
 	manipulateAsset(asset, action, x, y) {
-		let grid = _.cloneDeep(this.state.grid);
-
-		// First check if the user is replacing
-		if (
-			this.state.hoveredAsset !== null &&
-			this.state.selectedAsset !== null &&
-			this.state.selectedAsset.asset.canReplace.includes(
-				this.state.hoveredAsset.category
-			)
-		) {
-			// Removes old asset if moving an already exsisting asset
-			if (this.state.selectedAsset.asset.category !== "walls") {
-				if (
-					this.state.selectedAsset.x > -1 &&
-					this.state.selectedAsset.x > -1
-				) {
-					grid[this.state.selectedAsset.x][this.state.selectedAsset.y] = "0";
-				}
-			}
-
-			grid[x][y] = {
-				id: this.state.selectedAsset.asset.id,
-				rotation: grid[x][y].rotation
-			};
-
-			this.selectAsset(this.state.selectedAsset.asset, x, y);
-
-			this.setState({
-				grid: grid
-			});
-
-			return;
-		}
-
+		let grid = cloneDeep(this.state.grid);
 		if (action === "select") {
-			this.selectAsset(asset, x, y);
+			// Check if the user is replacing an asset
+			if (
+				this.state.selectedAsset &&
+				this.state.selectedAsset.asset.id !== "pov_camera" &&
+				this.state.selectedAsset.asset.id !== this.state.grid[x][y].id &&
+				this.state.selectedAsset.asset.canReplace.includes(asset.category)
+			) {
+				grid[x][y] = {
+					id: this.state.selectedAsset.asset.id,
+					rotation: grid[x][y].rotation
+				};
+
+				this.selectAsset(this.state.selectedAsset.asset, x, y, () =>
+					this.setState({
+						grid: grid
+					})
+				);
+			} else {
+				this.selectAsset(asset, x, y);
+			}
 		}
 
 		if (action === "deselect") {
@@ -198,7 +201,7 @@ export default class App extends React.Component {
 		}
 	}
 
-	selectAsset(asset, x, y) {
+	selectAsset(asset, x, y, cb) {
 		if (!asset) return;
 
 		if (x === null) x = -1;
@@ -213,22 +216,32 @@ export default class App extends React.Component {
 			this.setState(
 				{
 					selectedAsset: { asset: asset, x: x, y: y },
-					manipulationMode: true,
+					manipulationMode: asset.id === "pov_camera" || (x > -1 && y > -1)
+						? true
+						: false,
 					steps: clickInScene,
 					stepIndex: 0
 				},
-				this.applyNewSteps.bind(this)
+				() => {
+					typeof cb === "function" ? cb() : {};
+					this.applyNewSteps();
+				}
 			);
 		} else {
-			this.setState({
-				selectedAsset: { asset: asset, x: x, y: y },
-				manipulationMode: true
-			});
+			this.setState(
+				{
+					selectedAsset: { asset: asset, x: x, y: y },
+					manipulationMode: asset.id === "pov_camera" || (x > -1 && y > -1)
+						? true
+						: false
+				},
+				() => (typeof cb === "function" ? cb() : {})
+			);
 		}
 	}
 
 	shouldComponentUpdate(nextProps, nextState) {
-		if (!_.isEqual(this.state.grid, nextState.grid)) {
+		if (!isEqual(this.state.grid, nextState.grid)) {
 			return true;
 		}
 
@@ -244,7 +257,7 @@ export default class App extends React.Component {
 			return true;
 		}
 
-		if (this.state.selectedAsset !== nextState.selectedAsset) {
+		if (!isEqual(this.state.selectedAsset, nextState.selectedAsset)) {
 			return true;
 		}
 		return true;
@@ -265,6 +278,8 @@ export default class App extends React.Component {
 			position = { x: 2.5, y: 18, z: 14 };
 		} else if (
 			this.state.selectedAsset !== null &&
+			this.state.selectedAsset.x > -1 &&
+			this.state.selectedAsset.y > -1 &&
 			direction !== "y" &&
 			this.state.selectedAsset.asset.id !== "pov_camera"
 		) {
@@ -286,7 +301,7 @@ export default class App extends React.Component {
 		const old_y = this.state.selectedAsset.y;
 		const asset = this.state.selectedAsset.asset;
 
-		const grid = _.cloneDeep(this.state.grid);
+		const grid = cloneDeep(this.state.grid);
 
 		// is the tile open?
 		if (grid[old_x + x_distance][old_y + y_distance] == "0") {
@@ -321,8 +336,6 @@ export default class App extends React.Component {
 		return (
 			<div
 				id="app"
-				// Needed for joyride step
-				className="app-container"
 				// When in first person, app container style must be modified to absolute position to support built in aframe UI
 				style={this.state.thirdPerson ? {} : { position: "absolute" }}>
 				<Joyride
@@ -330,12 +343,12 @@ export default class App extends React.Component {
 					callback={this.joyrideCallback.bind(this)}
 					debug={false}
 					showSkipButton={true}
-					showStepsProgress={true}
+					showStepsProgress={false}
 					stepIndex={stepIndex}
 					steps={steps}
 					type={joyrideType}
 					run={isRunning}
-					disableOverlay={true}
+					disableOverlay={false}
 					locale={{
 						back: <span>Back</span>,
 						close: <span>Close</span>,
@@ -348,8 +361,6 @@ export default class App extends React.Component {
 					assetsFromFile={this.props.assetsFromFile}
 					manipulateAsset={this.manipulateAsset.bind(this)}
 					grid={this.state.grid}
-					mouseEnterAsset={this.mouseEnterAsset.bind(this)}
-					mouseExitAsset={this.mouseExitAsset.bind(this)}
 					thirdPerson={this.state.thirdPerson}
 					position={this.state.position}
 					onClick={this.handleClick.bind(this)}

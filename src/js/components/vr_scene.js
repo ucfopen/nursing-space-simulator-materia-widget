@@ -16,7 +16,7 @@ export default class VRScene extends React.Component {
 	isAssetSelected(tileXPosition, tileYPosition) {
 		if (
 			!this.props.selectedAsset ||
-			!this.props.selectedAsset.asset.id === "pov_camera"
+			this.props.selectedAsset.asset.id === "pov_camera"
 		)
 			return false;
 
@@ -32,11 +32,26 @@ export default class VRScene extends React.Component {
 	}
 
 	render() {
+		let assets = this.props.assetsFromFile;
+
 		return (
 			<Scene className="vr-scene">
 				<a-assets>
 					<img id="ceilingTexture" alt="sorry" src="assets/CEILING_TILE.jpg" />
-					<img id="wallTexture" alt="sorry" src="assets/WALL_2D_1.png" />
+					{Object.keys(assets).map(function(asset) {
+						if (assets[asset].objSrc) {
+							return (
+								<a-asset-item id={asset + "-obj"} src={assets[asset].objSrc} />
+							);
+						}
+					})}
+					{Object.keys(assets).map(function(asset) {
+						if (assets[asset].mtlSrc) {
+							return (
+								<a-asset-item id={asset + "-mtl"} src={assets[asset].mtlSrc} />
+							);
+						}
+					})}
 				</a-assets>
 				<Skybox />
 				<CameraFP
@@ -65,13 +80,6 @@ export default class VRScene extends React.Component {
 											rowIndex,
 											colIndex
 										)}
-										onMouseEnter={this.props.mouseEnterAsset.bind(
-											this,
-											this.props.assetsFromFile[
-												this.props.grid[rowIndex][colIndex].id
-											]
-										)}
-										onMouseLeave={this.props.mouseExitAsset.bind(this)}
 										data={
 											this.props.assetsFromFile[
 												this.props.grid[rowIndex][colIndex].id
