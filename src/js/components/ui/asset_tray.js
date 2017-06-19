@@ -46,13 +46,15 @@ export default class AssetTray extends React.Component {
 						)}>
 						First-Person Viewer
 					</button>
-					{this.props.categories.map((category, index) =>
-						<CategoryButton
-							onClick={this.setCurrentCategory.bind(this, category)}
-							key={index}
-							category={category}
-						/>
-					)}
+					<div id="categories-list">
+						{this.props.categories.map((category, index) =>
+							<CategoryButton
+								onClick={this.setCurrentCategory.bind(this, category)}
+								key={index}
+								category={category}
+							/>
+						)}
+					</div>
 				</div>
 				<div id="asset-picker">
 					{Object.keys(assets).map(asset => {

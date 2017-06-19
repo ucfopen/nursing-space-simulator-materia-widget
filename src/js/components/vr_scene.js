@@ -10,6 +10,8 @@ import QsetAsset from "./assets/qset_asset";
 import FloorUnit from "./assets/floor_unit";
 import Skybox from "./assets/skybox";
 
+import { clickInScene } from "../steps";
+
 export default class VRScene extends React.Component {
 	isAssetSelected(tileXPosition, tileYPosition) {
 		if (
@@ -33,7 +35,7 @@ export default class VRScene extends React.Component {
 		let assets = this.props.assetsFromFile;
 
 		return (
-			<Scene>
+			<Scene className="vr-scene">
 				<a-assets>
 					<img id="ceilingTexture" alt="sorry" src="assets/CEILING_TILE.jpg" />
 					{Object.keys(assets).map(function(asset) {

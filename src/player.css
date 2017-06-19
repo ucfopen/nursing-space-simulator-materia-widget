@@ -29,9 +29,22 @@ button svg.svg-icon:hover {
 }
 #back {
 	width: 100%;
-	background-color: #ff1a1a;
-	font-size: 32px;
+	background-color: #DC7627;
+
+	font-size: 24px;
 	font-weight: bold;
+
+	border: solid 1px #000000;
+
+	cursor: pointer;
+}
+
+#back:hover {
+	background: #e8a26d;
+}
+
+#back:active {
+	background: #ffffff;
 }
 
 /* Top-right panel */
@@ -328,10 +341,20 @@ button svg.svg-icon:hover {
 	font-size: 16px;
 }
 
+.asset-selected-icon {
+	border: solid 3px #e8a26d;
+}
+
 .active-category {
 	background-color: #b1a6a6;
 }
 
-.asset-selected-icon {
-	border: solid 3px #e8a26d;
+#categories-list {
+	width: 31%;
+}
+
+#vr-gif {
+	display: block;
+	margin: 0 auto;
+	padding-top: 10px;
 }
