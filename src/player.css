@@ -297,16 +297,6 @@ button svg.svg-icon:hover {
 	box-shadow: 0px 3px 3px 0px rgba(209, 235, 255, 0.6);
 }
 
-#asset-picker {
-	display: block;
-	/*width: 100%;*/
-	height: 100%;
-
-	overflow: auto;
-
-	vertical-align: top;
-}
-
 #asset-toggle > button {
 	width: 100%;
 	float: left;
@@ -319,9 +309,8 @@ button svg.svg-icon:hover {
 #asset-picker > button {
 	display: inline-block;
 	height: 100%;
-
-	vertical-align: top;
 }
+
 #previous-asset, #next-asset {
 	width: 8%; /* 10% of 80% */
 	height: 100%;
@@ -357,4 +346,16 @@ button svg.svg-icon:hover {
 	display: block;
 	margin: 0 auto;
 	padding-top: 10px;
+}
+
+.button-container {
+	display: inline-block;
+	width: 60px;
+	margin: 0 10px 0 10px;
+	vertical-align: top;
+	text-align: center;
+}
+
+.button-container:first-child {
+	margin: 0 10px 0 0px;
 }
