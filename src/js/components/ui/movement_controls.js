@@ -25,7 +25,7 @@ export default class MovementControls extends React.Component {
 					<ScreenshotSVG />
 				</button>
 				{this.props.thirdPerson
-					? <div>
+					? <div id="camera-controls">
 							<div id="camera-move">
 								<button id="camera-up" onClick={this.props.xUp}>
 									<UpArrowSVG />

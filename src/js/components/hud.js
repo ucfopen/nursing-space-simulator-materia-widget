@@ -6,8 +6,6 @@ import AssetControls from "./ui/asset_controls";
 import AssetTray from "./ui/asset_tray";
 import MovementControls from "./ui/movement_controls";
 
-//import './hud.css';
-
 export default class HUD extends React.Component {
 	render() {
 		return (
