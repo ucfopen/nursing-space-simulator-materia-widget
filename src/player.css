@@ -351,11 +351,14 @@ button svg.svg-icon:hover {
 .button-container {
 	display: inline-block;
 	width: 60px;
-	margin: 0 10px 0 10px;
+	margin: 0px 5px 0px 0px;
+	padding: 5px;
+
 	vertical-align: top;
 	text-align: center;
-}
 
-.button-container:first-child {
-	margin: 0 10px 0 0px;
+	background:#ffffff;
+	border-radius: 6px;
+
+	font-size: 12px;
 }
