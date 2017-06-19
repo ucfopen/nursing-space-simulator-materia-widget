@@ -70,7 +70,7 @@ export default class App extends React.Component {
 
 		grid[x][y] = {
 			id: this.state.selectedAsset.asset.id,
-			rotation: 0
+			rotation: this.state.selectedAsset.asset.rotation.y
 		};
 
 		if (this.state.selectedAsset.asset.category !== "walls") {
