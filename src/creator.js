@@ -1,6 +1,4 @@
 document.addEventListener("DOMContentLoaded", function(event) {
-	console.log("woo!");
-
 	var qset = {
 		items: [],
 		options: {}
@@ -13,10 +11,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
 	var materiaInterface = {};
 
-	// Note: We're populating the qset assets and gridloader properties with default assets
-	// This is currently copy/pasted from the demo.json
 	qset.options.assets = {
-		bed: {
+		"bed-1": {
 			assetRotationState: 0,
 			buttonSource: "assets/icons/icon_bed.png",
 			canReplace: [],
@@ -27,42 +23,30 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			id: "bed-1",
 			isCloned: "false",
 			isPermanent: "false",
-			materialSource: "assets/bed/mesh_bed.mtl",
 			materialType: "complex",
 			movable: "true",
-			objectSource: "assets/bed/mesh_bed.obj",
-			position: { x: -100, y: 0, z: -100 },
-			rotation: { x: 0, y: 0, z: 0 },
-			scale: { x: 0.35, y: 0.35, z: 0.35 },
+			mtlSrc: "assets/bed/mesh_bed.mtl",
+			objSrc: "assets/bed/mesh_bed.obj",
+			position: {
+				x: -100,
+				y: 0,
+				z: -100
+			},
+			rotation: {
+				x: 0,
+				y: 180,
+				z: 0
+			},
+			scale: {
+				x: 0.25,
+				y: 0.25,
+				z: 0.25
+			},
 			tag: "a-obj-model",
 			type: "object",
 			vertical: 1,
 			category: "beds",
 			title: "Bed"
-		},
-		"bedside-table": {
-			assetRotationState: 0,
-			buttonSource: "assets/icons/icon_bedsidetable.png",
-			canReplace: [],
-			cellsOwned: "",
-			clonable: "false",
-			defaultColor: "#376AD3",
-			horizontal: 0,
-			id: "bedside-table",
-			isCloned: "false",
-			isPermanent: "false",
-			materialSource: "assets/bedsidetable/mesh_bedsidetable.mtl",
-			materialType: "complex",
-			movable: "true",
-			objectSource: "assets/bedsidetable/mesh_bedsidetable.obj",
-			position: { x: -100, y: 0, z: -100 },
-			rotation: { x: 0, y: -90, z: 0 },
-			scale: { x: 0.35, y: 0.35, z: 0.35 },
-			tag: "a-obj-model",
-			type: "object",
-			vertical: 1,
-			category: "beds",
-			title: "Bedside Table"
 		},
 		chair: {
 			assetRotationState: 0,
@@ -75,22 +59,106 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			id: "chair",
 			isCloned: "false",
 			isPermanent: "false",
-			materialSource: "assets/chair/mesh_chair.mtl",
 			materialType: "complex",
 			movable: "true",
-			objectSource: "assets/chair/mesh_chair.obj",
-			position: { x: -100, y: 0, z: -100 },
-			rotation: { x: 0, y: 0, z: 0 },
-			scale: { x: 0.35, y: 0.35, z: 0.35 },
+			mtlSrc: "assets/chair/mesh_chair.mtl",
+			objSrc: "assets/chair/mesh_chair.obj",
+			position: {
+				x: -100,
+				y: 0,
+				z: -100
+			},
+			rotation: {
+				x: 0,
+				y: 180,
+				z: 0
+			},
+			scale: {
+				x: 0.25,
+				y: 0.25,
+				z: 0.25
+			},
 			tag: "a-obj-model",
 			type: "object",
 			vertical: 0,
 			category: "equipment",
 			title: "Chair"
 		},
+		curtain: {
+			assetRotationState: 0,
+			buttonSource: "assets/icons/icon_curtain.png",
+			canReplace: [],
+			cellsOwned: "",
+			clonable: "false",
+			defaultColor: "#376AD3",
+			horizontal: 0,
+			id: "curtain",
+			isCloned: "false",
+			isPermanent: "false",
+			materialType: "complex",
+			movable: "true",
+			mtlSrc: "assets/curtain/mesh_curtain.mtl",
+			objSrc: "assets/curtain/mesh_curtain.obj",
+			position: {
+				x: -100,
+				y: 0,
+				z: -100
+			},
+			rotation: {
+				x: 0,
+				y: 180,
+				z: 0
+			},
+			scale: {
+				x: 0.25,
+				y: 0.25,
+				z: 0.25
+			},
+			tag: "a-obj-model",
+			type: "object",
+			vertical: 0,
+			category: "equipment",
+			title: "Curtain"
+		},
+		counter: {
+			assetRotationState: 0,
+			buttonSource: "assets/icons/icon_counter.png",
+			canReplace: [],
+			cellsOwned: "",
+			clonable: "false",
+			defaultColor: "#376AD3",
+			horizontal: 0,
+			id: "counter",
+			isCloned: "false",
+			isPermanent: "false",
+			materialType: "complex",
+			movable: "true",
+			mtlSrc: "assets/counter/mesh_counter.mtl",
+			objSrc: "assets/counter/mesh_counter.obj",
+			position: {
+				x: -100,
+				y: 0,
+				z: -100
+			},
+			rotation: {
+				x: 0,
+				y: 180,
+				z: 0
+			},
+			scale: {
+				x: 0.25,
+				y: 0.25,
+				z: 0.25
+			},
+			tag: "a-obj-model",
+			type: "object",
+			vertical: 0,
+			category: "equipment",
+			title: "Counter"
+		},
 		crashcart: {
 			assetRotationState: 0,
-			buttonSource: "assets/icons/icon_crashcart.png",
+			buttonSource: "assets/icons/icon_cart.png",
 			canReplace: [],
 			cellsOwned: "",
 			clonable: "false",
@@ -99,18 +167,174 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			id: "crashcart",
 			isCloned: "false",
 			isPermanent: "false",
-			materialSource: "assets/crashcart/mesh_crashcart2.mtl",
 			materialType: "complex",
 			movable: "true",
-			objectSource: "assets/crashcart/mesh_crashcart2.obj",
-			position: { x: -100, y: 0, z: -100 },
-			rotation: { x: 0, y: 180, z: 0 },
-			scale: { x: 0.35, y: 0.35, z: 0.35 },
+			mtlSrc: "assets/cart/mesh_medical_cart.mtl",
+			objSrc: "assets/cart/mesh_medical_cart.obj",
+			position: {
+				x: -100,
+				y: 0,
+				z: -100
+			},
+			rotation: {
+				x: 0,
+				y: 180,
+				z: 0
+			},
+			scale: {
+				x: 0.25,
+				y: 0.25,
+				z: 0.25
+			},
 			tag: "a-obj-model",
 			type: "object",
 			vertical: 0,
 			category: "equipment",
 			title: "Crash Cart"
+		},
+		doctor: {
+			assetRotationState: 0,
+			buttonSource: "assets/icons/icon_doc.png",
+			canReplace: [],
+			cellsOwned: "",
+			clonable: "false",
+			defaultColor: "",
+			horizontal: 0,
+			id: "doctor",
+			isCloned: "false",
+			isPermanent: "false",
+			materialType: "complex",
+			movable: "true",
+			mtlSrc: "assets/doctor/mesh_doc.mtl",
+			objSrc: "assets/doctor/mesh_doc.obj",
+			position: {
+				x: -100,
+				y: 0,
+				z: -100
+			},
+			rotation: {
+				x: 0,
+				y: 180,
+				z: 0
+			},
+			scale: {
+				x: 0.25,
+				y: 0.25,
+				z: 0.25
+			},
+			tag: "a-obj-model",
+			type: "object",
+			vertical: 0,
+			category: "people",
+			title: "Doctor"
+		},
+		nurse: {
+			assetRotationState: 0,
+			buttonSource: "assets/icons/icon_nurse.png",
+			canReplace: [],
+			cellsOwned: "",
+			clonable: "false",
+			defaultColor: "",
+			horizontal: 0,
+			id: "nurse",
+			isCloned: "false",
+			isPermanent: "false",
+			materialType: "complex",
+			movable: "true",
+			mtlSrc: "assets/nurse/mesh_peep.mtl",
+			objSrc: "assets/nurse/mesh_peep.obj",
+			position: {
+				x: -100,
+				y: 0,
+				z: -100
+			},
+			rotation: {
+				x: 0,
+				y: 180,
+				z: 0
+			},
+			scale: {
+				x: 0.25,
+				y: 0.25,
+				z: 0.25
+			},
+			tag: "a-obj-model",
+			type: "object",
+			vertical: 0,
+			category: "people",
+			title: "Nurse"
+		},
+		desk: {
+			assetRotationState: 0,
+			buttonSource: "assets/icons/icon_desk.png",
+			canReplace: [],
+			cellsOwned: "",
+			clonable: "false",
+			defaultColor: "",
+			horizontal: 0,
+			id: "desk",
+			isCloned: "false",
+			isPermanent: "false",
+			materialType: "complex",
+			movable: "true",
+			mtlSrc: "assets/desk/mesh_desk.mtl",
+			objSrc: "assets/desk/mesh_desk.obj",
+			position: {
+				x: -100,
+				y: 0,
+				z: -100
+			},
+			rotation: {
+				x: 0,
+				y: 180,
+				z: 0
+			},
+			scale: {
+				x: 0.25,
+				y: 0.25,
+				z: 0.25
+			},
+			tag: "a-obj-model",
+			type: "object",
+			vertical: 0,
+			category: "equipment",
+			title: "Desk"
+		},
+		"monitor-1": {
+			assetRotationState: 0,
+			buttonSource: "assets/icons/icon_monitor.png",
+			canReplace: [],
+			cellsOwned: "",
+			clonable: "false",
+			defaultColor: "",
+			horizontal: 0,
+			id: "monitor-1",
+			isCloned: "false",
+			isPermanent: "false",
+			materialType: "complex",
+			movable: "true",
+			mtlSrc: "assets/monitor/mesh_monitor.mtl",
+			objSrc: "assets/monitor/mesh_monitor.obj",
+			position: {
+				x: -100,
+				y: 0,
+				z: -100
+			},
+			rotation: {
+				x: 0,
+				y: 180,
+				z: 0
+			},
+			scale: {
+				x: 0.25,
+				y: 0.25,
+				z: 0.25
+			},
+			tag: "a-obj-model",
+			type: "object",
+			vertical: 0,
+			category: "equipment",
+			title: "Monitor Stand"
 		},
 		computer: {
 			assetRotationState: 0,
@@ -120,26 +344,74 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			clonable: "false",
 			defaultColor: "",
 			horizontal: 0,
-			id: "computer-1",
+			id: "computer",
 			isCloned: "false",
 			isPermanent: "false",
-			materialSource: "assets/computer-stand/mesh_computerstand.mtl",
 			materialType: "complex",
 			movable: "true",
-			objectSource: "assets/computer-stand/mesh_computerstand.obj",
-			position: { x: -100, y: 0, z: -100 },
-			rotation: { x: 0, y: -90, z: 0 },
-			scale: { x: 0.35, y: 0.35, z: 0.35 },
+			mtlSrc: "assets/computer-stand/mesh_computer2.mtl",
+			objSrc: "assets/computer-stand/mesh_computer2.obj",
+			position: {
+				x: -100,
+				y: 0,
+				z: -100
+			},
+			rotation: {
+				x: 0,
+				y: 180,
+				z: 0
+			},
+			scale: {
+				x: 0.25,
+				y: 0.25,
+				z: 0.25
+			},
 			tag: "a-obj-model",
 			type: "object",
 			vertical: 0,
 			category: "equipment",
-			title: "Computer Stand"
+			title: "Computer"
+		},
+		"sink-1": {
+			assetRotationState: 0,
+			buttonSource: "assets/icons/icon_sink.png",
+			canReplace: [],
+			cellsOwned: "",
+			clonable: "false",
+			defaultColor: "",
+			horizontal: 0,
+			id: "sink-1",
+			isCloned: "false",
+			isPermanent: "false",
+			materialType: "complex",
+			movable: "true",
+			mtlSrc: "assets/sink/mesh_sink.mtl",
+			objSrc: "assets/sink/mesh_sink.obj",
+			position: {
+				x: -100,
+				y: 0,
+				z: -100
+			},
+			rotation: {
+				x: 0,
+				y: 180,
+				z: 0
+			},
+			scale: {
+				x: 0.25,
+				y: 0.25,
+				z: 0.25
+			},
+			tag: "a-obj-model",
+			type: "object",
+			vertical: 0,
+			category: "equipment",
+			title: "Sink"
 		},
 		"door-1": {
 			assetRotationState: 0,
-			buttonSource: "assets/DOOR_1_2D.png",
-			canReplace: ["door"],
+			buttonSource: "assets/icons/icon_door.png",
+			canReplace: ["walls"],
 			cellsOwned: "",
 			clonable: "false",
 			defaultColor: "",
@@ -147,44 +419,33 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			id: "door-1",
 			isCloned: "false",
 			isPermanent: "false",
-			materialType: "textured",
+			materialType: "complex",
 			movable: "false",
-			objectSource: "assets/DOOR_1.png",
-			position: { x: -100, y: 0, z: -100 },
-			rotation: { x: 0, y: 0, z: 0 },
+			mtlSrc: "assets/door/mesh_door.mtl",
+			objSrc: "assets/door/mesh_door.obj",
+			position: {
+				x: -100,
+				y: 0,
+				z: -100
+			},
+			rotation: {
+				x: 0,
+				y: 180,
+				z: 0
+			},
 			repeat: "1 1",
-			scale: { x: 1, y: 3, z: 1 },
+			scale: {
+				x: 0.25,
+				y: 0.25,
+				z: 0.25
+			},
 			tag: "a-box",
 			type: "door",
 			vertical: 0,
 			category: "walls",
 			title: "Door (1)"
 		},
-		"door-2": {
-			assetRotationState: 0,
-			buttonSource: "assets/DOOR_2_2D.png",
-			canReplace: ["door"],
-			cellsOwned: "",
-			clonable: "false",
-			defaultColor: "",
-			horizontal: 0,
-			id: "door-2",
-			isCloned: "false",
-			isPermanent: "false",
-			materialType: "textured",
-			movable: "false",
-			objectSource: "assets/DOOR_2.png",
-			position: { x: -100, y: 0, z: -100 },
-			rotation: { x: 0, y: 0, z: 0 },
-			repeat: "1 1",
-			scale: { x: 1, y: 3, z: 1 },
-			tag: "a-box",
-			type: "door",
-			vertical: 0,
-			category: "walls",
-			title: "Door (2)"
-		},
-		iv: {
+		"iv-1": {
 			assetRotationState: 0,
 			buttonSource: "assets/icons/icon_iv.png",
 			canReplace: [],
@@ -195,46 +456,34 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			id: "iv-1",
 			isCloned: "false",
 			isPermanent: "false",
-			materialSource: "assets/iv/mesh_iv.mtl",
 			materialType: "complex",
 			movable: "true",
-			objectSource: "assets/iv/mesh_iv.obj",
-			position: { x: -100, y: 0, z: -100 },
-			rotation: { x: 0, y: 0, z: 0 },
-			scale: { x: 0.35, y: 0.35, z: 0.35 },
+			mtlSrc: "assets/iv/mesh_iv.mtl",
+			objSrc: "assets/iv/mesh_iv.obj",
+			position: {
+				x: -100,
+				y: 0,
+				z: -100
+			},
+			rotation: {
+				x: 0,
+				y: 180,
+				z: 0
+			},
+			scale: {
+				x: 0.25,
+				y: 0.25,
+				z: 0.25
+			},
 			tag: "a-obj-model",
 			type: "object",
 			vertical: 0,
 			category: "equipment",
 			title: "IV Stand"
 		},
-		table: {
+		"trashcan-1": {
 			assetRotationState: 0,
-			buttonSource: "assets/icons/icon_table.png",
-			canReplace: [],
-			cellsOwned: "",
-			clonable: "false",
-			defaultColor: "#376AD3",
-			horizontal: 1,
-			id: "table",
-			isCloned: "false",
-			isPermanent: "false",
-			materialSource: "assets/table/mesh_table.mtl",
-			materialType: "complex",
-			movable: "true",
-			objectSource: "assets/table/mesh_table.obj",
-			position: { x: -100, y: 0, z: -100 },
-			rotation: { x: 0, y: -90, z: 0 },
-			scale: { x: 0.35, y: 0.35, z: 0.35 },
-			tag: "a-obj-model",
-			type: "object",
-			vertical: 1,
-			category: "equipment",
-			title: "Table"
-		},
-		trashcan: {
-			assetRotationState: 0,
-			buttonSource: "assets/icons/icon_trashcan.png",
+			buttonSource: "assets/icons/icon_trash.png",
 			canReplace: [],
 			cellsOwned: "",
 			clonable: "false",
@@ -243,13 +492,25 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			id: "trashcan-1",
 			isCloned: "false",
 			isPermanent: "false",
-			materialSource: "assets/trashcan/mesh_trashcan.mtl",
 			materialType: "complex",
 			movable: "true",
-			objectSource: "assets/trashcan/mesh_trashcan.obj",
-			position: { x: -100, y: 0, z: -100 },
-			rotation: { x: 0, y: 0, z: 0 },
-			scale: { x: 0.35, y: 0.35, z: 0.35 },
+			mtlSrc: "assets/trashcan/mesh_trashcan.mtl",
+			objSrc: "assets/trashcan/mesh_trashcan.obj",
+			position: {
+				x: -100,
+				y: 0,
+				z: -100
+			},
+			rotation: {
+				x: 0,
+				y: 180,
+				z: 0
+			},
+			scale: {
+				x: 0.25,
+				y: 0.25,
+				z: 0.25
+			},
 			tag: "a-obj-model",
 			type: "object",
 			vertical: 0,
@@ -258,7 +519,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 		},
 		"trashcan-bio": {
 			assetRotationState: 0,
-			buttonSource: "assets/icons/icon_trashcan_bio.png",
+			buttonSource: "assets/icons/icon_trashbio.png",
 			canReplace: [],
 			cellsOwned: "",
 			clonable: "false",
@@ -267,47 +528,179 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			id: "trashcan-bio",
 			isCloned: "false",
 			isPermanent: "false",
-			materialSource: "assets/trashcan_bio/mesh_trashcan_bio.mtl",
 			materialType: "complex",
 			movable: "true",
-			objectSource: "assets/trashcan_bio/mesh_trashcan_bio.obj",
-			position: { x: -100, y: 0, z: -100 },
-			rotation: { x: 0, y: 0, z: 0 },
-			scale: { x: 0.35, y: 0.35, z: 0.35 },
+			mtlSrc: "assets/trashcan_bio/mesh_trashcan.mtl",
+			objSrc: "assets/trashcan_bio/mesh_trashcan.obj",
+			position: {
+				x: -100,
+				y: 0,
+				z: -100
+			},
+			rotation: {
+				x: 0,
+				y: 180,
+				z: 0
+			},
+			scale: {
+				x: 0.25,
+				y: 0.25,
+				z: 0.25
+			},
 			tag: "a-obj-model",
 			type: "object",
 			vertical: 0,
 			category: "equipment",
 			title: "Biohazard Waste"
 		},
-		viewer: {
+		"fire-wall": {
 			assetRotationState: 0,
-			buttonSource: "assets/icons/icon_camera.png",
-			canReplace: [],
+			buttonSource: "assets/icons/icon_fire.png",
+			canReplace: ["walls"],
 			cellsOwned: "",
 			clonable: "false",
 			defaultColor: "",
 			horizontal: 0,
-			id: "pov-camera",
+			id: "fire-wall",
 			isCloned: "false",
 			isPermanent: "false",
-			materialSource: "assets/body-armour/mesh_camera.mtl",
 			materialType: "complex",
 			movable: "true",
-			objectSource: "",
-			position: { x: -100, y: 0, z: -100 },
-			rotation: { x: 0, y: 0, z: 0 },
-			scale: { x: 0.25, y: 0.25, z: 0.25 },
+			mtlSrc: "assets/fire-wall/mesh_wall_fire.mtl",
+			objSrc: "assets/fire-wall/mesh_wall_fire.obj",
+			position: {
+				x: -100,
+				y: 0,
+				z: -100
+			},
+			rotation: {
+				x: 0,
+				y: 180,
+				z: 0
+			},
+			scale: {
+				x: 0.25,
+				y: 0.25,
+				z: 0.25
+			},
 			tag: "a-obj-model",
-			type: "view",
+			type: "object",
 			vertical: 0,
-			category: "equipment",
-			title: "PoV Viewer"
+			category: "walls",
+			title: "Fire Wall"
+		},
+		"tv-wall": {
+			assetRotationState: 0,
+			buttonSource: "assets/icons/icon_tv.png",
+			canReplace: ["walls"],
+			cellsOwned: "",
+			clonable: "false",
+			defaultColor: "#9FCDB1",
+			horizontal: 0,
+			id: "tv-wall",
+			isCloned: "false",
+			isPermanent: "false",
+			materialType: "complex",
+			mtlSrc: "assets/tv_wall/mesh_tv_wall.mtl",
+			objSrc: "assets/tv_wall/mesh_tv_wall.obj",
+			movable: "false",
+			position: {
+				x: -100,
+				y: 0,
+				z: -100
+			},
+			rotation: {
+				x: 0,
+				y: 180,
+				z: 0
+			},
+			scale: {
+				x: 0.25,
+				y: 0.25,
+				z: 0.25
+			},
+			tag: "a-box",
+			type: "wall",
+			vertical: 0,
+			category: "walls",
+			title: "TV Wall"
+		},
+		window: {
+			assetRotationState: 0,
+			buttonSource: "assets/icons/icon_window.png",
+			canReplace: ["walls"],
+			cellsOwned: "",
+			clonable: "false",
+			defaultColor: "#9FCDB1",
+			horizontal: 0,
+			id: "window",
+			isCloned: "false",
+			isPermanent: "false",
+			materialType: "complex",
+			mtlSrc: "assets/window/mesh_window.mtl",
+			objSrc: "assets/window/mesh_window.obj",
+			movable: "false",
+			position: {
+				x: -100,
+				y: 0,
+				z: -100
+			},
+			rotation: {
+				x: 0,
+				y: 180,
+				z: 0
+			},
+			scale: {
+				x: 0.25,
+				y: 0.25,
+				z: 0.25
+			},
+			tag: "a-box",
+			type: "wall",
+			vertical: 0,
+			category: "walls",
+			title: "Window"
+		},
+		"soap-wall": {
+			assetRotationState: 0,
+			buttonSource: "assets/icons/icon_soap.png",
+			canReplace: ["walls"],
+			cellsOwned: "",
+			clonable: "false",
+			defaultColor: "#9FCDB1",
+			horizontal: 0,
+			id: "soap-wall",
+			isCloned: "false",
+			isPermanent: "false",
+			materialType: "complex",
+			mtlSrc: "assets/soap-wall/mesh_soap_wall.mtl",
+			objSrc: "assets/soap-wall/mesh_soap_wall.obj",
+			movable: "false",
+			position: {
+				x: -100,
+				y: 0,
+				z: -100
+			},
+			rotation: {
+				x: 0,
+				y: 180,
+				z: 0
+			},
+			scale: {
+				x: 0.25,
+				y: 0.25,
+				z: 0.25
+			},
+			tag: "a-box",
+			type: "wall",
+			vertical: 0,
+			category: "walls",
+			title: "Soap Wall"
 		},
 		"wall-1": {
 			assetRotationState: 0,
-			buttonSource: "assets/WALL_2D_1.png",
-			canReplace: ["wall"],
+			buttonSource: "assets/icons/icon_wall.png",
+			canReplace: ["walls"],
 			cellsOwned: "",
 			clonable: "false",
 			defaultColor: "#9FCDB1",
@@ -315,47 +708,39 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			id: "wall-1",
 			isCloned: "false",
 			isPermanent: "false",
-			materialType: "primitive",
+			materialType: "complex",
+			mtlSrc: "assets/wall/mesh_wall.mtl",
+			objSrc: "assets/wall/mesh_wall.obj",
 			movable: "false",
-			position: { x: -100, y: 0, z: -100 },
-			rotation: { x: 0, y: 0, z: 0 },
-			scale: { x: 1, y: 3, z: 1 },
+			position: {
+				x: -100,
+				y: 0,
+				z: -100
+			},
+			rotation: {
+				x: 0,
+				y: 180,
+				z: 0
+			},
+			scale: {
+				x: 0.25,
+				y: 0.25,
+				z: 0.25
+			},
 			tag: "a-box",
 			type: "wall",
 			vertical: 0,
 			category: "walls",
 			title: "Wall (1)"
-		},
-		"wall-2": {
-			assetRotationState: 0,
-			buttonSource: "assets/WALL_2D_2.png",
-			canReplace: ["wall"],
-			cellsOwned: "",
-			clonable: "false",
-			defaultColor: "#CBC99D",
-			horizontal: 0,
-			id: "wall-2",
-			isCloned: "false",
-			isPermanent: "false",
-			materialType: "primitive",
-			movable: "false",
-			position: { x: -100, y: 0, z: -100 },
-			rotation: { x: 0, y: 0, z: 0 },
-			scale: { x: 1, y: 3, z: 1 },
-			tag: "a-box",
-			type: "wall",
-			vertical: 0,
-			category: "walls",
-			title: "Wall (2)"
 		}
 	};
 
-	qset.options.categories = ["beds", "equipment", "walls"];
+	qset.options.categories = ["beds", "equipment", "walls", "people"];
 
 	qset.options.gridLoader = {
 		columns: 30,
 		content:
-			"x-x-x-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-x-x-x-x-x-x-w1-0-0-0-0-0-0-0-0-0-0-w1-w1-0-0-0-0-0-0-0-0-0-0-w1-x-x-x-x-x-x-w1-0-0-0-0-0-0-0-0-0-0-w1-w1-0-0-0-0-0-0-0-0-0-0-w1-x-x-x-x-x-x-w1-0-0-0-0-0-0-0-0-0-0-w1-w1-0-0-0-0-0-0-0-0-0-0-w1-x-x-x-x-x-x-w1-0-0-0-0-0-0-0-0-0-0-w1-w1-0-0-0-0-0-0-0-0-0-0-w1-x-x-x-x-x-x-w1-0-0-0-0-0-0-0-0-0-0-d1-d2-0-0-0-0-0-0-0-0-0-0-w1-x-x-x-x-x-x-w1-0-0-0-0-0-0-0-0-0-0-w1-w1-0-0-0-0-0-0-0-0-0-0-w1-x-x-x-x-x-x-w1-0-0-0-0-0-0-0-0-0-0-w1-w1-0-0-0-0-0-0-0-0-0-0-w1-x-x-x-x-x-x-w1-0-0-0-0-0-0-0-0-0-0-w1-w1-0-0-0-0-0-0-0-0-0-0-w1-x-x-x-x-x-x-w1-0-0-0-0-0-0-0-0-0-0-w1-w1-0-0-0-0-0-0-0-0-0-0-w1-x-x-x-x-x-x-w1-0-0-0-0-0-0-0-0-0-0-w1-w1-0-0-0-0-0-0-0-0-0-0-w1-x-x-x-x-x-x-w1-w1-w1-w1-w1-d1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-w1-d1-w1-w1-w1-w1-w1-w1-x-x-x",
+			"wall-1.0.0 wall-1.0.0 wall-1.0.0 wall-1.0.0 wall-1.0.0 wall-1.0.0 wall-1.0.0 wall-1.0.0 wall-1.0.0 wall-1.0.0 wall-1.0.0 wall-1.0.0 wall-1.0.0 wall-1.0.0 wall-1.0.0 wall-1.0.0 wall-1.0.0 wall-1.0.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 wall-1.0 wall-1.0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 wall-1.0 wall-1.0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 wall-1.0 wall-1.0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 wall-1.0 wall-1.0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 wall-1.0 wall-1.0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 wall-1.0 wall-1.0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 wall-1.0 wall-1.0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 wall-1.0 wall-1.0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 wall-1.0 wall-1.0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0",
 		rows: 12
 	};
 
