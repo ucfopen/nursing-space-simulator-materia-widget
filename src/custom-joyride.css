@@ -1,0 +1,24 @@
+.joyride-tooltip__close.joyride-tooltip__close--header {
+	visibility: hidden;
+}
+
+.joyride-tooltip__header {
+	border-bottom: 1px solid #DC7627 !important;
+}
+
+.joyride-tooltip__button--primary {
+	background-color: #DC7627 !important;
+}
+
+.joyride-tooltip__button--secondary {
+	color: #DC7627 !important;
+}
+
+.joyride-beacon__inner {
+	background-color: #DC7627;
+}
+
+.joyride-beacon__outer {
+	background-color: #DC7627;
+	border: 2px solid #DC7627;
+}
