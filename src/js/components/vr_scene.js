@@ -69,7 +69,26 @@ class VRScene extends Component {
 							alt="sorry"
 							src="assets/CEILING_TILE.jpg"
 						/>
-						<img id="wallTexture" alt="sorry" src="assets/WALL_2D_1.png" />
+						{Object.keys(this.props.assets).map(asset => {
+							if (this.props.assets[asset].objSrc) {
+								return (
+									<a-asset-item
+										id={asset + "-obj"}
+										src={this.props.assets[asset].objSrc}
+									/>
+								);
+							}
+						})}
+						{Object.keys(this.props.assets).map(asset => {
+							if (this.props.assets[asset].mtlSrc) {
+								return (
+									<a-asset-item
+										id={asset + "-mtl"}
+										src={this.props.assets[asset].mtlSrc}
+									/>
+								);
+							}
+						})}
 					</a-assets>
 
 					<CameraFP

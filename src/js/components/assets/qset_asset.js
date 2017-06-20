@@ -13,10 +13,18 @@ export default class QsetAsset extends Component {
 				primitive={this.props.data.tag}
 				// If an assets contains an .mtl (defined in qset), aframe will use obj-model. Otherwise, aframe will use material src
 				material={{
-					src: this.props.data.object,
 					color: this.props.data.defaultColor
 				}}
-				obj-model={this.props.data.object}
+				obj-model={
+					this.props.assetSelected
+						? "obj: #" + this.props.data.id + "-obj;"
+						: "obj: #" +
+								this.props.data.id +
+								"-obj;" +
+								"mtl: #" +
+								this.props.data.id +
+								"-mtl;"
+				}
 				/** 
                 * The scale property grows an a-box in the +-y direction, but we want it to seem like the box is just growing in the +y direction. 
                 *   To do this, the position of the box must be shifted upward half of the total scaling value.
