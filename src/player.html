@@ -5,9 +5,6 @@
 	<title>Hospital Sim</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
-	<!-- STYLESHEETS -->
-	<link rel="stylesheet" type="text/css" href="player.css">
-
 	<!-- REQUIRED MATERIA JAVASCRIPT -->
 	<script src="materia.enginecore.js"></script>
 
@@ -17,14 +14,14 @@
 	<script src="//cdnjs.cloudflare.com/ajax/libs/react/15.5.4/react-dom.min.js"></script>
 
 	<!-- MAIN APP -->
-	<link rel="stylesheet" type="text/css" href="player.css">
 	<script src="js/player.js"></script>
-
+	<link rel="stylesheet" type="text/css" href="player.css">
+	<link rel="stylesheet" href="react-joyride-compiled.css" type="text/css">
+	<link rel="stylesheet" href="custom-joyride.css" type="text/css">
 </head>
 
 <body>
-	<div id="sceneContainer" style="height: 100%; width: 100%"></div>
-
+	<div id="sceneContainer"></div>
 	<!--Initialize the application-->
 	<script>
 		Materia.Engine.start(HospitalSim.Engine);
