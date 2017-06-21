@@ -2,12 +2,12 @@ import { rotateCell, deleteItem, insertItem, isCellOccupied } from "../grid";
 
 import {
 	SELECT_ASSET_TYPE,
-	SELECT_OBJECT,
-	DESELECT_OBJECT,
-	ROTATE_OBJECT,
-	REMOVE_OBJECT,
-	UPDATE_GRID
-} from "../actions/placement_actions";
+	SELECT_ASSET,
+	DESELECT_ASSET,
+	ROTATE_ASSET,
+	REMOVE_ASSET,
+	INSERT_ASSET
+} from "../actions/grid_actions";
 
 import { INIT_DATA } from "../actions";
 
@@ -26,7 +26,7 @@ export default function(
 				currentX: null,
 				currentY: null
 			};
-		case SELECT_OBJECT:
+		case SELECT_ASSET:
 			let oldSelectedAsset;
 			if (state.selectedAsset === "none") oldSelectedAsset = "none";
 			else oldSelectedAsset = { ...state.selectedAsset };
@@ -59,7 +59,7 @@ export default function(
 					currentY: action.payload.y
 				};
 			}
-		case DESELECT_OBJECT:
+		case DESELECT_ASSET:
 			return {
 				...state,
 				manipulationMode: false,
@@ -67,14 +67,14 @@ export default function(
 				currentX: null,
 				currentY: null
 			};
-		case ROTATE_OBJECT: {
+		case ROTATE_ASSET: {
 			let gridCopy = JSON.parse(JSON.stringify(state.grid));
 			return {
 				...state,
 				grid: rotateCell(gridCopy, action.payload.x, action.payload.y)
 			};
 		}
-		case REMOVE_OBJECT: {
+		case REMOVE_ASSET: {
 			let gridCopy = JSON.parse(JSON.stringify(state.grid));
 			return {
 				...state,
@@ -85,7 +85,7 @@ export default function(
 				currentY: null
 			};
 		}
-		case UPDATE_GRID:
+		case INSERT_ASSET:
 			let gridCopy = JSON.parse(JSON.stringify(state.grid));
 
 			if (
