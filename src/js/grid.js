@@ -1,4 +1,4 @@
-// Helper function for loadGrid
+// Helper function for loadGrid that parses a string to an object
 const _getAssetInfo = function(gridValue) {
 	if (gridValue === "0") return gridValue;
 
@@ -98,5 +98,5 @@ export function isCellOccupied(grid, x, y) {
 }
 
 export function getItemId(grid, x, y) {
-	return grid[x][y].id;
+	return grid[x][y] === "0" ? "0" : grid[x][y].id;
 }
