@@ -33,7 +33,8 @@ export default function(
 
 			if (
 				oldSelectedAsset !== "none" &&
-				oldSelectedAsset.id !== action.payload.asset.id
+				oldSelectedAsset.id !== action.payload.asset.id &&
+				oldSelectedAsset.canReplace.includes(action.payload.asset.category)
 			) {
 				let gridCopy = JSON.parse(JSON.stringify(state.grid));
 				return {
