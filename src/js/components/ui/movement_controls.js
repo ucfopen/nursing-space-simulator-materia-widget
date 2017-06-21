@@ -21,31 +21,43 @@ export default class MovementControls extends React.Component {
 		return (
 			<div id="UI-right-panel">
 				<div id="top-buttons" />
-				<button onClick={this.takeScreenShot.bind(this)} id="screenshot">
+				<button onClick={() => this.takeScreenShot()} id="screenshot">
 					<ScreenshotSVG />
 				</button>
 				{this.props.thirdPerson
 					? <div id="camera-controls">
 							<div id="camera-move">
-								<button id="camera-up" onClick={this.props.xUp}>
+								<button
+									id="camera-up"
+									onClick={() => this.props.updatePosition("xUp")}>
 									<UpArrowSVG />
 								</button>
 								<div id="camera-move-horizontal">
-									<button id="camera-left" onClick={this.props.zUp}>
+									<button
+										id="camera-left"
+										onClick={() => this.props.updatePosition("zUp")}>
 										<LeftArrowSVG />
 									</button>
-									<button id="camera-right" onClick={this.props.zDown}>
+									<button
+										id="camera-right"
+										onClick={() => this.props.updatePosition("zDown")}>
 										<RightArrowSVG />
 									</button>
 								</div>
-								<button id="camera-down" onClick={this.props.xDown}>
+								<button
+									id="camera-down"
+									onClick={() => this.props.updatePosition("xDown")}>
 									<DownArrowSVG />
 								</button>
 							</div>
-							<button id="camera-zoom-in" onClick={this.props.yDown}>
+							<button
+								id="camera-zoom-in"
+								onClick={() => this.props.updatePosition("yDown")}>
 								<ZoomInSVG />
 							</button>
-							<button id="camera-zoom-out" onClick={this.props.yUp}>
+							<button
+								id="camera-zoom-out"
+								onClick={() => this.props.updatePosition("yUp")}>
 								<ZoomOutSVG />
 							</button>
 						</div>
