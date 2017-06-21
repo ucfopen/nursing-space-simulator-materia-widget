@@ -38,7 +38,7 @@ export function loadGrid(gridString, rows, columns) {
 /**
  * changes a cell rotation by 90 degrees
  *
- * @param {arary} grid json grid to be updated
+ * @param {arary} grid grid to be updated
  * @param {int} x x coordinate of gridcell to be rotated
  * @param {int} y y coordinate of gridcell to be rotated
  *
@@ -53,9 +53,9 @@ export function rotateCell(grid, x, y) {
 /**
  * removes an item from a grid
  *
- * @param {array} grid json grid to be updated
- * @param {int} x coordinate of gridcell to delete item
- * @param {int} y coordinate of gridcell to delete item
+ * @param {array} grid grid to be updated
+ * @param {int} x x coordinate of gridcell to delete item
+ * @param {int} y y coordinate of gridcell to delete item
  *
  * @return updated grid
  */
@@ -68,10 +68,10 @@ export function deleteItem(grid, x, y) {
 /**
  * inserts an item into a grid
  *
- * @param {array} grid 
+ * @param {array} grid grid to be updated
  * @param {string} item item to be placed
- * @param {int} x coordinate of gridcell to insert item
- * @param {int} y coordinate of gridcell to insert item
+ * @param {int} x x coordinate of gridcell to insert item
+ * @param {int} y y coordinate of gridcell to insert item
  *
  * @return updated grid
  */
@@ -82,6 +82,19 @@ export function insertItem(grid, item, x, y) {
 	};
 
 	return grid;
+}
+
+/**
+ * checks to see if an item is placed in a grid cell
+ *
+ * @param {array} grid grid to be checked
+ * @param {int} x x coordinate of gridcell to be checked
+ * @param {int} y y coordinate of gridcell to be checked
+ *
+ * @ return boolean
+ */
+export function isCellOccupied(grid, x, y) {
+	return grid[x][y] === "0" ? false : true;
 }
 
 export function getItemId(grid, x, y) {
