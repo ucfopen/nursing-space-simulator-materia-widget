@@ -83,3 +83,7 @@ export function insertItem(grid, item, x, y) {
 
 	return grid;
 }
+
+export function getItemId(grid, x, y) {
+	return grid[x][y].id;
+}
