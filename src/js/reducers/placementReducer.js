@@ -1,4 +1,4 @@
-import { rotateCell, resetCell, insertItem } from "../grid";
+import { rotateCell, resetCell, insertItem, getItemId } from "../grid";
 
 import {
 	SELECT_ASSET_TYPE,
@@ -32,35 +32,30 @@ export default function(
 			else oldSelectedAsset = { ...state.selectedAsset };
 
 			if (
-				oldSelectedAsset.id !== action.payload.asset.id &&
-				oldSelectedAsset !== "none"
+				oldSelectedAsset !== "none" &&
+				oldSelectedAsset.id !== action.payload.asset.id
 			) {
-				let gridWithReplacedObject = JSON.parse(JSON.stringify(state.grid));
-				gridWithReplacedObject[action.payload.x][action.payload.y] = {
-					id: oldSelectedAsset.id,
-					rotation: 0
-				};
+				let gridCopy = JSON.parse(JSON.stringify(state.grid));
 				return {
 					...state,
 					manipulationMode: true,
 					selectedAsset: oldSelectedAsset,
 					currentX: action.payload.x,
 					currentY: action.payload.y,
-					grid: gridWithReplacedObject
+					grid: insertItem(
+						gridCopy,
+						oldSelectedAsset.id,
+						action.payload.x,
+						action.payload.y
+					)
 				};
 			} else {
-				let gridWithReplacedObject = JSON.parse(JSON.stringify(state.grid));
-				gridWithReplacedObject[action.payload.x][action.payload.y] = {
-					id: action.payload.asset.id,
-					rotation: 0
-				};
 				return {
 					...state,
 					manipulationMode: true,
 					selectedAsset: action.payload.asset,
 					currentX: action.payload.x,
-					currentY: action.payload.y,
-					grid: gridWithReplacedObject
+					currentY: action.payload.y
 				};
 			}
 		case DESELECT_OBJECT:
