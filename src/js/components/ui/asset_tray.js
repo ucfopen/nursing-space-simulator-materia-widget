@@ -9,7 +9,6 @@ export default class AssetTray extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			category: this.props.categories[0],
 			showMenu: true
 		};
 	}
@@ -18,15 +17,11 @@ export default class AssetTray extends React.Component {
 		const showMenu = this.state.showMenu;
 		this.setState({ showMenu: !showMenu });
 	}
-	setCurrentCategory(category) {
-		this.setState({ category: category });
-	}
 
 	render() {
-		const assets = this.props.assetsFromFile;
-		const curCategory = this.state.category;
-		const selectAsset = this.props.selectAsset;
-		let selectedAsset = this.props.selectedAsset;
+		const assets = this.props.assets;
+		const curCategory = this.props.currentCategory;
+		const selectAssetType = this.props.selectAssetType;
 
 		return (
 			<div
@@ -38,18 +33,17 @@ export default class AssetTray extends React.Component {
 				<div id="asset-selection-menu">
 					<button
 						id="vr-viewer-mode"
-						onClick={selectAsset.bind(
-							this,
-							{ id: "pov_camera", title: "POV Camera" },
-							null,
-							null
-						)}>
+						onClick={() =>
+							this.props.selectAssetType({
+								id: "pov_camera",
+								title: "POV Camera"
+							})}>
 						First-Person Viewer
 					</button>
 					<div id="categories-list">
 						{this.props.categories.map((category, index) =>
 							<CategoryButton
-								onClick={this.setCurrentCategory.bind(this, category)}
+								onClick={() => this.props.setCategory(category)}
 								key={index}
 								category={category}
 							/>
@@ -63,8 +57,7 @@ export default class AssetTray extends React.Component {
 								<AssetButton
 									key={asset}
 									item={assets[asset]}
-									selectedAsset={selectedAsset}
-									onClick={selectAsset.bind(this, assets[asset], null, null)}
+									onClick={() => selectAssetType(assets[asset])}
 								/>
 							);
 						}
