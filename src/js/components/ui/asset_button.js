@@ -8,7 +8,7 @@ export default props => {
 				data-category={props.item.category}
 				data-title={props.item.title}
 				id={props.item.id}
-				onClick={props.onClick}
+				onClick={() => props.onClick()}
 				style={{
 					background:
 						"url(" + props.item.buttonSource + ") no-repeat center center",
