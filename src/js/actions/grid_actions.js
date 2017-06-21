@@ -1,9 +1,10 @@
-export const SELECT_ASSET_TYPE = "select_asset_type";
-export const UPDATE_GRID = "update_grid";
-export const SELECT_OBJECT = "select_object";
-export const DESELECT_OBJECT = "deselect_object";
-export const ROTATE_OBJECT = "rotate_object";
-export const REMOVE_OBJECT = "remove_object";
+export const DELETE_ASSET = "DELETE_ASSET";
+export const DESELECT_ASSET = "DESELECT_ASSET";
+export const INSERT_ASSET = "INSERT_ASSET";
+export const PLACE_ASSET = "PLACE_ASSET";
+export const ROTATE_ASSET = "ROTATE_ASSET";
+export const SELECT_ASSET = "SELECT_ASSET";
+export const SELECT_ASSET_TYPE = "SELECT_ASSET_TYPE";
 
 export function selectAssetType(asset) {
 	return {
@@ -12,36 +13,36 @@ export function selectAssetType(asset) {
 	};
 }
 
-export function selectObject(asset, x, y) {
+export function selectAsset(asset, x, y) {
 	return {
-		type: SELECT_OBJECT,
+		type: SELECT_ASSET,
 		payload: { asset, x, y }
 	};
 }
 
-export function deselectObject() {
+export function deselectAsset() {
 	return {
-		type: DESELECT_OBJECT
+		type: DESELECT_ASSET
 	};
 }
 
-export function rotateObject(asset, x, y) {
+export function rotateAsset(asset, x, y) {
 	return {
-		type: ROTATE_OBJECT,
+		type: ROTATE_ASSET,
 		payload: { asset, x, y }
 	};
 }
 
-export function removeObject(x, y) {
+export function removeAsset(x, y) {
 	return {
-		type: REMOVE_OBJECT,
+		type: REMOVE_ASSET,
 		payload: { x, y }
 	};
 }
 
-export function updateGrid(x, y) {
+export function insertAsset(x, y) {
 	return {
-		type: UPDATE_GRID,
+		type: INSERT_ASSET,
 		payload: {
 			x,
 			y
