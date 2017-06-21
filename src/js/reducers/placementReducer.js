@@ -1,4 +1,4 @@
-import { rotateCell, resetCell, insertItem, getItemId } from "../grid";
+import { rotateCell, resetCell, insertItem, isCellOccupied } from "../grid";
 
 import {
 	SELECT_ASSET_TYPE,
@@ -86,11 +86,16 @@ export default function(
 			};
 		}
 		case UPDATE_GRID:
-			if (state.selectedAsset === "none")
+			let gridCopy = JSON.parse(JSON.stringify(state.grid));
+
+			if (
+				state.selectedAsset === "none" ||
+				isCellOccupied(gridCopy, action.payload.x, action.payload.y)
+			)
 				return {
 					...state
 				};
-			let gridCopy = JSON.parse(JSON.stringify(state.grid));
+
 			return {
 				...state,
 				grid: insertItem(
