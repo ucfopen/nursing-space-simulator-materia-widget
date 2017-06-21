@@ -12,9 +12,9 @@ import { toggleMenuVisibility, setCategory } from "../actions/menu_actions";
 
 import {
 	selectAssetType,
-	deselectObject,
-	rotateObject,
-	removeObject
+	deselectAsset,
+	rotateAsset,
+	removeAsset
 } from "../actions/grid_actions";
 
 class HUD extends Component {
@@ -72,7 +72,7 @@ export default connect(mapStateToProps, {
 	toggleMenuVisibility,
 	setCategory,
 	selectAssetType,
-	deselectObject,
-	rotateObject,
-	removeObject
+	deselectAsset,
+	rotateAsset,
+	removeAsset
 })(HUD);
