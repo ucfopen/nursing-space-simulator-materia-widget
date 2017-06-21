@@ -7,7 +7,7 @@ import {
 	ROTATE_OBJECT,
 	REMOVE_OBJECT,
 	UPDATE_GRID
-} from "../actions/placement_actions";
+} from "../actions/grid_actions";
 
 import { INIT_DATA } from "../actions";
 

@@ -15,7 +15,7 @@ import {
 	deselectObject,
 	rotateObject,
 	removeObject
-} from "../actions/placement_actions";
+} from "../actions/grid_actions";
 
 class HUD extends Component {
 	render() {
@@ -53,13 +53,13 @@ class HUD extends Component {
 	}
 }
 
-function mapStateToProps({ menu, data, placement }) {
+function mapStateToProps({ menu, data, grid }) {
 	return {
 		assets: data.assets,
-		selectedAsset: placement.selectedAsset,
-		currentX: placement.currentX,
-		currentY: placement.currentY,
-		manipulationMode: placement.manipulationMode,
+		selectedAsset: grid.selectedAsset,
+		currentX: grid.currentX,
+		currentY: grid.currentY,
+		manipulationMode: grid.manipulationMode,
 		categories: data.categories,
 		currentCategory: menu.currentCategory,
 		visible: menu.visible
