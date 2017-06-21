@@ -12,10 +12,10 @@ import { toggleMenuVisibility, setCategory } from "../actions/menu_actions";
 
 import {
 	selectAssetType,
-	deselectObject,
-	rotateObject,
-	removeObject
-} from "../actions/placement_actions";
+	deselectAsset,
+	rotateAsset,
+	removeAsset
+} from "../actions/grid_actions";
 
 class HUD extends Component {
 	render() {
@@ -53,13 +53,13 @@ class HUD extends Component {
 	}
 }
 
-function mapStateToProps({ menu, data, placement }) {
+function mapStateToProps({ menu, data, grid }) {
 	return {
 		assets: data.assets,
-		selectedAsset: placement.selectedAsset,
-		currentX: placement.currentX,
-		currentY: placement.currentY,
-		manipulationMode: placement.manipulationMode,
+		selectedAsset: grid.selectedAsset,
+		currentX: grid.currentX,
+		currentY: grid.currentY,
+		manipulationMode: grid.manipulationMode,
 		categories: data.categories,
 		currentCategory: menu.currentCategory,
 		visible: menu.visible
@@ -72,7 +72,7 @@ export default connect(mapStateToProps, {
 	toggleMenuVisibility,
 	setCategory,
 	selectAssetType,
-	deselectObject,
-	rotateObject,
-	removeObject
+	deselectAsset,
+	rotateAsset,
+	removeAsset
 })(HUD);

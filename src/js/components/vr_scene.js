@@ -3,7 +3,7 @@ import AFRAME from "aframe";
 import { Scene } from "aframe-react";
 import { connect } from "react-redux";
 
-import { updateGrid, selectObject } from "../actions/placement_actions";
+import { insertAsset, selectAsset } from "../actions/grid_actions";
 
 // Scene Assets
 import CeilingUnit from "./assets/ceiling_unit";
@@ -21,7 +21,7 @@ class VRScene extends Component {
 							x={rowIndex}
 							z={colIndex}
 							onClick={() =>
-								this.props.selectObject(
+								this.props.selectAsset(
 									this.props.assets[column.id],
 									rowIndex,
 									colIndex
@@ -49,7 +49,7 @@ class VRScene extends Component {
 				<FloorUnit
 					x={rowIndex}
 					y={colIndex}
-					onClick={() => this.props.updateGrid(rowIndex, colIndex)}
+					onClick={() => this.props.insertAsset(rowIndex, colIndex)}
 					color="red"
 				/>
 			)
@@ -108,14 +108,14 @@ class VRScene extends Component {
 	}
 }
 
-function mapStateToProps({ position, data, placement }) {
+function mapStateToProps({ position, data, grid }) {
 	return {
 		position: { x: position.x, y: position.y, z: position.z },
 		thirdPerson: position.thirdPerson,
 		assets: data.assets,
-		grid: placement.grid,
-		selectedAsset: placement.selectedAsset
+		grid: grid.grid,
+		selectedAsset: grid.selectedAsset
 	};
 }
 
-export default connect(mapStateToProps, { updateGrid, selectObject })(VRScene);
+export default connect(mapStateToProps, { insertAsset, selectAsset })(VRScene);
