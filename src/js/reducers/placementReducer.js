@@ -1,4 +1,4 @@
-import { rotateCell, resetCell, insertItem, isCellOccupied } from "../grid";
+import { rotateCell, deleteItem, insertItem, isCellOccupied } from "../grid";
 
 import {
 	SELECT_ASSET_TYPE,
