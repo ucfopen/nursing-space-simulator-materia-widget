@@ -12,7 +12,7 @@ import {
 import { INIT_DATA } from "../actions";
 
 export default function(
-	state = { manipulationMode: false, selectedAsset: "none" },
+	state = { manipulationMode: false, selectedAsset: null },
 	action
 ) {
 	switch (action.type) {
@@ -41,11 +41,12 @@ export default function(
 			const gridCopy = JSON.parse(JSON.stringify(state.grid));
 
 			let oldSelectedAsset;
-			if (state.selectedAsset === "none") oldSelectedAsset = "none";
-			else oldSelectedAsset = { ...state.selectedAsset };
+			oldSelectedAsset = state.selectedAsset
+				? { ...state.selectedAsset }
+				: null;
 
 			if (
-				oldSelectedAsset !== "none" &&
+				oldSelectedAsset &&
 				oldSelectedAsset.id !== action.payload.asset.id &&
 				oldSelectedAsset.canReplace.includes(action.payload.asset.category)
 			) {
@@ -80,7 +81,7 @@ export default function(
 				...state,
 				grid: gridCopy,
 				manipulationMode: false,
-				selectedAsset: "none",
+				selectedAsset: null,
 				currentX: null,
 				currentY: null
 			};
@@ -100,17 +101,19 @@ export default function(
 				...state,
 				grid: deleteItem(gridCopy, action.payload.x, action.payload.y),
 				manipulationMode: false,
-				selectedAsset: "none",
+				selectedAsset: null,
 				currentX: null,
 				currentY: null
 			};
 		}
 
 		case INSERT_ASSET: {
-			const selectedAsset = { ...state.selectedAsset };
+			const selectedAsset = state.selectedAsset
+				? { ...state.selectedAsset }
+				: null;
 			const gridCopy = JSON.parse(JSON.stringify(state.grid));
 			if (
-				selectedAsset === "none" ||
+				!selectedAsset ||
 				!isCellAvailable(gridCopy, action.payload.x, action.payload.y)
 			) {
 				return {

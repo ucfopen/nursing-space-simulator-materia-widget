@@ -30,7 +30,7 @@ class HUD extends Component {
 					/>
 					{this.props.thirdPerson
 						? <div>
-								{this.props.selectedAsset !== "none"
+								{this.props.selectedAsset
 									? <AssetControls
 											selectedAsset={this.props.selectedAsset}
 											manipulationMode={this.props.manipulationMode}
