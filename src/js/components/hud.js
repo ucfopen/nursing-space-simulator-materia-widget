@@ -25,13 +25,21 @@ class HUD extends Component {
 			return (
 				<div>
 					<MovementControls
-						thirdPerson={true}
+						thirdPerson={this.props.thirdPerson}
 						updatePosition={this.props.updatePosition}
 					/>
-					{true
+					{this.props.thirdPerson
 						? <div>
 								{this.props.selectedAsset !== "none"
-									? <div>Asset Controls</div>
+									? <AssetControls
+											selectedAsset={this.props.selectedAsset}
+											manipulationMode={this.props.manipulationMode}
+											removeAsset={this.props.removeAsset}
+											deselectAsset={this.props.deselectAsset}
+											rotateAsset={this.props.rotateAsset}
+											currentX={this.props.currentX}
+											currentY={this.props.currentY}
+										/>
 									: null}
 								<AssetTray
 									assets={this.props.assets}
@@ -53,16 +61,17 @@ class HUD extends Component {
 	}
 }
 
-function mapStateToProps({ menu, data, grid }) {
+function mapStateToProps({ data, menu, grid, position }) {
 	return {
 		assets: data.assets,
+		categories: data.categories,
+		currentCategory: menu.currentCategory,
+		visible: menu.visible,
 		selectedAsset: grid.selectedAsset,
 		currentX: grid.currentX,
 		currentY: grid.currentY,
 		manipulationMode: grid.manipulationMode,
-		categories: data.categories,
-		currentCategory: menu.currentCategory,
-		visible: menu.visible
+		thirdPerson: position.thirdPerson
 	};
 }
 
