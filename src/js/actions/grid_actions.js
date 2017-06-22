@@ -43,9 +43,6 @@ export function removeAsset(x, y) {
 export function insertAsset(x, y) {
 	return {
 		type: INSERT_ASSET,
-		payload: {
-			x,
-			y
-		}
+		payload: { x, y }
 	};
 }

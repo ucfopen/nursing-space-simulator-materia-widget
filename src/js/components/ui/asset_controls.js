@@ -5,59 +5,48 @@ import DeselectSVG from "../assets/icon-svgs/deselect";
 import RotateSVG from "../assets/icon-svgs/rotate";
 import ConfirmSVG from "../assets/icon-svgs/confirm";
 
+import {
+	selectAssetType,
+	deselectAsset,
+	rotateAsset,
+	removeAsset
+} from "../../actions/grid_actions.js";
+
 export default props => {
 	return (
 		<div id="UI-selected-asset-options">
 			<span id="selected-asset-label">
 				<span className="selected-asset-label-title">
-					Currently selected: {props.selectedAsset.asset.title}
+					Currently selected: {props.selectedAsset.title}
 				</span>
 			</span>
 			{props.manipulationMode
 				? <div>
-						<button
-							id="confirm"
-							onClick={props.manipulateAsset.bind(
-								this,
-								props.selectedAsset.asset,
-								"deselect",
-								props.selectedAsset.x,
-								props.selectedAsset.y
-							)}>
+						<button id="confirm" onClick={() => props.deselectAsset()}>
 							<ConfirmSVG />
 						</button>
 						<button
 							id="rotate"
-							onClick={props.manipulateAsset.bind(
-								this,
-								props.selectedAsset.asset,
-								"rotate",
-								props.selectedAsset.x,
-								props.selectedAsset.y
-							)}>
+							onClick={() =>
+								props.rotateAsset(
+									props.selectedAsset.asset,
+									props.selectedAsset.x,
+									props.selectedAsset.y
+								)}>
 							<RotateSVG />
 						</button>
 						<button
 							id="remove"
-							onClick={props.manipulateAsset.bind(
-								this,
-								props.selectedAsset.asset,
-								"remove",
-								props.selectedAsset.x,
-								props.selectedAsset.y
-							)}>
+							onClick={() =>
+								props.removeAsset(
+									props.selectedAsset.asset,
+									props.selectedAsset.x,
+									props.selectedAsset.y
+								)}>
 							<DeleteSVG />
 						</button>
 					</div>
-				: <button
-						id="deselect"
-						onClick={props.manipulateAsset.bind(
-							this,
-							props.selectedAsset.asset,
-							"deselect",
-							props.selectedAsset.x,
-							props.selectedAsset.y
-						)}>
+				: <button id="deselect" onClick={() => props.deselectAsset()}>
 						<DeselectSVG />
 					</button>}
 		</div>
