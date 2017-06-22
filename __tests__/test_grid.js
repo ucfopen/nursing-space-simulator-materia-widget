@@ -4,7 +4,7 @@ import {
 	rotateCell,
 	deleteItem,
 	insertItem,
-	isCellOccupied
+	isCellAvailable
 } from "../src/js/grid";
 
 describe("Grid Tests", () => {
@@ -65,12 +65,12 @@ describe("Grid Tests", () => {
 		expect(grid[0][1]).toEqual({ id: "chair-1", rotation: 180 });
 	});
 
-	it("knows if a cell is occupied", () => {
+	it("knows if a cell is available", () => {
 		let grid = [["0", { id: "bed-1", rotation: 180 }], ["0", "0"]];
 
-		expect(isCellOccupied(grid, 0, 1)).toBe(true);
+		expect(isCellAvailable(grid, 0, 1)).toBe(false);
 
-		expect(isCellOccupied(grid, 0, 0)).toBe(false);
+		expect(isCellAvailable(grid, 0, 0)).toBe(true);
 	});
 
 	it("returns correct item id", () => {
