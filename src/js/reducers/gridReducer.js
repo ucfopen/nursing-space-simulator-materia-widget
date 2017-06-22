@@ -1,4 +1,4 @@
-import { rotateCell, deleteItem, insertItem, isCellOccupied } from "../grid";
+import { rotateCell, deleteItem, insertItem, isCellAvailable } from "../grid";
 
 import {
 	SELECT_ASSET_TYPE,
@@ -16,17 +16,30 @@ export default function(
 	action
 ) {
 	switch (action.type) {
-		case INIT_DATA:
-			return { ...state, grid: action.payload.grid };
-		case SELECT_ASSET_TYPE:
+		case INIT_DATA: {
 			return {
 				...state,
+				grid: action.payload.grid,
+				categories: action.payload.categories,
+				assets: action.payload.assets
+			};
+		}
+
+		case SELECT_ASSET_TYPE: {
+			const gridCopy = JSON.parse(JSON.stringify(state.grid));
+			return {
+				...state,
+				grid: gridCopy,
 				selectedAsset: action.payload,
 				manipulationMode: false,
 				currentX: null,
 				currentY: null
 			};
-		case SELECT_ASSET:
+		}
+
+		case SELECT_ASSET: {
+			const gridCopy = JSON.parse(JSON.stringify(state.grid));
+
 			let oldSelectedAsset;
 			if (state.selectedAsset === "none") oldSelectedAsset = "none";
 			else oldSelectedAsset = { ...state.selectedAsset };
@@ -36,7 +49,6 @@ export default function(
 				oldSelectedAsset.id !== action.payload.asset.id &&
 				oldSelectedAsset.canReplace.includes(action.payload.asset.category)
 			) {
-				let gridCopy = JSON.parse(JSON.stringify(state.grid));
 				return {
 					...state,
 					manipulationMode: true,
@@ -53,29 +65,37 @@ export default function(
 			} else {
 				return {
 					...state,
+					grid: gridCopy,
 					manipulationMode: true,
 					selectedAsset: action.payload.asset,
 					currentX: action.payload.x,
 					currentY: action.payload.y
 				};
 			}
-		case DESELECT_ASSET:
+		}
+
+		case DESELECT_ASSET: {
+			const gridCopy = JSON.parse(JSON.stringify(state.grid));
 			return {
 				...state,
+				grid: gridCopy,
 				manipulationMode: false,
 				selectedAsset: "none",
 				currentX: null,
 				currentY: null
 			};
+		}
+
 		case ROTATE_ASSET: {
-			let gridCopy = JSON.parse(JSON.stringify(state.grid));
+			const gridCopy = JSON.parse(JSON.stringify(state.grid));
 			return {
 				...state,
 				grid: rotateCell(gridCopy, action.payload.x, action.payload.y)
 			};
 		}
+
 		case REMOVE_ASSET: {
-			let gridCopy = JSON.parse(JSON.stringify(state.grid));
+			const gridCopy = JSON.parse(JSON.stringify(state.grid));
 			return {
 				...state,
 				grid: deleteItem(gridCopy, action.payload.x, action.payload.y),
@@ -85,30 +105,36 @@ export default function(
 				currentY: null
 			};
 		}
-		case INSERT_ASSET:
-			let gridCopy = JSON.parse(JSON.stringify(state.grid));
 
+		case INSERT_ASSET: {
+			const selectedAsset = { ...state.selectedAsset };
+			const gridCopy = JSON.parse(JSON.stringify(state.grid));
 			if (
-				state.selectedAsset === "none" ||
-				isCellOccupied(gridCopy, action.payload.x, action.payload.y)
-			)
+				selectedAsset === "none" ||
+				!isCellAvailable(gridCopy, action.payload.x, action.payload.y)
+			) {
 				return {
-					...state
+					...state,
+					grid: gridCopy
 				};
+			} else {
+				return {
+					...state,
+					grid: insertItem(
+						gridCopy,
+						selectedAsset.id,
+						action.payload.x,
+						action.payload.y
+					),
+					manipulationMode: true,
+					currentX: action.payload.x,
+					currentY: action.payload.y
+				};
+			}
+		}
 
-			return {
-				...state,
-				grid: insertItem(
-					gridCopy,
-					state.selectedAsset.id,
-					action.payload.x,
-					action.payload.y
-				),
-				manipulationMode: true,
-				currentX: action.payload.x,
-				currentY: action.payload.y
-			};
-		default:
+		default: {
 			return state;
+		}
 	}
 }

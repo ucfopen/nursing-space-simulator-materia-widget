@@ -14,23 +14,27 @@ import FloorUnit from "./assets/floor_unit";
 
 class VRScene extends Component {
 	renderAssets() {
-		const mappedAssets = this.props.grid.map((row, rowIndex) =>
-			row.map((column, colIndex) => {
-				return column !== "0"
-					? <QsetAsset
-							x={rowIndex}
-							z={colIndex}
-							onClick={() =>
-								this.props.selectAsset(
-									this.props.assets[column.id],
+		const assets = this.props.assets;
+		const selectAsset = this.props.selectAsset;
+		const mappedAssets = this.props.grid.map(
+			(row, rowIndex) =>
+				row.map((column, colIndex) => {
+					return column !== "0"
+						? <QsetAsset
+								x={rowIndex}
+								z={colIndex}
+								onClick={selectAsset.bind(
+									this,
+									assets[column.id],
 									rowIndex,
 									colIndex
 								)}
-							data={this.props.assets[column.id]}
-							rotation={column.rotation}
-						/>
-					: null;
-			})
+								data={assets[column.id]}
+								rotation={column.rotation}
+							/>
+						: null;
+				}, this),
+			this
 		);
 		return mappedAssets;
 	}
@@ -44,15 +48,20 @@ class VRScene extends Component {
 	}
 
 	renderFloor() {
-		const mappedFloor = this.props.grid.map((row, rowIndex) =>
-			row.map((column, colIndex) =>
-				<FloorUnit
-					x={rowIndex}
-					y={colIndex}
-					onClick={() => this.props.insertAsset(rowIndex, colIndex)}
-					color="red"
-				/>
-			)
+		const insertAsset = this.props.insertAsset;
+		const mappedFloor = this.props.grid.map(
+			(row, rowIndex) =>
+				row.map(
+					(column, colIndex) =>
+						<FloorUnit
+							x={rowIndex}
+							y={colIndex}
+							onClick={insertAsset.bind(this, rowIndex, colIndex)}
+							color="red"
+						/>,
+					this
+				),
+			this
 		);
 		return mappedFloor;
 	}
@@ -61,6 +70,7 @@ class VRScene extends Component {
 		if (!this.props.grid || !this.props.position || !this.props.assets)
 			return <div>Loading</div>;
 		else {
+			const assets = this.props.assets;
 			return (
 				<Scene>
 					<a-assets>
@@ -69,22 +79,22 @@ class VRScene extends Component {
 							alt="sorry"
 							src="assets/CEILING_TILE.jpg"
 						/>
-						{Object.keys(this.props.assets).map(asset => {
-							if (this.props.assets[asset].objSrc) {
+						{Object.keys(assets).map(asset => {
+							if (assets[asset].objSrc) {
 								return (
 									<a-asset-item
 										id={asset + "-obj"}
-										src={this.props.assets[asset].objSrc}
+										src={assets[asset].objSrc}
 									/>
 								);
 							}
 						})}
-						{Object.keys(this.props.assets).map(asset => {
-							if (this.props.assets[asset].mtlSrc) {
+						{Object.keys(assets).map(asset => {
+							if (assets[asset].mtlSrc) {
 								return (
 									<a-asset-item
 										id={asset + "-mtl"}
-										src={this.props.assets[asset].mtlSrc}
+										src={assets[asset].mtlSrc}
 									/>
 								);
 							}
