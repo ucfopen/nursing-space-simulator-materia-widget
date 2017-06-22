@@ -1,38 +1,21 @@
 // Helper function for loadGrid that parses a string to an object
-const _getAssetInfo = function(gridValue) {
+function getAssetInfo(gridValue) {
 	if (gridValue === "0") return gridValue;
 
 	const assetInfo = gridValue.split(".");
-
 	return {
 		id: assetInfo[0],
 		rotation: parseInt(assetInfo[1])
 	};
-};
+}
 
-/**
- * Takes a string representation of a grid and creates a two dimensional array to
- * represent the grid.
- *
- * @param {string} gridString string representing the simulator grid system
- * @param {int} rows number of rows the grid should have
- * @param {int} columns number of columns the grid should have
- *
- * @return two dimensional array containing grid
- */
 export function loadGrid(gridString, rows, columns) {
 	let tempGrid = gridString.split(" ");
-	let grid = new Array(rows);
-	let counter = 0;
-
-	for (let i = 0; i < rows; i++) {
-		grid[i] = new Array(columns);
-		for (let j = 0; j < columns; j++) {
-			grid[i][j] = _getAssetInfo(tempGrid[counter++]);
-		}
-	}
-
-	return grid;
+	return [...Array(rows)].map(() => {
+		return tempGrid.splice(0, columns).map(gridItem => {
+			return getAssetInfo(gridItem);
+		});
+	});
 }
 
 /**
@@ -46,7 +29,6 @@ export function loadGrid(gridString, rows, columns) {
  */
 export function rotateCell(grid, x, y) {
 	grid[x][y].rotation = (grid[x][y].rotation - 90) % 360;
-
 	return grid;
 }
 
@@ -61,7 +43,6 @@ export function rotateCell(grid, x, y) {
  */
 export function deleteItem(grid, x, y) {
 	grid[x][y] = "0";
-
 	return grid;
 }
 
@@ -75,9 +56,9 @@ export function deleteItem(grid, x, y) {
  *
  * @return updated grid
  */
-export function insertItem(grid, item, x, y) {
+export function insertItem(grid, itemId, x, y) {
 	grid[x][y] = {
-		id: item,
+		id: itemId,
 		rotation: 180
 	};
 
@@ -93,8 +74,8 @@ export function insertItem(grid, item, x, y) {
  *
  * @ return boolean
  */
-export function isCellOccupied(grid, x, y) {
-	return grid[x][y] === "0" ? false : true;
+export function isCellAvailable(grid, x, y) {
+	return grid[x][y] === "0";
 }
 
 export function getItemId(grid, x, y) {
