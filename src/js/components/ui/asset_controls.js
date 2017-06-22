@@ -27,22 +27,12 @@ export default props => {
 						</button>
 						<button
 							id="rotate"
-							onClick={() =>
-								props.rotateAsset(
-									props.selectedAsset.asset,
-									props.selectedAsset.x,
-									props.selectedAsset.y
-								)}>
+							onClick={() => props.rotateAsset(props.currentX, props.currentY)}>
 							<RotateSVG />
 						</button>
 						<button
 							id="remove"
-							onClick={() =>
-								props.removeAsset(
-									props.selectedAsset.asset,
-									props.selectedAsset.x,
-									props.selectedAsset.y
-								)}>
+							onClick={() => props.removeAsset(props.currentX, props.currentY)}>
 							<DeleteSVG />
 						</button>
 					</div>

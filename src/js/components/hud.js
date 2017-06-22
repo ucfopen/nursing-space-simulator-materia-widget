@@ -34,6 +34,11 @@ class HUD extends Component {
 									? <AssetControls
 											selectedAsset={this.props.selectedAsset}
 											manipulationMode={this.props.manipulationMode}
+											removeAsset={this.props.removeAsset}
+											deselectAsset={this.props.deselectAsset}
+											rotateAsset={this.props.rotateAsset}
+											currentX={this.props.currentX}
+											currentY={this.props.currentY}
 										/>
 									: null}
 								<AssetTray

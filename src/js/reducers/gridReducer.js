@@ -109,7 +109,6 @@ export default function(
 		case INSERT_ASSET: {
 			const selectedAsset = { ...state.selectedAsset };
 			const gridCopy = JSON.parse(JSON.stringify(state.grid));
-			const gridCopy2 = JSON.parse(JSON.stringify(state.grid));
 			if (
 				selectedAsset === "none" ||
 				!isCellAvailable(gridCopy, action.payload.x, action.payload.y)
