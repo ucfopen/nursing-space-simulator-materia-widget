@@ -75,10 +75,8 @@ export default function(
 		}
 
 		case DESELECT_ASSET: {
-			const gridCopy = JSON.parse(JSON.stringify(state.grid));
 			return {
 				...state,
-				grid: gridCopy,
 				manipulationMode: false,
 				selectedAsset: null,
 				currentX: null,
@@ -203,10 +201,9 @@ export default function(
 					}
 					break;
 			}
-			return { ...state, grid: gridCopy };
-		}
-		default: {
 			return state;
 		}
+		default:
+			return state;
 	}
 }
