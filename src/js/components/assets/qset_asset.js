@@ -11,11 +11,9 @@ export default props => {
 			events={{ click: props.onClick }}
 			primitive={props.data.tag}
 			// If an assets contains an .mtl (defined in qset), aframe will use obj-model. Otherwise, aframe will use material src
-			material={{
-				color: props.data.defaultColor
-			}}
+			material={{ color: "green", opacity: 0.4 }}
 			obj-model={
-				props.assetSelected
+				props.isSelected
 					? "obj: #" + props.data.id + "-obj;"
 					: "obj: #" +
 							props.data.id +
@@ -25,9 +23,9 @@ export default props => {
 							"-mtl;"
 			}
 			/** 
-                * The scale property grows an a-box in the +-y direction, but we want it to seem like the box is just growing in the +y direction. 
-                *   To do this, the position of the box must be shifted upward half of the total scaling value.
-                */
+			* The scale property grows an a-box in the +-y direction, but we want it to seem like the box is just growing in the +y direction.
+			*   To do this, the position of the box must be shifted upward half of the total scaling value.
+			*/
 			position={{ x: props.x, y: yScaleFactor, z: props.z }}
 			rotation={{ x: 0, y: props.rotation, z: 0 }}
 			scale={props.data.scale}
