@@ -156,6 +156,7 @@ export default function(
 							)
 						};
 					}
+					break;
 				case "xDown":
 					if (isCellAvailable(gridCopy, state.currentX - 1, state.currentY)) {
 						newGrid = deleteItem(gridCopy, state.currentX, state.currentY);
@@ -170,6 +171,7 @@ export default function(
 							)
 						};
 					}
+					break;
 				case "zUp":
 					if (isCellAvailable(gridCopy, state.currentX, state.currentY - 1)) {
 						newGrid = deleteItem(gridCopy, state.currentX, state.currentY);
@@ -184,6 +186,7 @@ export default function(
 							)
 						};
 					}
+					break;
 				case "zDown":
 					if (isCellAvailable(gridCopy, state.currentX, state.currentY + 1)) {
 						newGrid = deleteItem(gridCopy, state.currentX, state.currentY);
@@ -198,6 +201,7 @@ export default function(
 							)
 						};
 					}
+					break;
 			}
 			return { ...state, grid: gridCopy };
 		}
