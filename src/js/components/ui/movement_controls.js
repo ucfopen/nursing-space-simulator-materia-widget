@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import ScreenshotSVG from "../assets/icon-svgs/screenshot";
 import UpArrowSVG from "../assets/icon-svgs/up_arrow";
@@ -8,7 +8,7 @@ import RightArrowSVG from "../assets/icon-svgs/right_arrow";
 import ZoomInSVG from "../assets/icon-svgs/zoom_in";
 import ZoomOutSVG from "../assets/icon-svgs/zoom_out";
 
-export default class MovementControls extends React.Component {
+export default class MovementControls extends Component {
 	// TODO: GET THIS OUT ASAP, this is only in for the demo on the week of 6/12/17
 	takeScreenShot() {
 		document
@@ -27,37 +27,35 @@ export default class MovementControls extends React.Component {
 				{this.props.thirdPerson
 					? <div id="camera-controls">
 							<div id="camera-move">
-								<button
-									id="camera-up"
-									onClick={() => this.props.updatePosition("xUp")}>
+								<button id="camera-up" onClick={() => this.props.update("xUp")}>
 									<UpArrowSVG />
 								</button>
 								<div id="camera-move-horizontal">
 									<button
 										id="camera-left"
-										onClick={() => this.props.updatePosition("zUp")}>
+										onClick={() => this.props.update("zUp")}>
 										<LeftArrowSVG />
 									</button>
 									<button
 										id="camera-right"
-										onClick={() => this.props.updatePosition("zDown")}>
+										onClick={() => this.props.update("zDown")}>
 										<RightArrowSVG />
 									</button>
 								</div>
 								<button
 									id="camera-down"
-									onClick={() => this.props.updatePosition("xDown")}>
+									onClick={() => this.props.update("xDown")}>
 									<DownArrowSVG />
 								</button>
 							</div>
 							<button
 								id="camera-zoom-in"
-								onClick={() => this.props.updatePosition("yDown")}>
+								onClick={() => this.props.updateCameraPosition("yDown")}>
 								<ZoomInSVG />
 							</button>
 							<button
 								id="camera-zoom-out"
-								onClick={() => this.props.updatePosition("yUp")}>
+								onClick={() => this.props.updateCameraPosition("yUp")}>
 								<ZoomOutSVG />
 							</button>
 						</div>
