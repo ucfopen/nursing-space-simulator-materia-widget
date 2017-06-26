@@ -118,10 +118,14 @@ export default function(
 					grid: gridCopy
 				};
 			} else {
+				let newGrid;
+				if (state.currentX && state.currentY)
+					newGrid = deleteItem(gridCopy, state.currentX, state.currentY);
+				else newGrid = gridCopy;
 				return {
 					...state,
 					grid: insertItem(
-						gridCopy,
+						newGrid,
 						selectedAsset.id,
 						action.payload.x,
 						action.payload.y
