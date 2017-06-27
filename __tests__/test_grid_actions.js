@@ -66,4 +66,12 @@ describe("Grid Action Tests", () => {
 		};
 		expect(actions.insertAsset(5, 7)).toEqual(expectedAction);
 	});
+
+	it("updateAssetPosition", () => {
+		const expectedAction = {
+			type: actions.UPDATE_ASSET_POSITION,
+			payload: "xUp"
+		};
+		expect(actions.updateAssetPosition("xUp")).toEqual(expectedAction);
+	});
 });
