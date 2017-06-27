@@ -1,11 +1,14 @@
-import { POSITION_UPDATE, CAMERA_TOGGLE } from "../actions/camera_actions";
+import {
+	CAMERA_UPDATE_POSITION,
+	CAMERA_TOGGLE
+} from "../actions/camera_actions";
 
 export default function(
 	state = { x: 2.5, y: 18, z: 14, thirdPerson: true },
 	action
 ) {
 	switch (action.type) {
-		case POSITION_UPDATE:
+		case CAMERA_UPDATE_POSITION:
 			switch (action.payload) {
 				case "xUp":
 					return { ...state, x: state.x + 1 };

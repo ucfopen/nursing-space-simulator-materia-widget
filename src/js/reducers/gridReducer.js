@@ -6,7 +6,8 @@ import {
 	DESELECT_ASSET,
 	ROTATE_ASSET,
 	REMOVE_ASSET,
-	INSERT_ASSET
+	INSERT_ASSET,
+	UPDATE_ASSET_POSITION
 } from "../actions/grid_actions";
 
 import { INIT_DATA } from "../actions";
@@ -126,8 +127,77 @@ export default function(
 				};
 			}
 		}
-		default: {
+		case UPDATE_ASSET_POSITION: {
+			const selectedAsset = state.selectedAsset
+				? { ...state.selectedAsset }
+				: null;
+			const gridCopy = JSON.parse(JSON.stringify(state.grid));
+			let newGrid;
+			switch (action.payload) {
+				case "xUp":
+					if (isCellAvailable(gridCopy, state.currentX + 1, state.currentY)) {
+						newGrid = deleteItem(gridCopy, state.currentX, state.currentY);
+						return {
+							...state,
+							currentX: state.currentX + 1,
+							grid: insertItem(
+								newGrid,
+								selectedAsset.id,
+								state.currentX + 1,
+								state.currentY
+							)
+						};
+					}
+					break;
+				case "xDown":
+					if (isCellAvailable(gridCopy, state.currentX - 1, state.currentY)) {
+						newGrid = deleteItem(gridCopy, state.currentX, state.currentY);
+						return {
+							...state,
+							currentX: state.currentX - 1,
+							grid: insertItem(
+								newGrid,
+								selectedAsset.id,
+								state.currentX - 1,
+								state.currentY
+							)
+						};
+					}
+					break;
+				case "zUp":
+					if (isCellAvailable(gridCopy, state.currentX, state.currentY - 1)) {
+						newGrid = deleteItem(gridCopy, state.currentX, state.currentY);
+						return {
+							...state,
+							currentY: state.currentY - 1,
+							grid: insertItem(
+								newGrid,
+								selectedAsset.id,
+								state.currentX,
+								state.currentY - 1
+							)
+						};
+					}
+					break;
+				case "zDown":
+					if (isCellAvailable(gridCopy, state.currentX, state.currentY + 1)) {
+						newGrid = deleteItem(gridCopy, state.currentX, state.currentY);
+						return {
+							...state,
+							currentY: state.currentY + 1,
+							grid: insertItem(
+								newGrid,
+								selectedAsset.id,
+								state.currentX,
+								state.currentY + 1
+							)
+						};
+					}
+					break;
+			}
 			return state;
 		}
+		default:
+			return state;
 	}
 }
