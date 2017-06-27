@@ -76,7 +76,7 @@ class VRScene extends Component {
 		else {
 			const assets = this.props.assets;
 			return (
-				<Scene>
+				<Scene className="vr-scene">
 					<a-assets>
 						<img
 							id="ceilingTexture"
