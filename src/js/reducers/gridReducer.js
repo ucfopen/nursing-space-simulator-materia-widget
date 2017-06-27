@@ -113,10 +113,14 @@ export default function(
 					...state
 				};
 			} else {
+				let newGrid;
+				if (state.currentX && state.currentY)
+					newGrid = deleteItem(gridCopy, state.currentX, state.currentY);
+				else newGrid = gridCopy;
 				return {
 					...state,
 					grid: insertItem(
-						gridCopy,
+						newGrid,
 						selectedAsset.id,
 						action.payload.x,
 						action.payload.y
@@ -130,65 +134,72 @@ export default function(
 		case UPDATE_ASSET_POSITION: {
 			const selectedAsset = { ...state.selectedAsset };
 			const gridCopy = JSON.parse(JSON.stringify(state.grid));
+			const currentX = state.currentX;
+			const currentY = state.currentY;
+			const currentRotation = gridCopy[currentX][currentY].rotation;
 			let newGrid;
 
 			switch (action.payload) {
 				case "xUp":
-					if (isCellAvailable(gridCopy, state.currentX + 1, state.currentY)) {
-						newGrid = deleteItem(gridCopy, state.currentX, state.currentY);
+					if (isCellAvailable(gridCopy, currentX + 1, currentY)) {
+						newGrid = deleteItem(gridCopy, currentX, currentY);
 						return {
 							...state,
-							currentX: state.currentX + 1,
+							currentX: currentX + 1,
 							grid: insertItem(
 								newGrid,
 								selectedAsset.id,
-								state.currentX + 1,
-								state.currentY
+								currentX + 1,
+								currentY,
+								currentRotation
 							)
 						};
 					}
 					break;
 				case "xDown":
-					if (isCellAvailable(gridCopy, state.currentX - 1, state.currentY)) {
-						newGrid = deleteItem(gridCopy, state.currentX, state.currentY);
+					if (isCellAvailable(gridCopy, currentX - 1, currentY)) {
+						newGrid = deleteItem(gridCopy, currentX, currentY);
 						return {
 							...state,
-							currentX: state.currentX - 1,
+							currentX: currentX - 1,
 							grid: insertItem(
 								newGrid,
 								selectedAsset.id,
-								state.currentX - 1,
-								state.currentY
+								currentX - 1,
+								currentY,
+								currentRotation
 							)
 						};
 					}
 					break;
 				case "zUp":
-					if (isCellAvailable(gridCopy, state.currentX, state.currentY - 1)) {
-						newGrid = deleteItem(gridCopy, state.currentX, state.currentY);
+					if (isCellAvailable(gridCopy, currentX, currentY - 1)) {
+						newGrid = deleteItem(gridCopy, currentX, currentY);
 						return {
 							...state,
-							currentY: state.currentY - 1,
+							currentY: currentY - 1,
 							grid: insertItem(
 								newGrid,
 								selectedAsset.id,
-								state.currentX,
-								state.currentY - 1
+								currentX,
+								currentY - 1,
+								currentRotation
 							)
 						};
 					}
 					break;
 				case "zDown":
-					if (isCellAvailable(gridCopy, state.currentX, state.currentY + 1)) {
-						newGrid = deleteItem(gridCopy, state.currentX, state.currentY);
+					if (isCellAvailable(gridCopy, currentX, currentY + 1)) {
+						newGrid = deleteItem(gridCopy, currentX, currentY);
 						return {
 							...state,
-							currentY: state.currentY + 1,
+							currentY: currentY + 1,
 							grid: insertItem(
 								newGrid,
 								selectedAsset.id,
-								state.currentX,
-								state.currentY + 1
+								currentX,
+								currentY + 1,
+								currentRotation
 							)
 						};
 					}
