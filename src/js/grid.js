@@ -56,10 +56,10 @@ export function deleteItem(grid, x, y) {
  *
  * @return updated grid
  */
-export function insertItem(grid, itemId, x, y) {
+export function insertItem(grid, itemId, x, y, rotation = 180) {
 	grid[x][y] = {
 		id: itemId,
-		rotation: 180
+		rotation: rotation
 	};
 
 	return grid;
