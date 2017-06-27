@@ -18,7 +18,7 @@ describe("position reducer", () => {
 		});
 	});
 
-	it("should handle POSITION_UPDATE", () => {
+	it("should handle CAMERA_UPDATE_POSITION", () => {
 		const x = 10,
 			y = 10,
 			z = 10;
@@ -31,7 +31,7 @@ describe("position reducer", () => {
 				{ x, y, z },
 				// Action being passed in
 				{
-					type: actions.POSITION_UPDATE,
+					type: actions.CAMERA_UPDATE_POSITION,
 					payload: direction
 				}
 			)
@@ -49,7 +49,7 @@ describe("position reducer", () => {
 				{ x, y, z },
 				// Action being passed in
 				{
-					type: actions.POSITION_UPDATE,
+					type: actions.CAMERA_UPDATE_POSITION,
 					payload: direction
 				}
 			)
@@ -67,7 +67,7 @@ describe("position reducer", () => {
 				{ x, y, z },
 				// Action being passed in
 				{
-					type: actions.POSITION_UPDATE,
+					type: actions.CAMERA_UPDATE_POSITION,
 					payload: direction
 				}
 			)
@@ -85,7 +85,7 @@ describe("position reducer", () => {
 				{ x, y, z },
 				// Action being passed in
 				{
-					type: actions.POSITION_UPDATE,
+					type: actions.CAMERA_UPDATE_POSITION,
 					payload: direction
 				}
 			)
@@ -103,7 +103,7 @@ describe("position reducer", () => {
 				{ x, y, z },
 				// Action being passed in
 				{
-					type: actions.POSITION_UPDATE,
+					type: actions.CAMERA_UPDATE_POSITION,
 					payload: direction
 				}
 			)
@@ -121,7 +121,7 @@ describe("position reducer", () => {
 				{ x, y, z },
 				// Action being passed in
 				{
-					type: actions.POSITION_UPDATE,
+					type: actions.CAMERA_UPDATE_POSITION,
 					payload: direction
 				}
 			)
@@ -139,7 +139,7 @@ describe("position reducer", () => {
 				{ x, y, z },
 				// Action being passed in
 				{
-					type: actions.POSITION_UPDATE,
+					type: actions.CAMERA_UPDATE_POSITION,
 					payload: direction
 				}
 			)

@@ -3,10 +3,10 @@ import * as actions from "../src/js/actions/camera_actions";
 describe("Camera Action Tests", () => {
 	it("updatePosition", () => {
 		const expectedAction = {
-			type: actions.POSITION_UPDATE,
+			type: actions.CAMERA_UPDATE_POSITION,
 			payload: "xUp"
 		};
-		expect(actions.updatePosition("xUp")).toEqual(expectedAction);
+		expect(actions.updateCameraPosition("xUp")).toEqual(expectedAction);
 	});
 
 	it("cameraToggle", () => {

@@ -128,11 +128,10 @@ export default function(
 			}
 		}
 		case UPDATE_ASSET_POSITION: {
-			const selectedAsset = state.selectedAsset
-				? { ...state.selectedAsset }
-				: null;
+			const selectedAsset = { ...state.selectedAsset };
 			const gridCopy = JSON.parse(JSON.stringify(state.grid));
 			let newGrid;
+
 			switch (action.payload) {
 				case "xUp":
 					if (isCellAvailable(gridCopy, state.currentX + 1, state.currentY)) {
