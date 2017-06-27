@@ -338,4 +338,168 @@ describe("grid reducer", () => {
 			selectedAsset
 		});
 	});
+
+	it("should handle UPDATE_ASSET_POSITION", () => {
+		const grid = [
+			["0", "0", "0"],
+			["0", { id: "bed-1", rotation: 0 }, "0"],
+			["0", "0", "0"]
+		];
+
+		let selectedAsset = {
+			id: "bed-1"
+		};
+
+		const x = 1,
+			y = 1;
+
+		let direction = null;
+		let newGrid;
+
+		expect(
+			gridReducer(
+				// State being passed in
+				{ grid, currentX: x, currentY: y, selectedAsset },
+				// Action being passed it
+				{
+					type: actions.UPDATE_ASSET_POSITION,
+					payload: direction
+				}
+			)
+		).toEqual({
+			grid: grid,
+			currentX: x,
+			currentY: y,
+			selectedAsset
+		});
+
+		direction = "xUp";
+		newGrid = deleteItem(JSON.parse(JSON.stringify(grid)), x, y);
+
+		expect(
+			gridReducer(
+				// State being passed in
+				{ grid, currentX: x, currentY: y, selectedAsset },
+				// Action being passed it
+				{
+					type: actions.UPDATE_ASSET_POSITION,
+					payload: direction
+				}
+			)
+		).toEqual({
+			grid: insertItem(newGrid, selectedAsset.id, x + 1, y),
+			currentX: x + 1,
+			currentY: y,
+			selectedAsset
+		});
+
+		direction = "xDown";
+		newGrid = deleteItem(JSON.parse(JSON.stringify(grid)), x, y);
+
+		expect(
+			gridReducer(
+				// State being passed in
+				{ grid, currentX: x, currentY: y, selectedAsset },
+				// Action being passed it
+				{
+					type: actions.UPDATE_ASSET_POSITION,
+					payload: direction
+				}
+			)
+		).toEqual({
+			grid: insertItem(newGrid, selectedAsset.id, x - 1, y),
+			currentX: x - 1,
+			currentY: y,
+			selectedAsset
+		});
+
+		direction = "zUp";
+		newGrid = deleteItem(JSON.parse(JSON.stringify(grid)), x, y);
+
+		expect(
+			gridReducer(
+				// State being passed in
+				{ grid, currentX: x, currentY: y, selectedAsset },
+				// Action being passed it
+				{
+					type: actions.UPDATE_ASSET_POSITION,
+					payload: direction
+				}
+			)
+		).toEqual({
+			grid: insertItem(newGrid, selectedAsset.id, x, y - 1),
+			currentX: x,
+			currentY: y - 1,
+			selectedAsset
+		});
+
+		direction = "zDown";
+		newGrid = deleteItem(JSON.parse(JSON.stringify(grid)), x, y);
+
+		expect(
+			gridReducer(
+				// State being passed in
+				{ grid, currentX: x, currentY: y, selectedAsset },
+				// Action being passed it
+				{
+					type: actions.UPDATE_ASSET_POSITION,
+					payload: direction
+				}
+			)
+		).toEqual({
+			grid: insertItem(newGrid, selectedAsset.id, x, y + 1),
+			currentX: x,
+			currentY: y + 1,
+			selectedAsset
+		});
+
+		// Given the constant test grid, these are possible invalid moves that should not change the state
+		let invalidMovements = [
+			{
+				direction: "xUp",
+				x: 0,
+				y: 1
+			},
+			{
+				direction: "xDown",
+				x: 2,
+				y: 1
+			},
+			{
+				direction: "zUp",
+				x: 1,
+				y: 0
+			},
+			{
+				direction: "zDown",
+				x: 1,
+				y: 2
+			}
+		];
+
+		// Tests all invalid moves to make sure the state does not change
+		for (let i = 0; i < invalidMovements.length; i++) {
+			expect(
+				gridReducer(
+					// State being passed in
+					{
+						grid,
+						currentX: invalidMovements[i].x,
+						currentY: invalidMovements[i].y,
+						selectedAsset
+					},
+					// Action being passed it
+					{
+						type: actions.UPDATE_ASSET_POSITION,
+						payload: invalidMovements[i].direction
+					}
+				)
+			).toEqual({
+				grid,
+				currentX: invalidMovements[i].x,
+				currentY: invalidMovements[i].y,
+				selectedAsset
+			});
+		}
+	});
 });
