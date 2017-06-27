@@ -19,17 +19,13 @@ export default function(
 		case INIT_DATA: {
 			return {
 				...state,
-				grid: action.payload.grid,
-				categories: action.payload.categories,
-				assets: action.payload.assets
+				grid: action.payload.grid
 			};
 		}
 
 		case SELECT_ASSET_TYPE: {
-			const gridCopy = JSON.parse(JSON.stringify(state.grid));
 			return {
 				...state,
-				grid: gridCopy,
 				selectedAsset: action.payload,
 				manipulationMode: false,
 				currentX: null,
@@ -40,8 +36,7 @@ export default function(
 		case SELECT_ASSET: {
 			const gridCopy = JSON.parse(JSON.stringify(state.grid));
 
-			let oldSelectedAsset;
-			oldSelectedAsset = state.selectedAsset
+			let oldSelectedAsset = state.selectedAsset
 				? { ...state.selectedAsset }
 				: null;
 
@@ -66,7 +61,6 @@ export default function(
 			} else {
 				return {
 					...state,
-					grid: gridCopy,
 					manipulationMode: true,
 					selectedAsset: action.payload.asset,
 					currentX: action.payload.x,
@@ -76,10 +70,8 @@ export default function(
 		}
 
 		case DESELECT_ASSET: {
-			const gridCopy = JSON.parse(JSON.stringify(state.grid));
 			return {
 				...state,
-				grid: gridCopy,
 				manipulationMode: false,
 				selectedAsset: null,
 				currentX: null,
@@ -117,8 +109,7 @@ export default function(
 				!isCellAvailable(gridCopy, action.payload.x, action.payload.y)
 			) {
 				return {
-					...state,
-					grid: gridCopy
+					...state
 				};
 			} else {
 				return {
@@ -135,7 +126,6 @@ export default function(
 				};
 			}
 		}
-
 		default: {
 			return state;
 		}

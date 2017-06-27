@@ -28,7 +28,9 @@ export function loadGrid(gridString, rows, columns) {
  * @return updated grid
  */
 export function rotateCell(grid, x, y) {
-	grid[x][y].rotation = (grid[x][y].rotation - 90) % 360;
+	if (grid[x][y] !== "0")
+		grid[x][y].rotation = (grid[x][y].rotation - 90) % 360;
+
 	return grid;
 }
 
