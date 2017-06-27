@@ -16,6 +16,9 @@ class VRScene extends Component {
 	renderAssets() {
 		const assets = this.props.assets;
 		const selectAsset = this.props.selectAsset;
+		const currentX = this.props.currentX;
+		const currentY = this.props.currentY;
+
 		const mappedAssets = this.props.grid.map(
 			(row, rowIndex) =>
 				row.map((column, colIndex) => {
@@ -31,6 +34,7 @@ class VRScene extends Component {
 								)}
 								data={assets[column.id]}
 								rotation={column.rotation}
+								isSelected={currentX === rowIndex && currentY === colIndex}
 							/>
 						: null;
 				}, this),
@@ -124,7 +128,8 @@ function mapStateToProps({ position, data, grid }) {
 		thirdPerson: position.thirdPerson,
 		assets: data.assets,
 		grid: grid.grid,
-		selectedAsset: grid.selectedAsset
+		currentX: grid.currentX,
+		currentY: grid.currentY
 	};
 }
 
