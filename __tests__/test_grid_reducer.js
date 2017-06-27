@@ -387,7 +387,13 @@ describe("grid reducer", () => {
 				}
 			)
 		).toEqual({
-			grid: insertItem(newGrid, selectedAsset.id, x + 1, y),
+			grid: insertItem(
+				newGrid,
+				selectedAsset.id,
+				x + 1,
+				y,
+				grid[x][y].rotation
+			),
 			currentX: x + 1,
 			currentY: y,
 			selectedAsset
@@ -407,7 +413,13 @@ describe("grid reducer", () => {
 				}
 			)
 		).toEqual({
-			grid: insertItem(newGrid, selectedAsset.id, x - 1, y),
+			grid: insertItem(
+				newGrid,
+				selectedAsset.id,
+				x - 1,
+				y,
+				grid[x][y].rotation
+			),
 			currentX: x - 1,
 			currentY: y,
 			selectedAsset
@@ -427,7 +439,13 @@ describe("grid reducer", () => {
 				}
 			)
 		).toEqual({
-			grid: insertItem(newGrid, selectedAsset.id, x, y - 1),
+			grid: insertItem(
+				newGrid,
+				selectedAsset.id,
+				x,
+				y - 1,
+				grid[x][y].rotation
+			),
 			currentX: x,
 			currentY: y - 1,
 			selectedAsset
@@ -447,7 +465,13 @@ describe("grid reducer", () => {
 				}
 			)
 		).toEqual({
-			grid: insertItem(newGrid, selectedAsset.id, x, y + 1),
+			grid: insertItem(
+				newGrid,
+				selectedAsset.id,
+				x,
+				y + 1,
+				grid[x][y].rotation
+			),
 			currentX: x,
 			currentY: y + 1,
 			selectedAsset
