@@ -7,26 +7,39 @@ import MovementControls from "./ui/movement_controls";
 
 import { connect } from "react-redux";
 
-import { updatePosition, toggleCameraType } from "../actions/camera_actions.js";
+import {
+	updateCameraPosition,
+	toggleCameraType
+} from "../actions/camera_actions.js";
 import { toggleMenuVisibility, setCategory } from "../actions/menu_actions";
 
 import {
 	selectAssetType,
 	deselectAsset,
 	rotateAsset,
-	removeAsset
+	removeAsset,
+	updateAssetPosition
 } from "../actions/grid_actions";
 
 class HUD extends Component {
 	render() {
-		if (!this.props.categories || !this.props.assets) {
+		if (
+			!this.props.categories ||
+			!this.props.assets ||
+			!this.props.updateAssetPosition ||
+			!this.props.updateCameraPosition
+		) {
 			return <div>Loading</div>;
 		} else {
+			const update = this.props.selectedAsset
+				? this.props.updateAssetPosition
+				: this.props.updateCameraPosition;
 			return (
 				<div>
 					<MovementControls
 						thirdPerson={this.props.thirdPerson}
-						updatePosition={this.props.updatePosition}
+						update={update}
+						updateCameraPosition={this.props.updateCameraPosition}
 					/>
 					{this.props.thirdPerson
 						? <div>
@@ -76,12 +89,13 @@ function mapStateToProps({ data, menu, grid, position }) {
 }
 
 export default connect(mapStateToProps, {
-	updatePosition,
+	updateCameraPosition,
 	toggleCameraType,
 	toggleMenuVisibility,
 	setCategory,
 	selectAssetType,
 	deselectAsset,
 	rotateAsset,
-	removeAsset
+	removeAsset,
+	updateAssetPosition
 })(HUD);

@@ -6,6 +6,7 @@ export const ROTATE_ASSET = "ROTATE_ASSET";
 export const SELECT_ASSET = "SELECT_ASSET";
 export const SELECT_ASSET_TYPE = "SELECT_ASSET_TYPE";
 export const REMOVE_ASSET = "REMOVE_ASSET";
+export const UPDATE_ASSET_POSITION = "UPDATE_ASSET_POSITION";
 
 export function selectAssetType(asset) {
 	return {
@@ -45,5 +46,12 @@ export function insertAsset(x, y) {
 	return {
 		type: INSERT_ASSET,
 		payload: { x, y }
+	};
+}
+
+export function updateAssetPosition(axisDirection) {
+	return {
+		type: UPDATE_ASSET_POSITION,
+		payload: axisDirection
 	};
 }
