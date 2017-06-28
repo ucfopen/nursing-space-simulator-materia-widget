@@ -1,0 +1,79 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Asset Tray tests renders asset tray 1`] = `
+<div
+  className="open"
+  id="UI-bottom-panel"
+>
+  <button
+    className="drawer-toggle"
+    onClick={[Function]}
+  >
+    [Close Menu]
+  </button>
+  <div
+    id="asset-selection-menu"
+  >
+    <button
+      id="vr-viewer-mode"
+      onClick={[Function]}
+    >
+      First-Person Viewer
+    </button>
+    <div
+      id="categories-list"
+    >
+      <button
+        className="asset-category"
+        data-category="beds"
+        onClick={[Function]}
+      >
+        beds
+      </button>
+      <button
+        className="asset-category"
+        data-category="equipment"
+        onClick={[Function]}
+      >
+        equipment
+      </button>
+      <button
+        className="asset-category"
+        data-category="walls"
+        onClick={[Function]}
+      >
+        walls
+      </button>
+      <button
+        className="asset-category"
+        data-category="people"
+        onClick={[Function]}
+      >
+        people
+      </button>
+    </div>
+  </div>
+  <div
+    id="asset-picker"
+  >
+    <div
+      className="button-container"
+    >
+      <button
+        className="asset"
+        data-category="beds"
+        data-title={undefined}
+        id={undefined}
+        onClick={[Function]}
+        style={
+          Object {
+            "background": "url(undefined) no-repeat center center",
+            "backgroundSize": "100% 100%",
+          }
+        }
+      />
+      <div />
+    </div>
+  </div>
+</div>
+`;
