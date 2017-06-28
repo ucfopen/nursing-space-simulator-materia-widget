@@ -1,7 +1,7 @@
-import gridReducer from "../src/js/reducers/gridReducer";
-import * as actions from "../src/js/actions/grid_actions";
-import { INIT_DATA } from "../src/js/actions/";
-import { deleteItem, insertItem, rotateCell } from "../src/js/grid";
+import gridReducer from "../../src/js/reducers/gridReducer";
+import * as actions from "../../src/js/actions/grid_actions";
+import { INIT_DATA } from "../../src/js/actions/";
+import { deleteItem, insertItem, rotateCell } from "../../src/js/grid";
 
 describe("grid reducer", () => {
 	it("should return the inital state", () => {

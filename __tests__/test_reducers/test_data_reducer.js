@@ -1,6 +1,6 @@
-import dataReducer from "../src/js/reducers/dataReducer";
+import dataReducer from "../../src/js/reducers/dataReducer";
 
-import { INIT_DATA } from "../src/js/actions/";
+import { INIT_DATA } from "../../src/js/actions/";
 
 describe("data reducer", () => {
 	it("should return the inital state", () => {

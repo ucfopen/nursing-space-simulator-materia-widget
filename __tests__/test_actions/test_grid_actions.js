@@ -1,4 +1,4 @@
-import * as actions from "../src/js/actions/grid_actions";
+import * as actions from "../../src/js/actions/grid_actions";
 
 describe("Grid Action Tests", () => {
 	it("selectAssetType", () => {

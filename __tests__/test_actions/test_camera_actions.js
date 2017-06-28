@@ -1,4 +1,4 @@
-import * as actions from "../src/js/actions/camera_actions";
+import * as actions from "../../src/js/actions/camera_actions";
 
 describe("Camera Action Tests", () => {
 	it("updatePosition", () => {
