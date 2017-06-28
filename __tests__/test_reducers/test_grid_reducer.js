@@ -14,7 +14,9 @@ describe("grid reducer", () => {
 			)
 		).toEqual({
 			manipulationMode: false,
-			selectedAsset: null
+			selectedAsset: null,
+			currentX: null,
+			currentY: null
 		});
 	});
 

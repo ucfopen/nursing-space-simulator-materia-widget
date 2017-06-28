@@ -13,7 +13,12 @@ import {
 import { INIT_DATA } from "../actions";
 
 export default function(
-	state = { manipulationMode: false, selectedAsset: null },
+	state = {
+		currentX: null,
+		currentY: null,
+		manipulationMode: false,
+		selectedAsset: null
+	},
 	action
 ) {
 	switch (action.type) {
