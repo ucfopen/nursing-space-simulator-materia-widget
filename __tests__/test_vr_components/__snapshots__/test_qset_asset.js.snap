@@ -1,0 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`QsetAsset tests renders a qset asset correctly 1`] = `<a-obj-model />`;
+
+exports[`QsetAsset tests renders a qset asset correctly 2`] = `<a-obj-model />`;

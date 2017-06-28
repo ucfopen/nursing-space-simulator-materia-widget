@@ -1,5 +1,5 @@
-import positionReducer from "../src/js/reducers/positionReducer";
-import * as actions from "../src/js/actions/camera_actions";
+import positionReducer from "../../src/js/reducers/positionReducer";
+import * as actions from "../../src/js/actions/camera_actions";
 
 describe("position reducer", () => {
 	it("should return the inital state", () => {

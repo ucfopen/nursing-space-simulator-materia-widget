@@ -1,5 +1,5 @@
-import * as actions from "../src/js/actions";
-import { loadGrid } from "../src/js/grid";
+import * as actions from "../../src/js/actions";
+import { loadGrid } from "../../src/js/grid";
 describe("Menu Action Tests", () => {
 	it("initialize action", () => {
 		// does not represent a qset to its fullest extent

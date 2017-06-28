@@ -1,5 +1,5 @@
-import menuReducer from "../src/js/reducers/menuReducer";
-import * as actions from "../src/js/actions/menu_actions";
+import menuReducer from "../../src/js/reducers/menuReducer";
+import * as actions from "../../src/js/actions/menu_actions";
 
 describe("menu reducer", () => {
 	it("should return the inital state", () => {

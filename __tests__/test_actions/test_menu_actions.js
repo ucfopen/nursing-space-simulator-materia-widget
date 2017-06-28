@@ -1,4 +1,4 @@
-import * as actions from "../src/js/actions/menu_actions";
+import * as actions from "../../src/js/actions/menu_actions";
 
 describe("Menu Action Tests", () => {
 	it("toggleMenuVisibility", () => {
