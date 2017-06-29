@@ -18,7 +18,27 @@ import {
 class App extends Component {
 	componentDidMount() {
 		this.props.initData(this.props.qset);
-		this.props.startTourSection(this.joyride, part1);
+	}
+
+	componentWillUpdate(nextProps) {
+		if (nextProps.runNextSet === true) {
+			let newSteps;
+			switch (this.props.currentStepSet) {
+				case 0:
+					newSteps = part1;
+					break;
+				case 1:
+					newSteps = clickInScene;
+					break;
+				case 2:
+					newSteps = part2;
+					break;
+			}
+			this.joyride.setState({ index: 0 }, () =>
+				setTimeout(this.joyride.start(true), 500)
+			);
+			this.props.startTourSection(newSteps);
+		}
 	}
 
 	render() {
@@ -26,7 +46,7 @@ class App extends Component {
 			<div>
 				<Joyride
 					ref={c => (this.joyride = c)}
-					callback={() => console.log(this.joyride)}
+					callback={() => {}}
 					steps={this.props.steps}
 					debug={false}
 					showSkipButton={true}
@@ -52,8 +72,9 @@ class App extends Component {
 
 function mapStateToProps({ tour }) {
 	return {
-		running: tour.running,
-		steps: tour.steps
+		steps: tour.steps,
+		runNextSet: tour.runNextSet,
+		currentStepSet: tour.currentStepSet
 	};
 }
 
