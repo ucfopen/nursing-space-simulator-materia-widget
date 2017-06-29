@@ -295,7 +295,7 @@ describe("grid reducer", () => {
 		expect(
 			gridReducer(
 				// State being passed in
-				{ selectedAsset, grid },
+				{ selectedAsset, grid, currentX: null, currentY: null },
 				// Action being passed in
 				{
 					type: actions.INSERT_ASSET,
@@ -325,7 +325,7 @@ describe("grid reducer", () => {
 		expect(
 			gridReducer(
 				// State being passed in
-				{ selectedAsset, grid },
+				{ selectedAsset, grid, currentX: null, currentY: null },
 				// Action being passed in
 				{
 					type: actions.INSERT_ASSET,
@@ -337,7 +337,37 @@ describe("grid reducer", () => {
 			)
 		).toEqual({
 			grid,
-			selectedAsset
+			selectedAsset,
+			currentX: null,
+			currentY: null
+		});
+
+		x = 0;
+		y = 0;
+		// Tests currently selected asset is deleted when inserted to a new grid cell (aka moving an asset)
+		const newGrid = deleteItem(JSON.parse(JSON.stringify(grid)), 0, 1);
+		expect(
+			gridReducer(
+				{ selectedAsset, grid, currentX: 0, currentY: 1 },
+				{
+					type: actions.INSERT_ASSET,
+					payload: {
+						x,
+						y
+					}
+				}
+			)
+		).toEqual({
+			grid: insertItem(
+				JSON.parse(JSON.stringify(newGrid)),
+				selectedAsset.id,
+				x,
+				y
+			),
+			selectedAsset,
+			manipulationMode: true,
+			currentX: x,
+			currentY: y
 		});
 	});
 

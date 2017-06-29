@@ -118,10 +118,9 @@ export default function(
 					...state
 				};
 			} else {
-				let newGrid;
-				if (state.currentX && state.currentY)
-					newGrid = deleteItem(gridCopy, state.currentX, state.currentY);
-				else newGrid = gridCopy;
+				let newGrid = state.currentX !== null && state.currentY !== null
+					? (newGrid = deleteItem(gridCopy, state.currentX, state.currentY))
+					: (newGrid = gridCopy);
 				return {
 					...state,
 					grid: insertItem(
