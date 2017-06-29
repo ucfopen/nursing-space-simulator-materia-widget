@@ -1,29 +1,29 @@
 import React from "react";
 import renderer from "react-test-renderer";
 import { Entity } from "aframe-react";
+import { shallow } from "enzyme";
 import Aframe from "aframe";
 
 import QsetAsset from "../../src/js/components/assets/qset_asset";
 
-describe("QsetAsset tests", () => {
-	it("renders a qset asset correctly", () => {
-		const mockClick = jest.fn();
+const mockClick = jest.fn();
+const rotation = { x: 0, y: 0, z: 0 };
 
-		let assetIsSelected = false;
+describe("QsetAsset tests", () => {
+	it("renders a selected qset asset correctly", () => {
 		let data = {
 			id: "bed-1",
 			tag: "a-obj-model",
 			category: "beds",
 			scale: { x: 1, y: 1, z: 1 }
 		};
-		const rotation = { x: 0, y: 0, z: 0 };
 
 		const selectedQsetAssetWithoutWallsTree = renderer
 			.create(
 				<QsetAsset
 					onClick={mockClick}
 					data={data}
-					isSelected={assetIsSelected}
+					isSelected={true}
 					rotation={rotation}
 					x={1}
 					z={1}
@@ -32,9 +32,10 @@ describe("QsetAsset tests", () => {
 			.toJSON();
 
 		expect(selectedQsetAssetWithoutWallsTree).toMatchSnapshot();
+	});
 
-		assetIsSelected = true;
-		data = {
+	it("renders a selected qset asset correctly", () => {
+		let data = {
 			id: "wall-1",
 			tag: "a-obj-model",
 			category: "walls",
@@ -46,7 +47,7 @@ describe("QsetAsset tests", () => {
 				<QsetAsset
 					onClick={mockClick}
 					data={data}
-					isSelected={assetIsSelected}
+					isSelected={false}
 					rotation={rotation}
 					x={1}
 					z={1}
@@ -55,9 +56,53 @@ describe("QsetAsset tests", () => {
 			.toJSON();
 
 		expect(nonSelectedQsetAssetWithWallsTree).toMatchSnapshot();
+	});
 
-		expect(selectedQsetAssetWithoutWallsTree).not.toEqual(
-			nonSelectedQsetAssetWithWallsTree
+	it("does not add material source to selected assets", () => {
+		let data = {
+			id: "bed-1",
+			tag: "a-obj-model",
+			category: "beds",
+			scale: { x: 1, y: 1, z: 1 }
+		};
+
+		const nonSelectedQsetAssetWithWalls = shallow(
+			<QsetAsset
+				onClick={mockClick}
+				data={data}
+				isSelected={true}
+				rotation={rotation}
+				x={1}
+				z={1}
+			/>
 		);
+
+		expect(
+			nonSelectedQsetAssetWithWalls.props("obj-model")["obj-model"]
+		).toEqual(`obj: #${data.id}-obj;`);
+	});
+
+	it("adds material source to non-selected assets", () => {
+		let data = {
+			id: "bed-1",
+			tag: "a-obj-model",
+			category: "beds",
+			scale: { x: 1, y: 1, z: 1 }
+		};
+
+		const nonSelectedQsetAssetWithWalls = shallow(
+			<QsetAsset
+				onClick={mockClick}
+				data={data}
+				isSelected={false}
+				rotation={rotation}
+				x={1}
+				z={1}
+			/>
+		);
+
+		expect(
+			nonSelectedQsetAssetWithWalls.props("obj-model")["obj-model"]
+		).toEqual(`obj: #${data.id}-obj;mtl: #${data.id}-mtl;`);
 	});
 });
