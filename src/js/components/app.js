@@ -1,20 +1,13 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { initData } from "../actions";
-import { startTourSection } from "../actions/tour_actions";
+import { startTourSection, stopTour } from "../actions/tour_actions";
 import applyTourSteps from "../tourHelper";
 
 import HUD from "./hud";
 import VRScene from "./vr_scene";
 
 import Joyride from "react-joyride";
-import {
-	part1,
-	part2,
-	clickCameraInScene,
-	clickInScene,
-	clickFirstPersonViewer
-} from "../steps";
 
 class App extends Component {
 	componentDidMount() {
@@ -58,12 +51,16 @@ class App extends Component {
 		}
 	}
 
+	joyrideCallback(data) {
+		if (data.action === "skip") this.props.stopTour();
+	}
+
 	render() {
 		return (
 			<div>
 				<Joyride
 					ref={c => (this.joyride = c)}
-					callback={() => {}}
+					callback={this.joyrideCallback.bind(this)}
 					steps={this.props.steps}
 					debug={false}
 					showSkipButton={true}
@@ -98,4 +95,8 @@ function mapStateToProps({ tour }) {
 	};
 }
 
-export default connect(mapStateToProps, { initData, startTourSection })(App);
+export default connect(mapStateToProps, {
+	initData,
+	startTourSection,
+	stopTour
+})(App);
