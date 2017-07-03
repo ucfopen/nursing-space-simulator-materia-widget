@@ -1,4 +1,4 @@
-import { START_TOUR_SECTION } from "../actions/tour_actions";
+import { START_TOUR_SECTION, STOP_TOUR } from "../actions/tour_actions";
 import { SELECT_ASSET_TYPE, INSERT_ASSET } from "../actions/grid_actions";
 import { INIT_DATA } from "../actions/index";
 
@@ -28,6 +28,12 @@ export default function(
 				stepSetInQueue: action.payload.stepSetInQueue,
 				stepCompletion: action.payload.stepCompletion,
 				runNextSet: false
+			};
+
+		case STOP_TOUR:
+			return {
+				...state,
+				tourRunning: false
 			};
 
 		case SELECT_ASSET_TYPE:
