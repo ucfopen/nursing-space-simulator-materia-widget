@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { initData } from "../actions";
 import { startTourSection } from "../actions/tour_actions";
+import applyTourSteps from "../tourHelper";
 
 import HUD from "./hud";
 import VRScene from "./vr_scene";
@@ -18,26 +19,42 @@ import {
 class App extends Component {
 	componentDidMount() {
 		this.props.initData(this.props.qset);
+
+		// need this since componentWillUpdate not called for initial render
+		const {
+			steps,
+			nextSteps,
+			stepSetInQueue,
+			stepCompletion
+		} = applyTourSteps(this.props, {
+			runNextSet: true
+		});
+		this.joyride.setState({ index: 0 }, () =>
+			setTimeout(this.joyride.start(true), 500)
+		);
+		this.props.startTourSection(
+			steps,
+			nextSteps,
+			stepSetInQueue,
+			stepCompletion
+		);
 	}
 
 	componentWillUpdate(nextProps) {
-		if (nextProps.runNextSet === true) {
-			let newSteps;
-			switch (this.props.currentStepSet) {
-				case 0:
-					newSteps = part1;
-					break;
-				case 1:
-					newSteps = clickInScene;
-					break;
-				case 2:
-					newSteps = part2;
-					break;
-			}
+		const { steps, nextSteps, stepSetInQueue, stepCompletion } = applyTourSteps(
+			this.props,
+			nextProps
+		);
+		if (steps && nextSteps && stepSetInQueue && stepCompletion) {
 			this.joyride.setState({ index: 0 }, () =>
 				setTimeout(this.joyride.start(true), 500)
 			);
-			this.props.startTourSection(newSteps);
+			this.props.startTourSection(
+				steps,
+				nextSteps,
+				stepSetInQueue,
+				stepCompletion
+			);
 		}
 	}
 
@@ -73,8 +90,11 @@ class App extends Component {
 function mapStateToProps({ tour }) {
 	return {
 		steps: tour.steps,
+		nextSteps: tour.nextSteps,
 		runNextSet: tour.runNextSet,
-		currentStepSet: tour.currentStepSet
+		stepSetInQueue: tour.stepSetInQueue,
+		stepCompletion: tour.stepCompletion,
+		tourRunning: tour.tourRunning
 	};
 }
 
