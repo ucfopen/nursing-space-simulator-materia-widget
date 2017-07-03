@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Category button tests renders correctly 1`] = `
+<button
+  className="asset-category"
+  data-category="beds"
+  onClick={[Function]}
+>
+  beds
+</button>
+`;
