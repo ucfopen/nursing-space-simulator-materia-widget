@@ -5,7 +5,7 @@ import { initData } from "../actions";
 import HUD from "./hud";
 import VRScene from "./vr_scene";
 
-class App extends Component {
+export class App extends Component {
 	componentDidMount() {
 		this.props.initData(this.props.qset);
 	}

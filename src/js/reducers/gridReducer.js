@@ -13,7 +13,12 @@ import {
 import { INIT_DATA } from "../actions";
 
 export default function(
-	state = { manipulationMode: false, selectedAsset: null },
+	state = {
+		currentX: null,
+		currentY: null,
+		manipulationMode: false,
+		selectedAsset: null
+	},
 	action
 ) {
 	switch (action.type) {
@@ -25,10 +30,8 @@ export default function(
 		}
 
 		case SELECT_ASSET_TYPE: {
-			const gridCopy = JSON.parse(JSON.stringify(state.grid));
 			return {
 				...state,
-				grid: gridCopy,
 				selectedAsset: action.payload,
 				manipulationMode: false,
 				currentX: null,
@@ -39,8 +42,7 @@ export default function(
 		case SELECT_ASSET: {
 			const gridCopy = JSON.parse(JSON.stringify(state.grid));
 
-			let oldSelectedAsset;
-			oldSelectedAsset = state.selectedAsset
+			let oldSelectedAsset = state.selectedAsset
 				? { ...state.selectedAsset }
 				: null;
 
@@ -65,7 +67,6 @@ export default function(
 			} else {
 				return {
 					...state,
-					grid: gridCopy,
 					manipulationMode: true,
 					selectedAsset: action.payload.asset,
 					currentX: action.payload.x,
@@ -114,14 +115,12 @@ export default function(
 				!isCellAvailable(gridCopy, action.payload.x, action.payload.y)
 			) {
 				return {
-					...state,
-					grid: gridCopy
+					...state
 				};
 			} else {
-				let newGrid;
-				if (state.currentX && state.currentY)
-					newGrid = deleteItem(gridCopy, state.currentX, state.currentY);
-				else newGrid = gridCopy;
+				let newGrid = state.currentX !== null && state.currentY !== null
+					? (newGrid = deleteItem(gridCopy, state.currentX, state.currentY))
+					: (newGrid = gridCopy);
 				return {
 					...state,
 					grid: insertItem(
@@ -136,16 +135,14 @@ export default function(
 				};
 			}
 		}
-
 		case UPDATE_ASSET_POSITION: {
-			const selectedAsset = state.selectedAsset
-				? { ...state.selectedAsset }
-				: null;
+			const selectedAsset = { ...state.selectedAsset };
 			const gridCopy = JSON.parse(JSON.stringify(state.grid));
 			const currentX = state.currentX;
 			const currentY = state.currentY;
 			const currentRotation = gridCopy[currentX][currentY].rotation;
 			let newGrid;
+
 			switch (action.payload) {
 				case "xUp":
 					if (isCellAvailable(gridCopy, currentX + 1, currentY)) {

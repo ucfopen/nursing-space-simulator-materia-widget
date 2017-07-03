@@ -1,0 +1,390 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SVG Components test renders ConfirmSVG correctly 1`] = `
+<svg
+  enable-background="new 0 0 125 125"
+  height="55px"
+  version="1.1"
+  viewBox="0 0 125 125"
+  width="55px"
+  x="0px"
+  xmlns="http://www.w3.org/2000/svg"
+  y="0px"
+>
+  <g
+    id="Layer_9"
+  >
+    <polygon
+      fill="#DC7627"
+      points="119,33.2 100.4,14.7 45,70.2 23.5,48.7  5,67.2 26.4,88.7 26.4,88.7 45,107.2 45,107.2 45,107.2 63.5,88.7 63.5,88.7"
+      stroke="#000000"
+      strokeMiterlimit="10"
+      strokeWidth="3"
+    />
+  </g>
+</svg>
+`;
+
+exports[`SVG Components test renders DeleteSVG correctly 1`] = `
+<svg
+  height="55px"
+  version="1.1"
+  viewBox="0 0 125 125"
+  width="55px"
+  x="0px"
+  xmlns="http://www.w3.org/2000/svg"
+  y="0px"
+>
+  <g
+    class="svg-icon"
+    id="Layer_5"
+  >
+    <path
+      d="M82.5,18.8H42.5c-2.8,0-5-2.3-5-5V8c0-2.8,2.3-5,5-5h39.9c2.8,0,5,2.3,5,5v5.8C87.5,16.6,85.2,18.8,82.5,18.8z"
+      fill="none"
+      stroke="#000000"
+      strokeMiterlimit="10"
+      strokeWidth="3"
+    />
+    <path
+      d="M96.5,120H28.5c-4.2,0-7.6-3.4-7.6-7.6V19c0-4.2,3.4-7.6,7.6-7.6h68.1c4.2,0,7.6,3.4,7.6,7.6v93.4C104.2,116.6,100.7,120,96.5,120z"
+      fill="#DC7627"
+      stroke="#000000"
+      strokeMiterlimit="10"
+      strokeWidth="3"
+    />
+    <rect
+      fill="#DC7627"
+      height="19"
+      stroke="#000000"
+      strokeMiterlimit="10"
+      strokeWidth="3"
+      width="100.6"
+      x="12.2"
+      y="9.3"
+    />
+    <rect
+      fill="none"
+      height="77"
+      stroke="#000000"
+      strokeMiterlimit="10"
+      strokeWidth="3"
+      width="9.7"
+      x="33.5"
+      y="35"
+    />
+    <rect
+      fill="none"
+      height="77"
+      stroke="#000000"
+      strokeMiterlimit="10"
+      strokeWidth="3"
+      width="9.7"
+      x="57.7"
+      y="35"
+    />
+    <rect
+      fill="none"
+      height="77"
+      stroke="#000000"
+      strokeMiterlimit="10"
+      strokeWidth="3"
+      width="9.7"
+      x="81.8"
+      y="35"
+    />
+  </g>
+</svg>
+`;
+
+exports[`SVG Components test renders DeselectSVG correctly 1`] = `
+<svg
+  enable-background="new 0 0 125 125"
+  height="55px"
+  version="1.1"
+  viewBox="0 0 125 125"
+  width="55px"
+  x="0px"
+  xmlns="http://www.w3.org/2000/svg"
+  y="0px"
+>
+  <g
+    id="Layer_8"
+  >
+    <path
+      d="M62.5,7.2C31.9,7.2,7.2,31.9,7.2,62.5s24.8,55.3,55.3,55.3s55.3-24.8,55.3-55.3S93.1,7.2,62.5,7.2z M62.5,26.7c5.2,0,10.1,1.1,14.6,3.1L29.8,77.1c-2-4.5-3.1-9.4-3.1-14.6C26.7,42.7,42.7,26.7,62.5,26.7z M62.5,98.3c-5.2,0-10.1-1.1-14.6-3.1l47.3-47.3c2,4.5,3.1,9.4,3.1,14.6C98.3,82.3,82.3,98.3,62.5,98.3z"
+      fill="#DC7627"
+      stroke="#000000"
+      strokeMiterlimit="10"
+      strokeWidth="3"
+    />
+  </g>
+</svg>
+`;
+
+exports[`SVG Components test renders DownArrowSVG correctly 1`] = `
+<svg
+  height="50px"
+  version="1.1"
+  viewBox="0 0 125 125"
+  width="50px"
+  x="0px"
+  xmlns="http://www.w3.org/2000/svg"
+  y="0px"
+>
+  <g
+    id="Layer_3"
+  >
+    <polygon
+      fill="#DC7627"
+      points="62.5,107.6 98.9,71.2 78.2,71.2 78.2,17.4 46.8,17.4 46.8,71.2 26.1,71.2"
+      stroke="#000000"
+      strokeMiterlimit="10"
+      strokeWidth="3"
+    />
+  </g>
+</svg>
+`;
+
+exports[`SVG Components test renders LeftArrowSVG correctly 1`] = `
+<svg
+  height="50px"
+  version="1.1"
+  viewBox="0 0 125 125"
+  width="50px"
+  x="0px"
+  xmlns="http://www.w3.org/2000/svg"
+  y="0px"
+>
+  <g
+    id="Layer_3"
+  >
+    <polygon
+      fill="#DC7627"
+      points="17.4,62.5 53.8,98.9 53.8,78.2 107.6,78.2 107.6,46.8 53.8,46.8 53.8,26.1"
+      stroke="#000000"
+      strokeMiterlimit="10"
+      strokeWidth="3"
+    />
+  </g>
+</svg>
+`;
+
+exports[`SVG Components test renders RightArrowSVG correctly 1`] = `
+<svg
+  height="50px"
+  version="1.1"
+  viewBox="0 0 125 125"
+  width="50px"
+  x="0px"
+  xmlns="http://www.w3.org/2000/svg"
+  y="0px"
+>
+  <g
+    id="Layer_3"
+  >
+    <polygon
+      fill="#DC7627"
+      points="107.6,62.5 71.2,26.1 71.2,46.8 17.4,46.8 17.4,78.2 71.2,78.2 71.2,98.9"
+      stroke="#000000"
+      strokeMiterlimit="10"
+      strokeWidth="3"
+    />
+  </g>
+</svg>
+`;
+
+exports[`SVG Components test renders RotateSVG correctly 1`] = `
+<svg
+  height="55px"
+  version="1.1"
+  viewBox="0 0 125 125"
+  width="55px"
+  x="0px"
+  xmlns="http://www.w3.org/2000/svg"
+  y="0px"
+>
+  <g
+    id="Layer_2"
+  >
+    <path
+      d="M69.8,10.4v21.3c16.8,0.4,30.3,14.1,30.3,31c0,17.1-13.9,31-31,31c-16.6,0-30.2-13.1-31-29.6h13.1L27.5,32.9L3.8,64.2h13.2c0.9,28,23.8,50.4,52,50.4c28.8,0,52.1-23.3,52.1-52.1C121.2,34,98.2,10.8,69.8,10.4z"
+      fill="#DC7627"
+      stroke="#000000"
+      strokeMiterlimit="10"
+      strokeWidth="3"
+    />
+  </g>
+</svg>
+`;
+
+exports[`SVG Components test renders ScreenshotSVG correctly 1`] = `
+<svg
+  height="60px"
+  version="1.1"
+  viewBox="0 0 125 125"
+  width="60px"
+  x="0px"
+  xmlns="http://www.w3.org/2000/svg"
+  y="0px"
+>
+  <g
+    display="none"
+    id="delete"
+  >
+    <polygon
+      display="inline"
+      fill="#DC7627"
+      points="98,7.4 62.5,42.8  27,7.4 7.4,27 42.8,62.5 7.4,98 27,117.6 62.5,82.2 98,117.6 117.6,98 82.2,62.5 117.6,27"
+      stroke="#000000"
+      strokeMiterlimit="10"
+      strokeWidth="3"
+    />
+  </g>
+  <g
+    display="none"
+    id="Layer_2"
+  >
+    <path
+      d="M69.8,10.4v21.3 c16.8,0.4,30.3,14.1,30.3,31c0,17.1-13.9,31-31,31c-16.6,0-30.2-13.1-31-29.6h13.1L27.5,32.9L3.8,64.2h13.2 c0.9,28,23.8,50.4,52,50.4c28.8,0,52.1-23.3,52.1-52.1C121.2,34,98.2,10.8,69.8,10.4z"
+      display="inline"
+      fill="#DC7627"
+      stroke="#000000"
+      strokeMiterlimit="10"
+      strokeWidth="3"
+    />
+  </g>
+  <g
+    display="none"
+    id="Layer_3"
+  >
+    <polygon
+      display="inline"
+      fill="#DC7627"
+      points="107.6,62.5 71.2,26.1  71.2,46.8 17.4,46.8 17.4,78.2 71.2,78.2 71.2,98.9"
+      stroke="#000000"
+      strokeMiterlimit="10"
+      strokeWidth="3"
+    />
+  </g>
+  <g
+    id="Layer_4"
+  >
+    <polygon
+      fill="#434345"
+      points="13.5,37 28.2,22.2 47.2,22.2 61.4,36.4  "
+      stroke="#000000"
+      strokeMiterlimit="10"
+      strokeWidth="3"
+    />
+    <rect
+      fill="#545456"
+      height="56"
+      stroke="#000000"
+      strokeMiterlimit="10"
+      strokeWidth="3"
+      width="104.6"
+      x="10.2"
+      y="33.2"
+    />
+    <circle
+      cx="62.5"
+      cy="63.4"
+      fill="#C0C2C4"
+      r="26.1"
+      stroke="#000000"
+      strokeMiterlimit="10"
+      strokeWidth="3"
+    />
+    <path
+      d="M56.8,39.7l29.7,26c0,0,0.7,6.8-6.8,15L41.8,50.2C41.8,50.2,47.5,41.8,56.8,39.7z"
+      fill="#FFFFFF"
+    />
+    <rect
+      fill="#FFFFFF"
+      height="11.7"
+      stroke="#000000"
+      strokeMiterlimit="10"
+      strokeWidth="3"
+      width="19.8"
+      x="90.5"
+      y="37"
+    />
+  </g>
+</svg>
+`;
+
+exports[`SVG Components test renders UpArrowSVG correctly 1`] = `
+<svg
+  height="50px"
+  version="1.1"
+  viewBox="0 0 125 125"
+  width="50px"
+  x="0px"
+  xmlns="http://www.w3.org/2000/svg"
+  y="0px"
+>
+  <g
+    id="Layer_3"
+  >
+    <polygon
+      fill="#DC7627"
+      points="62.5,17.4 26.1,53.8 46.8,53.8  46.8,107.6 78.2,107.6 78.2,53.8 98.9,53.8"
+      stroke="#000000"
+      strokeMiterlimit="10"
+      strokeWidth="3"
+    />
+  </g>
+</svg>
+`;
+
+exports[`SVG Components test renders ZoomInSVG correctly 1`] = `
+<svg
+  height="30px"
+  version="1.1"
+  viewBox="0 0 125 125"
+  width="30px"
+  x="0px"
+  xmlns="http://www.w3.org/2000/svg"
+  y="0px"
+>
+  <g
+    id="Layer_6"
+  >
+    <polygon
+      fill="#DC7627"
+      points="102.5,51.2 73.8,51.2 73.8,22.5  51.2,22.5 51.2,51.2 22.5,51.2 22.5,73.8 51.2,73.8 51.2,102.5 73.8,102.5 73.8,73.8 102.5,73.8"
+      stroke="#000000"
+      strokeMiterlimit="10"
+      strokeWidth="3"
+    />
+  </g>
+</svg>
+`;
+
+exports[`SVG Components test renders ZoomOutSVG correctly 1`] = `
+<svg
+  height="30px"
+  version="1.1"
+  viewBox="0 0 125 125"
+  width="30px"
+  x="0px"
+  xmlns="http://www.w3.org/2000/svg"
+  y="0px"
+>
+  <g
+    id="Layer_7"
+  >
+    <rect
+      fill="#DC7627"
+      height="22.7"
+      stroke="#000000"
+      strokeMiterlimit="10"
+      strokeWidth="3"
+      width="80"
+      x="22.5"
+      y="51.2"
+    />
+  </g>
+</svg>
+`;
