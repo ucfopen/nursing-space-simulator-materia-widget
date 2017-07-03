@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`FloorUnit tests renders FloorUnit correctly 1`] = `<a-plane />`;

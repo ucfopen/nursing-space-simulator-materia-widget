@@ -1,0 +1,866 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`HUD tests Should render loading when asset prop is not passed in 1`] = `
+<div>
+  Loading
+</div>
+`;
+
+exports[`HUD tests Should render loading when asset prop is not passed in 2`] = `
+<div>
+  Loading
+</div>
+`;
+
+exports[`HUD tests Should render loading when asset prop is not passed in 3`] = `
+<div>
+  Loading
+</div>
+`;
+
+exports[`HUD tests Should render loading when asset prop is not passed in 4`] = `
+<div>
+  Loading
+</div>
+`;
+
+exports[`HUD tests Should render loading when asset prop is not passed in 5`] = `
+<div>
+  <div
+    id="UI-right-panel"
+  >
+    <div
+      id="top-buttons"
+    />
+    <button
+      id="screenshot"
+    >
+      <svg
+        height="60px"
+        version="1.1"
+        viewBox="0 0 125 125"
+        width="60px"
+        x="0px"
+        xmlns="http://www.w3.org/2000/svg"
+        y="0px"
+      >
+        <g
+          display="none"
+          id="delete"
+        >
+          <polygon
+            display="inline"
+            fill="#DC7627"
+            points="98,7.4 62.5,42.8  27,7.4 7.4,27 42.8,62.5 7.4,98 27,117.6 62.5,82.2 98,117.6 117.6,98 82.2,62.5 117.6,27"
+            stroke="#000000"
+            strokeMiterlimit="10"
+            strokeWidth="3"
+          />
+        </g>
+        <g
+          display="none"
+          id="Layer_2"
+        >
+          <path
+            d="M69.8,10.4v21.3 c16.8,0.4,30.3,14.1,30.3,31c0,17.1-13.9,31-31,31c-16.6,0-30.2-13.1-31-29.6h13.1L27.5,32.9L3.8,64.2h13.2 c0.9,28,23.8,50.4,52,50.4c28.8,0,52.1-23.3,52.1-52.1C121.2,34,98.2,10.8,69.8,10.4z"
+            display="inline"
+            fill="#DC7627"
+            stroke="#000000"
+            strokeMiterlimit="10"
+            strokeWidth="3"
+          />
+        </g>
+        <g
+          display="none"
+          id="Layer_3"
+        >
+          <polygon
+            display="inline"
+            fill="#DC7627"
+            points="107.6,62.5 71.2,26.1  71.2,46.8 17.4,46.8 17.4,78.2 71.2,78.2 71.2,98.9"
+            stroke="#000000"
+            strokeMiterlimit="10"
+            strokeWidth="3"
+          />
+        </g>
+        <g
+          id="Layer_4"
+        >
+          <polygon
+            fill="#434345"
+            points="13.5,37 28.2,22.2 47.2,22.2 61.4,36.4  "
+            stroke="#000000"
+            strokeMiterlimit="10"
+            strokeWidth="3"
+          />
+          <rect
+            fill="#545456"
+            height="56"
+            stroke="#000000"
+            strokeMiterlimit="10"
+            strokeWidth="3"
+            width="104.6"
+            x="10.2"
+            y="33.2"
+          />
+          <circle
+            cx="62.5"
+            cy="63.4"
+            fill="#C0C2C4"
+            r="26.1"
+            stroke="#000000"
+            strokeMiterlimit="10"
+            strokeWidth="3"
+          />
+          <path
+            d="M56.8,39.7l29.7,26c0,0,0.7,6.8-6.8,15L41.8,50.2C41.8,50.2,47.5,41.8,56.8,39.7z"
+            fill="#FFFFFF"
+          />
+          <rect
+            fill="#FFFFFF"
+            height="11.7"
+            stroke="#000000"
+            strokeMiterlimit="10"
+            strokeWidth="3"
+            width="19.8"
+            x="90.5"
+            y="37"
+          />
+        </g>
+      </svg>
+    </button>
+  </div>
+  <div
+    id="ground-top-panel"
+  >
+    <button
+      id="back"
+      onClick={[Function]}
+    >
+      Back
+    </button>
+  </div>
+</div>
+`;
+
+exports[`HUD tests Should render loading when no props are passed in 1`] = `
+<div>
+  Loading
+</div>
+`;
+
+exports[`HUD tests should render third person correctly with selected asset 1`] = `
+<div>
+  <div
+    id="UI-right-panel"
+  >
+    <div
+      id="top-buttons"
+    />
+    <button
+      id="screenshot"
+    >
+      <svg
+        height="60px"
+        version="1.1"
+        viewBox="0 0 125 125"
+        width="60px"
+        x="0px"
+        xmlns="http://www.w3.org/2000/svg"
+        y="0px"
+      >
+        <g
+          display="none"
+          id="delete"
+        >
+          <polygon
+            display="inline"
+            fill="#DC7627"
+            points="98,7.4 62.5,42.8  27,7.4 7.4,27 42.8,62.5 7.4,98 27,117.6 62.5,82.2 98,117.6 117.6,98 82.2,62.5 117.6,27"
+            stroke="#000000"
+            strokeMiterlimit="10"
+            strokeWidth="3"
+          />
+        </g>
+        <g
+          display="none"
+          id="Layer_2"
+        >
+          <path
+            d="M69.8,10.4v21.3 c16.8,0.4,30.3,14.1,30.3,31c0,17.1-13.9,31-31,31c-16.6,0-30.2-13.1-31-29.6h13.1L27.5,32.9L3.8,64.2h13.2 c0.9,28,23.8,50.4,52,50.4c28.8,0,52.1-23.3,52.1-52.1C121.2,34,98.2,10.8,69.8,10.4z"
+            display="inline"
+            fill="#DC7627"
+            stroke="#000000"
+            strokeMiterlimit="10"
+            strokeWidth="3"
+          />
+        </g>
+        <g
+          display="none"
+          id="Layer_3"
+        >
+          <polygon
+            display="inline"
+            fill="#DC7627"
+            points="107.6,62.5 71.2,26.1  71.2,46.8 17.4,46.8 17.4,78.2 71.2,78.2 71.2,98.9"
+            stroke="#000000"
+            strokeMiterlimit="10"
+            strokeWidth="3"
+          />
+        </g>
+        <g
+          id="Layer_4"
+        >
+          <polygon
+            fill="#434345"
+            points="13.5,37 28.2,22.2 47.2,22.2 61.4,36.4  "
+            stroke="#000000"
+            strokeMiterlimit="10"
+            strokeWidth="3"
+          />
+          <rect
+            fill="#545456"
+            height="56"
+            stroke="#000000"
+            strokeMiterlimit="10"
+            strokeWidth="3"
+            width="104.6"
+            x="10.2"
+            y="33.2"
+          />
+          <circle
+            cx="62.5"
+            cy="63.4"
+            fill="#C0C2C4"
+            r="26.1"
+            stroke="#000000"
+            strokeMiterlimit="10"
+            strokeWidth="3"
+          />
+          <path
+            d="M56.8,39.7l29.7,26c0,0,0.7,6.8-6.8,15L41.8,50.2C41.8,50.2,47.5,41.8,56.8,39.7z"
+            fill="#FFFFFF"
+          />
+          <rect
+            fill="#FFFFFF"
+            height="11.7"
+            stroke="#000000"
+            strokeMiterlimit="10"
+            strokeWidth="3"
+            width="19.8"
+            x="90.5"
+            y="37"
+          />
+        </g>
+      </svg>
+    </button>
+    <div
+      id="camera-controls"
+    >
+      <div
+        id="camera-move"
+      >
+        <button
+          id="camera-up"
+          onClick={[Function]}
+        >
+          <svg
+            height="50px"
+            version="1.1"
+            viewBox="0 0 125 125"
+            width="50px"
+            x="0px"
+            xmlns="http://www.w3.org/2000/svg"
+            y="0px"
+          >
+            <g
+              id="Layer_3"
+            >
+              <polygon
+                fill="#DC7627"
+                points="62.5,17.4 26.1,53.8 46.8,53.8  46.8,107.6 78.2,107.6 78.2,53.8 98.9,53.8"
+                stroke="#000000"
+                strokeMiterlimit="10"
+                strokeWidth="3"
+              />
+            </g>
+          </svg>
+        </button>
+        <div
+          id="camera-move-horizontal"
+        >
+          <button
+            id="camera-left"
+            onClick={[Function]}
+          >
+            <svg
+              height="50px"
+              version="1.1"
+              viewBox="0 0 125 125"
+              width="50px"
+              x="0px"
+              xmlns="http://www.w3.org/2000/svg"
+              y="0px"
+            >
+              <g
+                id="Layer_3"
+              >
+                <polygon
+                  fill="#DC7627"
+                  points="17.4,62.5 53.8,98.9 53.8,78.2 107.6,78.2 107.6,46.8 53.8,46.8 53.8,26.1"
+                  stroke="#000000"
+                  strokeMiterlimit="10"
+                  strokeWidth="3"
+                />
+              </g>
+            </svg>
+          </button>
+          <button
+            id="camera-right"
+            onClick={[Function]}
+          >
+            <svg
+              height="50px"
+              version="1.1"
+              viewBox="0 0 125 125"
+              width="50px"
+              x="0px"
+              xmlns="http://www.w3.org/2000/svg"
+              y="0px"
+            >
+              <g
+                id="Layer_3"
+              >
+                <polygon
+                  fill="#DC7627"
+                  points="107.6,62.5 71.2,26.1 71.2,46.8 17.4,46.8 17.4,78.2 71.2,78.2 71.2,98.9"
+                  stroke="#000000"
+                  strokeMiterlimit="10"
+                  strokeWidth="3"
+                />
+              </g>
+            </svg>
+          </button>
+        </div>
+        <button
+          id="camera-down"
+          onClick={[Function]}
+        >
+          <svg
+            height="50px"
+            version="1.1"
+            viewBox="0 0 125 125"
+            width="50px"
+            x="0px"
+            xmlns="http://www.w3.org/2000/svg"
+            y="0px"
+          >
+            <g
+              id="Layer_3"
+            >
+              <polygon
+                fill="#DC7627"
+                points="62.5,107.6 98.9,71.2 78.2,71.2 78.2,17.4 46.8,17.4 46.8,71.2 26.1,71.2"
+                stroke="#000000"
+                strokeMiterlimit="10"
+                strokeWidth="3"
+              />
+            </g>
+          </svg>
+        </button>
+      </div>
+      <button
+        id="camera-zoom-in"
+        onClick={[Function]}
+      >
+        <svg
+          height="30px"
+          version="1.1"
+          viewBox="0 0 125 125"
+          width="30px"
+          x="0px"
+          xmlns="http://www.w3.org/2000/svg"
+          y="0px"
+        >
+          <g
+            id="Layer_6"
+          >
+            <polygon
+              fill="#DC7627"
+              points="102.5,51.2 73.8,51.2 73.8,22.5  51.2,22.5 51.2,51.2 22.5,51.2 22.5,73.8 51.2,73.8 51.2,102.5 73.8,102.5 73.8,73.8 102.5,73.8"
+              stroke="#000000"
+              strokeMiterlimit="10"
+              strokeWidth="3"
+            />
+          </g>
+        </svg>
+      </button>
+      <button
+        id="camera-zoom-out"
+        onClick={[Function]}
+      >
+        <svg
+          height="30px"
+          version="1.1"
+          viewBox="0 0 125 125"
+          width="30px"
+          x="0px"
+          xmlns="http://www.w3.org/2000/svg"
+          y="0px"
+        >
+          <g
+            id="Layer_7"
+          >
+            <rect
+              fill="#DC7627"
+              height="22.7"
+              stroke="#000000"
+              strokeMiterlimit="10"
+              strokeWidth="3"
+              width="80"
+              x="22.5"
+              y="51.2"
+            />
+          </g>
+        </svg>
+      </button>
+    </div>
+  </div>
+  <div>
+    <div
+      id="UI-selected-asset-options"
+    >
+      <span
+        id="selected-asset-label"
+      >
+        <span
+          className="selected-asset-label-title"
+        >
+          Currently selected: 
+        </span>
+      </span>
+      <button
+        id="deselect"
+        onClick={[Function]}
+      >
+        <svg
+          enable-background="new 0 0 125 125"
+          height="55px"
+          version="1.1"
+          viewBox="0 0 125 125"
+          width="55px"
+          x="0px"
+          xmlns="http://www.w3.org/2000/svg"
+          y="0px"
+        >
+          <g
+            id="Layer_8"
+          >
+            <path
+              d="M62.5,7.2C31.9,7.2,7.2,31.9,7.2,62.5s24.8,55.3,55.3,55.3s55.3-24.8,55.3-55.3S93.1,7.2,62.5,7.2z M62.5,26.7c5.2,0,10.1,1.1,14.6,3.1L29.8,77.1c-2-4.5-3.1-9.4-3.1-14.6C26.7,42.7,42.7,26.7,62.5,26.7z M62.5,98.3c-5.2,0-10.1-1.1-14.6-3.1l47.3-47.3c2,4.5,3.1,9.4,3.1,14.6C98.3,82.3,82.3,98.3,62.5,98.3z"
+              fill="#DC7627"
+              stroke="#000000"
+              strokeMiterlimit="10"
+              strokeWidth="3"
+            />
+          </g>
+        </svg>
+      </button>
+    </div>
+    <div
+      className="open"
+      id="UI-bottom-panel"
+    >
+      <button
+        className="drawer-toggle"
+        onClick={[Function]}
+      >
+        [Close Menu]
+      </button>
+      <div
+        id="asset-selection-menu"
+      >
+        <button
+          id="vr-viewer-mode"
+          onClick={[Function]}
+        >
+          First-Person Viewer
+        </button>
+        <div
+          id="categories-list"
+        >
+          <button
+            className="asset-category"
+            data-category="beds"
+            onClick={[Function]}
+          >
+            beds
+          </button>
+          <button
+            className="asset-category"
+            data-category="equipment"
+            onClick={[Function]}
+          >
+            equipment
+          </button>
+          <button
+            className="asset-category"
+            data-category="walls"
+            onClick={[Function]}
+          >
+            walls
+          </button>
+          <button
+            className="asset-category"
+            data-category="people"
+            onClick={[Function]}
+          >
+            people
+          </button>
+        </div>
+      </div>
+      <div
+        id="asset-picker"
+      />
+    </div>
+  </div>
+</div>
+`;
+
+exports[`HUD tests should render third person correctly without selected asset 1`] = `
+<div>
+  <div
+    id="UI-right-panel"
+  >
+    <div
+      id="top-buttons"
+    />
+    <button
+      id="screenshot"
+    >
+      <svg
+        height="60px"
+        version="1.1"
+        viewBox="0 0 125 125"
+        width="60px"
+        x="0px"
+        xmlns="http://www.w3.org/2000/svg"
+        y="0px"
+      >
+        <g
+          display="none"
+          id="delete"
+        >
+          <polygon
+            display="inline"
+            fill="#DC7627"
+            points="98,7.4 62.5,42.8  27,7.4 7.4,27 42.8,62.5 7.4,98 27,117.6 62.5,82.2 98,117.6 117.6,98 82.2,62.5 117.6,27"
+            stroke="#000000"
+            strokeMiterlimit="10"
+            strokeWidth="3"
+          />
+        </g>
+        <g
+          display="none"
+          id="Layer_2"
+        >
+          <path
+            d="M69.8,10.4v21.3 c16.8,0.4,30.3,14.1,30.3,31c0,17.1-13.9,31-31,31c-16.6,0-30.2-13.1-31-29.6h13.1L27.5,32.9L3.8,64.2h13.2 c0.9,28,23.8,50.4,52,50.4c28.8,0,52.1-23.3,52.1-52.1C121.2,34,98.2,10.8,69.8,10.4z"
+            display="inline"
+            fill="#DC7627"
+            stroke="#000000"
+            strokeMiterlimit="10"
+            strokeWidth="3"
+          />
+        </g>
+        <g
+          display="none"
+          id="Layer_3"
+        >
+          <polygon
+            display="inline"
+            fill="#DC7627"
+            points="107.6,62.5 71.2,26.1  71.2,46.8 17.4,46.8 17.4,78.2 71.2,78.2 71.2,98.9"
+            stroke="#000000"
+            strokeMiterlimit="10"
+            strokeWidth="3"
+          />
+        </g>
+        <g
+          id="Layer_4"
+        >
+          <polygon
+            fill="#434345"
+            points="13.5,37 28.2,22.2 47.2,22.2 61.4,36.4  "
+            stroke="#000000"
+            strokeMiterlimit="10"
+            strokeWidth="3"
+          />
+          <rect
+            fill="#545456"
+            height="56"
+            stroke="#000000"
+            strokeMiterlimit="10"
+            strokeWidth="3"
+            width="104.6"
+            x="10.2"
+            y="33.2"
+          />
+          <circle
+            cx="62.5"
+            cy="63.4"
+            fill="#C0C2C4"
+            r="26.1"
+            stroke="#000000"
+            strokeMiterlimit="10"
+            strokeWidth="3"
+          />
+          <path
+            d="M56.8,39.7l29.7,26c0,0,0.7,6.8-6.8,15L41.8,50.2C41.8,50.2,47.5,41.8,56.8,39.7z"
+            fill="#FFFFFF"
+          />
+          <rect
+            fill="#FFFFFF"
+            height="11.7"
+            stroke="#000000"
+            strokeMiterlimit="10"
+            strokeWidth="3"
+            width="19.8"
+            x="90.5"
+            y="37"
+          />
+        </g>
+      </svg>
+    </button>
+    <div
+      id="camera-controls"
+    >
+      <div
+        id="camera-move"
+      >
+        <button
+          id="camera-up"
+          onClick={[Function]}
+        >
+          <svg
+            height="50px"
+            version="1.1"
+            viewBox="0 0 125 125"
+            width="50px"
+            x="0px"
+            xmlns="http://www.w3.org/2000/svg"
+            y="0px"
+          >
+            <g
+              id="Layer_3"
+            >
+              <polygon
+                fill="#DC7627"
+                points="62.5,17.4 26.1,53.8 46.8,53.8  46.8,107.6 78.2,107.6 78.2,53.8 98.9,53.8"
+                stroke="#000000"
+                strokeMiterlimit="10"
+                strokeWidth="3"
+              />
+            </g>
+          </svg>
+        </button>
+        <div
+          id="camera-move-horizontal"
+        >
+          <button
+            id="camera-left"
+            onClick={[Function]}
+          >
+            <svg
+              height="50px"
+              version="1.1"
+              viewBox="0 0 125 125"
+              width="50px"
+              x="0px"
+              xmlns="http://www.w3.org/2000/svg"
+              y="0px"
+            >
+              <g
+                id="Layer_3"
+              >
+                <polygon
+                  fill="#DC7627"
+                  points="17.4,62.5 53.8,98.9 53.8,78.2 107.6,78.2 107.6,46.8 53.8,46.8 53.8,26.1"
+                  stroke="#000000"
+                  strokeMiterlimit="10"
+                  strokeWidth="3"
+                />
+              </g>
+            </svg>
+          </button>
+          <button
+            id="camera-right"
+            onClick={[Function]}
+          >
+            <svg
+              height="50px"
+              version="1.1"
+              viewBox="0 0 125 125"
+              width="50px"
+              x="0px"
+              xmlns="http://www.w3.org/2000/svg"
+              y="0px"
+            >
+              <g
+                id="Layer_3"
+              >
+                <polygon
+                  fill="#DC7627"
+                  points="107.6,62.5 71.2,26.1 71.2,46.8 17.4,46.8 17.4,78.2 71.2,78.2 71.2,98.9"
+                  stroke="#000000"
+                  strokeMiterlimit="10"
+                  strokeWidth="3"
+                />
+              </g>
+            </svg>
+          </button>
+        </div>
+        <button
+          id="camera-down"
+          onClick={[Function]}
+        >
+          <svg
+            height="50px"
+            version="1.1"
+            viewBox="0 0 125 125"
+            width="50px"
+            x="0px"
+            xmlns="http://www.w3.org/2000/svg"
+            y="0px"
+          >
+            <g
+              id="Layer_3"
+            >
+              <polygon
+                fill="#DC7627"
+                points="62.5,107.6 98.9,71.2 78.2,71.2 78.2,17.4 46.8,17.4 46.8,71.2 26.1,71.2"
+                stroke="#000000"
+                strokeMiterlimit="10"
+                strokeWidth="3"
+              />
+            </g>
+          </svg>
+        </button>
+      </div>
+      <button
+        id="camera-zoom-in"
+        onClick={[Function]}
+      >
+        <svg
+          height="30px"
+          version="1.1"
+          viewBox="0 0 125 125"
+          width="30px"
+          x="0px"
+          xmlns="http://www.w3.org/2000/svg"
+          y="0px"
+        >
+          <g
+            id="Layer_6"
+          >
+            <polygon
+              fill="#DC7627"
+              points="102.5,51.2 73.8,51.2 73.8,22.5  51.2,22.5 51.2,51.2 22.5,51.2 22.5,73.8 51.2,73.8 51.2,102.5 73.8,102.5 73.8,73.8 102.5,73.8"
+              stroke="#000000"
+              strokeMiterlimit="10"
+              strokeWidth="3"
+            />
+          </g>
+        </svg>
+      </button>
+      <button
+        id="camera-zoom-out"
+        onClick={[Function]}
+      >
+        <svg
+          height="30px"
+          version="1.1"
+          viewBox="0 0 125 125"
+          width="30px"
+          x="0px"
+          xmlns="http://www.w3.org/2000/svg"
+          y="0px"
+        >
+          <g
+            id="Layer_7"
+          >
+            <rect
+              fill="#DC7627"
+              height="22.7"
+              stroke="#000000"
+              strokeMiterlimit="10"
+              strokeWidth="3"
+              width="80"
+              x="22.5"
+              y="51.2"
+            />
+          </g>
+        </svg>
+      </button>
+    </div>
+  </div>
+  <div>
+    <div
+      className="open"
+      id="UI-bottom-panel"
+    >
+      <button
+        className="drawer-toggle"
+        onClick={[Function]}
+      >
+        [Close Menu]
+      </button>
+      <div
+        id="asset-selection-menu"
+      >
+        <button
+          id="vr-viewer-mode"
+          onClick={[Function]}
+        >
+          First-Person Viewer
+        </button>
+        <div
+          id="categories-list"
+        >
+          <button
+            className="asset-category"
+            data-category="beds"
+            onClick={[Function]}
+          >
+            beds
+          </button>
+          <button
+            className="asset-category"
+            data-category="equipment"
+            onClick={[Function]}
+          >
+            equipment
+          </button>
+          <button
+            className="asset-category"
+            data-category="walls"
+            onClick={[Function]}
+          >
+            walls
+          </button>
+          <button
+            className="asset-category"
+            data-category="people"
+            onClick={[Function]}
+          >
+            people
+          </button>
+        </div>
+      </div>
+      <div
+        id="asset-picker"
+      />
+    </div>
+  </div>
+</div>
+`;
