@@ -15,7 +15,7 @@ export default () => {
 					fill="#DC7627"
 					stroke="#000000"
 					strokeWidth="3"
-					stroke-miterlimit="10"
+					strokeMiterlimit="10"
 					points="17.4,62.5 53.8,98.9 53.8,78.2 107.6,78.2 107.6,46.8 53.8,46.8 53.8,26.1"
 				/>
 			</g>

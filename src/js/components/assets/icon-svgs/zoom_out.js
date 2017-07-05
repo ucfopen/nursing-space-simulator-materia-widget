@@ -17,7 +17,7 @@ export default () => {
 					fill="#DC7627"
 					stroke="#000000"
 					strokeWidth="3"
-					stroke-miterlimit="10"
+					strokeMiterlimit="10"
 					width="80"
 					height="22.7"
 				/>
