@@ -19,7 +19,9 @@ exports[`VR Scene Tests should display loading when no position is passed in 1`]
 `;
 
 exports[`VR Scene Tests should display the scene when all props are passed in 1`] = `
-<a-scene>
+<a-scene
+  className="vr-scene"
+>
   <a-assets>
     <img
       alt="sorry"
@@ -68,7 +70,9 @@ exports[`VR Scene Tests should display the scene when all props are passed in 1`
 `;
 
 exports[`VR Scene Tests should not render ceiling when in third person 1`] = `
-<a-scene>
+<a-scene
+  className="vr-scene"
+>
   <a-assets>
     <img
       alt="sorry"
