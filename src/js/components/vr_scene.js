@@ -12,7 +12,7 @@ import CameraFP from "./assets/camera_fp";
 import QsetAsset from "./assets/qset_asset";
 import FloorUnit from "./assets/floor_unit";
 
-class VRScene extends Component {
+export class VRScene extends Component {
 	renderAssets() {
 		const assets = this.props.assets;
 		const selectAsset = this.props.selectAsset;

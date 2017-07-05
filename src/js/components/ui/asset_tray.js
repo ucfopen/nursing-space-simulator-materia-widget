@@ -43,7 +43,7 @@ export default class AssetTray extends React.Component {
 					<div id="categories-list">
 						{this.props.categories.map((category, index) =>
 							<CategoryButton
-								onClick={() => this.props.setCategory(category)}
+								onClick={this.props.setCategory.bind(this, category)}
 								key={index}
 								category={category}
 							/>
@@ -57,7 +57,7 @@ export default class AssetTray extends React.Component {
 								<AssetButton
 									key={asset}
 									item={assets[asset]}
-									onClick={() => selectAssetType(assets[asset])}
+									onClick={selectAssetType.bind(this, assets[asset])}
 								/>
 							);
 						}

@@ -9,7 +9,7 @@ import VRScene from "./vr_scene";
 
 import Joyride from "react-joyride";
 
-class App extends Component {
+export class App extends Component {
 	componentDidMount() {
 		this.props.initData(this.props.qset);
 

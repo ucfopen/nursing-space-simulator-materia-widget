@@ -21,7 +21,7 @@ import {
 	updateAssetPosition
 } from "../actions/grid_actions";
 
-class HUD extends Component {
+export class HUD extends Component {
 	render() {
 		if (
 			!this.props.categories ||

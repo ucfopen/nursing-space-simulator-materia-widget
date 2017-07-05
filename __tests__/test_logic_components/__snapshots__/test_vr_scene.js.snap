@@ -1,0 +1,108 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`VR Scene Tests should display loading if no props are passed in 1`] = `
+<div>
+  Loading
+</div>
+`;
+
+exports[`VR Scene Tests should display loading when no assets are passed in 1`] = `
+<div>
+  Loading
+</div>
+`;
+
+exports[`VR Scene Tests should display loading when no position is passed in 1`] = `
+<div>
+  Loading
+</div>
+`;
+
+exports[`VR Scene Tests should display the scene when all props are passed in 1`] = `
+<a-scene>
+  <a-assets>
+    <img
+      alt="sorry"
+      id="ceilingTexture"
+      src="assets/CEILING_TILE.jpg"
+    />
+    <a-asset-item
+      id="bed-obj"
+      src="url/to/obj"
+    />
+    <a-asset-item
+      id="chair-obj"
+      src="url/to/obj"
+    />
+    <a-asset-item
+      id="bed-mtl"
+      src="url/to/mtl"
+    />
+    <a-asset-item
+      id="chair-mtl"
+      src="url/to/mtl"
+    />
+  </a-assets>
+  <a-entity />
+  <a-entity />
+  <a-plane />
+  <a-plane />
+  <a-plane />
+  <a-plane />
+  <a-plane />
+  <a-plane />
+  <a-plane />
+  <a-plane />
+  <a-plane />
+  <a-entity />
+  <a-plane />
+  <a-plane />
+  <a-plane />
+  <a-plane />
+  <a-plane />
+  <a-plane />
+  <a-plane />
+  <a-plane />
+  <a-plane />
+</a-scene>
+`;
+
+exports[`VR Scene Tests should not render ceiling when in third person 1`] = `
+<a-scene>
+  <a-assets>
+    <img
+      alt="sorry"
+      id="ceilingTexture"
+      src="assets/CEILING_TILE.jpg"
+    />
+    <a-asset-item
+      id="bed-obj"
+      src="url/to/obj"
+    />
+    <a-asset-item
+      id="chair-obj"
+      src="url/to/obj"
+    />
+    <a-asset-item
+      id="bed-mtl"
+      src="url/to/mtl"
+    />
+    <a-asset-item
+      id="chair-mtl"
+      src="url/to/mtl"
+    />
+  </a-assets>
+  <a-entity />
+  <a-entity />
+  <a-plane />
+  <a-plane />
+  <a-plane />
+  <a-plane />
+  <a-plane />
+  <a-plane />
+  <a-plane />
+  <a-plane />
+  <a-plane />
+  <a-entity />
+</a-scene>
+`;
