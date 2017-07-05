@@ -1,83 +1,225 @@
-import {
-	getItemId,
-	loadGrid,
-	rotateCell,
-	deleteItem,
-	insertItem,
-	isCellOccupied
-} from "../src/js/grid";
+import * as gridFunctions from "../src/js/grid";
 
-describe("Grid Tests", () => {
-	it("loads a grid", () => {
-		let gridString = "0 0 0 0";
-		const [gridLength, gridWidth] = [2, 2];
+const gridString =
+	"wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 0 bed-1.0 0 wall-1.0 wall-1.0 chair-1.-90 0 0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0";
+const grid = [
+	[
+		{ id: "wall-1", rotation: 0 },
+		{ id: "wall-1", rotation: 0 },
+		{ id: "wall-1", rotation: 0 },
+		{ id: "wall-1", rotation: 0 },
+		{ id: "wall-1", rotation: 0 }
+	],
+	[
+		{ id: "wall-1", rotation: 0 },
+		"0",
+		{ id: "bed-1", rotation: 0 },
+		"0",
+		{ id: "wall-1", rotation: 0 }
+	],
+	[
+		{ id: "wall-1", rotation: 0 },
+		{ id: "chair-1", rotation: -90 },
+		"0",
+		"0",
+		{ id: "wall-1", rotation: 0 }
+	],
+	[
+		{ id: "wall-1", rotation: 0 },
+		{ id: "wall-1", rotation: 0 },
+		{ id: "wall-1", rotation: 0 },
+		{ id: "wall-1", rotation: 0 },
+		{ id: "wall-1", rotation: 0 }
+	]
+];
 
-		let generatedGrid = loadGrid(gridString, gridLength, gridWidth);
+describe("test grid functions", () => {
+	it("loads a grid correctly", () => {
+		let newGrid;
 
-		expect(generatedGrid.length).toEqual(2);
-		expect(generatedGrid[0].length).toEqual(2);
-		expect(generatedGrid[1].length).toEqual(2);
+		newGrid = gridFunctions.loadGrid(gridString, 4, 5);
+		expect(JSON.stringify(newGrid)).toEqual(JSON.stringify(grid));
 
-		gridString = "0 bed-1.0 0 chair.90";
+		newGrid = gridFunctions.loadGrid(null, 4, 5);
+		expect(newGrid).toEqual(null);
 
-		generatedGrid = loadGrid(gridString, gridLength, gridWidth);
+		newGrid = gridFunctions.loadGrid(gridString, null, 5);
+		expect(newGrid).toEqual(null);
 
-		expect(generatedGrid[0][1]).toEqual({ id: "bed-1", rotation: 0 });
-		expect(generatedGrid[1][1]).toEqual({ id: "chair", rotation: 90 });
+		newGrid = gridFunctions.loadGrid(gridString, 4, null);
+		expect(newGrid).toEqual(null);
+
+		newGrid = gridFunctions.loadGrid(null, null, null);
+		expect(newGrid).toEqual(null);
 	});
 
-	it("rotates a cell", () => {
-		let grid = [["0", { id: "bed-1", rotation: 0 }], ["0", "0"]];
+	it("rotates a cell correctly", () => {
+		let rotatedGrid;
 
-		grid = rotateCell(grid, 0, 1);
-		expect(grid[0][1].rotation).toEqual(-90);
+		rotatedGrid = gridFunctions.rotateCell(
+			JSON.parse(JSON.stringify(grid)),
+			0,
+			1
+		);
+		expect(rotatedGrid[0][1].rotation).toEqual(-90);
 
-		grid = rotateCell(grid, 0, 1);
-		expect(grid[0][1].rotation).toEqual(-180);
+		rotatedGrid = gridFunctions.rotateCell(
+			JSON.parse(JSON.stringify(grid)),
+			2,
+			1
+		);
+		expect(rotatedGrid[2][1].rotation).toEqual(-180);
 
-		grid = rotateCell(grid, 0, 1);
-		expect(grid[0][1].rotation).toEqual(-270);
+		rotatedGrid = gridFunctions.rotateCell(
+			JSON.parse(JSON.stringify(grid)),
+			1,
+			1
+		);
+		expect(JSON.stringify(rotatedGrid)).toEqual(JSON.stringify(grid));
 
-		grid = rotateCell(grid, 0, 1);
-		expect(grid[0][1].rotation).toEqual(-0);
-
-		grid = rotateCell(grid, 0, 1);
-		expect(grid[0][1].rotation).toEqual(-90);
+		rotatedGrid = gridFunctions.rotateCell(null, null, null);
+		expect(rotatedGrid).toEqual(null);
 	});
 
-	it("removes an item from the grid", () => {
-		let grid = [["0", { id: "bed-1", rotation: 0 }], ["0", "0"]];
+	it("deletes an item from the grid", () => {
+		let deletedGrid;
 
-		grid = deleteItem(grid, 0, 1);
-		expect(grid[0][1]).toEqual("0");
+		deletedGrid = gridFunctions.deleteItem(
+			JSON.parse(JSON.stringify(grid)),
+			0,
+			1
+		);
 
-		grid = deleteItem(grid, 0, 0);
-		expect(grid[0][1]).toEqual("0");
+		expect(deletedGrid[0][1]).toEqual("0");
+
+		deletedGrid = gridFunctions.deleteItem(null, 0, 1);
+		expect(deletedGrid).toEqual(null);
+
+		deletedGrid = gridFunctions.deleteItem(
+			JSON.parse(JSON.stringify(grid)),
+			null,
+			1
+		);
+		expect(deletedGrid).toEqual(null);
+
+		deletedGrid = gridFunctions.deleteItem(
+			JSON.parse(JSON.stringify(grid)),
+			0,
+			null
+		);
+		expect(deletedGrid).toEqual(null);
+
+		deletedGrid = gridFunctions.deleteItem(null, null, null);
+		expect(deletedGrid).toEqual(null);
 	});
 
 	it("inserts an item to the grid", () => {
-		let grid = [["0", "0"], ["0", "0"]];
+		let insertedGrid;
 
-		grid = insertItem(grid, "bed-1", 0, 1);
-		expect(grid[0][1]).toEqual({ id: "bed-1", rotation: 180 });
+		insertedGrid = gridFunctions.insertItem(
+			JSON.parse(JSON.stringify(grid)),
+			"iv",
+			1,
+			1
+		);
+		expect(insertedGrid[1][1].rotation).toEqual(180);
+		expect(insertedGrid[1][1].id).toEqual("iv");
 
-		grid = insertItem(grid, "chair-1", 0, 1);
-		expect(grid[0][1]).toEqual({ id: "chair-1", rotation: 180 });
+		insertedGrid = gridFunctions.insertItem(
+			JSON.parse(JSON.stringify(grid)),
+			"bed-1",
+			2,
+			0,
+			-90
+		);
+		expect(insertedGrid[2][0].rotation).toEqual(-90);
+		expect(insertedGrid[2][0].id).toEqual("bed-1");
+
+		insertedGrid = gridFunctions.insertItem(
+			JSON.parse(JSON.stringify(grid)),
+			null,
+			1,
+			1
+		);
+		expect(insertedGrid[1][1]).toEqual("0");
+
+		insertedGrid = gridFunctions.insertItem(null, "iv", 1, 1);
+		expect(insertedGrid).toEqual(null);
+
+		insertedGrid = gridFunctions.insertItem(
+			JSON.parse(JSON.stringify(grid)),
+			"iv",
+			null,
+			1
+		);
+		expect(insertedGrid).toEqual(null);
+
+		insertedGrid = gridFunctions.insertItem(
+			JSON.parse(JSON.stringify(grid)),
+			"iv",
+			1,
+			null
+		);
+		expect(insertedGrid).toEqual(null);
+
+		insertedGrid = gridFunctions.insertItem(null, null, null, null);
+		expect(insertedGrid).toEqual(null);
 	});
 
-	it("knows if a cell is occupied", () => {
-		let grid = [["0", { id: "bed-1", rotation: 180 }], ["0", "0"]];
+	it("can check if a cell is available", () => {
+		let isCellAvailable;
 
-		expect(isCellOccupied(grid, 0, 1)).toBe(true);
+		isCellAvailable = gridFunctions.isCellAvailable(null, 0, 1);
+		expect(isCellAvailable).toBe(false);
 
-		expect(isCellOccupied(grid, 0, 0)).toBe(false);
+		isCellAvailable = gridFunctions.isCellAvailable(
+			JSON.parse(JSON.stringify(grid)),
+			null,
+			1
+		);
+		expect(isCellAvailable).toBe(false);
+
+		isCellAvailable = gridFunctions.isCellAvailable(
+			JSON.parse(JSON.stringify(grid)),
+			0,
+			null
+		);
+		expect(isCellAvailable).toBe(false);
+
+		isCellAvailable = gridFunctions.isCellAvailable(
+			JSON.parse(JSON.stringify(grid)),
+			0,
+			1
+		);
+		expect(isCellAvailable).toBe(false);
+
+		isCellAvailable = gridFunctions.isCellAvailable(
+			JSON.parse(JSON.stringify(grid)),
+			1,
+			1
+		);
+		expect(isCellAvailable).toBe(true);
 	});
 
-	it("returns correct item id", () => {
-		let grid = [["0", { id: "bed-1", rotation: 180 }], ["0", "0"]];
+	it("can get the item id of a cell", () => {
+		let itemId;
 
-		expect(getItemId(grid, 0, 1)).toEqual("bed-1");
+		itemId = gridFunctions.getItemId(null, 0, 1);
+		expect(itemId).toEqual(null);
 
-		expect(getItemId(grid, 0, 0)).toBe("0");
+		itemId = gridFunctions.getItemId(JSON.parse(JSON.stringify(grid)), null, 1);
+		expect(itemId).toEqual(null);
+
+		itemId = gridFunctions.getItemId(JSON.parse(JSON.stringify(grid)), 0, null);
+		expect(itemId).toEqual(null);
+
+		itemId = gridFunctions.getItemId(null, null, null);
+		expect(itemId).toEqual(null);
+
+		itemId = gridFunctions.getItemId(JSON.parse(JSON.stringify(grid)), 0, 1);
+		expect(itemId).toEqual("wall-1");
+
+		itemId = gridFunctions.getItemId(JSON.parse(JSON.stringify(grid)), 1, 1);
+		expect(itemId).toEqual("0");
 	});
 });
