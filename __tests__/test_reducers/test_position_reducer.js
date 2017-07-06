@@ -1,5 +1,6 @@
 import positionReducer from "../../src/js/reducers/positionReducer";
 import * as actions from "../../src/js/actions/camera_actions";
+import { INSERT_ASSET } from "../../src/js/actions/grid_actions";
 
 describe("position reducer", () => {
 	it("should return the inital state", () => {
@@ -150,35 +151,83 @@ describe("position reducer", () => {
 		});
 	});
 
-	it("should handle CAMERA_TOGGLE", () => {
-		let thirdPerson = true;
-
+	it("should handle TOGGLE_THIRD_PERSON", () => {
 		expect(
 			positionReducer(
 				// State being passed in
-				{ thirdPerson },
+				[],
 				// Action being passed in
 				{
-					type: actions.CAMERA_TOGGLE
+					type: actions.TOGGLE_THIRD_PERSON
 				}
 			)
 		).toEqual({
+			thirdPerson: true,
+			x: 2.5,
+			y: 18,
+			z: 14
+		});
+	});
+
+	it("should handle INSERT_ASSET with the pov_camera asset id", () => {
+		expect(
+			positionReducer(
+				// State being passed in
+				[],
+				// Action being passed in
+				{
+					type: INSERT_ASSET,
+					payload: {
+						assetId: "pov_camera",
+						x: 1,
+						y: 1
+					}
+				}
+			)
+		).toEqual({
+			x: 1,
+			y: 1,
+			z: 1,
 			thirdPerson: false
 		});
+	});
 
-		thirdPerson = false;
-
+	it("should handle INSERT_ASSET with no asset id", () => {
 		expect(
 			positionReducer(
 				// State being passed in
-				{ thirdPerson },
+				[],
 				// Action being passed in
 				{
-					type: actions.CAMERA_TOGGLE
+					type: INSERT_ASSET,
+					payload: {
+						x: 1,
+						y: 1
+					}
 				}
 			)
-		).toEqual({
-			thirdPerson: true
-		});
+		).toEqual(
+			[] // this is the state being passed in
+		);
+	});
+
+	it("should handle INSERT_ASSET with any asset id that is not pov_camera", () => {
+		expect(
+			positionReducer(
+				// State being passed in
+				[],
+				// Action being passed in
+				{
+					type: INSERT_ASSET,
+					payload: {
+						assetId: "bed-1",
+						x: 1,
+						y: 1
+					}
+				}
+			)
+		).toEqual(
+			[] // this is the state being passed in
+		);
 	});
 });
