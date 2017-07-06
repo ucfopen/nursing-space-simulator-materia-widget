@@ -25,8 +25,10 @@ describe("FloorUnit tests", () => {
 		expect(mockClick).toBeCalled();
 	});
 
-	it("should set active to true/false when tile mouseenter/mouseexit events are fired", () => {
-		const floorUnitComponent = shallow(<FloorUnit onClick={mockClick} />);
+	it("should set active to true/false when tile mouseenter/mouseexit events are fired in third person", () => {
+		const floorUnitComponent = shallow(
+			<FloorUnit thirdPerson={true} onClick={mockClick} />
+		);
 
 		// enyme's simulate("mouseEnter"/"mouseleave")" does not fire correctly on this aframe component
 		expect(floorUnitComponent.state().active).toBe(false);
@@ -38,6 +40,21 @@ describe("FloorUnit tests", () => {
 		expect(floorUnitComponent.props().material).toEqual("color: red");
 
 		floorUnitComponent.props().events.mouseleave();
+
+		expect(floorUnitComponent.state().active).toBe(false);
+		expect(floorUnitComponent.props().material).toEqual("color: white");
+	});
+
+	it("should set active to false when tile mouseenter event is fired in first person", () => {
+		const floorUnitComponent = shallow(
+			<FloorUnit thirdPerson={false} onClick={mockClick} />
+		);
+
+		// enyme's simulate("mouseEnter"/"mouseleave")" does not fire correctly on this aframe component
+		expect(floorUnitComponent.state().active).toBe(false);
+		expect(floorUnitComponent.props().material).toEqual("color: white");
+
+		floorUnitComponent.props().events.mouseenter();
 
 		expect(floorUnitComponent.state().active).toBe(false);
 		expect(floorUnitComponent.props().material).toEqual("color: white");

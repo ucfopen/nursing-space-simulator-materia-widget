@@ -388,11 +388,34 @@ describe("grid reducer", () => {
 		let direction = null;
 		let newGrid;
 
+		// Does not attemp to update an assets position if there is none or if the asset is pov_camera
+		expect(
+			gridReducer(
+				// State being passed in
+				{
+					grid,
+					currentX: null,
+					currentY: null,
+					selectedAsset: { id: "pov_camera", title: "POV Camera" }
+				},
+				// Action being passed in
+				{
+					type: actions.UPDATE_ASSET_POSITION,
+					payload: "xUp"
+				}
+			)
+		).toEqual({
+			grid,
+			currentX: null,
+			currentY: null,
+			selectedAsset: { id: "pov_camera", title: "POV Camera" }
+		});
+
 		expect(
 			gridReducer(
 				// State being passed in
 				{ grid, currentX: x, currentY: y, selectedAsset },
-				// Action being passed it
+				// Action being passed in
 				{
 					type: actions.UPDATE_ASSET_POSITION,
 					payload: direction

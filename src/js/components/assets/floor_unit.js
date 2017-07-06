@@ -19,7 +19,7 @@ export default class FloorUnit extends Component {
 	}
 
 	handleClick() {
-		this.props.onClick(this.props.selectedAssetId, this.props.x, this.props.y);
+		this.props.onClick(this.props.x, this.props.y, this.props.selectedAssetId);
 	}
 
 	render() {
