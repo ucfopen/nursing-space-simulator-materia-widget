@@ -1,10 +1,10 @@
-import { START_TOUR_SECTION, SKIP_TOUR } from "../actions/tour_actions";
+import { START_TOUR_SECTION, END_TOUR } from "../actions/tour_actions";
 import { SELECT_ASSET_TYPE, INSERT_ASSET } from "../actions/grid_actions";
 import { INIT_DATA } from "../actions/index";
 
 export default function(
 	state = {
-		tourSkipped: false,
+		tourRunning: true,
 		steps: [],
 		nextSteps: [],
 		runNextSet: false,
@@ -30,15 +30,15 @@ export default function(
 				runNextSet: false
 			};
 
-		case SKIP_TOUR:
+		case END_TOUR:
 			return {
 				...state,
-				tourSkipped: true
+				tourRunning: false
 			};
 
 		case SELECT_ASSET_TYPE:
 			if (
-				!state.tourSkipped &&
+				state.tourRunning &&
 				action.payload.id !== "pov_camera" &&
 				JSON.stringify(state.stepCompletion) ===
 					JSON.stringify({ 1: true, 2: false, 3: false, 4: false, 5: false })
@@ -49,7 +49,7 @@ export default function(
 					stepSetInQueue: "clickInScene"
 				};
 			} else if (
-				!state.tourSkipped &&
+				state.tourRunning &&
 				action.payload.id === "pov_camera" &&
 				JSON.stringify(state.stepCompletion) ===
 					JSON.stringify({ 1: true, 2: true, 3: true, 4: false, 5: false })
@@ -63,7 +63,7 @@ export default function(
 
 		case INSERT_ASSET:
 			if (
-				!state.tourSkipped &&
+				state.tourRunning &&
 				JSON.stringify(state.stepCompletion) ===
 					JSON.stringify({ 1: true, 2: true, 3: false, 4: false, 5: false }) &&
 				action.payload.assetId !== "pov_camera"
@@ -74,7 +74,7 @@ export default function(
 					stepSetInQueue: "part2"
 				};
 			} else if (
-				!state.tourSkipped &&
+				state.tourRunning &&
 				JSON.stringify(state.stepCompletion) ===
 					JSON.stringify({ 1: true, 2: true, 3: true, 4: true, 5: false }) &&
 				action.payload.assetId === "pov_camera"
