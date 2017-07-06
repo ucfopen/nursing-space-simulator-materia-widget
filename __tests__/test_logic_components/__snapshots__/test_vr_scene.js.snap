@@ -114,7 +114,9 @@ exports[`VR Scene Tests should not render ceiling when in third person 1`] = `
 `;
 
 exports[`VR Scene Tests should render floor correctly if a selected asset is passed in 1`] = `
-<a-scene>
+<a-scene
+  className="vr-scene"
+>
   <a-assets>
     <img
       alt="sorry"
