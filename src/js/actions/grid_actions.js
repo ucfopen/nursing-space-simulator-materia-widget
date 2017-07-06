@@ -42,10 +42,10 @@ export function removeAsset(x, y) {
 	};
 }
 
-export function insertAsset(x, y) {
+export function insertAsset(assetId = null, x, y) {
 	return {
 		type: INSERT_ASSET,
-		payload: { x, y }
+		payload: { assetId, x, y }
 	};
 }
 

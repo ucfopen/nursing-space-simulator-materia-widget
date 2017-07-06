@@ -1,7 +1,9 @@
 import {
 	CAMERA_UPDATE_POSITION,
-	CAMERA_TOGGLE
+	TOGGLE_THIRD_PERSON
 } from "../actions/camera_actions";
+
+import { INSERT_ASSET } from "../actions/grid_actions";
 
 export default function(
 	state = { x: 2.5, y: 18, z: 14, thirdPerson: true },
@@ -25,8 +27,19 @@ export default function(
 				case "reset":
 					return { ...state, y: 2 };
 			}
-		case CAMERA_TOGGLE:
-			return { ...state, thirdPerson: !state.thirdPerson };
+		case TOGGLE_THIRD_PERSON:
+			return { ...state, x: 2.5, y: 18, z: 14, thirdPerson: true };
+		case INSERT_ASSET:
+			if (action.payload.assetId === "pov_camera") {
+				return {
+					...state,
+					x: action.payload.x,
+					y: 1,
+					z: action.payload.y,
+					thirdPerson: false
+				};
+			}
+			return state;
 		default:
 			return state;
 	}
