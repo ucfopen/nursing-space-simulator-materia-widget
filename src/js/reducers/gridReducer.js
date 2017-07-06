@@ -48,6 +48,7 @@ export default function(
 
 			if (
 				oldSelectedAsset &&
+				oldSelectedAsset.id !== "pov_camera" &&
 				oldSelectedAsset.id !== action.payload.asset.id &&
 				oldSelectedAsset.canReplace.includes(action.payload.asset.category)
 			) {
@@ -112,7 +113,8 @@ export default function(
 			const gridCopy = JSON.parse(JSON.stringify(state.grid));
 			if (
 				!selectedAsset ||
-				!isCellAvailable(gridCopy, action.payload.x, action.payload.y)
+				!isCellAvailable(gridCopy, action.payload.x, action.payload.y) ||
+				selectedAsset.id === "pov_camera"
 			) {
 				return {
 					...state
@@ -138,6 +140,11 @@ export default function(
 		}
 		case UPDATE_ASSET_POSITION: {
 			const selectedAsset = { ...state.selectedAsset };
+
+			if (!selectedAsset || selectedAsset.id === "pov_camera") {
+				return state;
+			}
+
 			const gridCopy = JSON.parse(JSON.stringify(state.grid));
 			const currentX = state.currentX;
 			const currentY = state.currentY;
