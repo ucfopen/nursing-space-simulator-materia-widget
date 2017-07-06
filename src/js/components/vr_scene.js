@@ -11,6 +11,7 @@ import CameraTP from "./assets/camera_tp";
 import CameraFP from "./assets/camera_fp";
 import QsetAsset from "./assets/qset_asset";
 import FloorUnit from "./assets/floor_unit";
+import Skybox from "./assets/skybox";
 
 export class VRScene extends Component {
 	renderAssets() {
@@ -104,7 +105,7 @@ export class VRScene extends Component {
 							}
 						})}
 					</a-assets>
-
+					<Skybox />
 					<CameraFP
 						active={!this.props.thirdPerson}
 						position={{ x: 5, y: 1, z: 10 }}
