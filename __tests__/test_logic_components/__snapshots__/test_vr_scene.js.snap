@@ -43,6 +43,7 @@ exports[`VR Scene Tests should display the scene when all props are passed in 1`
       src="url/to/mtl"
     />
   </a-assets>
+  <a-sky />
   <a-entity />
   <a-entity />
   <a-plane />
@@ -92,6 +93,7 @@ exports[`VR Scene Tests should not render ceiling when in third person 1`] = `
       src="url/to/mtl"
     />
   </a-assets>
+  <a-sky />
   <a-entity />
   <a-entity />
   <a-plane />

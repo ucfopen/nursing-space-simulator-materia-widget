@@ -150,35 +150,21 @@ describe("position reducer", () => {
 		});
 	});
 
-	it("should handle CAMERA_TOGGLE", () => {
-		let thirdPerson = true;
-
+	it("should handle TOGGLE_THIRD_PERSON", () => {
 		expect(
 			positionReducer(
 				// State being passed in
-				{ thirdPerson },
+				[],
 				// Action being passed in
 				{
-					type: actions.CAMERA_TOGGLE
+					type: actions.TOGGLE_THIRD_PERSON
 				}
 			)
 		).toEqual({
-			thirdPerson: false
-		});
-
-		thirdPerson = false;
-
-		expect(
-			positionReducer(
-				// State being passed in
-				{ thirdPerson },
-				// Action being passed in
-				{
-					type: actions.CAMERA_TOGGLE
-				}
-			)
-		).toEqual({
-			thirdPerson: true
+			thirdPerson: true,
+			x: 2.5,
+			y: 18,
+			z: 14
 		});
 	});
 });

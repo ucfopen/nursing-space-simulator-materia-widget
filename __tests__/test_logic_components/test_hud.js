@@ -25,10 +25,9 @@ const selectedAsset = {
 };
 const updateAssetPositionMock = jest.fn();
 const updateCameraPositionMock = jest.fn();
-const toggleCameraType = jest.fn();
 const selectAssetTypeMock = jest.fn();
 const setCategoryMock = jest.fn();
-const toggleCameraTypeMock = jest.fn();
+const toggleThirdPersonMock = jest.fn();
 
 describe("HUD tests", () => {
 	it("Should render loading when no props are passed in", () => {
@@ -113,13 +112,13 @@ describe("HUD tests", () => {
 				selectedAsset={selectedAsset}
 				selectAssetType={selectAssetTypeMock}
 				setCategory={setCategoryMock}
-				toggleCameraType={toggleCameraTypeMock}
+				toggleThirdPerson={toggleThirdPersonMock}
 			/>
 		);
 
 		hud.find("#back").simulate("click");
 
-		expect(toggleCameraTypeMock).toBeCalled();
+		expect(toggleThirdPersonMock).toBeCalled();
 	});
 
 	/*it("Should use updateAssetPosition when an asset is selected", () => {
