@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { initData } from "../actions";
-import { startTourSection, stopTour } from "../actions/tour_actions";
+import { startTourSection, skipTour } from "../actions/tour_actions";
 import applyTourSteps from "../tourHelper";
 
 import HUD from "./hud";
@@ -52,12 +52,15 @@ export class App extends Component {
 	}
 
 	joyrideCallback(data) {
-		if (data.action === "skip") this.props.stopTour();
+		if (data.action === "skip") this.props.skipTour();
 	}
 
 	render() {
 		return (
-			<div>
+			<div
+				id="app"
+				// When in first person, app container style must be modified to absolute position to support built in aframe UI
+				style={this.props.thirdPerson ? {} : { position: "absolute" }}>
 				<Joyride
 					ref={c => (this.joyride = c)}
 					callback={this.joyrideCallback.bind(this)}
@@ -84,19 +87,19 @@ export class App extends Component {
 	}
 }
 
-function mapStateToProps({ tour }) {
+function mapStateToProps({ tour, position }) {
 	return {
 		steps: tour.steps,
 		nextSteps: tour.nextSteps,
 		runNextSet: tour.runNextSet,
 		stepSetInQueue: tour.stepSetInQueue,
 		stepCompletion: tour.stepCompletion,
-		tourRunning: tour.tourRunning
+		thirdPerson: position.thirdPerson
 	};
 }
 
 export default connect(mapStateToProps, {
 	initData,
 	startTourSection,
-	stopTour
+	skipTour
 })(App);

@@ -36,6 +36,12 @@ export default function(props, nextProps) {
 				stepSetInQueue = "clickCameraInScene";
 				stepCompletion[4] = true;
 				break;
+			case "clickCameraInScene":
+				steps = clickCameraInScene;
+				nextSteps = [];
+				stepSetInQueue = "no more steps";
+				stepCompletion[5] = true;
+				break;
 		}
 	}
 	return { steps, nextSteps, stepSetInQueue, stepCompletion };
