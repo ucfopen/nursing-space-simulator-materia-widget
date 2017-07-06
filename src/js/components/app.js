@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { initData } from "../actions";
-import { startTourSection, skipTour } from "../actions/tour_actions";
+import { startTourSection, endTour } from "../actions/tour_actions";
 import applyTourSteps from "../tourHelper";
 
 import HUD from "./hud";
@@ -34,25 +34,29 @@ export class App extends Component {
 	}
 
 	componentWillUpdate(nextProps) {
-		const { steps, nextSteps, stepSetInQueue, stepCompletion } = applyTourSteps(
-			this.props,
-			nextProps
-		);
-		if (steps && nextSteps && stepSetInQueue && stepCompletion) {
-			this.joyride.setState({ index: 0 }, () =>
-				setTimeout(this.joyride.start(true), 500)
-			);
-			this.props.startTourSection(
+		if (this.props.tourRunning) {
+			const {
 				steps,
 				nextSteps,
 				stepSetInQueue,
 				stepCompletion
-			);
+			} = applyTourSteps(this.props, nextProps);
+			if (steps && nextSteps && stepSetInQueue && stepCompletion) {
+				this.joyride.setState({ index: 0 }, () =>
+					setTimeout(this.joyride.start(true), 500)
+				);
+				this.props.startTourSection(
+					steps,
+					nextSteps,
+					stepSetInQueue,
+					stepCompletion
+				);
+			}
 		}
 	}
 
 	joyrideCallback(data) {
-		if (data.action === "skip") this.props.skipTour();
+		if (data.type === "finished") this.props.endTour();
 	}
 
 	render() {
@@ -94,6 +98,7 @@ function mapStateToProps({ tour, position }) {
 		runNextSet: tour.runNextSet,
 		stepSetInQueue: tour.stepSetInQueue,
 		stepCompletion: tour.stepCompletion,
+		tourRunning: tour.tourRunning,
 		thirdPerson: position.thirdPerson
 	};
 }
@@ -101,5 +106,5 @@ function mapStateToProps({ tour, position }) {
 export default connect(mapStateToProps, {
 	initData,
 	startTourSection,
-	skipTour
+	endTour
 })(App);
