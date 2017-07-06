@@ -42,7 +42,7 @@ export function removeAsset(x, y) {
 	};
 }
 
-export function insertAsset(assetId = null, x, y) {
+export function insertAsset(x, y, assetId = null) {
 	return {
 		type: INSERT_ASSET,
 		payload: { assetId, x, y }

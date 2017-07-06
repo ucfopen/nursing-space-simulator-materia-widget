@@ -1,4 +1,10 @@
-import { rotateCell, deleteItem, insertItem, isCellAvailable } from "../grid";
+import {
+	rotateCell,
+	deleteItem,
+	insertItem,
+	isCellAvailable,
+	getCellRotation
+} from "../grid";
 
 import {
 	SELECT_ASSET_TYPE,
@@ -110,7 +116,9 @@ export default function(
 			const selectedAsset = state.selectedAsset
 				? { ...state.selectedAsset }
 				: null;
+
 			const gridCopy = JSON.parse(JSON.stringify(state.grid));
+
 			if (
 				!selectedAsset ||
 				!isCellAvailable(gridCopy, action.payload.x, action.payload.y) ||
@@ -120,17 +128,26 @@ export default function(
 					...state
 				};
 			} else {
-				let newGrid =
-					state.currentX !== null && state.currentY !== null
-						? (newGrid = deleteItem(gridCopy, state.currentX, state.currentY))
-						: (newGrid = gridCopy);
+				let newGrid,
+					prevRotation = 180;
+				if (state.currentX !== null && state.currentY !== null) {
+					prevRotation = getCellRotation(
+						gridCopy,
+						state.currentX,
+						state.currentY
+					);
+					newGrid = deleteItem(gridCopy, state.currentX, state.currentY);
+				} else {
+					newGrid = gridCopy;
+				}
 				return {
 					...state,
 					grid: insertItem(
 						newGrid,
 						selectedAsset.id,
 						action.payload.x,
-						action.payload.y
+						action.payload.y,
+						prevRotation
 					),
 					manipulationMode: true,
 					currentX: action.payload.x,
@@ -148,7 +165,7 @@ export default function(
 			const gridCopy = JSON.parse(JSON.stringify(state.grid));
 			const currentX = state.currentX;
 			const currentY = state.currentY;
-			const currentRotation = gridCopy[currentX][currentY].rotation;
+			const currentRotation = getCellRotation(gridCopy, currentX, currentY);
 			let newGrid;
 
 			switch (action.payload) {

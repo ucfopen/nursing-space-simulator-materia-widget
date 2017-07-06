@@ -45,7 +45,8 @@ const propsInVRScene = [
 	"insertAsset",
 	"selectAsset",
 	"store",
-	"storeSubscription"
+	"storeSubscription",
+	"selectedAsset"
 ];
 
 const insertAsset = jest.fn();
@@ -97,6 +98,25 @@ describe("VR Scene Tests", () => {
 					assets={assets}
 					position={position}
 					selectAsset={selectAsset}
+					insertAsset={insertAsset}
+					currentX={1}
+					currentY={1}
+					thirdPerson={true}
+				/>
+			)
+			.toJSON();
+		expect(vrSceneTree).toMatchSnapshot();
+	});
+
+	it("should render floor correctly if a selected asset is passed in", () => {
+		const vrSceneTree = renderer
+			.create(
+				<VRScene
+					grid={grid}
+					assets={assets}
+					position={position}
+					selectAsset={selectAsset}
+					selectedAsset={{ id: "pov_camera", name: "POV Camera" }}
 					insertAsset={insertAsset}
 					currentX={1}
 					currentY={1}

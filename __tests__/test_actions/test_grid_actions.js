@@ -56,15 +56,28 @@ describe("Grid Action Tests", () => {
 		expect(actions.removeAsset(5, 7)).toEqual(expectedAction);
 	});
 
-	it("insertAsset", () => {
+	it("insertAsset with no asset id", () => {
 		const expectedAction = {
 			type: actions.INSERT_ASSET,
 			payload: {
+				assetId: null,
 				x: 5,
 				y: 7
 			}
 		};
 		expect(actions.insertAsset(5, 7)).toEqual(expectedAction);
+	});
+
+	it("insertAsset with asset id", () => {
+		const expectedAction = {
+			type: actions.INSERT_ASSET,
+			payload: {
+				assetId: "pov_camera",
+				x: 5,
+				y: 7
+			}
+		};
+		expect(actions.insertAsset(5, 7, "pov_camera")).toEqual(expectedAction);
 	});
 
 	it("updateAssetPosition", () => {
