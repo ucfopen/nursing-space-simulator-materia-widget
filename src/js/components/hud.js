@@ -9,7 +9,7 @@ import { connect } from "react-redux";
 
 import {
 	updateCameraPosition,
-	toggleCameraType
+	toggleThirdPerson
 } from "../actions/camera_actions.js";
 import { toggleMenuVisibility, setCategory } from "../actions/menu_actions";
 
@@ -64,7 +64,9 @@ export class HUD extends Component {
 								/>
 							</div>
 						: <div id="ground-top-panel">
-								<button id="back" onClick={() => this.props.toggleCameraType()}>
+								<button
+									id="back"
+									onClick={() => this.props.toggleThirdPerson()}>
 									Back
 								</button>
 							</div>}
@@ -90,7 +92,7 @@ function mapStateToProps({ data, menu, grid, position }) {
 
 export default connect(mapStateToProps, {
 	updateCameraPosition,
-	toggleCameraType,
+	toggleThirdPerson,
 	toggleMenuVisibility,
 	setCategory,
 	selectAssetType,

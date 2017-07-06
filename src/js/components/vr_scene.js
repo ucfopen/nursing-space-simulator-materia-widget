@@ -53,16 +53,22 @@ export class VRScene extends Component {
 	}
 
 	renderFloor() {
+		const selectedAssetId = this.props.selectedAsset
+			? this.props.selectedAsset.id
+			: null;
+
 		const insertAsset = this.props.insertAsset;
+
 		const mappedFloor = this.props.grid.map(
 			(row, rowIndex) =>
 				row.map(
 					(column, colIndex) =>
 						<FloorUnit
+							thirdPerson={this.props.thirdPerson}
+							selectedAssetId={selectedAssetId}
 							x={rowIndex}
 							y={colIndex}
-							onClick={insertAsset.bind(this, rowIndex, colIndex)}
-							color="red"
+							onClick={insertAsset}
 						/>,
 					this
 				),
@@ -108,7 +114,7 @@ export class VRScene extends Component {
 					<Skybox />
 					<CameraFP
 						active={!this.props.thirdPerson}
-						position={{ x: 5, y: 1, z: 10 }}
+						position={this.props.position}
 					/>
 					<CameraTP
 						active={this.props.thirdPerson}
@@ -130,7 +136,8 @@ function mapStateToProps({ position, data, grid }) {
 		assets: data.assets,
 		grid: grid.grid,
 		currentX: grid.currentX,
-		currentY: grid.currentY
+		currentY: grid.currentY,
+		selectedAsset: grid.selectedAsset
 	};
 }
 
