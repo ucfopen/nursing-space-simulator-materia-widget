@@ -1,5 +1,5 @@
 export const START_TOUR_SECTION = "START_TOUR_SECTION";
-export const SKIP_TOUR = "SKIP_TOUR";
+export const END_TOUR = "END_TOUR";
 
 export function startTourSection(
 	steps,
@@ -13,8 +13,8 @@ export function startTourSection(
 	};
 }
 
-export function stopTour() {
+export function endTour() {
 	return {
-		type: SKIP_TOUR
+		type: END_TOUR
 	};
 }
