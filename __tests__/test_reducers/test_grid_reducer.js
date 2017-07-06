@@ -1,7 +1,12 @@
 import gridReducer from "../../src/js/reducers/gridReducer";
 import * as actions from "../../src/js/actions/grid_actions";
 import { INIT_DATA } from "../../src/js/actions/";
-import { deleteItem, insertItem, rotateCell } from "../../src/js/grid";
+import {
+	deleteItem,
+	insertItem,
+	rotateCell,
+	getCellRotation
+} from "../../src/js/grid";
 
 describe("grid reducer", () => {
 	it("should return the inital state", () => {
@@ -345,6 +350,7 @@ describe("grid reducer", () => {
 		x = 0;
 		y = 0;
 		// Tests currently selected asset is deleted when inserted to a new grid cell (aka moving an asset)
+		const prevRotation = getCellRotation(grid, 0, 1);
 		const newGrid = deleteItem(JSON.parse(JSON.stringify(grid)), 0, 1);
 		expect(
 			gridReducer(
@@ -362,7 +368,8 @@ describe("grid reducer", () => {
 				JSON.parse(JSON.stringify(newGrid)),
 				selectedAsset.id,
 				x,
-				y
+				y,
+				prevRotation
 			),
 			selectedAsset,
 			manipulationMode: true,
