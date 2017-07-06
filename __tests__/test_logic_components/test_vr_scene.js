@@ -108,6 +108,25 @@ describe("VR Scene Tests", () => {
 		expect(vrSceneTree).toMatchSnapshot();
 	});
 
+	it("should render floor correctly if a selected asset is passed in", () => {
+		const vrSceneTree = renderer
+			.create(
+				<VRScene
+					grid={grid}
+					assets={assets}
+					position={position}
+					selectAsset={selectAsset}
+					selectedAsset={{ id: "pov_camera", name: "POV Camera" }}
+					insertAsset={insertAsset}
+					currentX={1}
+					currentY={1}
+					thirdPerson={true}
+				/>
+			)
+			.toJSON();
+		expect(vrSceneTree).toMatchSnapshot();
+	});
+
 	it("should render connected VRScene with props", () => {
 		const store = createStore(reducers);
 
