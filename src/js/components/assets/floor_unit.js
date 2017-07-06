@@ -9,11 +9,17 @@ export default class FloorUnit extends Component {
 	}
 
 	onMouseEnter() {
-		this.setState({ active: true });
+		const active = this.props.thirdPerson ? true : false;
+
+		this.setState({ active });
 	}
 
 	onMouseLeave() {
 		this.setState({ active: false });
+	}
+
+	handleClick() {
+		this.props.onClick(this.props.selectedAssetId, this.props.x, this.props.y);
 	}
 
 	render() {
@@ -25,7 +31,7 @@ export default class FloorUnit extends Component {
 				rotation={{ x: "-90", y: "0", z: "0" }}
 				scale={{ x: "1", y: "1", z: "1" }}
 				events={{
-					click: this.props.onClick,
+					click: this.handleClick.bind(this),
 					mouseenter: this.onMouseEnter.bind(this),
 					mouseleave: this.onMouseLeave.bind(this)
 				}}

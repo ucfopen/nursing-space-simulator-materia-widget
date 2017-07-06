@@ -1,5 +1,5 @@
 export const CAMERA_UPDATE_POSITION = "CAMERA_UPDATE_POSITION";
-export const CAMERA_TOGGLE = "CAMERA_TOGGLE_TYPE";
+export const TOGGLE_THIRD_PERSON = "TOGGLE_THIRD_PERSON";
 
 export function updateCameraPosition(axisDirection) {
 	return {
@@ -8,8 +8,8 @@ export function updateCameraPosition(axisDirection) {
 	};
 }
 
-export function toggleCameraType() {
+export function toggleThirdPerson() {
 	return {
-		type: CAMERA_TOGGLE
+		type: TOGGLE_THIRD_PERSON
 	};
 }
