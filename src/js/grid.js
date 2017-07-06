@@ -87,12 +87,13 @@ export function insertItem(grid, itemId, x, y, rotation = 180) {
 		return null;
 	}
 
-	grid[x][y] = itemId === null
-		? (grid[x][y] = "0")
-		: {
-				id: itemId,
-				rotation: rotation
-			};
+	grid[x][y] =
+		itemId === null
+			? (grid[x][y] = "0")
+			: {
+					id: itemId,
+					rotation: rotation
+				};
 
 	return grid;
 }
@@ -121,7 +122,7 @@ export function isCellAvailable(grid, x, y) {
  * @param {int} x x coordinate of gridcell to be checked
  * @param {int} y y coordinate of gridcell to be checked
  *
- * @return boolean
+ * @return id of item in cell
  */
 export function getItemId(grid, x, y) {
 	if (grid === null || x === null || y === null) {
@@ -129,4 +130,21 @@ export function getItemId(grid, x, y) {
 	}
 
 	return grid[x][y] === "0" ? "0" : grid[x][y].id;
+}
+
+/**
+ * returns the id of the item placed in a grid cell
+ *
+ * @param {array} grid grid to be checked
+ * @param {int} x x coordinate of gridcell to be checked
+ * @param {int} y y coordinate of gridcell to be checked
+ *
+ * @return rotation of item in cell
+ */
+export function getCellRotation(grid, x, y) {
+	if (grid === null || x === null || y === null) {
+		return null;
+	}
+
+	return grid[x][y] === "0" ? 180 : grid[x][y].rotation;
 }
