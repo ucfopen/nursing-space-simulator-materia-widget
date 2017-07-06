@@ -222,4 +222,42 @@ describe("test grid functions", () => {
 		itemId = gridFunctions.getItemId(JSON.parse(JSON.stringify(grid)), 1, 1);
 		expect(itemId).toEqual("0");
 	});
+
+	it("can get the item id of a cell", () => {
+		let itemRotation;
+
+		itemRotation = gridFunctions.getCellRotation(null, 0, 1);
+		expect(itemRotation).toEqual(null);
+
+		itemRotation = gridFunctions.getCellRotation(
+			JSON.parse(JSON.stringify(grid)),
+			null,
+			1
+		);
+		expect(itemRotation).toEqual(null);
+
+		itemRotation = gridFunctions.getCellRotation(
+			JSON.parse(JSON.stringify(grid)),
+			0,
+			null
+		);
+		expect(itemRotation).toEqual(null);
+
+		itemRotation = gridFunctions.getCellRotation(null, null, null);
+		expect(itemRotation).toEqual(null);
+
+		itemRotation = gridFunctions.getCellRotation(
+			JSON.parse(JSON.stringify(grid)),
+			0,
+			1
+		);
+		expect(itemRotation).toEqual(0);
+
+		itemRotation = gridFunctions.getCellRotation(
+			JSON.parse(JSON.stringify(grid)),
+			2,
+			1
+		);
+		expect(itemRotation).toEqual(-90);
+	});
 });
