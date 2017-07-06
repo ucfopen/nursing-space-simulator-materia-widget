@@ -9,10 +9,10 @@ describe("Camera Action Tests", () => {
 		expect(actions.updateCameraPosition("xUp")).toEqual(expectedAction);
 	});
 
-	it("cameraToggle", () => {
+	it("toggleThirdPerson", () => {
 		const expectedAction = {
-			type: actions.CAMERA_TOGGLE
+			type: actions.TOGGLE_THIRD_PERSON
 		};
-		expect(actions.toggleCameraType()).toEqual(expectedAction);
+		expect(actions.toggleThirdPerson()).toEqual(expectedAction);
 	});
 });

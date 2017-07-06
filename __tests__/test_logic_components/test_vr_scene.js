@@ -45,7 +45,8 @@ const propsInVRScene = [
 	"insertAsset",
 	"selectAsset",
 	"store",
-	"storeSubscription"
+	"storeSubscription",
+	"selectedAsset"
 ];
 
 const insertAsset = jest.fn();
