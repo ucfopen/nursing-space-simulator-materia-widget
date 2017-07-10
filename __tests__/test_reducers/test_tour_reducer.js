@@ -12,15 +12,14 @@ import {
 
 import { INIT_DATA } from "../../src/js/actions";
 
-import { part1, clickInScene } from "../../src/js/steps";
+import steps from "../../src/js/steps";
 
 const initialState = {
 	tourRunning: true,
-	steps: [],
-	nextSteps: [],
+	steps: steps,
+	currentSteps: steps[0],
 	runNextSet: false,
-	stepSetInQueue: "part1",
-	stepCompletion: { 1: false, 2: false, 3: false, 4: false, 5: false }
+	stepCompletion: 0
 };
 
 const selectedAsset = {
@@ -45,7 +44,7 @@ describe("tour reducer", () => {
 		).toEqual(initialState);
 	});
 
-	it("should return runNextSet", () => {
+	it("should return runNextSet when started", () => {
 		expect(
 			tourReducer(
 				// State being passed in
@@ -75,36 +74,22 @@ describe("tour reducer", () => {
 			{ ...initialState, runNextSet: true },
 			// Action being passed in
 			{
-				type: START_TOUR_SECTION,
-				payload: {
-					steps: part1,
-					nextSteps: clickInScene,
-					stepSetInQueue: "clickInScene",
-					stepCompletion: { 1: true, 2: false, 3: false, 4: false, 5: false }
-				}
+				type: START_TOUR_SECTION
 			}
 		);
-		expect(test).toHaveProperty("steps", part1);
-		expect(test).toHaveProperty("nextSteps", clickInScene);
-		expect(test).toHaveProperty("stepSetInQueue", "clickInScene");
-		expect(test).toHaveProperty("stepCompletion", {
-			1: true,
-			2: false,
-			3: false,
-			4: false,
-			5: false
-		});
+		expect(test).toHaveProperty("currentSteps", steps[0]);
+		expect(test).toHaveProperty("stepCompletion", 1);
 		expect(test).toHaveProperty("runNextSet", false);
 	});
 
 	////////////////////////////////////////////////////////////////////////
 
-	it("goes to step:clickInScene", () => {
+	it("SELECT_ASSET_TYPE, stepCompletion:1, selectedAsset:object ===> runNextSet: True", () => {
 		const test = tourReducer(
 			// State being passed in
 			{
 				...initialState,
-				stepCompletion: { 1: true, 2: false, 3: false, 4: false, 5: false }
+				stepCompletion: 1
 			},
 			// Action being passed in
 			{
@@ -112,52 +97,15 @@ describe("tour reducer", () => {
 				payload: selectedAsset
 			}
 		);
-		expect(test).toHaveProperty("stepSetInQueue", "clickInScene");
 		expect(test).toHaveProperty("runNextSet", true);
 	});
 
-	it("ignores progressing to step:clickInScene if tour ended", () => {
+	it("SELECT_ASSET_TYPE, stepCompletion:1, selectedAsset:camera ===> runNextSet: False", () => {
 		const test = tourReducer(
 			// State being passed in
 			{
 				...initialState,
-				tourRunning: false,
-				stepCompletion: { 1: true, 2: false, 3: false, 4: false, 5: false }
-			},
-			// Action being passed in
-			{
-				type: SELECT_ASSET_TYPE,
-				payload: selectedAsset
-			}
-		);
-		expect(test).toHaveProperty("stepSetInQueue", "part1");
-		expect(test).toHaveProperty("runNextSet", false);
-	});
-
-	it("ignores progressing to step:clickInScene if stepCompletion not at expected step", () => {
-		const test = tourReducer(
-			// State being passed in
-			{
-				...initialState,
-				// this is purposely an invalid stepCompletion
-				stepCompletion: { 1: true, 2: true, 3: true, 4: false, 5: false }
-			},
-			// Action being passed in
-			{
-				type: SELECT_ASSET_TYPE,
-				payload: selectedAsset
-			}
-		);
-		expect(test).toHaveProperty("stepSetInQueue", "part1");
-		expect(test).toHaveProperty("runNextSet", false);
-	});
-
-	it("ignores progressing to step:clickInScene if pov_camera selected", () => {
-		const test = tourReducer(
-			// State being passed in
-			{
-				...initialState,
-				stepCompletion: { 1: true, 2: false, 3: false, 4: false, 5: false }
+				stepCompletion: 1
 			},
 			// Action being passed in
 			{
@@ -165,19 +113,82 @@ describe("tour reducer", () => {
 				payload: selectedAssetCamera
 			}
 		);
-		expect(test).toHaveProperty("stepSetInQueue", "part1");
+		expect(test).toHaveProperty("runNextSet", false);
+	});
+
+	it("SELECT_ASSET_TYPE, stepCompletion:3, selectedAsset:camera ===> runNextSet: True", () => {
+		const test = tourReducer(
+			// State being passed in
+			{
+				...initialState,
+				stepCompletion: 3
+			},
+			// Action being passed in
+			{
+				type: SELECT_ASSET_TYPE,
+				payload: selectedAssetCamera
+			}
+		);
+		expect(test).toHaveProperty("runNextSet", true);
+	});
+
+	it("SELECT_ASSET_TYPE, stepCompletion:3, selectedAsset:object ===> runNextSet: False", () => {
+		const test = tourReducer(
+			// State being passed in
+			{
+				...initialState,
+				stepCompletion: 3
+			},
+			// Action being passed in
+			{
+				type: SELECT_ASSET_TYPE,
+				payload: selectedAsset
+			}
+		);
+		expect(test).toHaveProperty("runNextSet", false);
+	});
+
+	it("SELECT_ASSET_TYPE: runNextSet False if tour ended", () => {
+		const test = tourReducer(
+			// State being passed in
+			{
+				...initialState,
+				tourRunning: false
+			},
+			// Action being passed in
+			{
+				type: SELECT_ASSET_TYPE,
+				payload: selectedAsset
+			}
+		);
+		expect(test).toHaveProperty("runNextSet", false);
+	});
+
+	it("SELECT_ASSET_TYPE: runNextSet False if stepCompletion not at expected step", () => {
+		const test = tourReducer(
+			// State being passed in
+			{
+				...initialState,
+				// this is purposely an invalid stepCompletion
+				stepCompletion: "invalid"
+			},
+			// Action being passed in
+			{
+				type: SELECT_ASSET_TYPE,
+				payload: selectedAsset
+			}
+		);
 		expect(test).toHaveProperty("runNextSet", false);
 	});
 
 	////////////////////////////////////////////////////////////////////////
 
-	it("goes to step:part2", () => {
+	it("INSERT_ASSET, stepCompletion:2, selectedAsset:object ===> runNextSet: True", () => {
 		const test = tourReducer(
 			// State being passed in
 			{
 				...initialState,
-				stepSetInQueue: "clickInScene",
-				stepCompletion: { 1: true, 2: true, 3: false, 4: false, 5: false }
+				stepCompletion: 2
 			},
 			// Action being passed in
 			{
@@ -185,55 +196,15 @@ describe("tour reducer", () => {
 				payload: selectedAsset
 			}
 		);
-		expect(test).toHaveProperty("stepSetInQueue", "part2");
 		expect(test).toHaveProperty("runNextSet", true);
 	});
 
-	it("ignores progressing to step:part2 if tour ended", () => {
+	it("INSERT_ASSET, stepCompletion:2, selectedAsset:camera ===> runNextSet: False", () => {
 		const test = tourReducer(
 			// State being passed in
 			{
 				...initialState,
-				stepSetInQueue: "clickInScene",
-				tourRunning: false,
-				stepCompletion: { 1: true, 2: true, 3: false, 4: false, 5: false }
-			},
-			// Action being passed in
-			{
-				type: SELECT_ASSET_TYPE,
-				payload: selectedAsset
-			}
-		);
-		expect(test).toHaveProperty("stepSetInQueue", "clickInScene");
-		expect(test).toHaveProperty("runNextSet", false);
-	});
-
-	it("ignores progressing to step:part2 if stepCompletion not at expected step", () => {
-		const test = tourReducer(
-			// State being passed in
-			{
-				...initialState,
-				stepSetInQueue: "clickInScene",
-				// this is purposely an invalid stepCompletion
-				stepCompletion: { 1: true, 2: true, 3: true, 4: true, 5: false }
-			},
-			// Action being passed in
-			{
-				type: INSERT_ASSET,
-				payload: selectedAsset
-			}
-		);
-		expect(test).toHaveProperty("stepSetInQueue", "clickInScene");
-		expect(test).toHaveProperty("runNextSet", false);
-	});
-
-	it("ignores progressing to step:part2 if pov_camera selected", () => {
-		const test = tourReducer(
-			// State being passed in
-			{
-				...initialState,
-				stepSetInQueue: "clickInScene",
-				stepCompletion: { 1: true, 2: true, 3: false, 4: false, 5: false }
+				stepCompletion: 2
 			},
 			// Action being passed in
 			{
@@ -241,75 +212,64 @@ describe("tour reducer", () => {
 				payload: selectedAssetCamera
 			}
 		);
-		expect(test).toHaveProperty("stepSetInQueue", "clickInScene");
 		expect(test).toHaveProperty("runNextSet", false);
 	});
 
-	////////////////////////////////////////////////////////////////////////
-
-	it("goes to step:clickFirstPersonViewer", () => {
+	it("INSERT_ASSET, stepCompletion:4, selectedAsset:camera ===> runNextSet: True", () => {
 		const test = tourReducer(
 			// State being passed in
 			{
 				...initialState,
-				stepSetInQueue: "part2",
-				stepCompletion: { 1: true, 2: true, 3: true, 4: false, 5: false }
+				stepCompletion: 4
 			},
 			// Action being passed in
 			{
-				type: SELECT_ASSET_TYPE,
+				type: INSERT_ASSET,
 				payload: selectedAssetCamera
 			}
 		);
-		expect(test).toHaveProperty("stepSetInQueue", "clickFirstPersonViewer");
 		expect(test).toHaveProperty("runNextSet", true);
 	});
 
-	it("ignores progressing to step:clickFirstPersonViewer if tour ended", () => {
+	it("INSERT_ASSET, stepCompletion:4, selectedAsset:object ===> runNextSet: False", () => {
 		const test = tourReducer(
 			// State being passed in
 			{
 				...initialState,
-				stepSetInQueue: "part2",
-				tourRunning: false,
-				stepCompletion: { 1: true, 2: true, 3: true, 4: false, 5: false }
+				stepCompletion: 4
 			},
 			// Action being passed in
 			{
-				type: SELECT_ASSET_TYPE,
-				payload: selectedAssetCamera
+				type: INSERT_ASSET,
+				payload: selectedAsset
 			}
 		);
-		expect(test).toHaveProperty("stepSetInQueue", "part2");
 		expect(test).toHaveProperty("runNextSet", false);
 	});
 
-	it("ignores progressing to step:clickFirstPersonViewer if stepCompletion not at expected step", () => {
+	it("INSERT_ASSET: runNextSet False if tour ended", () => {
 		const test = tourReducer(
 			// State being passed in
 			{
 				...initialState,
-				stepSetInQueue: "part2",
+				tourRunning: false
+			},
+			// Action being passed in
+			{
+				type: INSERT_ASSET,
+				payload: selectedAsset
+			}
+		);
+		expect(test).toHaveProperty("runNextSet", false);
+	});
+
+	it("INSERT_ASSET: runNextSet False if stepCompletion not at expected step", () => {
+		const test = tourReducer(
+			// State being passed in
+			{
+				...initialState,
 				// this is purposely an invalid stepCompletion
-				stepCompletion: { 1: true, 2: true, 3: true, 4: true, 5: false }
-			},
-			// Action being passed in
-			{
-				type: SELECT_ASSET_TYPE,
-				payload: selectedAssetCamera
-			}
-		);
-		expect(test).toHaveProperty("stepSetInQueue", "part2");
-		expect(test).toHaveProperty("runNextSet", false);
-	});
-
-	it("ignores progressing to step:clickFirstPersonViewer if pov_camera is NOT selected", () => {
-		const test = tourReducer(
-			// State being passed in
-			{
-				...initialState,
-				stepSetInQueue: "clickFirstPersonViewer",
-				stepCompletion: { 1: true, 2: true, 3: true, 4: false, 5: false }
+				stepCompletion: "invalid"
 			},
 			// Action being passed in
 			{
@@ -317,83 +277,6 @@ describe("tour reducer", () => {
 				payload: selectedAsset
 			}
 		);
-		expect(test).toHaveProperty("stepSetInQueue", "clickFirstPersonViewer");
-		expect(test).toHaveProperty("runNextSet", false);
-	});
-
-	////////////////////////////////////////////////////////////////////////
-
-	it("goes to step:clickCameraInScene", () => {
-		const test = tourReducer(
-			// State being passed in
-			{
-				...initialState,
-				stepSetInQueue: "clickFirstPersonViewer",
-				stepCompletion: { 1: true, 2: true, 3: true, 4: true, 5: false }
-			},
-			// Action being passed in
-			{
-				type: INSERT_ASSET,
-				payload: selectedAssetCamera
-			}
-		);
-		expect(test).toHaveProperty("stepSetInQueue", "clickCameraInScene");
-		expect(test).toHaveProperty("runNextSet", true);
-	});
-
-	it("ignores progressing to step:clickCameraInScene if tour ended", () => {
-		const test = tourReducer(
-			// State being passed in
-			{
-				...initialState,
-				stepSetInQueue: "clickFirstPersonViewer",
-				tourRunning: false,
-				stepCompletion: { 1: true, 2: true, 3: true, 4: true, 5: false }
-			},
-			// Action being passed in
-			{
-				type: INSERT_ASSET,
-				payload: selectedAssetCamera
-			}
-		);
-		expect(test).toHaveProperty("stepSetInQueue", "clickFirstPersonViewer");
-		expect(test).toHaveProperty("runNextSet", false);
-	});
-
-	it("ignores progressing to step:clickCameraInScene if stepCompletion not at expected step", () => {
-		const test = tourReducer(
-			// State being passed in
-			{
-				...initialState,
-				stepSetInQueue: "clickFirstPersonViewer",
-				// this is purposely an invalid stepCompletion
-				stepCompletion: { 1: true, 2: false, 3: false, 4: false, 5: false }
-			},
-			// Action being passed in
-			{
-				type: INSERT_ASSET,
-				payload: selectedAssetCamera
-			}
-		);
-		expect(test).toHaveProperty("stepSetInQueue", "clickFirstPersonViewer");
-		expect(test).toHaveProperty("runNextSet", false);
-	});
-
-	it("ignores progressing to step:clickCameraInScene if pov_camera is NOT selected", () => {
-		const test = tourReducer(
-			// State being passed in
-			{
-				...initialState,
-				stepSetInQueue: "clickCameraInScene",
-				stepCompletion: { 1: true, 2: true, 3: true, 4: true, 5: false }
-			},
-			// Action being passed in
-			{
-				type: SELECT_ASSET_TYPE,
-				payload: selectedAsset
-			}
-		);
-		expect(test).toHaveProperty("stepSetInQueue", "clickCameraInScene");
 		expect(test).toHaveProperty("runNextSet", false);
 	});
 });
