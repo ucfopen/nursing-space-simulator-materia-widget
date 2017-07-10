@@ -2,14 +2,15 @@ import { START_TOUR_SECTION, END_TOUR } from "../actions/tour_actions";
 import { SELECT_ASSET_TYPE, INSERT_ASSET } from "../actions/grid_actions";
 import { INIT_DATA } from "../actions/index";
 
+import steps from "../steps";
+
 export default function(
 	state = {
 		tourRunning: true,
-		steps: [],
-		nextSteps: [],
+		steps: steps,
+		currentSteps: steps[0],
 		runNextSet: false,
-		stepSetInQueue: "part1",
-		stepCompletion: { 1: false, 2: false, 3: false, 4: false, 5: false }
+		stepCompletion: 0
 	},
 	action
 ) {
@@ -23,10 +24,8 @@ export default function(
 		case START_TOUR_SECTION:
 			return {
 				...state,
-				steps: action.payload.steps,
-				nextSteps: action.payload.nextSteps,
-				stepSetInQueue: action.payload.stepSetInQueue,
-				stepCompletion: action.payload.stepCompletion,
+				currentSteps: state.steps[state.stepCompletion],
+				stepCompletion: state.stepCompletion + 1,
 				runNextSet: false
 			};
 
@@ -40,49 +39,41 @@ export default function(
 			if (
 				state.tourRunning &&
 				action.payload.id !== "pov_camera" &&
-				JSON.stringify(state.stepCompletion) ===
-					JSON.stringify({ 1: true, 2: false, 3: false, 4: false, 5: false })
+				state.stepCompletion === 1
 			) {
 				return {
 					...state,
-					runNextSet: true,
-					stepSetInQueue: "clickInScene"
+					runNextSet: true
 				};
 			} else if (
 				state.tourRunning &&
 				action.payload.id === "pov_camera" &&
-				JSON.stringify(state.stepCompletion) ===
-					JSON.stringify({ 1: true, 2: true, 3: true, 4: false, 5: false })
+				state.stepCompletion === 3
 			) {
 				return {
 					...state,
-					runNextSet: true,
-					stepSetInQueue: "clickFirstPersonViewer"
+					runNextSet: true
 				};
 			} else return state;
 
 		case INSERT_ASSET:
 			if (
 				state.tourRunning &&
-				JSON.stringify(state.stepCompletion) ===
-					JSON.stringify({ 1: true, 2: true, 3: false, 4: false, 5: false }) &&
+				state.stepCompletion === 2 &&
 				action.payload.assetId !== "pov_camera"
 			) {
 				return {
 					...state,
-					runNextSet: true,
-					stepSetInQueue: "part2"
+					runNextSet: true
 				};
 			} else if (
 				state.tourRunning &&
-				JSON.stringify(state.stepCompletion) ===
-					JSON.stringify({ 1: true, 2: true, 3: true, 4: true, 5: false }) &&
+				state.stepCompletion === 4 &&
 				action.payload.assetId === "pov_camera"
 			) {
 				return {
 					...state,
-					runNextSet: true,
-					stepSetInQueue: "clickCameraInScene"
+					runNextSet: true
 				};
 			} else return state;
 
