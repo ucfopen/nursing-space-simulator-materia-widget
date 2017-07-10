@@ -18,16 +18,23 @@ describe("App tests", () => {
 
 	it("should render connected component using app", () => {
 		const store = createStore(reducers);
-		const spy = jest.fn();
+		const initDataSpy = jest.fn();
 		ConnectedApp.prototype.componentDidMount = function() {
-			spy();
+			this.props.initData();
 		};
 		const connectedAppComponent = mount(
 			<Provider store={store}>
-				<ConnectedApp qset={qset} />
+				<ConnectedApp qset={qset} initData={initDataSpy} />
 			</Provider>,
 			{ attachTo: jsdom.window.document.getElementById("app") }
 		);
-		expect(spy).toBeCalled();
+		expect(initDataSpy).toBeCalled();
+	});
+
+	it("should end tour if joyride callback returns finished", () => {
+		const endTourSpy = jest.fn();
+		const wrapper = shallow(<App endTour={endTourSpy} />);
+		wrapper.instance().joyrideCallback({ type: "finished" });
+		expect(endTourSpy).toBeCalled();
 	});
 });
