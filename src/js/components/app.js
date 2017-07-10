@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { initData } from "../actions";
 import { startTourSection, endTour } from "../actions/tour_actions";
-import applyTourSteps from "../tourHelper";
 
 import HUD from "./hud";
 import VRScene from "./vr_scene";
@@ -12,46 +11,14 @@ import Joyride from "react-joyride";
 export class App extends Component {
 	componentDidMount() {
 		this.props.initData(this.props.qset);
-
-		// need this since componentWillUpdate not called for initial render
-		const {
-			steps,
-			nextSteps,
-			stepSetInQueue,
-			stepCompletion
-		} = applyTourSteps(this.props, {
-			runNextSet: true
-		});
-		this.joyride.setState({ index: 0 }, () =>
-			setTimeout(this.joyride.start(true), 500)
-		);
-		this.props.startTourSection(
-			steps,
-			nextSteps,
-			stepSetInQueue,
-			stepCompletion
-		);
 	}
 
 	componentWillUpdate(nextProps) {
-		if (this.props.tourRunning) {
-			const {
-				steps,
-				nextSteps,
-				stepSetInQueue,
-				stepCompletion
-			} = applyTourSteps(this.props, nextProps);
-			if (steps && nextSteps && stepSetInQueue && stepCompletion) {
-				this.joyride.setState({ index: 0 }, () =>
-					setTimeout(this.joyride.start(true), 500)
-				);
-				this.props.startTourSection(
-					steps,
-					nextSteps,
-					stepSetInQueue,
-					stepCompletion
-				);
-			}
+		if (nextProps.runNextSet === true && this.props.tourRunning) {
+			this.joyride.setState({ index: 0 }, () =>
+				setTimeout(this.joyride.start(true), 500)
+			);
+			this.props.startTourSection();
 		}
 	}
 
@@ -68,7 +35,7 @@ export class App extends Component {
 				<Joyride
 					ref={c => (this.joyride = c)}
 					callback={this.joyrideCallback.bind(this)}
-					steps={this.props.steps}
+					steps={this.props.currentSteps}
 					debug={false}
 					showSkipButton={true}
 					showStepsProgress={false}
@@ -93,11 +60,8 @@ export class App extends Component {
 
 function mapStateToProps({ tour, position }) {
 	return {
-		steps: tour.steps,
-		nextSteps: tour.nextSteps,
+		currentSteps: tour.currentSteps,
 		runNextSet: tour.runNextSet,
-		stepSetInQueue: tour.stepSetInQueue,
-		stepCompletion: tour.stepCompletion,
 		tourRunning: tour.tourRunning,
 		thirdPerson: position.thirdPerson
 	};

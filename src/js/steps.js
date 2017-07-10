@@ -1,4 +1,4 @@
-export const part1 = [
+const beginning = [
 	{
 		title: "Welcome to the Nursing Simulation Builder!",
 		text:
@@ -56,7 +56,7 @@ export const part1 = [
 	}
 ];
 
-export const clickInScene = [
+const clickInScene = [
 	{
 		title: "Placing Objects",
 		text: "Click/touch inside the room to place the object.",
@@ -69,7 +69,7 @@ export const clickInScene = [
 	}
 ];
 
-export const part2 = [
+const objectOptions = [
 	{
 		title: "Object Options",
 		text:
@@ -99,7 +99,7 @@ export const part2 = [
 	}
 ];
 
-export const clickFirstPersonViewer = [
+const clickFirstPersonViewer = [
 	{
 		title: "Go Into First-Person View",
 		text: "Click/touch inside the room to go into first-person mode.",
@@ -112,7 +112,7 @@ export const clickFirstPersonViewer = [
 	}
 ];
 
-export const clickCameraInScene = [
+const clickCameraInScene = [
 	{
 		title: "Welcome to First Person",
 		text:
@@ -137,3 +137,12 @@ export const clickCameraInScene = [
 		allowClicksThruHole: "true"
 	}
 ];
+
+const steps = {
+	0: beginning,
+	1: clickInScene,
+	2: objectOptions,
+	3: clickFirstPersonViewer,
+	4: clickCameraInScene
+};
+export default steps;
