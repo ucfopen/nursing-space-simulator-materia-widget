@@ -36,6 +36,7 @@ export class VRScene extends Component {
 								data={assets[column.id]}
 								rotation={column.rotation}
 								isSelected={currentX === rowIndex && currentY === colIndex}
+								key={`${rowIndex} ${colIndex}`}
 							/>
 						: null;
 				}, this),
@@ -47,7 +48,13 @@ export class VRScene extends Component {
 	renderCeiling() {
 		if (this.props.thirdPerson) return null;
 		const mappedCeiling = this.props.grid.map((row, rowIndex) =>
-			row.map((column, colIndex) => <CeilingUnit x={rowIndex} z={colIndex} />)
+			row.map((column, colIndex) =>
+				<CeilingUnit
+					x={rowIndex}
+					z={colIndex}
+					key={`${rowIndex} ${colIndex}`}
+				/>
+			)
 		);
 		return mappedCeiling;
 	}
@@ -69,6 +76,7 @@ export class VRScene extends Component {
 							x={rowIndex}
 							y={colIndex}
 							onClick={insertAsset}
+							key={`${rowIndex} ${colIndex}`}
 						/>,
 					this
 				),
@@ -96,6 +104,7 @@ export class VRScene extends Component {
 									<a-asset-item
 										id={asset + "-obj"}
 										src={assets[asset].objSrc}
+										key={`${asset}-obj`}
 									/>
 								);
 							}
@@ -106,6 +115,7 @@ export class VRScene extends Component {
 									<a-asset-item
 										id={asset + "-mtl"}
 										src={assets[asset].mtlSrc}
+										key={`${asset}-mtl`}
 									/>
 								);
 							}
