@@ -12,10 +12,6 @@ const jsdom = new JSDOM(
 );
 
 describe("App tests", () => {
-	it("should. ...", () => {
-		const app = shallow(<App qset={qset} />);
-	});
-
 	it("should render connected component using app", () => {
 		const store = createStore(reducers);
 		const initDataSpy = jest.fn();
