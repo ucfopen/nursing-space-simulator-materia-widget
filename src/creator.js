@@ -759,7 +759,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	};
 
 	materiaInterface.onSaveClicked = function() {
-		title = document.getElementById("title").value;
+		const title = document.getElementById("title").value;
 		Materia.CreatorCore.save(title, qset, 1);
 	};
 
