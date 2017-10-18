@@ -6,15 +6,15 @@ import {
 import { INSERT_ASSET } from "../actions/grid_actions";
 
 export default function(
-	state = { x: 2.5, y: 18, z: 14, thirdPerson: true },
+	state = { x: 14.5, y: 18, z: 9, thirdPerson: true },
 	action
 ) {
 	switch (action.type) {
 		case CAMERA_UPDATE_POSITION:
 			switch (action.payload) {
-				case "xUp":
+				case "xRight":
 					return { ...state, x: state.x + 1 };
-				case "xDown":
+				case "xLeft":
 					return { ...state, x: state.x - 1 };
 				case "yUp":
 					return { ...state, y: state.y + 1 };
@@ -35,7 +35,7 @@ export default function(
 					...state,
 					x: action.payload.x,
 					y: 1,
-					z: action.payload.y,
+					z: action.payload.z,
 					thirdPerson: false
 				};
 			}

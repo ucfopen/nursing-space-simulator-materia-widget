@@ -9,8 +9,13 @@
 		"aframe": "global:AFRAME"
 	},
 	"jest": {
-		"collectCoverageFrom": ["src/**/*.js"],
-		"testPathIgnorePatterns": ["/node_modules/", "/custom_test_utilities/"],
+		"collectCoverageFrom": [
+			"src/**/*.js"
+		],
+		"testPathIgnorePatterns": [
+			"/node_modules/",
+			"/custom_test_utilities/"
+		],
 		"coverageThreshold": {
 			"global": {
 				"branches": 97,
@@ -22,6 +27,7 @@
 	},
 	"dependencies": {
 		"aframe": "^0.5.0",
+		"aframe-mouse-cursor-component": "^0.5.2",
 		"aframe-react": "^4.2.3",
 		"fs": "0.0.2",
 		"react": "^15.5.4",
@@ -71,7 +77,10 @@
 		"build": "gulp"
 	},
 	"lint-staged": {
-		"*.js": ["prettier --use-tabs --jsx-bracket-same-line --write", "git add"]
+		"*.js": [
+			"prettier --use-tabs --jsx-bracket-same-line --write",
+			"git add"
+		]
 	},
 	"author": "New Media"
 }
