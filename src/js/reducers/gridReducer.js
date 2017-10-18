@@ -166,14 +166,13 @@ export default function(
 			const gridCopy = JSON.parse(JSON.stringify(state.grid));
 			const currentX = state.currentX;
 			const currentZ = state.currentZ;
-			const currentRotation = getCellRotation(gridCopy, currentZ, currentX);
+			const currentRotation = getCellRotation(gridCopy, currentX, currentZ);
 			let newGrid;
 
 			switch (action.payload) {
 				case "xRight":
-					console.log(action.payload);
-					if (isCellAvailable(gridCopy, currentZ, currentX + 1)) {
-						newGrid = deleteItem(gridCopy, currentZ, currentX);
+					if (isCellAvailable(gridCopy, currentX + 1, currentZ)) {
+						newGrid = deleteItem(gridCopy, currentX, currentZ);
 						return {
 							...state,
 							currentX: currentX + 1,
@@ -188,8 +187,8 @@ export default function(
 					}
 					break;
 				case "xLeft":
-					if (isCellAvailable(gridCopy, currentZ, currentX - 1)) {
-						newGrid = deleteItem(gridCopy, currentZ, currentX);
+					if (isCellAvailable(gridCopy, currentX - 1, currentZ)) {
+						newGrid = deleteItem(gridCopy, currentX, currentZ);
 						return {
 							...state,
 							currentX: currentX - 1,
@@ -204,8 +203,8 @@ export default function(
 					}
 					break;
 				case "zUp":
-					if (isCellAvailable(gridCopy, currentZ - 1, currentX)) {
-						newGrid = deleteItem(gridCopy, currentZ, currentX);
+					if (isCellAvailable(gridCopy, currentX, currentZ - 1)) {
+						newGrid = deleteItem(gridCopy, currentX, currentZ);
 						return {
 							...state,
 							currentZ: currentZ - 1,
@@ -220,8 +219,8 @@ export default function(
 					}
 					break;
 				case "zDown":
-					if (isCellAvailable(gridCopy, currentZ + 1, currentX)) {
-						newGrid = deleteItem(gridCopy, currentZ, currentX);
+					if (isCellAvailable(gridCopy, currentX, currentZ + 1)) {
+						newGrid = deleteItem(gridCopy, currentX, currentZ);
 						return {
 							...state,
 							currentZ: currentZ + 1,
