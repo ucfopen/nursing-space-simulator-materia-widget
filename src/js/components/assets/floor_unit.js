@@ -10,7 +10,6 @@ export default class FloorUnit extends Component {
 
 	onMouseEnter() {
 		const active = this.props.thirdPerson ? true : false;
-
 		this.setState({ active });
 	}
 
@@ -19,7 +18,7 @@ export default class FloorUnit extends Component {
 	}
 
 	handleClick() {
-		this.props.onClick(this.props.x, this.props.y, this.props.selectedAssetId);
+		this.props.onClick(this.props.x, this.props.z, this.props.selectedAssetId);
 	}
 
 	render() {
@@ -27,7 +26,7 @@ export default class FloorUnit extends Component {
 			<Entity
 				primitive="a-plane"
 				material={this.state.active ? "color: red" : "color: white"}
-				position={{ x: this.props.x, y: "0", z: this.props.y }}
+				position={{ x: this.props.x, y: "0", z: this.props.z }}
 				rotation={{ x: "-90", y: "0", z: "0" }}
 				scale={{ x: "1", y: "1", z: "1" }}
 				events={{

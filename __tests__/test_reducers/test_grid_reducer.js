@@ -21,7 +21,7 @@ describe("grid reducer", () => {
 			manipulationMode: false,
 			selectedAsset: null,
 			currentX: null,
-			currentY: null
+			currentZ: null
 		});
 	});
 
@@ -70,7 +70,7 @@ describe("grid reducer", () => {
 			selectedAsset: asset,
 			manipulationMode: false,
 			currentX: null,
-			currentY: null
+			currentZ: null
 		});
 	});
 
@@ -89,7 +89,7 @@ describe("grid reducer", () => {
 
 		let grid = [["0", { id: "bed-1", rotation: 0 }], ["0", "0"]];
 		let x = 0,
-			y = 0;
+			z = 0;
 
 		// If the currently selected asset can replace the asset being selected, replace the asset being selected
 		expect(
@@ -102,7 +102,7 @@ describe("grid reducer", () => {
 					payload: {
 						asset: assetBeingSelected,
 						x,
-						y
+						z
 					}
 				}
 			)
@@ -110,12 +110,12 @@ describe("grid reducer", () => {
 			manipulationMode: true,
 			selectedAsset: currentlySelectedAsset,
 			currentX: x,
-			currentY: y,
+			currentZ: z,
 			grid: insertItem(
 				JSON.parse(JSON.stringify(grid)),
 				currentlySelectedAsset.id,
-				x,
-				y
+				z,
+				x
 			)
 		});
 
@@ -129,8 +129,8 @@ describe("grid reducer", () => {
 					type: actions.SELECT_ASSET,
 					payload: {
 						asset: assetBeingSelected,
-						x,
-						y
+						z,
+						x
 					}
 				}
 			)
@@ -139,7 +139,7 @@ describe("grid reducer", () => {
 			manipulationMode: true,
 			selectedAsset: assetBeingSelected,
 			currentX: x,
-			currentY: y
+			currentZ: z
 		});
 
 		assetBeingSelected = currentlySelectedAsset;
@@ -154,8 +154,8 @@ describe("grid reducer", () => {
 					type: actions.SELECT_ASSET,
 					payload: {
 						asset: assetBeingSelected,
-						x,
-						y
+						z,
+						x
 					}
 				}
 			)
@@ -164,7 +164,7 @@ describe("grid reducer", () => {
 			manipulationMode: true,
 			selectedAsset: assetBeingSelected,
 			currentX: x,
-			currentY: y
+			currentZ: z
 		});
 
 		currentlySelectedAsset = {
@@ -183,8 +183,8 @@ describe("grid reducer", () => {
 					type: actions.SELECT_ASSET,
 					payload: {
 						asset: assetBeingSelected,
-						x,
-						y
+						z,
+						x
 					}
 				}
 			)
@@ -193,7 +193,7 @@ describe("grid reducer", () => {
 			manipulationMode: true,
 			selectedAsset: assetBeingSelected,
 			currentX: x,
-			currentY: y
+			currentZ: z
 		});
 	});
 
@@ -211,14 +211,15 @@ describe("grid reducer", () => {
 			manipulationMode: false,
 			selectedAsset: null,
 			currentX: null,
-			currentY: null
+			currentZ: null
 		});
 	});
 
 	it("should handle ROTATE_ASSET", () => {
 		const grid = [["0", { id: "bed-1", rotation: 0 }], ["0", "0"]];
 		const x = 0,
-			y = 1;
+			z = 1;
+
 		expect(
 			gridReducer(
 				// State being passed in
@@ -228,20 +229,20 @@ describe("grid reducer", () => {
 					type: actions.ROTATE_ASSET,
 					payload: {
 						x,
-						y
+						z
 					}
 				}
 			)
 		).toEqual({
-			grid: rotateCell(JSON.parse(JSON.stringify(grid)), x, y)
+			grid: rotateCell(JSON.parse(JSON.stringify(grid)), x, z)
 		});
 	});
 
 	it("should handle REMOVE_ASSET", () => {
 		const grid = [["0", { id: "bed-1", rotation: 0 }], ["0", "0"]];
 
-		const x = 0,
-			y = 1;
+		const x = 1,
+			z = 0;
 
 		expect(
 			gridReducer(
@@ -252,16 +253,16 @@ describe("grid reducer", () => {
 					type: actions.REMOVE_ASSET,
 					payload: {
 						x,
-						y
+						z
 					}
 				}
 			)
 		).toEqual({
-			grid: deleteItem(JSON.parse(JSON.stringify(grid)), x, y),
+			grid: deleteItem(JSON.parse(JSON.stringify(grid)), x, z),
 			manipulationMode: false,
 			selectedAsset: null,
 			currentX: null,
-			currentY: null
+			currentZ: null
 		});
 	});
 
@@ -271,7 +272,7 @@ describe("grid reducer", () => {
 		let selectedAsset = null;
 
 		let x = 1,
-			y = 1;
+			z = 1;
 
 		// If the selected asset is null, return the previous state
 		expect(
@@ -283,7 +284,7 @@ describe("grid reducer", () => {
 					type: actions.INSERT_ASSET,
 					payload: {
 						x,
-						y
+						z
 					}
 				}
 			)
@@ -300,13 +301,13 @@ describe("grid reducer", () => {
 		expect(
 			gridReducer(
 				// State being passed in
-				{ selectedAsset, grid, currentX: null, currentY: null },
+				{ selectedAsset, grid, currentX: null, currentZ: null },
 				// Action being passed in
 				{
 					type: actions.INSERT_ASSET,
 					payload: {
 						x,
-						y
+						z
 					}
 				}
 			)
@@ -315,28 +316,28 @@ describe("grid reducer", () => {
 				JSON.parse(JSON.stringify(grid)),
 				selectedAsset.id,
 				x,
-				y
+				z
 			),
 			selectedAsset,
 			manipulationMode: true,
 			currentX: x,
-			currentY: y
+			currentZ: z
 		});
 
-		x = 0;
-		y = 1;
+		x = 1;
+		z = 0;
 
 		// If the cell to be inserted to is occupied, return the previous state
 		expect(
 			gridReducer(
 				// State being passed in
-				{ selectedAsset, grid, currentX: null, currentY: null },
+				{ selectedAsset, grid, currentX: null, currentZ: null },
 				// Action being passed in
 				{
 					type: actions.INSERT_ASSET,
 					payload: {
 						x,
-						y
+						z
 					}
 				}
 			)
@@ -344,22 +345,24 @@ describe("grid reducer", () => {
 			grid,
 			selectedAsset,
 			currentX: null,
-			currentY: null
+			currentZ: null
 		});
 
 		x = 0;
-		y = 0;
+		z = 0;
+
 		// Tests currently selected asset is deleted when inserted to a new grid cell (aka moving an asset)
-		const prevRotation = getCellRotation(grid, 0, 1);
-		const newGrid = deleteItem(JSON.parse(JSON.stringify(grid)), 0, 1);
+		const prevRotation = getCellRotation(grid, 1, 0);
+		const newGrid = deleteItem(JSON.parse(JSON.stringify(grid)), 1, 0);
+
 		expect(
 			gridReducer(
-				{ selectedAsset, grid, currentX: 0, currentY: 1 },
+				{ selectedAsset, grid, currentX: 1, currentZ: 0 },
 				{
 					type: actions.INSERT_ASSET,
 					payload: {
 						x,
-						y
+						z
 					}
 				}
 			)
@@ -368,13 +371,13 @@ describe("grid reducer", () => {
 				JSON.parse(JSON.stringify(newGrid)),
 				selectedAsset.id,
 				x,
-				y,
+				z,
 				prevRotation
 			),
 			selectedAsset,
 			manipulationMode: true,
 			currentX: x,
-			currentY: y
+			currentZ: z
 		});
 	});
 
@@ -390,19 +393,19 @@ describe("grid reducer", () => {
 		};
 
 		const x = 1,
-			y = 1;
+			z = 1;
 
 		let direction = null;
 		let newGrid;
 
-		// Does not attemp to update an assets position if there is none or if the asset is pov_camera
+		// Does not attempt to update an assets position if there is none or if the asset is pov_camera
 		expect(
 			gridReducer(
 				// State being passed in
 				{
 					grid,
 					currentX: null,
-					currentY: null,
+					currentZ: null,
 					selectedAsset: { id: "pov_camera", title: "POV Camera" }
 				},
 				// Action being passed in
@@ -414,14 +417,14 @@ describe("grid reducer", () => {
 		).toEqual({
 			grid,
 			currentX: null,
-			currentY: null,
+			currentZ: null,
 			selectedAsset: { id: "pov_camera", title: "POV Camera" }
 		});
 
 		expect(
 			gridReducer(
 				// State being passed in
-				{ grid, currentX: x, currentY: y, selectedAsset },
+				{ grid, currentX: x, currentZ: z, selectedAsset },
 				// Action being passed in
 				{
 					type: actions.UPDATE_ASSET_POSITION,
@@ -431,17 +434,17 @@ describe("grid reducer", () => {
 		).toEqual({
 			grid: grid,
 			currentX: x,
-			currentY: y,
+			currentZ: z,
 			selectedAsset
 		});
 
-		direction = "xUp";
-		newGrid = deleteItem(JSON.parse(JSON.stringify(grid)), x, y);
+		direction = "xRight";
+		newGrid = deleteItem(JSON.parse(JSON.stringify(grid)), x, z);
 
 		expect(
 			gridReducer(
 				// State being passed in
-				{ grid, currentX: x, currentY: y, selectedAsset },
+				{ grid, currentX: x, currentZ: z, selectedAsset },
 				// Action being passed it
 				{
 					type: actions.UPDATE_ASSET_POSITION,
@@ -453,21 +456,21 @@ describe("grid reducer", () => {
 				newGrid,
 				selectedAsset.id,
 				x + 1,
-				y,
-				grid[x][y].rotation
+				z,
+				grid[z][x].rotation
 			),
 			currentX: x + 1,
-			currentY: y,
+			currentZ: z,
 			selectedAsset
 		});
 
-		direction = "xDown";
-		newGrid = deleteItem(JSON.parse(JSON.stringify(grid)), x, y);
+		direction = "xLeft";
+		newGrid = deleteItem(JSON.parse(JSON.stringify(grid)), x, z);
 
 		expect(
 			gridReducer(
 				// State being passed in
-				{ grid, currentX: x, currentY: y, selectedAsset },
+				{ grid, currentX: x, currentZ: z, selectedAsset },
 				// Action being passed it
 				{
 					type: actions.UPDATE_ASSET_POSITION,
@@ -479,21 +482,21 @@ describe("grid reducer", () => {
 				newGrid,
 				selectedAsset.id,
 				x - 1,
-				y,
-				grid[x][y].rotation
+				z,
+				grid[z][x].rotation
 			),
 			currentX: x - 1,
-			currentY: y,
+			currentZ: z,
 			selectedAsset
 		});
 
 		direction = "zUp";
-		newGrid = deleteItem(JSON.parse(JSON.stringify(grid)), x, y);
+		newGrid = deleteItem(JSON.parse(JSON.stringify(grid)), x, z);
 
 		expect(
 			gridReducer(
 				// State being passed in
-				{ grid, currentX: x, currentY: y, selectedAsset },
+				{ grid, currentX: x, currentZ: z, selectedAsset },
 				// Action being passed it
 				{
 					type: actions.UPDATE_ASSET_POSITION,
@@ -505,21 +508,21 @@ describe("grid reducer", () => {
 				newGrid,
 				selectedAsset.id,
 				x,
-				y - 1,
-				grid[x][y].rotation
+				z - 1,
+				grid[z][x].rotation
 			),
 			currentX: x,
-			currentY: y - 1,
+			currentZ: z - 1,
 			selectedAsset
 		});
 
 		direction = "zDown";
-		newGrid = deleteItem(JSON.parse(JSON.stringify(grid)), x, y);
+		newGrid = deleteItem(JSON.parse(JSON.stringify(grid)), x, z);
 
 		expect(
 			gridReducer(
 				// State being passed in
-				{ grid, currentX: x, currentY: y, selectedAsset },
+				{ grid, currentX: x, currentZ: z, selectedAsset },
 				// Action being passed it
 				{
 					type: actions.UPDATE_ASSET_POSITION,
@@ -531,11 +534,11 @@ describe("grid reducer", () => {
 				newGrid,
 				selectedAsset.id,
 				x,
-				y + 1,
-				grid[x][y].rotation
+				z + 1,
+				grid[z][x].rotation
 			),
 			currentX: x,
-			currentY: y + 1,
+			currentZ: z + 1,
 			selectedAsset
 		});
 
@@ -544,22 +547,22 @@ describe("grid reducer", () => {
 			{
 				direction: "xUp",
 				x: 0,
-				y: 1
+				z: 1
 			},
 			{
 				direction: "xDown",
 				x: 2,
-				y: 1
+				z: 1
 			},
 			{
 				direction: "zUp",
 				x: 1,
-				y: 0
+				z: 0
 			},
 			{
 				direction: "zDown",
 				x: 1,
-				y: 2
+				z: 2
 			}
 		];
 
@@ -571,7 +574,7 @@ describe("grid reducer", () => {
 					{
 						grid,
 						currentX: invalidMovements[i].x,
-						currentY: invalidMovements[i].y,
+						currentZ: invalidMovements[i].z,
 						selectedAsset
 					},
 					// Action being passed it
@@ -583,7 +586,7 @@ describe("grid reducer", () => {
 			).toEqual({
 				grid,
 				currentX: invalidMovements[i].x,
-				currentY: invalidMovements[i].y,
+				currentZ: invalidMovements[i].z,
 				selectedAsset
 			});
 		}

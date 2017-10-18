@@ -41,7 +41,7 @@ const propsInVRScene = [
 	"assets",
 	"grid",
 	"currentX",
-	"currentY",
+	"currentZ",
 	"insertAsset",
 	"selectAsset",
 	"store",
@@ -82,7 +82,7 @@ describe("VR Scene Tests", () => {
 					selectAsset={selectAsset}
 					insertAsset={insertAsset}
 					currentX={0}
-					currentY={0}
+					currentZ={0}
 					thirdPerson={false}
 				/>
 			)
@@ -100,7 +100,7 @@ describe("VR Scene Tests", () => {
 					selectAsset={selectAsset}
 					insertAsset={insertAsset}
 					currentX={1}
-					currentY={1}
+					currentZ={1}
 					thirdPerson={true}
 				/>
 			)
@@ -119,7 +119,7 @@ describe("VR Scene Tests", () => {
 					selectedAsset={{ id: "pov_camera", name: "POV Camera" }}
 					insertAsset={insertAsset}
 					currentX={1}
-					currentY={1}
+					currentZ={1}
 					thirdPerson={true}
 				/>
 			)

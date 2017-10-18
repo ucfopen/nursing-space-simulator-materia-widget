@@ -6,7 +6,7 @@ export default props => {
 	return (
 		<Entity
 			camera={{ active: props.active }}
-			rotation="-90 180 90"
+			rotation="270 0 0"
 			position={props.position}
 			mouse-cursor
 		/>

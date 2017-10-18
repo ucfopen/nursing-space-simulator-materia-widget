@@ -20,25 +20,27 @@ export default props => {
 					Currently selected: {props.selectedAsset.title}
 				</span>
 			</span>
-			{props.manipulationMode
-				? <div>
-						<button id="confirm" onClick={() => props.deselectAsset()}>
-							<ConfirmSVG />
-						</button>
-						<button
-							id="rotate"
-							onClick={() => props.rotateAsset(props.currentX, props.currentY)}>
-							<RotateSVG />
-						</button>
-						<button
-							id="remove"
-							onClick={() => props.removeAsset(props.currentX, props.currentY)}>
-							<DeleteSVG />
-						</button>
-					</div>
-				: <button id="deselect" onClick={() => props.deselectAsset()}>
-						<DeselectSVG />
-					</button>}
+			{props.manipulationMode ? (
+				<div>
+					<button id="confirm" onClick={() => props.deselectAsset()}>
+						<ConfirmSVG />
+					</button>
+					<button
+						id="rotate"
+						onClick={() => props.rotateAsset(props.currentX, props.currentZ)}>
+						<RotateSVG />
+					</button>
+					<button
+						id="remove"
+						onClick={() => props.removeAsset(props.currentX, props.currentZ)}>
+						<DeleteSVG />
+					</button>
+				</div>
+			) : (
+				<button id="deselect" onClick={() => props.deselectAsset()}>
+					<DeselectSVG />
+				</button>
+			)}
 		</div>
 	);
 };
