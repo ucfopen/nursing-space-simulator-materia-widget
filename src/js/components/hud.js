@@ -41,35 +41,35 @@ export class HUD extends Component {
 						update={update}
 						updateCameraPosition={this.props.updateCameraPosition}
 					/>
-					{this.props.thirdPerson
-						? <div>
-								{this.props.selectedAsset
-									? <AssetControls
-											selectedAsset={this.props.selectedAsset}
-											manipulationMode={this.props.manipulationMode}
-											removeAsset={this.props.removeAsset}
-											deselectAsset={this.props.deselectAsset}
-											rotateAsset={this.props.rotateAsset}
-											currentX={this.props.currentX}
-											currentY={this.props.currentY}
-										/>
-									: null}
-								<AssetTray
-									assets={this.props.assets}
-									categories={this.props.categories}
-									selectAssetType={this.props.selectAssetType}
-									selectedAsset={this.props.selectAsset}
-									setCategory={this.props.setCategory}
-									currentCategory={this.props.currentCategory}
+					{this.props.thirdPerson ? (
+						<div>
+							{this.props.selectedAsset ? (
+								<AssetControls
+									selectedAsset={this.props.selectedAsset}
+									manipulationMode={this.props.manipulationMode}
+									removeAsset={this.props.removeAsset}
+									deselectAsset={this.props.deselectAsset}
+									rotateAsset={this.props.rotateAsset}
+									currentX={this.props.currentX}
+									currentZ={this.props.currentZ}
 								/>
-							</div>
-						: <div id="ground-top-panel">
-								<button
-									id="back"
-									onClick={() => this.props.toggleThirdPerson()}>
-									Back
-								</button>
-							</div>}
+							) : null}
+							<AssetTray
+								assets={this.props.assets}
+								categories={this.props.categories}
+								selectAssetType={this.props.selectAssetType}
+								selectedAsset={this.props.selectAsset}
+								setCategory={this.props.setCategory}
+								currentCategory={this.props.currentCategory}
+							/>
+						</div>
+					) : (
+						<div id="ground-top-panel">
+							<button id="back" onClick={() => this.props.toggleThirdPerson()}>
+								Back
+							</button>
+						</div>
+					)}
 				</div>
 			);
 		} //end else
@@ -84,7 +84,7 @@ function mapStateToProps({ data, menu, grid, position }) {
 		visible: menu.visible,
 		selectedAsset: grid.selectedAsset,
 		currentX: grid.currentX,
-		currentY: grid.currentY,
+		currentZ: grid.currentZ,
 		manipulationMode: grid.manipulationMode,
 		thirdPerson: position.thirdPerson
 	};

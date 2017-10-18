@@ -12,9 +12,9 @@ describe("position reducer", () => {
 				{}
 			)
 		).toEqual({
-			x: 2.5,
+			x: 14.5,
 			y: 18,
-			z: 14,
+			z: 9,
 			thirdPerson: true
 		});
 	});
@@ -24,7 +24,7 @@ describe("position reducer", () => {
 			y = 10,
 			z = 10;
 
-		let direction = "xUp";
+		let direction = "xRight";
 
 		expect(
 			positionReducer(
@@ -42,7 +42,7 @@ describe("position reducer", () => {
 			z
 		});
 
-		direction = "xDown";
+		direction = "xLeft";
 
 		expect(
 			positionReducer(
@@ -180,7 +180,7 @@ describe("position reducer", () => {
 					payload: {
 						assetId: "pov_camera",
 						x: 1,
-						y: 1
+						z: 1
 					}
 				}
 			)
@@ -222,7 +222,7 @@ describe("position reducer", () => {
 					payload: {
 						assetId: "bed-1",
 						x: 1,
-						y: 1
+						z: 1
 					}
 				}
 			)

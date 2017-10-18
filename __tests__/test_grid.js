@@ -61,12 +61,12 @@ describe("test grid functions", () => {
 			0,
 			1
 		);
-		expect(rotatedGrid[0][1].rotation).toEqual(-90);
+		expect(rotatedGrid[1][0].rotation).toEqual(-90);
 
 		rotatedGrid = gridFunctions.rotateCell(
 			JSON.parse(JSON.stringify(grid)),
-			2,
-			1
+			1,
+			2
 		);
 		expect(rotatedGrid[2][1].rotation).toEqual(-180);
 
@@ -86,8 +86,8 @@ describe("test grid functions", () => {
 
 		deletedGrid = gridFunctions.deleteItem(
 			JSON.parse(JSON.stringify(grid)),
-			0,
-			1
+			1,
+			0
 		);
 
 		expect(deletedGrid[0][1]).toEqual("0");
@@ -128,8 +128,8 @@ describe("test grid functions", () => {
 		insertedGrid = gridFunctions.insertItem(
 			JSON.parse(JSON.stringify(grid)),
 			"bed-1",
-			2,
 			0,
+			2,
 			-90
 		);
 		expect(insertedGrid[2][0].rotation).toEqual(-90);
@@ -188,8 +188,8 @@ describe("test grid functions", () => {
 
 		isCellAvailable = gridFunctions.isCellAvailable(
 			JSON.parse(JSON.stringify(grid)),
-			0,
-			1
+			1,
+			0
 		);
 		expect(isCellAvailable).toBe(false);
 
@@ -248,15 +248,15 @@ describe("test grid functions", () => {
 
 		itemRotation = gridFunctions.getCellRotation(
 			JSON.parse(JSON.stringify(grid)),
-			0,
-			1
+			1,
+			0
 		);
 		expect(itemRotation).toEqual(0);
 
 		itemRotation = gridFunctions.getCellRotation(
 			JSON.parse(JSON.stringify(grid)),
-			2,
-			1
+			1,
+			2
 		);
 		expect(itemRotation).toEqual(-90);
 	});

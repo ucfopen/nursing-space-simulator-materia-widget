@@ -112,7 +112,7 @@ exports[`Movement Controls tests renders movement controls correctly 1`] = `
     >
       <button
         id="camera-up"
-        onClick={[Function]}
+        onMouseDown={[Function]}
       >
         <svg
           height="50px"
@@ -141,7 +141,7 @@ exports[`Movement Controls tests renders movement controls correctly 1`] = `
       >
         <button
           id="camera-left"
-          onClick={[Function]}
+          onMouseDown={[Function]}
         >
           <svg
             height="50px"
@@ -167,7 +167,7 @@ exports[`Movement Controls tests renders movement controls correctly 1`] = `
         </button>
         <button
           id="camera-right"
-          onClick={[Function]}
+          onMouseDown={[Function]}
         >
           <svg
             height="50px"
@@ -194,7 +194,7 @@ exports[`Movement Controls tests renders movement controls correctly 1`] = `
       </div>
       <button
         id="camera-down"
-        onClick={[Function]}
+        onMouseDown={[Function]}
       >
         <svg
           height="50px"
@@ -221,7 +221,7 @@ exports[`Movement Controls tests renders movement controls correctly 1`] = `
     </div>
     <button
       id="camera-zoom-in"
-      onClick={[Function]}
+      onMouseDown={[Function]}
     >
       <svg
         height="30px"
@@ -390,7 +390,7 @@ exports[`Movement Controls tests renders movement controls correctly 2`] = `
     >
       <button
         id="camera-up"
-        onClick={[Function]}
+        onMouseDown={[Function]}
       >
         <svg
           height="50px"
@@ -419,7 +419,7 @@ exports[`Movement Controls tests renders movement controls correctly 2`] = `
       >
         <button
           id="camera-left"
-          onClick={[Function]}
+          onMouseDown={[Function]}
         >
           <svg
             height="50px"
@@ -445,7 +445,7 @@ exports[`Movement Controls tests renders movement controls correctly 2`] = `
         </button>
         <button
           id="camera-right"
-          onClick={[Function]}
+          onMouseDown={[Function]}
         >
           <svg
             height="50px"
@@ -472,7 +472,7 @@ exports[`Movement Controls tests renders movement controls correctly 2`] = `
       </div>
       <button
         id="camera-down"
-        onClick={[Function]}
+        onMouseDown={[Function]}
       >
         <svg
           height="50px"
@@ -499,7 +499,7 @@ exports[`Movement Controls tests renders movement controls correctly 2`] = `
     </div>
     <button
       id="camera-zoom-in"
-      onClick={[Function]}
+      onMouseDown={[Function]}
     >
       <svg
         height="30px"

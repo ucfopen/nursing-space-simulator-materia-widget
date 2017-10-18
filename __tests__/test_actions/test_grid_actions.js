@@ -21,7 +21,7 @@ describe("Grid Action Tests", () => {
 			payload: {
 				asset,
 				x: 5,
-				y: 7
+				z: 7
 			}
 		};
 		expect(actions.selectAsset(asset, 5, 7)).toEqual(expectedAction);
@@ -39,7 +39,7 @@ describe("Grid Action Tests", () => {
 			type: actions.ROTATE_ASSET,
 			payload: {
 				x: 5,
-				y: 7
+				z: 7
 			}
 		};
 		expect(actions.rotateAsset(5, 7)).toEqual(expectedAction);
@@ -50,7 +50,7 @@ describe("Grid Action Tests", () => {
 			type: actions.REMOVE_ASSET,
 			payload: {
 				x: 5,
-				y: 7
+				z: 7
 			}
 		};
 		expect(actions.removeAsset(5, 7)).toEqual(expectedAction);
@@ -62,7 +62,7 @@ describe("Grid Action Tests", () => {
 			payload: {
 				assetId: null,
 				x: 5,
-				y: 7
+				z: 7
 			}
 		};
 		expect(actions.insertAsset(5, 7)).toEqual(expectedAction);
@@ -74,7 +74,7 @@ describe("Grid Action Tests", () => {
 			payload: {
 				assetId: "pov_camera",
 				x: 5,
-				y: 7
+				z: 7
 			}
 		};
 		expect(actions.insertAsset(5, 7, "pov_camera")).toEqual(expectedAction);

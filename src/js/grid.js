@@ -35,18 +35,21 @@ export function loadGrid(gridString, rows, columns) {
  * changes a cell rotation by 90 degrees
  *
  * @param {arary} grid grid to be updated
- * @param {int} x x coordinate of gridcell to be rotated
- * @param {int} y y coordinate of gridcell to be rotated
+ * @param {int} col column of gridcell to be checked
+ * @param {int} row row of gridcell to be checked
  *
  * @return updated grid
  */
-export function rotateCell(grid, x, y) {
-	if (grid === null || x === null || y === null) {
+export function rotateCell(grid, x, z) {
+	if (grid === null || x === null || z === null) {
 		return null;
 	}
 
-	if (grid[x][y] && grid[x][y] !== "0") {
-		grid[x][y].rotation = (grid[x][y].rotation - 90) % 360;
+	const col = x,
+		row = z;
+
+	if (grid[row][col] && grid[row][col] !== "0") {
+		grid[row][col].rotation = (grid[row][col].rotation - 90) % 360;
 	}
 
 	return grid;
@@ -56,17 +59,20 @@ export function rotateCell(grid, x, y) {
  * removes an item from a grid
  *
  * @param {array} grid grid to be updated
- * @param {int} x x coordinate of gridcell to delete item
- * @param {int} y y coordinate of gridcell to delete item
+ * @param {int} col column of gridcell to be checked
+ * @param {int} row row of gridcell to be checked
  *
  * @return updated grid
  */
-export function deleteItem(grid, x, y) {
-	if (grid === null || x === null || y === null) {
+export function deleteItem(grid, x, z) {
+	if (grid === null || x === null || z === null) {
 		return null;
 	}
 
-	grid[x][y] = "0";
+	const col = x,
+		row = z;
+
+	grid[row][col] = "0";
 
 	return grid;
 }
@@ -76,20 +82,23 @@ export function deleteItem(grid, x, y) {
  *
  * @param {array} grid grid to be updated
  * @param {string} itemId id of the item to be placed
- * @param {int} x x coordinate of gridcell to insert item
- * @param {int} y y coordinate of gridcell to insert item
+ * @param {int} col column of gridcell to be checked
+ * @param {int} row row of gridcell to be checked
  * @param {int} rotation rotation of the item being placed
  *
  * @return updated grid
  */
-export function insertItem(grid, itemId, x, y, rotation = 180) {
-	if (grid === null || x === null || y === null) {
+export function insertItem(grid, itemId, x, z, rotation = 180) {
+	if (grid === null || x === null || z === null) {
 		return null;
 	}
 
-	grid[x][y] =
+	const col = x,
+		row = z;
+
+	grid[row][col] =
 		itemId === null
-			? (grid[x][y] = "0")
+			? (grid[row][col] = "0")
 			: {
 					id: itemId,
 					rotation: rotation
@@ -102,49 +111,49 @@ export function insertItem(grid, itemId, x, y, rotation = 180) {
  * checks to see if an item is placed in a grid cell
  *
  * @param {array} grid grid to be checked
- * @param {int} x x coordinate of gridcell to be checked
- * @param {int} y y coordinate of gridcell to be checked
+ * @param {int} col column of gridcell to be checked
+ * @param {int} row row of gridcell to be checked
  *
  * @return boolean
  */
-export function isCellAvailable(grid, x, y) {
-	if (grid === null || x === null || y === null) {
+export function isCellAvailable(grid, col, row) {
+	if (grid === null || col === null || row === null) {
 		return false;
 	}
 
-	return grid[x][y] === "0";
+	return grid[row][col] === "0";
 }
 
 /**
  * returns the id of the item placed in a grid cell
  *
  * @param {array} grid grid to be checked
- * @param {int} x x coordinate of gridcell to be checked
- * @param {int} y y coordinate of gridcell to be checked
+ * @param {int} col column of gridcell to be checked
+ * @param {int} row row of gridcell to be checked
  *
  * @return id of item in cell
  */
-export function getItemId(grid, x, y) {
-	if (grid === null || x === null || y === null) {
+export function getItemId(grid, col, row) {
+	if (grid === null || col === null || row === null) {
 		return null;
 	}
 
-	return grid[x][y] === "0" ? "0" : grid[x][y].id;
+	return grid[row][col] === "0" ? "0" : grid[row][col].id;
 }
 
 /**
  * returns the id of the item placed in a grid cell
  *
  * @param {array} grid grid to be checked
- * @param {int} x x coordinate of gridcell to be checked
- * @param {int} y y coordinate of gridcell to be checked
+ * @param {int} col column of gridcell to be checked
+ * @param {int} row row of gridcell to be checked
  *
  * @return rotation of item in cell
  */
-export function getCellRotation(grid, x, y) {
-	if (grid === null || x === null || y === null) {
+export function getCellRotation(grid, col, row) {
+	if (grid === null || col === null || row === null) {
 		return null;
 	}
 
-	return grid[x][y] === "0" ? 180 : grid[x][y].rotation;
+	return grid[row][col] === "0" ? 180 : grid[row][col].rotation;
 }

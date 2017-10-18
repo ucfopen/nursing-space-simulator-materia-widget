@@ -5,12 +5,7 @@
 		"data": {
 			"items": [],
 			"options": {
-				"categories": [
-					"beds",
-					"equipment",
-					"walls",
-					"people"
-				],
+				"categories": ["beds", "equipment", "walls", "people"],
 				"assets": {
 					"bed-1": {
 						"assetRotationState": 0,
@@ -411,9 +406,7 @@
 					"door-1": {
 						"assetRotationState": 0,
 						"buttonSource": "assets/icons/icon_door.png",
-						"canReplace": [
-							"walls"
-						],
+						"canReplace": ["walls"],
 						"cellsOwned": "",
 						"clonable": "false",
 						"defaultColor": "",
@@ -558,9 +551,7 @@
 					"fire-wall": {
 						"assetRotationState": 0,
 						"buttonSource": "assets/icons/icon_fire.png",
-						"canReplace": [
-							"walls"
-						],
+						"canReplace": ["walls"],
 						"cellsOwned": "",
 						"clonable": "false",
 						"defaultColor": "",
@@ -596,9 +587,7 @@
 					"tv-wall": {
 						"assetRotationState": 0,
 						"buttonSource": "assets/icons/icon_tv.png",
-						"canReplace": [
-							"walls"
-						],
+						"canReplace": ["walls"],
 						"cellsOwned": "",
 						"clonable": "false",
 						"defaultColor": "#9FCDB1",
@@ -634,9 +623,7 @@
 					"window": {
 						"assetRotationState": 0,
 						"buttonSource": "assets/icons/icon_window.png",
-						"canReplace": [
-							"walls"
-						],
+						"canReplace": ["walls"],
 						"cellsOwned": "",
 						"clonable": "false",
 						"defaultColor": "#9FCDB1",
@@ -672,9 +659,7 @@
 					"soap-wall": {
 						"assetRotationState": 0,
 						"buttonSource": "assets/icons/icon_soap.png",
-						"canReplace": [
-							"walls"
-						],
+						"canReplace": ["walls"],
 						"cellsOwned": "",
 						"clonable": "false",
 						"defaultColor": "#9FCDB1",
@@ -710,9 +695,7 @@
 					"wall-1": {
 						"assetRotationState": 0,
 						"buttonSource": "assets/icons/icon_wall.png",
-						"canReplace": [
-							"walls"
-						],
+						"canReplace": ["walls"],
 						"cellsOwned": "",
 						"clonable": "false",
 						"defaultColor": "#9FCDB1",
@@ -748,7 +731,7 @@
 				},
 				"gridLoader": {
 					"columns": 30,
-					"content": "wall-1.0.0 wall-1.0.0 wall-1.0.0 wall-1.0.0 wall-1.0.0 wall-1.0.0 wall-1.0.0 wall-1.0.0 wall-1.0.0 wall-1.0.0 wall-1.0.0 wall-1.0.0 wall-1.0.0 wall-1.0.0 wall-1.0.0 wall-1.0.0 wall-1.0.0 wall-1.0.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 wall-1.0 wall-1.0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 wall-1.0 wall-1.0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 wall-1.0 wall-1.0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 wall-1.0 wall-1.0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 wall-1.0 wall-1.0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 wall-1.0 wall-1.0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 wall-1.0 wall-1.0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 wall-1.0 wall-1.0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 wall-1.0 wall-1.0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0",
+					"content": "wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 wall-1.0 wall-1.0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 wall-1.0 wall-1.0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 wall-1.0 wall-1.0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 wall-1.0 wall-1.0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 wall-1.0 wall-1.0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 wall-1.0 wall-1.0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 wall-1.0 wall-1.0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 wall-1.0 wall-1.0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 wall-1.0 wall-1.0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0",
 					"rows": 12
 				}
 			}

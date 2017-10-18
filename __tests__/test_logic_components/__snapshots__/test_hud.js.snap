@@ -262,7 +262,7 @@ exports[`HUD tests should render third person correctly with selected asset 1`] 
       >
         <button
           id="camera-up"
-          onClick={[Function]}
+          onMouseDown={[Function]}
         >
           <svg
             height="50px"
@@ -291,7 +291,7 @@ exports[`HUD tests should render third person correctly with selected asset 1`] 
         >
           <button
             id="camera-left"
-            onClick={[Function]}
+            onMouseDown={[Function]}
           >
             <svg
               height="50px"
@@ -317,7 +317,7 @@ exports[`HUD tests should render third person correctly with selected asset 1`] 
           </button>
           <button
             id="camera-right"
-            onClick={[Function]}
+            onMouseDown={[Function]}
           >
             <svg
               height="50px"
@@ -344,7 +344,7 @@ exports[`HUD tests should render third person correctly with selected asset 1`] 
         </div>
         <button
           id="camera-down"
-          onClick={[Function]}
+          onMouseDown={[Function]}
         >
           <svg
             height="50px"
@@ -371,7 +371,7 @@ exports[`HUD tests should render third person correctly with selected asset 1`] 
       </div>
       <button
         id="camera-zoom-in"
-        onClick={[Function]}
+        onMouseDown={[Function]}
       >
         <svg
           height="30px"
@@ -640,7 +640,7 @@ exports[`HUD tests should render third person correctly without selected asset 1
       >
         <button
           id="camera-up"
-          onClick={[Function]}
+          onMouseDown={[Function]}
         >
           <svg
             height="50px"
@@ -669,7 +669,7 @@ exports[`HUD tests should render third person correctly without selected asset 1
         >
           <button
             id="camera-left"
-            onClick={[Function]}
+            onMouseDown={[Function]}
           >
             <svg
               height="50px"
@@ -695,7 +695,7 @@ exports[`HUD tests should render third person correctly without selected asset 1
           </button>
           <button
             id="camera-right"
-            onClick={[Function]}
+            onMouseDown={[Function]}
           >
             <svg
               height="50px"
@@ -722,7 +722,7 @@ exports[`HUD tests should render third person correctly without selected asset 1
         </div>
         <button
           id="camera-down"
-          onClick={[Function]}
+          onMouseDown={[Function]}
         >
           <svg
             height="50px"
@@ -749,7 +749,7 @@ exports[`HUD tests should render third person correctly without selected asset 1
       </div>
       <button
         id="camera-zoom-in"
-        onClick={[Function]}
+        onMouseDown={[Function]}
       >
         <svg
           height="30px"

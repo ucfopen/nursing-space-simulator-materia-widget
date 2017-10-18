@@ -4,6 +4,7 @@ import { Scene } from "aframe-react";
 import { connect } from "react-redux";
 
 import { insertAsset, selectAsset } from "../actions/grid_actions";
+import { updatePosition } from "../actions/camera_actions";
 
 // Scene Assets
 import CeilingUnit from "./assets/ceiling_unit";
@@ -18,27 +19,27 @@ export class VRScene extends Component {
 		const assets = this.props.assets;
 		const selectAsset = this.props.selectAsset;
 		const currentX = this.props.currentX;
-		const currentY = this.props.currentY;
+		const currentZ = this.props.currentZ;
 
 		const mappedAssets = this.props.grid.map(
 			(row, rowIndex) =>
 				row.map((column, colIndex) => {
-					return column !== "0"
-						? <QsetAsset
-								x={rowIndex}
-								z={colIndex}
-								onClick={selectAsset.bind(
-									this,
-									assets[column.id],
-									rowIndex,
-									colIndex
-								)}
-								data={assets[column.id]}
-								rotation={column.rotation}
-								isSelected={currentX === rowIndex && currentY === colIndex}
-								key={`${rowIndex} ${colIndex}`}
-							/>
-						: null;
+					return column !== "0" ? (
+						<QsetAsset
+							x={colIndex}
+							z={rowIndex}
+							onClick={selectAsset.bind(
+								this,
+								assets[column.id],
+								colIndex,
+								rowIndex
+							)}
+							data={assets[column.id]}
+							rotation={column.rotation}
+							isSelected={currentX === colIndex && currentZ === rowIndex}
+							key={`${rowIndex} ${colIndex}`}
+						/>
+					) : null;
 				}, this),
 			this
 		);
@@ -48,13 +49,13 @@ export class VRScene extends Component {
 	renderCeiling() {
 		if (this.props.thirdPerson) return null;
 		const mappedCeiling = this.props.grid.map((row, rowIndex) =>
-			row.map((column, colIndex) =>
+			row.map((column, colIndex) => (
 				<CeilingUnit
-					x={rowIndex}
-					z={colIndex}
+					x={colIndex}
+					z={rowIndex}
 					key={`${rowIndex} ${colIndex}`}
 				/>
-			)
+			))
 		);
 		return mappedCeiling;
 	}
@@ -69,15 +70,16 @@ export class VRScene extends Component {
 		const mappedFloor = this.props.grid.map(
 			(row, rowIndex) =>
 				row.map(
-					(column, colIndex) =>
+					(column, colIndex) => (
 						<FloorUnit
 							thirdPerson={this.props.thirdPerson}
 							selectedAssetId={selectedAssetId}
-							x={rowIndex}
-							y={colIndex}
+							x={colIndex}
+							z={rowIndex}
 							onClick={insertAsset}
 							key={`${rowIndex} ${colIndex}`}
-						/>,
+						/>
+					),
 					this
 				),
 			this
@@ -146,9 +148,12 @@ function mapStateToProps({ position, data, grid }) {
 		assets: data.assets,
 		grid: grid.grid,
 		currentX: grid.currentX,
-		currentY: grid.currentY,
+		currentZ: grid.currentZ,
 		selectedAsset: grid.selectedAsset
 	};
 }
 
-export default connect(mapStateToProps, { insertAsset, selectAsset })(VRScene);
+export default connect(mapStateToProps, {
+	insertAsset,
+	selectAsset
+})(VRScene);

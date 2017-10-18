@@ -15,10 +15,10 @@ export function selectAssetType(asset) {
 	};
 }
 
-export function selectAsset(asset, x, y) {
+export function selectAsset(asset, x, z) {
 	return {
 		type: SELECT_ASSET,
-		payload: { asset, x, y }
+		payload: { asset, x, z }
 	};
 }
 
@@ -28,24 +28,24 @@ export function deselectAsset() {
 	};
 }
 
-export function rotateAsset(x, y) {
+export function rotateAsset(x, z) {
 	return {
 		type: ROTATE_ASSET,
-		payload: { x, y }
+		payload: { x, z }
 	};
 }
 
-export function removeAsset(x, y) {
+export function removeAsset(x, z) {
 	return {
 		type: REMOVE_ASSET,
-		payload: { x, y }
+		payload: { x, z }
 	};
 }
 
-export function insertAsset(x, y, assetId = null) {
+export function insertAsset(x, z, assetId = null) {
 	return {
 		type: INSERT_ASSET,
-		payload: { assetId, x, y }
+		payload: { assetId, x, z }
 	};
 }
 

@@ -24,7 +24,7 @@ describe("Asset Controls Component", () => {
 					removeAsset={removeMock}
 					selectedAsset={selectedAsset}
 					currentX={1}
-					currentY={1}
+					currentZ={1}
 				/>
 			)
 			.toJSON();
@@ -40,7 +40,7 @@ describe("Asset Controls Component", () => {
 					removeAsset={removeMock}
 					selectedAsset={selectedAsset}
 					currentX={1}
-					currentY={1}
+					currentZ={1}
 				/>
 			)
 			.toJSON();
@@ -61,7 +61,7 @@ describe("Asset Controls Component", () => {
 				removeAsset={removeMock}
 				selectedAsset={selectedAsset}
 				currentX={1}
-				currentY={1}
+				currentZ={1}
 			/>
 		);
 
@@ -83,7 +83,7 @@ describe("Asset Controls Component", () => {
 				removeAsset={removeMock}
 				selectedAsset={selectedAsset}
 				currentX={1}
-				currentY={1}
+				currentZ={1}
 			/>
 		);
 
