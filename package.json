@@ -11,7 +11,7 @@
 		"aframe-mouse-cursor-component": "^0.4.1",
 		"aframe-react": "^4.2.3",
 		"lodash": "^4.17.4",
-		"materia-widget-development-kit": "git+ssh://git@clu.cdl.ucf.edu:materia/materia-widget-development-kit.git#v1.0.4",
+		"materia-widget-development-kit": "git+ssh://git@clu.cdl.ucf.edu:materia/materia-widget-development-kit#semver:>=1.0.6 <1.10.0",
 		"react": "^15.5.4",
 		"react-dom": "^15.5.4",
 		"react-joyride": "^1.10.1"
