@@ -36,8 +36,8 @@ function loadGrid(gridString, gLen, gWid) {
 /*
 ** Places the first--and main--React element in the document.
 */
-Namespace("HospitalSim").Engine = (function() {
-	var start = function(instance, qset, version) {
+Namespace("HospitalSim").Engine = {
+	start: function(instance, qset, version) {
 		let data = {
 			assetsFromFile: qset.options.assets,
 			categories: qset.options.categories,
@@ -55,8 +55,5 @@ Namespace("HospitalSim").Engine = (function() {
 			/>,
 			document.querySelector("#sceneContainer")
 		);
-	};
-
-	// Public.
-	return { start: start };
-})();
+	}
+};
