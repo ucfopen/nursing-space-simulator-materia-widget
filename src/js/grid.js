@@ -103,8 +103,6 @@ export function insertItem(grid, itemId, x, z, rotation = 180) {
 	const col = x,
 		row = z;
 
-	if (!_isInBounds(grid, row, col)) return grid;
-
 	grid[row][col] =
 		itemId === null
 			? (grid[row][col] = "0")
