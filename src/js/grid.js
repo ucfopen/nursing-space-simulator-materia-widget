@@ -1,5 +1,5 @@
 // Helper function for loadGrid that parses a string to an object
-function getAssetInfo(gridValue) {
+function _getAssetInfo(gridValue) {
 	if (gridValue === "0") return gridValue;
 
 	const assetInfo = gridValue.split(".");
@@ -7,6 +7,13 @@ function getAssetInfo(gridValue) {
 		id: assetInfo[0],
 		rotation: parseInt(assetInfo[1])
 	};
+}
+
+function _isInBounds(grid, row, col) {
+	if (row < 0 || row >= grid.length) return false;
+	if (col < 0 || col >= grid[0].length) return false;
+
+	return true;
 }
 
 /**
@@ -26,7 +33,7 @@ export function loadGrid(gridString, rows, columns) {
 	let tempGrid = gridString.split(" ");
 	return [...Array(rows)].map(() => {
 		return tempGrid.splice(0, columns).map(gridItem => {
-			return getAssetInfo(gridItem);
+			return _getAssetInfo(gridItem);
 		});
 	});
 }
@@ -96,6 +103,8 @@ export function insertItem(grid, itemId, x, z, rotation = 180) {
 	const col = x,
 		row = z;
 
+	if (!_isInBounds(grid, row, col)) return grid;
+
 	grid[row][col] =
 		itemId === null
 			? (grid[row][col] = "0")
@@ -116,10 +125,15 @@ export function insertItem(grid, itemId, x, z, rotation = 180) {
  *
  * @return boolean
  */
-export function isCellAvailable(grid, col, row) {
-	if (grid === null || col === null || row === null) {
+export function isCellAvailable(grid, x, z) {
+	if (grid === null || x === null || z === null) {
 		return false;
 	}
+
+	const col = x,
+		row = z;
+
+	if (!_isInBounds(grid, row, col)) return false;
 
 	return grid[row][col] === "0";
 }
