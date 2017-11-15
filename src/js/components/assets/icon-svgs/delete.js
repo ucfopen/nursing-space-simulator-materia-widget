@@ -10,7 +10,7 @@ export default () => {
 			viewBox="0 0 125 125"
 			width="55px"
 			height="55px">
-			<g class="svg-icon" id="Layer_5">
+			<g className="svg-icon" id="Layer_5">
 				<path
 					fill="none"
 					stroke="#000000"
