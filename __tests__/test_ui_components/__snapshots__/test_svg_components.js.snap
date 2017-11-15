@@ -2,7 +2,7 @@
 
 exports[`SVG Components test renders ConfirmSVG correctly 1`] = `
 <svg
-  enable-background="new 0 0 125 125"
+  enableBackground="new 0 0 125 125"
   height="55px"
   version="1.1"
   viewBox="0 0 125 125"
@@ -36,7 +36,7 @@ exports[`SVG Components test renders DeleteSVG correctly 1`] = `
   y="0px"
 >
   <g
-    class="svg-icon"
+    className="svg-icon"
     id="Layer_5"
   >
     <path
@@ -99,7 +99,7 @@ exports[`SVG Components test renders DeleteSVG correctly 1`] = `
 
 exports[`SVG Components test renders DeselectSVG correctly 1`] = `
 <svg
-  enable-background="new 0 0 125 125"
+  enableBackground="new 0 0 125 125"
   height="55px"
   version="1.1"
   viewBox="0 0 125 125"
