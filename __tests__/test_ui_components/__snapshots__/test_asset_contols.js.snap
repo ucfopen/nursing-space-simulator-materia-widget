@@ -20,7 +20,7 @@ exports[`Asset Controls Component renders asset controls 1`] = `
       onClick={[Function]}
     >
       <svg
-        enable-background="new 0 0 125 125"
+        enableBackground="new 0 0 125 125"
         height="55px"
         version="1.1"
         viewBox="0 0 125 125"
@@ -82,7 +82,7 @@ exports[`Asset Controls Component renders asset controls 1`] = `
         y="0px"
       >
         <g
-          class="svg-icon"
+          className="svg-icon"
           id="Layer_5"
         >
           <path
@@ -165,7 +165,7 @@ exports[`Asset Controls Component renders asset controls 2`] = `
     onClick={[Function]}
   >
     <svg
-      enable-background="new 0 0 125 125"
+      enableBackground="new 0 0 125 125"
       height="55px"
       version="1.1"
       viewBox="0 0 125 125"
