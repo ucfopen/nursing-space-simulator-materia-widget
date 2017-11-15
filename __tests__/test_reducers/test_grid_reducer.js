@@ -545,12 +545,22 @@ describe("grid reducer", () => {
 		// Given the constant test grid, these are possible invalid moves that should not change the state
 		let invalidMovements = [
 			{
-				direction: "xUp",
+				direction: "xRight",
 				x: 0,
 				z: 1
 			},
 			{
-				direction: "xDown",
+				direction: "xLeft",
+				x: 0,
+				z: 1
+			},
+			{
+				direction: "xLeft",
+				x: 2,
+				z: 1
+			},
+			{
+				direction: "xRight",
 				x: 2,
 				z: 1
 			},
@@ -558,6 +568,16 @@ describe("grid reducer", () => {
 				direction: "zUp",
 				x: 1,
 				z: 0
+			},
+			{
+				direction: "zDown",
+				x: 1,
+				z: 0
+			},
+			{
+				direction: "zUp",
+				x: 1,
+				z: 2
 			},
 			{
 				direction: "zDown",
