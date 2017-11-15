@@ -444,7 +444,7 @@ exports[`HUD tests should render third person correctly with selected asset 1`] 
         onClick={[Function]}
       >
         <svg
-          enable-background="new 0 0 125 125"
+          enableBackground="new 0 0 125 125"
           height="55px"
           version="1.1"
           viewBox="0 0 125 125"
