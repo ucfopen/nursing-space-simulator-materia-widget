@@ -38,7 +38,25 @@ describe("test grid functions", () => {
 		let newGrid;
 
 		newGrid = gridFunctions.loadGrid(gridString, 4, 5);
-		expect(JSON.stringify(newGrid)).toEqual(JSON.stringify(grid));
+		for (let i = 0; i < newGrid.length; i++) {
+			for (let j = 0; j < newGrid[0].length; j++) {
+				if (newGrid[i][j].id == "wall-1") {
+					if (j === 0) {
+						expect(newGrid[i][j].rotation).toEqual(0);
+					} else if (j === newGrid[0].length - 1) {
+						expect(newGrid[i][j].rotation).toEqual(180);
+					} else if (i === 0) {
+						expect(newGrid[i][j].rotation).toEqual(270);
+					} else if (i === newGrid.length - 1) {
+						expect(newGrid[i][j].rotation).toEqual(90);
+					}
+				} else {
+					expect(JSON.stringify(newGrid[i][j])).toEqual(
+						JSON.stringify(grid[i][j])
+					);
+				}
+			}
+		}
 
 		newGrid = gridFunctions.loadGrid(null, 4, 5);
 		expect(newGrid).toEqual(null);
