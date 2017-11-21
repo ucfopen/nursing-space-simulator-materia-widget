@@ -58,6 +58,11 @@ export default function(
 				oldSelectedAsset.id !== action.payload.asset.id &&
 				oldSelectedAsset.canReplace.includes(action.payload.asset.category)
 			) {
+				const prevRotation = getCellRotation(
+					gridCopy,
+					action.payload.x,
+					action.payload.z
+				);
 				return {
 					...state,
 					manipulationMode: true,
@@ -68,7 +73,8 @@ export default function(
 						gridCopy,
 						oldSelectedAsset.id,
 						action.payload.x,
-						action.payload.z
+						action.payload.z,
+						prevRotation
 					)
 				};
 			} else {

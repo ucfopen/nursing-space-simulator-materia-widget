@@ -9,6 +9,27 @@ function _getAssetInfo(gridValue) {
 	};
 }
 
+// Sets walls that border the entire scene to face inward. Helps users add wall assets to those walls.
+function _setInitialWallRotations(grid) {
+	const height = grid.length;
+	const width = grid[0].length;
+
+	let rotation = 0;
+	for (let i = 0; i < height; i++) {
+		for (let j = 0; j < width; j++) {
+			if (grid[i][j] == "0") continue;
+			rotation = 0;
+
+			if (i == 0) grid[i][j].rotation = 270;
+			else if (i == height - 1) grid[i][j].rotation = 90;
+			if (j == 0) grid[i][j].rotation = 0;
+			else if (j == width - 1) grid[i][j].rotation = 180;
+		}
+	}
+
+	return grid;
+}
+
 function _isInBounds(grid, row, col) {
 	if (row < 0 || row >= grid.length) return false;
 	if (col < 0 || col >= grid[0].length) return false;
@@ -31,11 +52,13 @@ export function loadGrid(gridString, rows, columns) {
 	}
 
 	let tempGrid = gridString.split(" ");
-	return [...Array(rows)].map(() => {
-		return tempGrid.splice(0, columns).map(gridItem => {
-			return _getAssetInfo(gridItem);
-		});
-	});
+	return _setInitialWallRotations(
+		[...Array(rows)].map(() => {
+			return tempGrid.splice(0, columns).map(gridItem => {
+				return _getAssetInfo(gridItem);
+			});
+		})
+	);
 }
 
 /**
