@@ -265,11 +265,12 @@ button svg.svg-icon:hover {
 }
 
 #UI-bottom-panel #asset-selection-menu button:hover {
-	background: #d1ebff;
+	background: #e5fbff;
 }
 
 #UI-bottom-panel #asset-selection-menu .asset-category.active-category {
 	background: #d1ebff;
+	text-decoration: underline;
 }
 
 #UI-bottom-panel #asset-selection-menu #vr-viewer-mode {
