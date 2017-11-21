@@ -114,8 +114,8 @@ describe("grid reducer", () => {
 			grid: insertItem(
 				JSON.parse(JSON.stringify(grid)),
 				currentlySelectedAsset.id,
-				z,
-				x
+				x,
+				z
 			)
 		});
 
