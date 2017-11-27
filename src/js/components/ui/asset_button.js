@@ -4,7 +4,11 @@ export default props => {
 	return (
 		<div className="button-container">
 			<button
-				className="asset"
+				className={
+				props.selectedAsset && props.selectedAsset.id === props.item.id
+					? "asset asset-selected-icon"
+					: "asset"
+				}
 				data-category={props.item.category}
 				data-title={props.item.title}
 				id={props.item.id}
