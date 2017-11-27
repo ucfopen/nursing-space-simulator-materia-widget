@@ -58,7 +58,7 @@ export class HUD extends Component {
 								assets={this.props.assets}
 								categories={this.props.categories}
 								selectAssetType={this.props.selectAssetType}
-								selectedAsset={this.props.selectAsset}
+								selectedAsset={this.props.selectedAsset}
 								setCategory={this.props.setCategory}
 								currentCategory={this.props.currentCategory}
 							/>
