@@ -46,6 +46,7 @@ export default class AssetTray extends React.Component {
 								onClick={this.props.setCategory.bind(this, category)}
 								key={index}
 								category={category}
+								curCategory={curCategory}
 							/>
 						)}
 					</div>
