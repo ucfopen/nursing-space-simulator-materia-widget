@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import AFRAME from "aframe";
 import { Entity } from "aframe-react";
+import { isCellAvailable } from "../../grid";
 
 export default class FloorUnit extends Component {
 	constructor(props) {
@@ -21,11 +22,16 @@ export default class FloorUnit extends Component {
 		this.props.onClick(this.props.x, this.props.z, this.props.selectedAssetId);
 	}
 
+	isValidPlace() {
+		return isCellAvailable(this.props.grid, this.props.x, this.props.z);
+	}
+
 	render() {
 		return (
 			<Entity
 				primitive="a-plane"
-				material={this.state.active ? "color: red" : "color: white"}
+				material={this.state.active && this.props.selectedAssetId ?
+					(this.isValidPlace() ? "color: green" : "color : red") : "color: white"}
 				position={{ x: this.props.x, y: "0", z: this.props.z }}
 				rotation={{ x: "-90", y: "0", z: "0" }}
 				scale={{ x: "1", y: "1", z: "1" }}
