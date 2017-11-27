@@ -3,7 +3,7 @@ import React from "react";
 export default props => {
 	return (
 		<button
-			className="asset-category"
+			className={props.category == props.curCategory ? "active-category asset-category" : "asset-category"}
 			data-category={props.category}
 			onClick={props.onClick}>
 			{props.category}
