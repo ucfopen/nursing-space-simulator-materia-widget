@@ -78,6 +78,7 @@ export class VRScene extends Component {
 							z={rowIndex}
 							onClick={insertAsset}
 							key={`${rowIndex} ${colIndex}`}
+							grid={this.props.grid}
 						/>
 					),
 					this
