@@ -22,6 +22,7 @@ export default class AssetTray extends React.Component {
 		const assets = this.props.assets;
 		const curCategory = this.props.currentCategory;
 		const selectAssetType = this.props.selectAssetType;
+		const selectedAsset = this.props.selectedAsset;
 
 		return (
 			<div
@@ -58,6 +59,7 @@ export default class AssetTray extends React.Component {
 								<AssetButton
 									key={asset}
 									item={assets[asset]}
+									selectedAsset={selectedAsset}
 									onClick={selectAssetType.bind(this, assets[asset])}
 								/>
 							);
