@@ -28,7 +28,7 @@ export default function(
 					return { ...state, y: 2 };
 			}
 		case TOGGLE_THIRD_PERSON:
-			return { ...state, x: 2.5, y: 18, z: 14, thirdPerson: true };
+			return { ...state, x: 14.5, y: 18, z: 9, thirdPerson: true };
 		case INSERT_ASSET:
 			if (action.payload.assetId === "pov_camera") {
 				return {
