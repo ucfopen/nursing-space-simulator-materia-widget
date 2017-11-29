@@ -153,6 +153,10 @@ export default class App extends React.Component {
 		this.setState({
 			grid: grid
 		});
+	
+		console.log("handle click called");
+		console.log(grid);
+		console.log(JSON.stringify(grid));
 	}
 
 	manipulateAsset(asset, action, x, y) {
@@ -185,6 +189,8 @@ export default class App extends React.Component {
 				manipulationMode: false,
 				selectedAsset: null
 			});
+
+			Materia.Engine.saveGameData(this.state.grid);
 		}
 
 		if (action === "remove") {

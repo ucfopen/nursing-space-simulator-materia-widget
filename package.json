@@ -1,7 +1,7 @@
 {
-	"name": "Hospital-Sim",
+	"name": "nursing-simulation-builder",
 	"materia": {
-		"cleanName": "hospital-sim"
+		"cleanName": "nursing-simulation-builder"
 	},
 	"version": "0.2.0",
 	"private": true,

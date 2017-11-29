@@ -38,22 +38,49 @@ function loadGrid(gridString, gLen, gWid) {
 */
 Namespace("HospitalSim").Engine = {
 	start: function(instance, qset, version) {
+
+		Materia.Engine.resumeGameData();
+
 		let data = {
 			assetsFromFile: qset.options.assets,
 			categories: qset.options.categories,
 			gridLoader: qset.options.gridLoader
 		};
+
+		var app = 
+		<App
+			map={loadGrid(
+				data.gridLoader.content,
+				data.gridLoader.rows,
+				data.gridLoader.columns
+			)}
+			categories={data.categories}
+			assetsFromFile={data.assetsFromFile}
+		/>
+
 		ReactDOM.render(
-			<App
-				map={loadGrid(
-					data.gridLoader.content,
-					data.gridLoader.rows,
-					data.gridLoader.columns
-				)}
-				categories={data.categories}
-				assetsFromFile={data.assetsFromFile}
-			/>,
-			document.querySelector("#sceneContainer")
+			app, document.querySelector("#sceneContainer")
 		);
+	},
+
+	resume: function(instance, qset, version, state) {
+
+			console.log("resume called within widget");
+			var categories = qset.options.categories;
+			var assetsFromFile = qset.options.assets;
+
+			var grid = JSON.parse(state);
+			var dom = document.querySelector("#sceneContainer");
+
+			ReactDOM.unmountComponentAtNode(dom);
+
+			ReactDOM.render(
+				<App
+					map={grid}
+					categories={categories}
+					assetsFromFile={assetsFromFile}
+				/>,
+				document.querySelector("#sceneContainer")
+			);
 	}
 };
