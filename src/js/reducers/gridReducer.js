@@ -36,13 +36,28 @@ export default function(
 		}
 
 		case SELECT_ASSET_TYPE: {
-			return {
-				...state,
-				selectedAsset: action.payload,
-				manipulationMode: false,
-				currentX: null,
-				currentZ: null
-			};
+			let oldSelectedAsset = state.selectedAsset
+				? { ...state.selectedAsset }
+				: null;
+			// If the same asset type is clicked again, deselect it.
+			if (oldSelectedAsset && action.payload && oldSelectedAsset.id == action.payload.id)
+				return {
+					...state,
+					manipulationMode: false,
+					extendWallMode: false,
+					selectedAsset: null,
+					currentX: null,
+					currentZ: null
+				};
+			else
+				return {
+					...state,
+					manipulationMode: false,
+					extendWallMode: false,
+					selectedAsset: action.payload,
+					currentX: null,
+					currentZ: null
+				};
 		}
 
 		case SELECT_ASSET: {
