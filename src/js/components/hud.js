@@ -18,7 +18,8 @@ import {
 	deselectAsset,
 	rotateAsset,
 	removeAsset,
-	updateAssetPosition
+	updateAssetPosition,
+	extendWall
 } from "../actions/grid_actions";
 
 export class HUD extends Component {
@@ -52,6 +53,8 @@ export class HUD extends Component {
 									rotateAsset={this.props.rotateAsset}
 									currentX={this.props.currentX}
 									currentZ={this.props.currentZ}
+									extendWallMode={this.props.extendWallMode}
+									extendWall={this.props.extendWall}
 								/>
 							) : null}
 							<AssetTray
@@ -83,6 +86,7 @@ function mapStateToProps({ data, menu, grid, position }) {
 		currentCategory: menu.currentCategory,
 		visible: menu.visible,
 		selectedAsset: grid.selectedAsset,
+		extendWallMode: grid.extendWallMode,
 		currentX: grid.currentX,
 		currentZ: grid.currentZ,
 		manipulationMode: grid.manipulationMode,
@@ -99,5 +103,6 @@ export default connect(mapStateToProps, {
 	deselectAsset,
 	rotateAsset,
 	removeAsset,
-	updateAssetPosition
+	updateAssetPosition,
+	extendWall
 })(HUD);
