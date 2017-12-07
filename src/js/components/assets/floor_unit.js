@@ -19,6 +19,8 @@ export default class FloorUnit extends Component {
 	}
 
 	handleClick() {
+		if (!this.state.active)
+			return;
 		if (this.props.extendWallMode)
 			this.props.onClick(
 				this.props.x,
@@ -44,7 +46,7 @@ export default class FloorUnit extends Component {
 		}
 		if (this.props.z == this.props.extendZ)
 		{
-			return (this.props.validX.includes(~~this.props.x))
+			return (this.props.validX.includes(this.props.x))
 		}
 	}
 
