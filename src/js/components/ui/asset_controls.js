@@ -17,12 +17,10 @@ export default props => {
 	if (props.extendWallMode)
 		return (
 			<div id="UI-selected-asset-options">
-				<span id="selected-asset-label">
-					<span className="selected-asset-label-title">
-						Currently selected: {props.selectedAsset.title}
-					</span>
-				</span>
 				<div>
+					<span id="selected-asset-tooltip" className={props.tooltipText ? "shown" : "hidden"}>
+						Click on a valid space to auto-fill walls.
+					</span>
 					<button id="deselect" onClick={() => props.deselectAsset()}>
 						<DeselectSVG />
 					</button>
@@ -37,6 +35,12 @@ export default props => {
 						Currently selected: {props.selectedAsset.title}
 					</span>
 				</span>
+				{props.selectedAsset.id == "pov_camera" ?
+					<span id="selected-asset-tooltip" className={props.tooltipText ? "shown" : "hidden"}>
+						Abc
+					</span>
+					: null
+				}
 				{props.manipulationMode ? (
 					<div>
 						<button id="confirm" onClick={() => props.deselectAsset()}>
@@ -61,17 +65,10 @@ export default props => {
 							: null
 						}
 					</div>
-				) : (props.selectedAsset.id == "pov_camera" ? (
-					<div>
-						<span id="selected-asset-tooltip">Click somewhere to jump into first-person view.</span>
-						<button id="deselect" onClick={() => props.deselectAsset()}>
-							<DeselectSVG />
-						</button>
-					</div>
-					) : (<button id="deselect" onClick={() => props.deselectAsset()}>
-							<DeselectSVG />
-						</button>)
-				)}
+				) : <button id="deselect" onClick={() => props.deselectAsset()}>
+						<DeselectSVG />
+					</button>
+				}
 			</div>
 		);
 };
