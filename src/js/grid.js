@@ -52,7 +52,8 @@ export function loadGrid(gridString, rows, columns) {
 	}
 
 	let tempGrid = gridString.split(" ");
-	return _setInitialWallRotations(
+	//return _setInitialWallRotations(
+	return (
 		[...Array(rows)].map(() => {
 			return tempGrid.splice(0, columns).map(gridItem => {
 				return _getAssetInfo(gridItem);
