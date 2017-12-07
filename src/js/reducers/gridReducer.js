@@ -272,10 +272,10 @@ export default function(
 		}
 
 		case EXTEND_WALL: {
-			let validX = [];
-			let validZ = [];
 			const currentX = state.currentX;
 			const currentZ = state.currentZ;
+			let validX = [currentX];
+			let validZ = [currentZ];
 			const gridCopy = JSON.parse(JSON.stringify(state.grid));
 			// Valid direction array in order: up, right, bottom, left
 			// In third-person view, Z is the horizontal axis, X is vertical
