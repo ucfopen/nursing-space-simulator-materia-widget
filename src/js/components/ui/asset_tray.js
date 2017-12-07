@@ -34,6 +34,7 @@ export default class AssetTray extends React.Component {
 				<div id="asset-selection-menu">
 					<button
 						id="vr-viewer-mode"
+						className={selectedAsset && selectedAsset.id == "pov_camera" ? "active-category" : ""}
 						onClick={() =>
 							this.props.selectAssetType({
 								id: "pov_camera",
