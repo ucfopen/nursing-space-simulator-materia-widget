@@ -2,17 +2,19 @@ import React, { Component } from "react";
 import AFRAME from "aframe";
 import { Scene } from "aframe-react";
 import { connect } from "react-redux";
+import { Entity } from "aframe-react";
 
-import { insertAsset, selectAsset } from "../actions/grid_actions";
+import { insertAsset, selectAsset, fillWalls } from "../actions/grid_actions";
 import { updatePosition } from "../actions/camera_actions";
 
 // Scene Assets
-import CeilingUnit from "./assets/ceiling_unit";
 import CameraTP from "./assets/camera_tp";
 import CameraFP from "./assets/camera_fp";
 import QsetAsset from "./assets/qset_asset";
 import FloorUnit from "./assets/floor_unit";
 import Skybox from "./assets/skybox";
+import FloorTile from "./assets/floor_tile";
+import Ceiling from "./assets/ceiling";
 
 export class VRScene extends Component {
 	renderAssets() {
@@ -46,26 +48,13 @@ export class VRScene extends Component {
 		return mappedAssets;
 	}
 
-	renderCeiling() {
-		if (this.props.thirdPerson) return null;
-		const mappedCeiling = this.props.grid.map((row, rowIndex) =>
-			row.map((column, colIndex) => (
-				<CeilingUnit
-					x={colIndex}
-					z={rowIndex}
-					key={`${rowIndex} ${colIndex}`}
-				/>
-			))
-		);
-		return mappedCeiling;
-	}
-
 	renderFloor() {
 		const selectedAssetId = this.props.selectedAsset
 			? this.props.selectedAsset.id
 			: null;
 
 		const insertAsset = this.props.insertAsset;
+		const fillWalls = this.props.fillWalls;
 
 		const mappedFloor = this.props.grid.map(
 			(row, rowIndex) =>
@@ -76,9 +65,17 @@ export class VRScene extends Component {
 							selectedAssetId={selectedAssetId}
 							x={colIndex}
 							z={rowIndex}
-							onClick={insertAsset}
+							onClick={this.props.extendWallMode
+								? fillWalls
+								: insertAsset
+							}
 							key={`${rowIndex} ${colIndex}`}
 							grid={this.props.grid}
+							extendWallMode={this.props.extendWallMode}
+							extendX={this.props.currentX}
+							extendZ={this.props.currentZ}
+							validX={this.props.validX}
+							validZ={this.props.validZ}
 						/>
 					),
 					this
@@ -100,6 +97,11 @@ export class VRScene extends Component {
 							id="ceilingTexture"
 							alt="sorry"
 							src="assets/CEILING_TILE.jpg"
+						/>
+						<img
+							id="wallTexture"
+							alt="sorry"
+							src="assets/WALL_TEXTURE.png"
 						/>
 						{Object.keys(assets).map(asset => {
 							if (assets[asset].objSrc) {
@@ -125,6 +127,10 @@ export class VRScene extends Component {
 						})}
 					</a-assets>
 					<Skybox />
+					<FloorTile />
+					<Ceiling
+						thirdPerson={this.props.thirdPerson}
+					/>
 					<CameraFP
 						active={!this.props.thirdPerson}
 						position={this.props.position}
@@ -135,7 +141,6 @@ export class VRScene extends Component {
 					/>
 					{this.renderFloor()}
 					{this.renderAssets()}
-					{this.renderCeiling()}
 				</Scene>
 			);
 		} //end else
@@ -150,11 +155,15 @@ function mapStateToProps({ position, data, grid }) {
 		grid: grid.grid,
 		currentX: grid.currentX,
 		currentZ: grid.currentZ,
-		selectedAsset: grid.selectedAsset
+		selectedAsset: grid.selectedAsset,
+		extendWallMode: grid.extendWallMode,
+		validX: grid.validX,
+		validZ: grid.validZ
 	};
 }
 
 export default connect(mapStateToProps, {
 	insertAsset,
-	selectAsset
+	selectAsset,
+	fillWalls
 })(VRScene);
