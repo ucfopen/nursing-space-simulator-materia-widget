@@ -13,7 +13,9 @@ import {
 	ROTATE_ASSET,
 	REMOVE_ASSET,
 	INSERT_ASSET,
-	UPDATE_ASSET_POSITION
+	UPDATE_ASSET_POSITION,
+	EXTEND_WALL,
+	FILL_WALLS
 } from "../actions/grid_actions";
 
 import { INIT_DATA } from "../actions";
@@ -22,6 +24,7 @@ export default function(
 	state = {
 		currentX: null,
 		currentZ: null,
+		extendWallMode: false,
 		manipulationMode: false,
 		selectedAsset: null
 	},
@@ -81,6 +84,7 @@ export default function(
 				return {
 					...state,
 					manipulationMode: true,
+					extendWallMode: false,
 					selectedAsset: oldSelectedAsset,
 					currentX: action.payload.x,
 					currentZ: action.payload.z,
@@ -96,6 +100,7 @@ export default function(
 				return {
 					...state,
 					manipulationMode: true,
+					extendWallMode: false,
 					selectedAsset: action.payload.asset,
 					currentX: action.payload.x,
 					currentZ: action.payload.z
@@ -107,6 +112,7 @@ export default function(
 			return {
 				...state,
 				manipulationMode: false,
+				extendWallMode: false,
 				selectedAsset: null,
 				currentX: null,
 				currentZ: null
@@ -127,6 +133,7 @@ export default function(
 				...state,
 				grid: deleteItem(gridCopy, action.payload.x, action.payload.z),
 				manipulationMode: false,
+				extendWallMode: false,
 				selectedAsset: null,
 				currentX: null,
 				currentZ: null
@@ -171,6 +178,7 @@ export default function(
 						prevRotation
 					),
 					manipulationMode: true,
+					extendWallMode: false,
 					currentX: action.payload.x,
 					currentZ: action.payload.z
 				};
@@ -197,6 +205,7 @@ export default function(
 						return {
 							...state,
 							currentX: currentX + 1,
+							extendWallMode: false,
 							grid: insertItem(
 								newGrid,
 								selectedAsset.id,
@@ -213,6 +222,7 @@ export default function(
 						return {
 							...state,
 							currentX: currentX - 1,
+							extendWallMode: false,
 							grid: insertItem(
 								newGrid,
 								selectedAsset.id,
@@ -229,6 +239,7 @@ export default function(
 						return {
 							...state,
 							currentZ: currentZ - 1,
+							extendWallMode: false,
 							grid: insertItem(
 								newGrid,
 								selectedAsset.id,
@@ -245,6 +256,7 @@ export default function(
 						return {
 							...state,
 							currentZ: currentZ + 1,
+							extendWallMode: false,
 							grid: insertItem(
 								newGrid,
 								selectedAsset.id,
@@ -258,6 +270,116 @@ export default function(
 			}
 			return state;
 		}
+
+		case EXTEND_WALL: {
+			let validX = [];
+			let validZ = [];
+			const currentX = state.currentX;
+			const currentZ = state.currentZ;
+			const gridCopy = JSON.parse(JSON.stringify(state.grid));
+			// Valid direction array in order: up, right, bottom, left
+			// In third-person view, Z is the horizontal axis, X is vertical
+			let dir = [true, true, true, true];
+			let level = 1;
+			while (dir[0] || dir[1] || dir[2] || dir[3])
+			{
+				if (dir[0]) // up
+				{
+					if (isCellAvailable(gridCopy, currentX + level, currentZ))
+						validX.push(currentX + level);
+					else
+						dir[0] = false;
+				}
+				if (dir[1]) // right
+				{
+					if (isCellAvailable(gridCopy, currentX, currentZ + level))
+						validZ.push(currentZ + level);
+					else
+						dir[1] = false;
+				}
+				if (dir[2]) // down
+				{
+					if (isCellAvailable(gridCopy, currentX - level, currentZ))
+						validX.push(currentX - level);
+					else
+						dir[2] = false;
+				}
+				if (dir[3]) // left
+				{
+					if (isCellAvailable(gridCopy, currentX, currentZ - level))
+						validZ.push(currentZ - level);
+					else
+						dir[3] = false;
+				}
+				level++;
+			}
+			return {
+				...state,
+				extendWallMode: true,
+				manipulationMode: true,
+				currentX: state.currentX,
+				currentZ: state.currentZ,
+				validZ: validZ,
+				validX: validX
+			};
+		}
+
+		case FILL_WALLS: {
+			const gridCopy = JSON.parse(JSON.stringify(state.grid));
+			const extendX = action.payload.extendX;
+			const extendZ = action.payload.extendZ;
+			let newGrid = gridCopy;
+			let validFill = false;
+
+			if (action.payload.x == extendX &&
+				action.payload.validZ.includes(action.payload.z))
+					validFill = true;
+			if (action.payload.z == extendZ &&
+				action.payload.validX.includes(action.payload.x))
+					validFill = true;
+
+			if (validFill)
+			{
+				// If moving in the Z direction
+				if (action.payload.x == extendX)
+				{
+					let x = action.payload.x;
+					let z = Math.min(action.payload.z, extendZ);
+					let end = Math.max(action.payload.z, extendZ);
+					while (z <= end)
+					{
+						newGrid = insertItem(newGrid, "wall-1", x, z, 0);
+						z++;
+					}
+				}
+				else
+				{
+					let z = action.payload.z;
+					let x = Math.min(action.payload.x, extendX);
+					let end = Math.max(action.payload.x, extendX);
+					while (x <= end)
+					{
+						newGrid = insertItem(newGrid, "wall-1", x, z, 0);
+						x++;
+					}
+				}
+
+			}
+			else
+			{
+				console.log("can't fill here");
+			}
+			return {
+				...state,
+				manipulationMode: false,
+				extendWallMode: false,
+				selectedAsset: null,
+				currentX: null,
+				currentZ: null,
+				grid: newGrid
+			};
+		}
+
 		default:
 			return state;
 	}
