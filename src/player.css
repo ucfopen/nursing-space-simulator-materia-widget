@@ -202,6 +202,22 @@ button svg.svg-icon:hover {
 	border-radius: 5px;
 }
 
+#selected-asset-tooltip {
+	position: absolute;
+	top: 10px;
+	left: 275px;
+
+	width: 350px;
+
+	text-align: center;
+	font-size: 16px;
+	z-index: 1;
+	padding: 5px 10px 5px 10px;
+	background: #fdd89c;
+	border: 1px solid black;
+	border-radius: 5px;
+}
+
 /* Bottom panel */
 
 #UI-bottom-panel {
@@ -276,6 +292,12 @@ button svg.svg-icon:hover {
 #UI-bottom-panel #asset-selection-menu #vr-viewer-mode {
 	float: right;
 	margin-right: 15px;
+}
+
+#UI-bottom-panel #asset-selection-menu #vr-viewer-mode.active-category{
+	background: #fdd89c;
+	text-decoration: underline;
+	border: 1px solid black;
 }
 
 #asset-picker {
