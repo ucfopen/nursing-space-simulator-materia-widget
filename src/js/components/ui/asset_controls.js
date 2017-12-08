@@ -37,7 +37,7 @@ export default props => {
 				</span>
 				{props.selectedAsset.id == "pov_camera" ?
 					<span id="selected-asset-tooltip" className={props.tooltipText ? "shown" : "hidden"}>
-						Abc
+						Select a location to jump into first-person view.
 					</span>
 					: null
 				}
