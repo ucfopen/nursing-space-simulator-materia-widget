@@ -19,7 +19,7 @@ export default class FloorUnit extends Component {
 	}
 
 	handleClick() {
-		if (!this.state.active)
+		if (!this.props.thirdPerson)
 			return;
 		if (this.props.extendWallMode)
 			this.props.onClick(
@@ -41,13 +41,9 @@ export default class FloorUnit extends Component {
 
 	highlightExtend() {
 		if (this.props.x == this.props.extendX)
-		{
 			return (this.props.validZ.includes(this.props.z))
-		}
 		if (this.props.z == this.props.extendZ)
-		{
 			return (this.props.validX.includes(this.props.x))
-		}
 	}
 
 	render() {
