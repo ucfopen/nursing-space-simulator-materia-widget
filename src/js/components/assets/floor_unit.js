@@ -21,6 +21,7 @@ export default class FloorUnit extends Component {
 	handleClick() {
 		if (!this.props.thirdPerson)
 			return;
+
 		if (this.props.extendWallMode)
 			this.props.onClick(
 				this.props.x,
