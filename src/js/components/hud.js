@@ -32,7 +32,7 @@ export class HUD extends Component {
 		) {
 			return <div>Loading</div>;
 		} else {
-			const update = this.props.selectedAsset
+			const update = this.props.manipulationMode
 				? this.props.updateAssetPosition
 				: this.props.updateCameraPosition;
 			return (
