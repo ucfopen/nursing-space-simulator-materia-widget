@@ -193,3 +193,46 @@ export function getCellRotation(grid, col, row) {
 
 	return grid[row][col] === "0" ? 180 : grid[row][col].rotation;
 }
+
+
+export function findValidExtends(grid, x, z) {
+	let validX = [x];
+	let validZ = [z];
+	// Valid direction array in order: up, right, bottom, left
+	// In third-person view, Z is the horizontal axis, X is vertical
+	let dir = [true, true, true, true];
+	let level = 1;
+	while (dir[0] || dir[1] || dir[2] || dir[3])
+	{
+		if (dir[0]) // up
+		{
+			if (isCellAvailable(grid, x + level, z))
+				validX.push(x + level);
+			else
+				dir[0] = false;
+		}
+		if (dir[1]) // right
+		{
+			if (isCellAvailable(grid, x, z + level))
+				validZ.push(z + level);
+			else
+				dir[1] = false;
+		}
+		if (dir[2]) // down
+		{
+			if (isCellAvailable(grid, x - level, z))
+				validX.push(x - level);
+			else
+				dir[2] = false;
+		}
+		if (dir[3]) // left
+		{
+			if (isCellAvailable(grid, x, z - level))
+				validZ.push(z - level);
+			else
+				dir[3] = false;
+		}
+		level++;
+	}
+	return [validX, validZ];
+}
