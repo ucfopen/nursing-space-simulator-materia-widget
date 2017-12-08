@@ -3,7 +3,8 @@ import {
 	deleteItem,
 	insertItem,
 	isCellAvailable,
-	getCellRotation
+	getCellRotation,
+	findValidExtends
 } from "../grid";
 
 import {
@@ -156,6 +157,7 @@ export default function(
 					...state
 				};
 			} else {
+
 				let newGrid,
 					prevRotation = 180;
 				if (state.currentX !== null && state.currentZ !== null) {
@@ -167,6 +169,28 @@ export default function(
 					newGrid = deleteItem(gridCopy, state.currentX, state.currentZ);
 				} else {
 					newGrid = gridCopy;
+					if (selectedAsset.id == "wall-1")
+					{
+						let validX, validZ;
+						newGrid = insertItem(
+							newGrid,
+							selectedAsset.id,
+							action.payload.x,
+							action.payload.z,
+							prevRotation
+						);
+						[validX, validZ] = findValidExtends(newGrid, action.payload.x, action.payload.z);
+						return {
+							...state,
+							grid: newGrid,
+							extendWallMode: true,
+							manipulationMode: true,
+							currentX: action.payload.x,
+							currentZ: action.payload.z,
+							validZ: validZ,
+							validX: validX
+						};
+					}
 				}
 				return {
 					...state,
@@ -272,47 +296,9 @@ export default function(
 		}
 
 		case EXTEND_WALL: {
-			const currentX = state.currentX;
-			const currentZ = state.currentZ;
-			let validX = [currentX];
-			let validZ = [currentZ];
 			const gridCopy = JSON.parse(JSON.stringify(state.grid));
-			// Valid direction array in order: up, right, bottom, left
-			// In third-person view, Z is the horizontal axis, X is vertical
-			let dir = [true, true, true, true];
-			let level = 1;
-			while (dir[0] || dir[1] || dir[2] || dir[3])
-			{
-				if (dir[0]) // up
-				{
-					if (isCellAvailable(gridCopy, currentX + level, currentZ))
-						validX.push(currentX + level);
-					else
-						dir[0] = false;
-				}
-				if (dir[1]) // right
-				{
-					if (isCellAvailable(gridCopy, currentX, currentZ + level))
-						validZ.push(currentZ + level);
-					else
-						dir[1] = false;
-				}
-				if (dir[2]) // down
-				{
-					if (isCellAvailable(gridCopy, currentX - level, currentZ))
-						validX.push(currentX - level);
-					else
-						dir[2] = false;
-				}
-				if (dir[3]) // left
-				{
-					if (isCellAvailable(gridCopy, currentX, currentZ - level))
-						validZ.push(currentZ - level);
-					else
-						dir[3] = false;
-				}
-				level++;
-			}
+			let validX, validZ;
+			[validX, validZ] = findValidExtends(gridCopy, state.currentX, state.currentZ);
 			return {
 				...state,
 				extendWallMode: true,
