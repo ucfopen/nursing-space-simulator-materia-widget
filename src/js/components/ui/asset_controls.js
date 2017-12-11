@@ -64,6 +64,16 @@ export default props => {
 							</button>
 							: null
 						}
+						{props.selectedAsset.id == "wall-1" ||
+						 props.selectedAsset.id == "window" ||
+						 props.selectedAsset.id == "door-1" ?
+							<button
+								id="editAsset"
+								onClick={() => props.editAsset(props.currentX, props.currentZ)}>
+								<RotateSVG />
+							</button>
+							: null
+						}
 					</div>
 				) : <button id="deselect" onClick={() => props.deselectAsset()}>
 						<DeselectSVG />
