@@ -7,8 +7,9 @@ export default props => {
 	const yScaleFactor = props.data.category === "walls"
 		? props.data.scale.y / 2
 		: 0;
+	const id = props.data.id;
 	return (
-		(props.data.id === 'wall-1' || props.data.id === 'window') ?
+		(id === 'wall-1' || id === 'window' || id == 'door-1') ?
 			<Wall
 				onClick={props.onClick}
 				isSelected={props.isSelected}
@@ -26,11 +27,11 @@ export default props => {
 					props.isSelected
 						? "obj: #" + props.data.id + "-obj;"
 						: "obj: #" +
-								props.data.id +
-								"-obj;" +
-								"mtl: #" +
-								props.data.id +
-								"-mtl;"
+							props.data.id +
+							"-obj;" +
+							"mtl: #" +
+							props.data.id +
+							"-mtl;"
 				}
 				/**
 				* The scale property grows an a-box in the +-y direction, but we want it to seem like the box is just growing in the +y direction.
