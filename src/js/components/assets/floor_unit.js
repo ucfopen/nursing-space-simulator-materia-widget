@@ -53,7 +53,7 @@ export default class FloorUnit extends Component {
 				<Entity
 					primitive="a-plane"
 					material={{
-						color: this.highlightExtend() ? "green" : "red",
+						color: this.highlightExtend() ? "green" : "#ff7777",
 						opacity: this.state.active ? 0.7 : 0.4
 					}}
 					position={{ x: this.props.x, y: "0.25", z: this.props.z }}
