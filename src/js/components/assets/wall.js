@@ -26,12 +26,12 @@ export default class Wall extends Component {
 								? { color: "green", opacity: 0.4, }
 								: { color: "#f9d9c2", opacity: 1, metalness: 0.4 }
 						}
-						position={{y: .475}}
+						position={{ x: 0, y: .475, z: 0}}
 					/>
 					<Entity
 						geometry={{ primitive: 'box', height: 1.4, width: 1, depth: .1}}
 						material={{ color: "white", opacity: .25 }}
-						position={{ y: 1.65 }}
+						position={{ x: 0, y: 1.65, z: 0 }}
 					/>
 					<Entity
 						geometry={{ primitive: 'box', height: .65, width: 1, depth: 1}}
@@ -40,7 +40,7 @@ export default class Wall extends Component {
 								? { color: "green", opacity: 0.4, }
 								: { color: "#f9d9c2", opacity: 1, metalness: 0.4 }
 						}
-						position={{ y: 2.675 }}
+						position={{ x: 0, y: 2.675, z: 0 }}
 					/>
 					<Entity
 						primitive="a-box"
@@ -52,7 +52,7 @@ export default class Wall extends Component {
 								? { color: "green", opacity: 0.4}
 								: { color: "#7c695b", opacity: 1 }
 						}
-						position={{ y: .15 }}
+						position={{ x: 0, y: .15, z: 0 }}
 						rotation={{ x: -90 }}
 					/>
 					{this.processStickers()}
@@ -71,7 +71,7 @@ export default class Wall extends Component {
 								? { color: "green", opacity: 0.4 }
 								: { color: "#f9d9c2", opacity: 1, metalness: 0.4 }
 						}
-						position={{ y: 2.5 }}
+						position={{ x: 0, y: 2.5, z: 0}}
 					/>
 					<Entity
 						geometry={{ primitive: 'plane', height: .75, width: 2}}
