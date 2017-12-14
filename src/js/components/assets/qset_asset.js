@@ -18,6 +18,7 @@ export default props => {
 				rotation={props.rotation}
 				type={props.data.id}
 				attributes={props.attributes}
+				mode={props.mode}
 			/> :
 			<Entity
 				events={{ click: props.onClick }}

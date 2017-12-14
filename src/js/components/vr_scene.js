@@ -40,6 +40,7 @@ export class VRScene extends Component {
 							attributes={column}
 							rotation={column.rotation}
 							isSelected={currentX === colIndex && currentZ === rowIndex}
+							mode={this.props.mode}
 							key={`${rowIndex} ${colIndex}`}
 						/>
 					) : null;
