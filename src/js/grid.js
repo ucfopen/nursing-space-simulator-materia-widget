@@ -80,7 +80,7 @@ export function rotateCell(grid, x, z) {
 		row = z;
 
 	if (grid[row][col] && grid[row][col] !== "0") {
-		grid[row][col].rotation = (grid[row][col].rotation - 90) % 360;
+		grid[row][col].rotation = (grid[row][col].rotation - 90 + 360) % 360;
 	}
 
 	return grid;
