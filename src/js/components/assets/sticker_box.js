@@ -22,10 +22,9 @@ export class StickerBox extends Component {
 					className="editWallSticker"
 					style={
 						stickerType == "0"
-						? {background: "orange"}
+						? {background: "#af9888"}
 						: {background:
-								"url(" + this.props.assets[stickerType].buttonSource + ") no-repeat center center",
-								backgroundSize: "100% 100%"}
+								"url(" + this.props.assets[stickerType].buttonSource + ")"}
 					}/>
 				<button
 					className="stickerArrowLeft"
