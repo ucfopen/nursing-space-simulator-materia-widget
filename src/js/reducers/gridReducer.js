@@ -4,7 +4,10 @@ import {
 	insertItem,
 	isCellAvailable,
 	getCellRotation,
-	findValidExtends
+	findValidExtends,
+	insertWalls,
+	getStickers,
+	setSticker
 } from "../grid";
 
 import {
@@ -16,7 +19,9 @@ import {
 	INSERT_ASSET,
 	UPDATE_ASSET_POSITION,
 	EXTEND_WALL,
-	FILL_WALLS
+	FILL_WALLS,
+	EDIT_ASSET,
+	EDIT_STICKER
 } from "../actions/grid_actions";
 
 import { INIT_DATA } from "../actions";
@@ -25,8 +30,7 @@ export default function(
 	state = {
 		currentX: null,
 		currentZ: null,
-		extendWallMode: false,
-		manipulationMode: false,
+		mode: "none",
 		selectedAsset: null
 	},
 	action
@@ -47,8 +51,7 @@ export default function(
 			if (oldSelectedAsset && action.payload && oldSelectedAsset.id == action.payload.id)
 				return {
 					...state,
-					manipulationMode: false,
-					extendWallMode: false,
+					mode: "none",
 					selectedAsset: null,
 					currentX: null,
 					currentZ: null
@@ -56,8 +59,7 @@ export default function(
 			else
 				return {
 					...state,
-					manipulationMode: false,
-					extendWallMode: false,
+					mode: "none",
 					selectedAsset: action.payload,
 					currentX: null,
 					currentZ: null
@@ -84,8 +86,7 @@ export default function(
 				);
 				return {
 					...state,
-					manipulationMode: true,
-					extendWallMode: false,
+					mode: "manipulation",
 					selectedAsset: oldSelectedAsset,
 					currentX: action.payload.x,
 					currentZ: action.payload.z,
@@ -100,8 +101,7 @@ export default function(
 			} else {
 				return {
 					...state,
-					manipulationMode: true,
-					extendWallMode: false,
+					mode: "manipulation",
 					selectedAsset: action.payload.asset,
 					currentX: action.payload.x,
 					currentZ: action.payload.z
@@ -112,8 +112,7 @@ export default function(
 		case DESELECT_ASSET: {
 			return {
 				...state,
-				manipulationMode: false,
-				extendWallMode: false,
+				mode: "none",
 				selectedAsset: null,
 				currentX: null,
 				currentZ: null
@@ -133,8 +132,7 @@ export default function(
 			return {
 				...state,
 				grid: deleteItem(gridCopy, action.payload.x, action.payload.z),
-				manipulationMode: false,
-				extendWallMode: false,
+				mode: "none",
 				selectedAsset: null,
 				currentX: null,
 				currentZ: null
@@ -159,9 +157,15 @@ export default function(
 			} else {
 
 				let newGrid,
-					prevRotation = 180;
+					prevRotation = 180,
+					prevStickers;
 				if (state.currentX !== null && state.currentZ !== null) {
 					prevRotation = getCellRotation(
+						gridCopy,
+						state.currentX,
+						state.currentZ
+					);
+					prevStickers = getStickers(
 						gridCopy,
 						state.currentX,
 						state.currentZ
@@ -183,8 +187,7 @@ export default function(
 						return {
 							...state,
 							grid: newGrid,
-							extendWallMode: true,
-							manipulationMode: true,
+							mode: "extendWall",
 							currentX: action.payload.x,
 							currentZ: action.payload.z,
 							validZ: validZ,
@@ -199,10 +202,10 @@ export default function(
 						selectedAsset.id,
 						action.payload.x,
 						action.payload.z,
-						prevRotation
+						prevRotation,
+						prevStickers
 					),
-					manipulationMode: true,
-					extendWallMode: false,
+					mode: "manipulation",
 					currentX: action.payload.x,
 					currentZ: action.payload.z
 				};
@@ -220,6 +223,11 @@ export default function(
 			const currentX = state.currentX;
 			const currentZ = state.currentZ;
 			const currentRotation = getCellRotation(gridCopy, currentX, currentZ);
+			const prevStickers = getStickers(
+				gridCopy,
+				state.currentX,
+				state.currentZ
+			);
 			let newGrid;
 
 			switch (action.payload) {
@@ -229,13 +237,13 @@ export default function(
 						return {
 							...state,
 							currentX: currentX + 1,
-							extendWallMode: false,
 							grid: insertItem(
 								newGrid,
 								selectedAsset.id,
 								currentX + 1,
 								currentZ,
-								currentRotation
+								currentRotation,
+								prevStickers
 							)
 						};
 					}
@@ -246,13 +254,13 @@ export default function(
 						return {
 							...state,
 							currentX: currentX - 1,
-							extendWallMode: false,
 							grid: insertItem(
 								newGrid,
 								selectedAsset.id,
 								currentX - 1,
 								currentZ,
-								currentRotation
+								currentRotation,
+								prevStickers
 							)
 						};
 					}
@@ -263,13 +271,13 @@ export default function(
 						return {
 							...state,
 							currentZ: currentZ - 1,
-							extendWallMode: false,
 							grid: insertItem(
 								newGrid,
 								selectedAsset.id,
 								currentX,
 								currentZ - 1,
-								currentRotation
+								currentRotation,
+								prevStickers
 							)
 						};
 					}
@@ -280,13 +288,13 @@ export default function(
 						return {
 							...state,
 							currentZ: currentZ + 1,
-							extendWallMode: false,
 							grid: insertItem(
 								newGrid,
 								selectedAsset.id,
 								currentX,
 								currentZ + 1,
-								currentRotation
+								currentRotation,
+								prevStickers
 							)
 						};
 					}
@@ -301,8 +309,7 @@ export default function(
 			[validX, validZ] = findValidExtends(gridCopy, state.currentX, state.currentZ);
 			return {
 				...state,
-				extendWallMode: true,
-				manipulationMode: true,
+				mode: "extendWall",
 				currentX: state.currentX,
 				currentZ: state.currentZ,
 				validZ: validZ,
@@ -312,58 +319,61 @@ export default function(
 
 		case FILL_WALLS: {
 			const gridCopy = JSON.parse(JSON.stringify(state.grid));
-			const extendX = action.payload.extendX;
-			const extendZ = action.payload.extendZ;
-			let newGrid = gridCopy;
-			let validFill = false;
+			const endX = action.payload.x;
+			const endZ = action.payload.z;
+			const startX = action.payload.extendX;
+			const startZ = action.payload.extendZ;
+			let newGrid;
 
-			if (action.payload.x == extendX &&
-				action.payload.validZ.includes(action.payload.z))
-					validFill = true;
-			if (action.payload.z == extendZ &&
-				action.payload.validX.includes(action.payload.x))
-					validFill = true;
+			let validFill = (
+				startX == endX && action.payload.validZ.includes(endZ) ||
+				startZ == endZ && action.payload.validX.includes(endX)
+			)
 
 			if (validFill)
-			{
-				// If moving in the Z direction
-				if (action.payload.x == extendX)
-				{
-					let x = action.payload.x;
-					let z = Math.min(action.payload.z, extendZ);
-					let end = Math.max(action.payload.z, extendZ);
-					while (z <= end)
-					{
-						newGrid = insertItem(newGrid, "wall-1", x, z, 0);
-						z++;
-					}
-				}
-				else
-				{
-					let z = action.payload.z;
-					let x = Math.min(action.payload.x, extendX);
-					let end = Math.max(action.payload.x, extendX);
-					while (x <= end)
-					{
-						newGrid = insertItem(newGrid, "wall-1", x, z, 0);
-						x++;
-					}
-				}
-
-			}
+				newGrid = insertWalls(gridCopy, startX, startZ, endX, endZ);
 			else
 			{
 				console.log("can't fill here");
+				newGrid = gridCopy;
 			}
 			return {
 				...state,
-				manipulationMode: false,
-				extendWallMode: false,
+				mode: "none",
 				selectedAsset: null,
 				currentX: null,
 				currentZ: null,
 				grid: newGrid
 			};
+		}
+
+		case EDIT_ASSET: {
+			return {
+				...state,
+				mode: "editAsset"
+			};
+		}
+
+		case EDIT_STICKER: {
+			const gridCopy = JSON.parse(JSON.stringify(state.grid));
+			const stickers = getStickers(gridCopy, action.payload.x, action.payload.z);
+
+			const currSticker = stickers[action.payload.side];
+			const stickerIndex = action.payload.stickerTypes.indexOf(currSticker);
+			const numTypes = action.payload.stickerTypes.length;
+			const newStickerIndex = (stickerIndex + action.payload.direction + numTypes) % numTypes;
+			const newSticker = action.payload.stickerTypes[newStickerIndex];
+
+			return {
+				...state,
+				grid: setSticker(
+					gridCopy,
+					action.payload.x,
+					action.payload.z,
+					action.payload.side,
+					newSticker
+				)
+			}
 		}
 
 		default:

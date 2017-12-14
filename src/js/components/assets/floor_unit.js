@@ -10,7 +10,7 @@ export default class FloorUnit extends Component {
 	}
 
 	onMouseEnter() {
-		const active = this.props.thirdPerson ? true : false;
+		const active = (this.props.thirdPerson && this.props.mode != "editAsset");
 		this.setState({ active });
 	}
 
@@ -19,14 +19,13 @@ export default class FloorUnit extends Component {
 	}
 
 	handleClick() {
-		if (!this.props.thirdPerson)
+		if (!this.state.active)
 			return;
 
-		if (this.props.extendWallMode)
+		if (this.props.mode == "extendWall")
 			this.props.onClick(
 				this.props.x,
 				this.props.z,
-				this.props.selectedAssetId,
 				this.props.extendX,
 				this.props.extendZ,
 				this.props.validX,
@@ -48,7 +47,7 @@ export default class FloorUnit extends Component {
 	}
 
 	render() {
-		if (this.props.extendWallMode)
+		if (this.props.mode == "extendWall")
 			return (
 				<Entity
 					primitive="a-plane"
