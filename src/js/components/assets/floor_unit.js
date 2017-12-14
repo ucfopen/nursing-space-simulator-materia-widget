@@ -19,7 +19,7 @@ export default class FloorUnit extends Component {
 	}
 
 	handleClick() {
-		if (!this.state.active)
+		if (!this.props.thirdPerson || this.props.mode == "editAsset")
 			return;
 
 		if (this.props.mode == "extendWall")
