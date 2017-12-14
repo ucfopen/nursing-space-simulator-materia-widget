@@ -1,9 +1,13 @@
 import {
 	CAMERA_UPDATE_POSITION,
-	TOGGLE_THIRD_PERSON
+	TOGGLE_THIRD_PERSON,
 } from "../actions/camera_actions";
 
-import { INSERT_ASSET } from "../actions/grid_actions";
+import {
+	INSERT_ASSET,
+	EDIT_ASSET,
+	DESELECT_ASSET
+} from "../actions/grid_actions";
 
 export default function(
 	state = { x: 14.5, y: 18, z: 9, thirdPerson: true },
@@ -39,6 +43,17 @@ export default function(
 					thirdPerson: false
 				};
 			}
+			return state;
+		case EDIT_ASSET:
+			return {
+				...state,
+				x: action.payload.x,
+				y: 6.5,
+				z: action.payload.z
+			};
+		case DESELECT_ASSET:
+			if (action.payload.reset)
+				return { ...state, x: 14.5, y: 18, z: 9, thirdPerson: true };
 			return state;
 		default:
 			return state;

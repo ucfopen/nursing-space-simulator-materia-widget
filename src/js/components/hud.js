@@ -19,7 +19,8 @@ import {
 	rotateAsset,
 	removeAsset,
 	updateAssetPosition,
-	extendWall
+	extendWall,
+	editAsset
 } from "../actions/grid_actions";
 
 export class HUD extends Component {
@@ -32,7 +33,7 @@ export class HUD extends Component {
 		) {
 			return <div>Loading</div>;
 		} else {
-			const update = this.props.manipulationMode
+			const update = this.props.mode == "manipulation"
 				? this.props.updateAssetPosition
 				: this.props.updateCameraPosition;
 			return (
@@ -47,14 +48,15 @@ export class HUD extends Component {
 							{this.props.selectedAsset ? (
 								<AssetControls
 									selectedAsset={this.props.selectedAsset}
-									manipulationMode={this.props.manipulationMode}
+									mode={this.props.mode}
 									removeAsset={this.props.removeAsset}
 									deselectAsset={this.props.deselectAsset}
 									rotateAsset={this.props.rotateAsset}
 									currentX={this.props.currentX}
 									currentZ={this.props.currentZ}
-									extendWallMode={this.props.extendWallMode}
 									extendWall={this.props.extendWall}
+									editAsset={this.props.editAsset}
+									grid={this.props.grid}
 								/>
 							) : null}
 							<AssetTray
@@ -86,10 +88,10 @@ function mapStateToProps({ data, menu, grid, position }) {
 		currentCategory: menu.currentCategory,
 		visible: menu.visible,
 		selectedAsset: grid.selectedAsset,
-		extendWallMode: grid.extendWallMode,
+		mode: grid.mode,
+		grid: grid.grid,
 		currentX: grid.currentX,
 		currentZ: grid.currentZ,
-		manipulationMode: grid.manipulationMode,
 		thirdPerson: position.thirdPerson
 	};
 }
@@ -104,5 +106,6 @@ export default connect(mapStateToProps, {
 	rotateAsset,
 	removeAsset,
 	updateAssetPosition,
-	extendWall
+	extendWall,
+	editAsset
 })(HUD);
