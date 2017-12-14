@@ -394,12 +394,12 @@ button svg.svg-icon:hover {
 
 #topStickerBox {
 	left: 440px;
-	top: 180px;
+	top: 190px;
 }
 
 #rightStickerBox {
-	left: 545px;
-	top: 280px;
+	left: 565px;
+	top: 290px;
 }
 
 #bottomStickerBox {
@@ -408,25 +408,27 @@ button svg.svg-icon:hover {
 }
 
 #leftStickerBox {
-	left: 340px;
-	top: 280px;
+	left: 320px;
+	top: 290px;
 }
 
 .stickerArrowLeft {
 	position: absolute;
-	margin-left: -25px;
+	margin-left: -34px;
 	top: 10px;
 }
 
 .stickerArrowRight {
 	position: absolute;
-	margin-left: 25px;
+	margin-left: 40px;
 	top: 10px;
-
 }
 
 .editWallSticker {
 	width: 70px;
 	height: 70px;
 	position: absolute;
+	border: 2px solid black !important;
+	background-size: 100% 100% !important;
+	background-position: center center;
 }
