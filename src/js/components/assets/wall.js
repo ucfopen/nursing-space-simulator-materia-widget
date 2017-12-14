@@ -104,7 +104,7 @@ export default class Wall extends Component {
 					<Entity
 						primitive="a-box"
 						width="1.025"
-						height="0.185"
+						height="0.15"
 						depth=".35"
 						material={
 							this.props.isSelected
@@ -117,7 +117,7 @@ export default class Wall extends Component {
 					<Entity
 						primitive="a-box"
 						width="1.025"
-						height="0.185"
+						height="0.15"
 						depth=".35"
 						material={
 							this.props.isSelected
