@@ -37,6 +37,7 @@ export class VRScene extends Component {
 								rowIndex
 							)}
 							data={assets[column.id]}
+							attributes={column}
 							rotation={column.rotation}
 							isSelected={currentX === colIndex && currentZ === rowIndex}
 							key={`${rowIndex} ${colIndex}`}
@@ -65,13 +66,13 @@ export class VRScene extends Component {
 							selectedAssetId={selectedAssetId}
 							x={colIndex}
 							z={rowIndex}
-							onClick={this.props.extendWallMode
+							onClick={this.props.mode == "extendWall"
 								? fillWalls
 								: insertAsset
 							}
 							key={`${rowIndex} ${colIndex}`}
 							grid={this.props.grid}
-							extendWallMode={this.props.extendWallMode}
+							mode={this.props.mode}
 							extendX={this.props.currentX}
 							extendZ={this.props.currentZ}
 							validX={this.props.validX}
@@ -151,7 +152,7 @@ function mapStateToProps({ position, data, grid }) {
 		currentX: grid.currentX,
 		currentZ: grid.currentZ,
 		selectedAsset: grid.selectedAsset,
-		extendWallMode: grid.extendWallMode,
+		mode: grid.mode,
 		validX: grid.validX,
 		validZ: grid.validZ
 	};

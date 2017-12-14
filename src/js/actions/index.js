@@ -10,10 +10,11 @@ export function initData(qset) {
 	);
 
 	const categories = qset.options.categories;
+	const stickerTypes = qset.options.stickerTypes;
 	const assets = qset.options.assets;
 
 	return {
 		type: INIT_DATA,
-		payload: { grid, categories, assets }
+		payload: { grid, categories, stickerTypes, assets }
 	};
 }

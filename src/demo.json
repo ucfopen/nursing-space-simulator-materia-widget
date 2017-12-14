@@ -6,6 +6,7 @@
 			"items": [],
 			"options": {
 				"categories": ["beds", "equipment", "walls", "people"],
+				"stickerTypes": ["0", "fireSticker", "soapSticker", "tvSticker"],
 				"assets": {
 					"bed-1": {
 						"buttonSource": "assets/icons/icon_bed.png",
@@ -559,11 +560,77 @@
 						"type": "wall",
 						"category": "walls",
 						"title": "Wall (1)"
+					},
+					"fireSticker": {
+						"buttonSource": "assets/icons/icon_fire.png",
+						"canReplace": [],
+						"defaultColor": "#9FCDB1",
+						"id": "fireSticker",
+						"mtlSrc": "",
+						"objSrc": "",
+						"rotation": {
+							"x": 0,
+							"y": 180,
+							"z": 0
+						},
+						"scale": {
+							"x": 0.25,
+							"y": 0.25,
+							"z": 0.25
+						},
+						"tag": "a-obj-model",
+						"type": "sticker",
+						"category": "sticker",
+						"title": "Fire Sticker"
+					},
+					"soapSticker": {
+						"buttonSource": "assets/icons/icon_soap.png",
+						"canReplace": [],
+						"defaultColor": "#9FCDB1",
+						"id": "soapSticker",
+						"mtlSrc": "",
+						"objSrc": "assets/stickers/soap.obj",
+						"rotation": {
+							"x": 0,
+							"y": 180,
+							"z": 0
+						},
+						"scale": {
+							"x": 0.25,
+							"y": 0.25,
+							"z": 0.25
+						},
+						"tag": "a-obj-model",
+						"type": "sticker",
+						"category": "sticker",
+						"title": "Soap Sticker"
+					},
+					"tvSticker": {
+						"buttonSource": "assets/icons/icon_tv.png",
+						"canReplace": [],
+						"defaultColor": "#9FCDB1",
+						"id": "tvSticker",
+						"mtlSrc": "",
+						"objSrc": "assets/stickers/tv.obj",
+						"rotation": {
+							"x": 0,
+							"y": 180,
+							"z": 0
+						},
+						"scale": {
+							"x": 0.25,
+							"y": 0.25,
+							"z": 0.25
+						},
+						"tag": "a-obj-model",
+						"type": "sticker",
+						"category": "sticker",
+						"title": "TV Sticker"
 					}
 				},
 				"gridLoader": {
 					"columns": 30,
-					"content": "wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 wall-1.0 wall-1.0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 wall-1.0 wall-1.0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 wall-1.0 wall-1.0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 wall-1.0 wall-1.0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 wall-1.0 wall-1.0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 wall-1.0 wall-1.0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 wall-1.0 wall-1.0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 wall-1.0 wall-1.0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 wall-1.0 wall-1.0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0",
+					"content": "wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 wall-1.0 wall-1.0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 wall-1.0 wall-1.0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 wall-1.0 wall-1.0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 wall-1.0 wall-1.0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 wall-1.0 wall-1.0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 wall-1.0 wall-1.0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 wall-1.0 wall-1.0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 wall-1.0 wall-1.0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 wall-1.0 wall-1.0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0.tvSticker,soapSticker,0,0",
 					"rows": 12
 				}
 			}
