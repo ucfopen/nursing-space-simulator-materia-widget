@@ -83,7 +83,7 @@ export default class Wall extends Component {
 					<Entity
 						geometry={{ primitive: 'box', height: 1, width: 1, depth: 1}}
 						material={
-							this.props.isSelected
+							this.props.isSelected && this.props.mode != "editAsset"
 								? { color: "green", opacity: 0.4 }
 								: { color: "#f9d9c2", opacity: 1, metalness: 0.4 }
 						}
@@ -92,7 +92,7 @@ export default class Wall extends Component {
 					<Entity
 						geometry={{ primitive: 'plane', height: .75, width: 2}}
 						material={
-							this.props.isSelected
+							this.props.isSelected && this.props.mode != "editAsset"
 								? { side: "double", color: "green", opacity: 0.4 }
 								: { side: "double", color: "white", opacity: 1, metalness: 0.4 }
 						}
@@ -102,7 +102,7 @@ export default class Wall extends Component {
 					<Entity
 						geometry={{ primitive: 'box', height: 3, width: 1, depth: 0.125}}
 						material={
-							this.props.isSelected
+							this.props.isSelected && this.props.mode != "editAsset"
 								? { color: "green", opacity: 0.4 }
 								: { color: "#f9d9c2", opacity: 1, metalness: 0.4 }
 						}
@@ -111,7 +111,7 @@ export default class Wall extends Component {
 					<Entity
 						geometry={{ primitive: 'box', height: 3, width: 1, depth: 0.125}}
 						material={
-							this.props.isSelected
+							this.props.isSelected && this.props.mode != "editAsset"
 								? { color: "green", opacity: 0.4 }
 								: { color: "#f9d9c2", opacity: 1, metalness: 0.4 }
 						}
@@ -123,7 +123,7 @@ export default class Wall extends Component {
 						height="0.15"
 						depth=".35"
 						material={
-							this.props.isSelected
+							this.props.isSelected && this.props.mode != "editAsset"
 								? { color: "green", opacity: 0.4}
 								: { color: "#7c695b", opacity: 1 }
 						}
@@ -156,7 +156,7 @@ export default class Wall extends Component {
 						events={{ click: this.props.onClick }}
 						geometry={{ primitive: 'box', height: 3, width: 1, depth: 1}}
 						material={
-							this.props.isSelected
+							this.props.isSelected && this.props.mode != "editAsset"
 								? { color: "green", opacity: 0.4 }
 								: { color: "#f9d9c2", opacity: 1, metalness: 0.4 }
 						}
@@ -168,7 +168,7 @@ export default class Wall extends Component {
 						height="1.025"
 						depth=".35"
 						material={
-							this.props.isSelected
+							this.props.isSelected && this.props.mode != "editAsset"
 								? { color: "green", opacity: 0.4}
 								: { color: "#7c695b", opacity: 1 }
 						}
