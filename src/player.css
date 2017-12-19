@@ -5,7 +5,7 @@
 }
 
 button {
-	border: solid 1px #A9A9A9;
+	border: solid 1px #a9a9a9;
 	border-radius: 5px;
 	box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.2);
 	outline: none;
@@ -29,7 +29,7 @@ button svg.svg-icon:hover {
 }
 #back {
 	width: 100%;
-	background-color: #DC7627;
+	background-color: #dc7627;
 
 	font-size: 24px;
 	font-weight: bold;
@@ -107,15 +107,17 @@ button svg.svg-icon:hover {
 #camera-move button:active svg path,
 #camera-move button:active svg polygon,
 #camera-move button:active svg rect {
-	fill: #FFFFFF;
+	fill: #ffffff;
 }
 
-#camera-zoom-in:hover svg polygon, #camera-zoom-out:hover svg rect {
+#camera-zoom-in:hover svg polygon,
+#camera-zoom-out:hover svg rect {
 	fill: #e8a26d;
 }
 
-#camera-zoom-in:active svg polygon, #camera-zoom-out:active svg rect {
-	fill: #FFFFFF;
+#camera-zoom-in:active svg polygon,
+#camera-zoom-out:active svg rect {
+	fill: #ffffff;
 }
 
 #camera-move-horizontal {
@@ -127,10 +129,12 @@ button svg.svg-icon:hover {
 
 	text-align: center;
 }
-#camera-left, #camera-right {
+#camera-left,
+#camera-right {
 	display: inline-block;
 }
-#camera-up, #camera-down {
+#camera-up,
+#camera-down {
 	display: block;
 	margin-left: auto;
 	margin-right: auto;
@@ -140,7 +144,8 @@ button svg.svg-icon:hover {
 	top: -30px;
 }
 
-#camera-zoom-in, #camera-zoom-out {
+#camera-zoom-in,
+#camera-zoom-out {
 	display: inline-block;
 	margin-top: 30px;
 	margin-right: 3px;
@@ -183,7 +188,7 @@ button svg.svg-icon:hover {
 #UI-selected-asset-options button:active svg path,
 #UI-selected-asset-options button:active svg rect,
 #UI-selected-asset-options button:active svg polygon {
-	fill: #FFFFFF;
+	fill: #ffffff;
 }
 
 #UI-selected-asset-options #selected-asset-label {
@@ -199,6 +204,22 @@ button svg.svg-icon:hover {
 #UI-selected-asset-options #selected-asset-label .selected-asset-label-title {
 	padding: 5px 10px 5px 10px;
 	background: #ffffff;
+	border-radius: 5px;
+}
+
+#selected-asset-tooltip {
+	position: absolute;
+	top: 10px;
+	left: 275px;
+
+	width: 350px;
+
+	text-align: center;
+	font-size: 16px;
+	z-index: 1;
+	padding: 5px 10px 5px 10px;
+	background: #fdd89c;
+	border: 1px solid black;
 	border-radius: 5px;
 }
 
@@ -234,7 +255,7 @@ button svg.svg-icon:hover {
 
 	padding: 0px;
 
-	background: #FFFFFF;
+	background: #ffffff;
 	border-radius: 0px;
 	border: none;
 
@@ -258,8 +279,8 @@ button svg.svg-icon:hover {
 	padding: 5px 10px;
 	font-size: 15px;
 
-	background: #FFFFFF;
-	border: solid 1px #E0E0E0;
+	background: #ffffff;
+	border: solid 1px #e0e0e0;
 
 	cursor: pointer;
 }
@@ -270,12 +291,16 @@ button svg.svg-icon:hover {
 
 #UI-bottom-panel #asset-selection-menu .asset-category.active-category {
 	background: #d1ebff;
-	text-decoration: underline;
 }
 
 #UI-bottom-panel #asset-selection-menu #vr-viewer-mode {
 	float: right;
 	margin-right: 15px;
+}
+
+#UI-bottom-panel #asset-selection-menu #vr-viewer-mode.active-category {
+	background: #fdd89c;
+	border: 1px solid black;
 }
 
 #asset-picker {
@@ -312,16 +337,18 @@ button svg.svg-icon:hover {
 	height: 100%;
 }
 
-#previous-asset, #next-asset {
+#previous-asset,
+#next-asset {
 	width: 8%; /* 10% of 80% */
 	height: 100%;
 
-	background: #FFFFFF;
+	background: #ffffff;
 
 	font-size: 32px;
 	font-weight: bold;
 }
-#previous-asset:hover, #next-asset:hover {
+#previous-asset:hover,
+#next-asset:hover {
 	background: #d1ebff;
 }
 
@@ -358,8 +385,55 @@ button svg.svg-icon:hover {
 	vertical-align: top;
 	text-align: center;
 
-	background:#ffffff;
+	background: #ffffff;
 	border-radius: 6px;
 
 	font-size: 12px;
+}
+
+.sticker-box {
+	position: absolute;
+	height: 90px;
+	width: 90px;
+}
+
+#top-sticker-box {
+	left: 440px;
+	top: 190px;
+}
+
+#right-sticker-box {
+	left: 565px;
+	top: 290px;
+}
+
+#bottom-sticker-box {
+	left: 440px;
+	top: 400px;
+}
+
+#left-sticker-box {
+	left: 320px;
+	top: 290px;
+}
+
+.sticker-arrow-left {
+	position: absolute;
+	margin-left: -34px;
+	top: 10px;
+}
+
+.sticker-arrow-right {
+	position: absolute;
+	margin-left: 40px;
+	top: 10px;
+}
+
+.edit-wall-sticker {
+	width: 70px;
+	height: 70px;
+	position: absolute;
+	border: 2px solid black !important;
+	background-size: 100% 100% !important;
+	background-position: center center;
 }
