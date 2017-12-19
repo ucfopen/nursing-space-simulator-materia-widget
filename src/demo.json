@@ -5,7 +5,7 @@
 		"data": {
 			"items": [],
 			"options": {
-				"categories": ["beds", "equipment", "walls", "people"],
+				"categories": ["equipment", "walls", "people"],
 				"stickerTypes": ["0", "fireSticker", "soapSticker", "tvSticker"],
 				"assets": {
 					"bed-1": {
@@ -33,7 +33,7 @@
 						},
 						"tag": "a-obj-model",
 						"type": "object",
-						"category": "beds",
+						"category": "equipment",
 						"title": "Bed"
 					},
 					"chair": {
@@ -343,7 +343,7 @@
 						"tag": "a-obj-model",
 						"type": "door",
 						"category": "walls",
-						"title": "Door (1)"
+						"title": "Door"
 					},
 					"iv-1": {
 						"buttonSource": "assets/icons/icon_iv.png",
@@ -429,62 +429,6 @@
 						"category": "equipment",
 						"title": "Biohazard Waste"
 					},
-					"fire-wall": {
-						"buttonSource": "assets/icons/icon_fire.png",
-						"canReplace": ["walls"],
-						"defaultColor": "",
-						"id": "fire-wall",
-						"materialType": "complex",
-						"mtlSrc": "assets/fire-wall/mesh_wall_fire.mtl",
-						"objSrc": "assets/fire-wall/mesh_wall_fire.obj",
-						"position": {
-							"x": -100,
-							"y": 0,
-							"z": -100
-						},
-						"rotation": {
-							"x": 0,
-							"y": 180,
-							"z": 0
-						},
-						"scale": {
-							"x": 0.25,
-							"y": 0.25,
-							"z": 0.25
-						},
-						"tag": "a-obj-model",
-						"type": "object",
-						"category": "walls",
-						"title": "Fire Wall"
-					},
-					"tv-wall": {
-						"buttonSource": "assets/icons/icon_tv.png",
-						"canReplace": ["walls"],
-						"defaultColor": "#9FCDB1",
-						"id": "tv-wall",
-						"materialType": "complex",
-						"mtlSrc": "assets/tv_wall/mesh_tv_wall.mtl",
-						"objSrc": "assets/tv_wall/mesh_tv_wall.obj",
-						"position": {
-							"x": -100,
-							"y": 0,
-							"z": -100
-						},
-						"rotation": {
-							"x": 0,
-							"y": 180,
-							"z": 0
-						},
-						"scale": {
-							"x": 0.25,
-							"y": 0.25,
-							"z": 0.25
-						},
-						"tag": "a-obj-model",
-						"type": "wall",
-						"category": "walls",
-						"title": "TV Wall"
-					},
 					"window": {
 						"buttonSource": "assets/icons/icon_window.png",
 						"canReplace": ["walls"],
@@ -513,34 +457,6 @@
 						"category": "walls",
 						"title": "Window"
 					},
-					"soap-wall": {
-						"buttonSource": "assets/icons/icon_soap.png",
-						"canReplace": ["walls"],
-						"defaultColor": "#9FCDB1",
-						"id": "soap-wall",
-						"materialType": "complex",
-						"mtlSrc": "assets/soap-wall/mesh_soap_wall.mtl",
-						"objSrc": "assets/soap-wall/mesh_soap_wall.obj",
-						"position": {
-							"x": -100,
-							"y": 0,
-							"z": -100
-						},
-						"rotation": {
-							"x": 0,
-							"y": 180,
-							"z": 0
-						},
-						"scale": {
-							"x": 0.25,
-							"y": 0.25,
-							"z": 0.25
-						},
-						"tag": "a-obj-model",
-						"type": "wall",
-						"category": "walls",
-						"title": "Soap Wall"
-					},
 					"wall-1": {
 						"buttonSource": "assets/icons/icon_wall.png",
 						"canReplace": ["walls"],
@@ -559,7 +475,7 @@
 						"tag": "a-box",
 						"type": "wall",
 						"category": "walls",
-						"title": "Wall (1)"
+						"title": "Wall"
 					},
 					"fireSticker": {
 						"buttonSource": "assets/icons/icon_fire.png",
@@ -630,7 +546,8 @@
 				},
 				"gridLoader": {
 					"columns": 30,
-					"content": "wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 wall-1.0 wall-1.0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 wall-1.0 wall-1.0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 wall-1.0 wall-1.0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 wall-1.0 wall-1.0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 wall-1.0 wall-1.0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 wall-1.0 wall-1.0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 wall-1.0 wall-1.0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 wall-1.0 wall-1.0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 wall-1.0 wall-1.0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0",
+					"content":
+						"wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 wall-1.0 wall-1.0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 wall-1.0 wall-1.0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 wall-1.0 wall-1.0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 wall-1.0 wall-1.0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 wall-1.0 wall-1.0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 wall-1.0 wall-1.0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 wall-1.0 wall-1.0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 wall-1.0 wall-1.0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 wall-1.0 wall-1.0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0",
 					"rows": 12
 				}
 			}
