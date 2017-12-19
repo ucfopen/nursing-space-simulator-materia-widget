@@ -1,166 +1,110 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import DeleteSVG from "../assets/icon-svgs/delete";
-import DeselectSVG from "../assets/icon-svgs/deselect";
-import RotateSVG from "../assets/icon-svgs/rotate";
-import ConfirmSVG from "../assets/icon-svgs/confirm";
-import EditSVG from "../assets/icon-svgs/edit_box";
-import StickerBox from "../assets/sticker_box"
+import React from 'react'
+import ReactDOM from 'react-dom'
+import DeleteSVG from '../assets/icon-svgs/delete'
+import DeselectSVG from '../assets/icon-svgs/deselect'
+import RotateSVG from '../assets/icon-svgs/rotate'
+import ConfirmSVG from '../assets/icon-svgs/confirm'
+import EditSVG from '../assets/icon-svgs/edit_box'
+import StickerBox from '../assets/sticker_box'
 
-import{
-	getCellRotation,
-	getStickers
-} from "../../grid"
+import { getCellRotation, getStickers } from '../../grid'
+import { deselectAsset, rotateAsset, removeAsset, extendWall } from '../../actions/grid_actions.js'
 
-import {
-	selectAssetType,
-	deselectAsset,
-	rotateAsset,
-	removeAsset,
-	extendWall
-} from "../../actions/grid_actions.js";
+const TOP = 0
+const RIGHT = 1
+const BOTTOM = 2
+const LEFT = 3
 
 export default props => {
-	if (props.mode == "extendWall")
+	const { mode, tooltipText, grid, currentX, currentZ, selectedAsset, stickers } = props
+	const { deselectAsset, extendWall, rotateAsset, removeAsset, editAsset } = props
+	if (mode == 'extendWall')
 		return (
 			<div id="UI-selected-asset-options">
 				<div>
-					<span id="selected-asset-tooltip" className={props.tooltipText ? "shown" : "hidden"}>
+					<span id="selected-asset-tooltip" className={tooltipText ? 'shown' : 'hidden'}>
 						Click on a valid space to auto-fill walls.
 					</span>
-					<button id="deselect" onClick={() => props.deselectAsset()}>
+					<button id="deselect" onClick={() => deselectAsset()}>
 						<DeselectSVG />
 					</button>
 				</div>
 			</div>
-		);
-	if (props.mode == "editAsset")
-	{
-		const rotation = getCellRotation(props.grid, props.currentX, props.currentZ);
-		const stickers = getStickers(props.grid, props.currentX, props.currentZ);
+		)
+	if (mode == 'editAsset') {
+		const rotation = getCellRotation(grid, currentX, currentZ)
+		const stickers = getStickers(grid, currentX, currentZ)
+		const stickerProps = { stickers, x: currentX, z: currentZ }
 		return (
 			<div id="UI-selected-asset-options">
 				<div>
-					<span id="selected-asset-tooltip" className={props.tooltipText ? "shown" : "hidden"}>
+					<span id="selected-asset-tooltip" className={tooltipText ? 'shown' : 'hidden'}>
 						Edit this item.
 					</span>
-					<button id="deselect" onClick={() => props.deselectAsset(true)}>
+					<button id="deselect" onClick={() => deselectAsset(true)}>
 						<DeselectSVG />
 					</button>
-					{props.selectedAsset.id == "wall-1" ?
+					{selectedAsset.id == 'wall-1' ? (
 						<div>
-							<StickerBox
-								index={0}
-								stickers={stickers}
-								x={props.currentX}
-								z={props.currentZ}
-								side="top"/>
-							<StickerBox
-								index={1}
-								stickers={stickers}
-								x={props.currentX}
-								z={props.currentZ}
-								side="right"/>
-							<StickerBox
-								index={2}
-								stickers={stickers}
-								x={props.currentX}
-								z={props.currentZ}
-								side="bottom"/>
-							<StickerBox
-								index={3}
-								stickers={stickers}
-								x={props.currentX}
-								z={props.currentZ}
-								side="left"/>
+							<StickerBox index={TOP} {...stickerProps} side="top" />
+							<StickerBox index={RIGHT} {...stickerProps} side="right" />
+							<StickerBox index={BOTTOM} {...stickerProps} side="bottom" />
+							<StickerBox index={LEFT} {...stickerProps} side="left" />
 						</div>
-					: (
-						rotation % 180 == 0  ?
-							<div>
-								<StickerBox
-									index={0}
-									stickers={stickers}
-									x={props.currentX}
-									z={props.currentZ}
-									side="top"/>
-								<StickerBox
-									index={2}
-									stickers={stickers}
-									x={props.currentX}
-									z={props.currentZ}
-									side="bottom"/>
-							</div>
-						:	<div>
-								<StickerBox
-									index={1}
-									stickers={stickers}
-									x={props.currentX}
-									z={props.currentZ}
-									side="right"/>
-								<StickerBox
-									index={3}
-									stickers={stickers}
-									x={props.currentX}
-									z={props.currentZ}
-									side="left"/>
-							</div>
-					)
-					}
+					) : rotation % 180 == 0 ? (
+						<div>
+							<StickerBox index={TOP} {...stickerProps} side="top" />
+							<StickerBox index={BOTTOM} {...stickerProps} side="bottom" />
+						</div>
+					) : (
+						<div>
+							<StickerBox index={RIGHT} {...stickerProps} side="right" />
+							<StickerBox index={LEFT} {...stickerProps} side="left" />
+						</div>
+					)}
 				</div>
 			</div>
-		);
-	}
-	else // manipulationMode
+		)
+	} else // manipulationMode
 		return (
 			<div id="UI-selected-asset-options">
 				<span id="selected-asset-label">
 					<span className="selected-asset-label-title">
-						Currently selected: {props.selectedAsset.title}
+						Currently selected: {selectedAsset.title}
 					</span>
 				</span>
-				{props.selectedAsset.id == "pov_camera" ?
-					<span id="selected-asset-tooltip" className={props.tooltipText ? "shown" : "hidden"}>
+				{selectedAsset.id == 'pov_camera' ? (
+					<span id="selected-asset-tooltip" className={tooltipText ? 'shown' : 'hidden'}>
 						Select a location to jump into first-person view.
 					</span>
-					: null
-				}
-				{props.mode == "manipulation" ? (
+				) : null}
+				{mode == 'manipulation' ? (
 					<div>
-						<button id="confirm" onClick={() => props.deselectAsset()}>
+						<button id="confirm" onClick={() => deselectAsset()}>
 							<ConfirmSVG />
 						</button>
-						<button
-							id="rotate"
-							onClick={() => props.rotateAsset(props.currentX, props.currentZ)}>
+						<button id="rotate" onClick={() => rotateAsset(currentX, currentZ)}>
 							<RotateSVG />
 						</button>
-						<button
-							id="remove"
-							onClick={() => props.removeAsset(props.currentX, props.currentZ)}>
+						<button id="remove" onClick={() => removeAsset(currentX, currentZ)}>
 							<DeleteSVG />
 						</button>
-						{props.selectedAsset.id == "wall-1" ?
-							<button
-								id="extendWall"
-								onClick={() => props.extendWall(props.currentX, props.currentZ)}>
+						{selectedAsset.id == 'wall-1' ? (
+							<button id="extendWall" onClick={() => extendWall(currentX, currentZ)}>
 								<RotateSVG />
 							</button>
-							: null
-						}
-						{props.selectedAsset.id == "wall-1" ||
-						 props.selectedAsset.id == "door-1" ?
-							<button
-								id="editAsset"
-								onClick={() => props.editAsset(props.currentX, props.currentZ)}>
+						) : null}
+						{selectedAsset.id == 'wall-1' || selectedAsset.id == 'door-1' ? (
+							<button id="editAsset" onClick={() => editAsset(currentX, currentZ)}>
 								<RotateSVG />
 							</button>
-							: null
-						}
+						) : null}
 					</div>
-				) : <button id="deselect" onClick={() => props.deselectAsset()}>
+				) : (
+					<button id="deselect" onClick={() => deselectAsset()}>
 						<DeselectSVG />
 					</button>
-				}
+				)}
 			</div>
-		);
-};
+		)
+}
