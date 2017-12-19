@@ -26,10 +26,10 @@ export function selectAsset(asset, x, z) {
 	};
 }
 
-export function deselectAsset(reset = false) {
+export function deselectAsset(restorePosition = false) {
 	return {
 		type: DESELECT_ASSET,
-		payload: { reset }
+		payload: { restorePosition }
 	};
 }
 

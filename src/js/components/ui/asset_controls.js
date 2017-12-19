@@ -1,5 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import AssetTooltip from '../ui/asset_tooltip'
 import DeleteSVG from '../assets/icon-svgs/delete'
 import DeselectSVG from '../assets/icon-svgs/deselect'
 import RotateSVG from '../assets/icon-svgs/rotate'
@@ -16,31 +17,33 @@ const BOTTOM = 2
 const LEFT = 3
 
 export default props => {
-	const { mode, tooltipText, grid, currentX, currentZ, selectedAsset, stickers } = props
+	// matches keys from props to respective variables
+	const { mode, grid, currentX, currentZ, selectedAsset, stickers } = props
+
 	const { deselectAsset, extendWall, rotateAsset, removeAsset, editAsset } = props
-	if (mode == 'extendWall')
+
+	if (mode === 'extendWall')
 		return (
 			<div id="UI-selected-asset-options">
 				<div>
-					<span id="selected-asset-tooltip" className={tooltipText ? 'shown' : 'hidden'}>
-						Click on a valid space to auto-fill walls.
-					</span>
+					<AssetTooltip toolTipText="Click on a valid space to auto-fill walls." showToolTip={true}/>
 					<button id="deselect" onClick={() => deselectAsset()}>
 						<DeselectSVG />
 					</button>
 				</div>
 			</div>
 		)
-	if (mode == 'editAsset') {
+	if (mode === 'editAsset') {
 		const rotation = getCellRotation(grid, currentX, currentZ)
 		const stickers = getStickers(grid, currentX, currentZ)
 		const stickerProps = { stickers, x: currentX, z: currentZ }
+
+		if(props.isMenuVisible) props.toggleMenu();
+
 		return (
 			<div id="UI-selected-asset-options">
 				<div>
-					<span id="selected-asset-tooltip" className={tooltipText ? 'shown' : 'hidden'}>
-						Edit this item.
-					</span>
+					<AssetTooltip toolTipText="Edit this item." showToolTip={true}/>
 					<button id="deselect" onClick={() => deselectAsset(true)}>
 						<DeselectSVG />
 					</button>
@@ -74,9 +77,7 @@ export default props => {
 					</span>
 				</span>
 				{selectedAsset.id == 'pov_camera' ? (
-					<span id="selected-asset-tooltip" className={tooltipText ? 'shown' : 'hidden'}>
-						Select a location to jump into first-person view.
-					</span>
+					<AssetTooltip toolTipText="Select a location to jump into first-person view." showToolTip={true}/>
 				) : null}
 				{mode == 'manipulation' ? (
 					<div>
