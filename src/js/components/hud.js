@@ -1,17 +1,15 @@
-import React, { Component } from "react";
+import React, { Component } from 'react'
+import { checkPropsExist } from '../utilities'
 
-import CategoryButton from "./ui/category_button";
-import AssetControls from "./ui/asset_controls";
-import AssetTray from "./ui/asset_tray";
-import MovementControls from "./ui/movement_controls";
+import CategoryButton from './ui/category_button'
+import AssetControls from './ui/asset_controls'
+import AssetTray from './ui/asset_tray'
+import MovementControls from './ui/movement_controls'
 
-import { connect } from "react-redux";
+import { connect } from 'react-redux'
 
-import {
-	updateCameraPosition,
-	toggleThirdPerson
-} from "../actions/camera_actions.js";
-import { toggleMenuVisibility, setCategory } from "../actions/menu_actions";
+import { updateCameraPosition, toggleThirdPerson } from '../actions/camera_actions.js'
+import { toggleMenuVisibility, setCategory } from '../actions/menu_actions'
 
 import {
 	selectAssetType,
@@ -21,63 +19,59 @@ import {
 	updateAssetPosition,
 	extendWall,
 	editAsset
-} from "../actions/grid_actions";
+} from '../actions/grid_actions'
 
 export class HUD extends Component {
-	render() {
-		if (
-			!this.props.categories ||
-			!this.props.assets ||
-			!this.props.updateAssetPosition ||
-			!this.props.updateCameraPosition
-		) {
-			return <div>Loading</div>;
-		} else {
-			const update = this.props.mode == "manipulation"
-				? this.props.updateAssetPosition
-				: this.props.updateCameraPosition;
-			return (
-				<div>
-					<MovementControls
-						thirdPerson={this.props.thirdPerson}
-						update={update}
-						updateCameraPosition={this.props.updateCameraPosition}
-					/>
-					{this.props.thirdPerson ? (
-						<div>
-							{this.props.selectedAsset ? (
-								<AssetControls
-									selectedAsset={this.props.selectedAsset}
-									mode={this.props.mode}
-									removeAsset={this.props.removeAsset}
-									deselectAsset={this.props.deselectAsset}
-									rotateAsset={this.props.rotateAsset}
-									currentX={this.props.currentX}
-									currentZ={this.props.currentZ}
-									extendWall={this.props.extendWall}
-									editAsset={this.props.editAsset}
-									grid={this.props.grid}
-								/>
-							) : null}
-							<AssetTray
-								assets={this.props.assets}
-								categories={this.props.categories}
-								selectAssetType={this.props.selectAssetType}
+	renderHUD() {
+		const { mode, thirdPerson, selectedAsset } = this.props
+		const { updateAssetPosition, updateCameraPosition } = this.props
+
+		const update = mode === 'manipulation' ? updateAssetPosition : updateCameraPosition
+		return (
+			<div>
+				<MovementControls
+					thirdPerson={thirdPerson}
+					update={update}
+					updateCameraPosition={updateCameraPosition}
+				/>
+				{thirdPerson ? (
+					<div>
+						{selectedAsset ? (
+							<AssetControls
 								selectedAsset={this.props.selectedAsset}
-								setCategory={this.props.setCategory}
-								currentCategory={this.props.currentCategory}
+								mode={this.props.mode}
+								removeAsset={this.props.removeAsset}
+								deselectAsset={this.props.deselectAsset}
+								rotateAsset={this.props.rotateAsset}
+								currentX={this.props.currentX}
+								currentZ={this.props.currentZ}
+								extendWall={this.props.extendWall}
+								editAsset={this.props.editAsset}
+								grid={this.props.grid}
 							/>
-						</div>
-					) : (
-						<div id="ground-top-panel">
-							<button id="back" onClick={() => this.props.toggleThirdPerson()}>
-								Back
-							</button>
-						</div>
-					)}
-				</div>
-			);
-		} //end else
+						) : null}
+						<AssetTray
+							assets={this.props.assets}
+							categories={this.props.categories}
+							selectAssetType={this.props.selectAssetType}
+							selectedAsset={this.props.selectedAsset}
+							setCategory={this.props.setCategory}
+							currentCategory={this.props.currentCategory}
+						/>
+					</div>
+				) : (
+					<div id="ground-top-panel">
+						<button id="back" onClick={() => this.props.toggleThirdPerson()}>
+							Back
+						</button>
+					</div>
+				)}
+			</div>
+		)
+	}
+	render() {
+		if (checkPropsExist(this.props)) return this.renderHUD()
+		else return null
 	}
 }
 
@@ -93,7 +87,7 @@ function mapStateToProps({ data, menu, grid, position }) {
 		currentX: grid.currentX,
 		currentZ: grid.currentZ,
 		thirdPerson: position.thirdPerson
-	};
+	}
 }
 
 export default connect(mapStateToProps, {
@@ -108,4 +102,4 @@ export default connect(mapStateToProps, {
 	updateAssetPosition,
 	extendWall,
 	editAsset
-})(HUD);
+})(HUD)

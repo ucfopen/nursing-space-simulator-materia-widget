@@ -9,16 +9,16 @@ import WallPrimitive from './primitive_assets/wall'
 
 export default class Wall extends Component {
 	processStickers() {
-		let sticker
+		const { attributes, isSelected, rotation } = this.props
 		let mappedStickers
-		if (this.props.attributes.stickers) {
-			mappedStickers = this.props.attributes.stickers.map((item, itemIndex) => {
+		if (attributes.stickers) {
+			mappedStickers = attributes.stickers.map((item, itemIndex) => {
 				if (item != '0')
 					return (
 						<Sticker
 							id={item}
-							rotation={90 - itemIndex * 90 - this.props.rotation}
-							isSelected={this.props.isSelected}
+							rotation={90 - itemIndex * 90 - rotation}
+							isSelected={isSelected}
 							key={`${item} ${itemIndex}`}
 						/>
 					)
@@ -28,8 +28,8 @@ export default class Wall extends Component {
 	}
 
 	render() {
-		let { x, y, z, rotation, mode, isSelected, onClick } = this.props
-		let defaultProps = {
+		const { x, y, z, type, rotation, mode, isSelected, onClick } = this.props
+		const defaultProps = {
 			x,
 			y,
 			z,
@@ -46,8 +46,8 @@ export default class Wall extends Component {
 		}
 
 		// There are 3 basic wall types: window, door, and regular
-		if (this.props.type === 'window') return <WindowPrimitive {...defaultProps} />
-		if (this.props.type === 'door-1') return <DoorPrimitive {...defaultProps} />
+		if (type === 'window') return <WindowPrimitive {...defaultProps} />
+		if (type === 'door-1') return <DoorPrimitive {...defaultProps} />
 		else return <WallPrimitive {...defaultProps} />
 	}
 }

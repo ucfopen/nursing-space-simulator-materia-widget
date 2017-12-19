@@ -4,7 +4,7 @@ import React from 'react'
 
 export default props => {
 	// attributes
-	let {
+	const {
 		x,
 		y,
 		z,
@@ -19,7 +19,7 @@ export default props => {
 	} = props
 
 	// functions
-	let { onClick, processStickers } = props
+	const { onClick, processStickers } = props
 
 	/*
 	Structure:
