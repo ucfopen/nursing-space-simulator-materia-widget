@@ -21,9 +21,6 @@ export default class AssetTray extends Component {
 	render() {
 		const { assets, currentCategory, selectedAsset, categories } = this.props
 		const { selectAssetType, setCategory } = this.props
-
-		console.log(`me props are ${this.props}`)
-
 		return (
 			<div id="UI-bottom-panel" className={this.state.showMenu ? 'open' : 'closed'}>
 				<button onClick={this.toggleMenu.bind(this)} className="drawer-toggle">
