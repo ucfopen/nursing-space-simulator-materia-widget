@@ -6,25 +6,13 @@ import AssetButton from './asset_button'
 import CategoryButton from './category_button'
 
 export default class AssetTray extends Component {
-	constructor(props) {
-		super(props)
-		this.state = {
-			showMenu: true
-		}
-	}
-
-	toggleMenu() {
-		const showMenu = this.state.showMenu
-		this.setState({ showMenu: !showMenu })
-	}
-
 	render() {
 		const { assets, currentCategory, selectedAsset, categories } = this.props
 		const { selectAssetType, setCategory } = this.props
 		return (
-			<div id="UI-bottom-panel" className={this.state.showMenu ? 'open' : 'closed'}>
-				<button onClick={this.toggleMenu.bind(this)} className="drawer-toggle">
-					{this.state.showMenu ? '[Close Menu]' : '[Open Menu]'}
+			<div id="UI-bottom-panel" className={this.props.showMenu ? 'open' : 'closed'}>
+				<button onClick={this.props.toggleMenu} className="drawer-toggle">
+					{this.props.showMenu ? '[Close Menu]' : '[Open Menu]'}
 				</button>
 				<div id="asset-selection-menu">
 					<button
