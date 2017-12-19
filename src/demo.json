@@ -5,7 +5,7 @@
 		"data": {
 			"items": [],
 			"options": {
-				"categories": ["beds", "equipment", "walls", "people"],
+				"categories": ["equipment", "walls", "people"],
 				"stickerTypes": ["0", "fireSticker", "soapSticker", "tvSticker"],
 				"assets": {
 					"bed-1": {
@@ -33,7 +33,7 @@
 						},
 						"tag": "a-obj-model",
 						"type": "object",
-						"category": "beds",
+						"category": "equipment",
 						"title": "Bed"
 					},
 					"chair": {
