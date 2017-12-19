@@ -27,13 +27,15 @@ export class HUD extends Component {
 		const { updateAssetPosition, updateCameraPosition } = this.props
 
 		const update = mode === 'manipulation' ? updateAssetPosition : updateCameraPosition
+		console.log(mode);
 		return (
 			<div>
-				<MovementControls
+				{mode !== 'editAsset' ?
+				(<MovementControls
 					thirdPerson={thirdPerson}
 					update={update}
 					updateCameraPosition={updateCameraPosition}
-				/>
+				/>) : null}
 				{thirdPerson ? (
 					<div>
 						{selectedAsset ? (
@@ -47,7 +49,9 @@ export class HUD extends Component {
 								currentZ={this.props.currentZ}
 								extendWall={this.props.extendWall}
 								editAsset={this.props.editAsset}
+								isMenuVisible={this.props.visible}
 								grid={this.props.grid}
+								toggleMenu={this.props.toggleMenuVisibility.bind(this)}
 							/>
 						) : null}
 						<AssetTray
@@ -57,6 +61,8 @@ export class HUD extends Component {
 							selectedAsset={this.props.selectedAsset}
 							setCategory={this.props.setCategory}
 							currentCategory={this.props.currentCategory}
+							toggleMenu={this.props.toggleMenuVisibility.bind(this)}
+							showMenu={this.props.visible}
 						/>
 					</div>
 				) : (
