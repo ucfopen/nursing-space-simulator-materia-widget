@@ -31,7 +31,9 @@ export default function(
 		currentX: null,
 		currentZ: null,
 		mode: "none",
-		selectedAsset: null
+		selectedAsset: null,
+		validX: null,
+		validZ: null
 	},
 	action
 ) {
