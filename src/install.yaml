@@ -22,6 +22,7 @@ meta_data:
   features:
     - Customizable
     - Fullscreen
+    - PersistenceEnabled
   supported_data:
     - Custom
   about: >
