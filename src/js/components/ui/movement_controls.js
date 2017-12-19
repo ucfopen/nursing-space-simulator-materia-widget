@@ -9,11 +9,17 @@ import ZoomInSVG from "../assets/icon-svgs/zoom_in";
 import ZoomOutSVG from "../assets/icon-svgs/zoom_out";
 
 export default class MovementControls extends Component {
+	takeScreenShot() {
+		document
+			.querySelector("a-scene")
+			.components.screenshot.capture("perspective");
+	}
+
 	render() {
 		return (
 			<div id="UI-right-panel">
 				<div id="top-buttons" />
-				<button id="screenshot">
+				<button onClick={this.takeScreenShot.bind(this)} id="screenshot">
 					<ScreenshotSVG />
 				</button>
 				{this.props.thirdPerson ? (
