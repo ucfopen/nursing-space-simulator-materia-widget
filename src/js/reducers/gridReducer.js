@@ -3,7 +3,11 @@ import {
 	deleteItem,
 	insertItem,
 	isCellAvailable,
-	getCellRotation
+	getCellRotation,
+	findValidExtends,
+	insertWalls,
+	getStickers,
+	setSticker
 } from "../grid";
 
 import {
@@ -13,7 +17,11 @@ import {
 	ROTATE_ASSET,
 	REMOVE_ASSET,
 	INSERT_ASSET,
-	UPDATE_ASSET_POSITION
+	UPDATE_ASSET_POSITION,
+	EXTEND_WALL,
+	FILL_WALLS,
+	EDIT_ASSET,
+	EDIT_STICKER
 } from "../actions/grid_actions";
 
 import { INIT_DATA } from "../actions";
@@ -22,8 +30,10 @@ export default function(
 	state = {
 		currentX: null,
 		currentZ: null,
-		manipulationMode: false,
-		selectedAsset: null
+		mode: "none",
+		selectedAsset: null,
+		validX: null,
+		validZ: null
 	},
 	action
 ) {
@@ -36,13 +46,26 @@ export default function(
 		}
 
 		case SELECT_ASSET_TYPE: {
-			return {
-				...state,
-				selectedAsset: action.payload,
-				manipulationMode: false,
-				currentX: null,
-				currentZ: null
-			};
+			let oldSelectedAsset = state.selectedAsset
+				? { ...state.selectedAsset }
+				: null;
+			// If the same asset type is clicked again, deselect it.
+			if (oldSelectedAsset && action.payload && oldSelectedAsset.id == action.payload.id)
+				return {
+					...state,
+					mode: "none",
+					selectedAsset: null,
+					currentX: null,
+					currentZ: null
+				};
+			else
+				return {
+					...state,
+					mode: "none",
+					selectedAsset: action.payload,
+					currentX: null,
+					currentZ: null
+				};
 		}
 
 		case SELECT_ASSET: {
@@ -65,7 +88,7 @@ export default function(
 				);
 				return {
 					...state,
-					manipulationMode: true,
+					mode: "manipulation",
 					selectedAsset: oldSelectedAsset,
 					currentX: action.payload.x,
 					currentZ: action.payload.z,
@@ -80,7 +103,7 @@ export default function(
 			} else {
 				return {
 					...state,
-					manipulationMode: true,
+					mode: "manipulation",
 					selectedAsset: action.payload.asset,
 					currentX: action.payload.x,
 					currentZ: action.payload.z
@@ -91,7 +114,7 @@ export default function(
 		case DESELECT_ASSET: {
 			return {
 				...state,
-				manipulationMode: false,
+				mode: "none",
 				selectedAsset: null,
 				currentX: null,
 				currentZ: null
@@ -111,7 +134,7 @@ export default function(
 			return {
 				...state,
 				grid: deleteItem(gridCopy, action.payload.x, action.payload.z),
-				manipulationMode: false,
+				mode: "none",
 				selectedAsset: null,
 				currentX: null,
 				currentZ: null
@@ -134,10 +157,17 @@ export default function(
 					...state
 				};
 			} else {
+
 				let newGrid,
-					prevRotation = 180;
+					prevRotation = 180,
+					prevStickers;
 				if (state.currentX !== null && state.currentZ !== null) {
 					prevRotation = getCellRotation(
+						gridCopy,
+						state.currentX,
+						state.currentZ
+					);
+					prevStickers = getStickers(
 						gridCopy,
 						state.currentX,
 						state.currentZ
@@ -145,6 +175,27 @@ export default function(
 					newGrid = deleteItem(gridCopy, state.currentX, state.currentZ);
 				} else {
 					newGrid = gridCopy;
+					if (selectedAsset.id == "wall-1")
+					{
+						let validX, validZ;
+						newGrid = insertItem(
+							newGrid,
+							selectedAsset.id,
+							action.payload.x,
+							action.payload.z,
+							prevRotation
+						);
+						[validX, validZ] = findValidExtends(newGrid, action.payload.x, action.payload.z);
+						return {
+							...state,
+							grid: newGrid,
+							mode: "extendWall",
+							currentX: action.payload.x,
+							currentZ: action.payload.z,
+							validZ: validZ,
+							validX: validX
+						};
+					}
 				}
 				return {
 					...state,
@@ -153,9 +204,10 @@ export default function(
 						selectedAsset.id,
 						action.payload.x,
 						action.payload.z,
-						prevRotation
+						prevRotation,
+						prevStickers
 					),
-					manipulationMode: true,
+					mode: "manipulation",
 					currentX: action.payload.x,
 					currentZ: action.payload.z
 				};
@@ -173,6 +225,11 @@ export default function(
 			const currentX = state.currentX;
 			const currentZ = state.currentZ;
 			const currentRotation = getCellRotation(gridCopy, currentX, currentZ);
+			const prevStickers = getStickers(
+				gridCopy,
+				state.currentX,
+				state.currentZ
+			);
 			let newGrid;
 
 			switch (action.payload) {
@@ -187,7 +244,8 @@ export default function(
 								selectedAsset.id,
 								currentX + 1,
 								currentZ,
-								currentRotation
+								currentRotation,
+								prevStickers
 							)
 						};
 					}
@@ -203,7 +261,8 @@ export default function(
 								selectedAsset.id,
 								currentX - 1,
 								currentZ,
-								currentRotation
+								currentRotation,
+								prevStickers
 							)
 						};
 					}
@@ -219,7 +278,8 @@ export default function(
 								selectedAsset.id,
 								currentX,
 								currentZ - 1,
-								currentRotation
+								currentRotation,
+								prevStickers
 							)
 						};
 					}
@@ -235,7 +295,8 @@ export default function(
 								selectedAsset.id,
 								currentX,
 								currentZ + 1,
-								currentRotation
+								currentRotation,
+								prevStickers
 							)
 						};
 					}
@@ -243,6 +304,80 @@ export default function(
 			}
 			return state;
 		}
+
+		case EXTEND_WALL: {
+			const gridCopy = JSON.parse(JSON.stringify(state.grid));
+			let validX, validZ;
+			[validX, validZ] = findValidExtends(gridCopy, state.currentX, state.currentZ);
+			return {
+				...state,
+				mode: "extendWall",
+				currentX: state.currentX,
+				currentZ: state.currentZ,
+				validZ: validZ,
+				validX: validX
+			};
+		}
+
+		case FILL_WALLS: {
+			const gridCopy = JSON.parse(JSON.stringify(state.grid));
+			const endX = action.payload.x;
+			const endZ = action.payload.z;
+			const startX = action.payload.extendX;
+			const startZ = action.payload.extendZ;
+			let newGrid;
+
+			let validFill = (
+				startX == endX && action.payload.validZ.includes(endZ) ||
+				startZ == endZ && action.payload.validX.includes(endX)
+			)
+
+			if (validFill)
+				newGrid = insertWalls(gridCopy, startX, startZ, endX, endZ);
+			else
+			{
+				console.log("can't fill here");
+				newGrid = gridCopy;
+			}
+			return {
+				...state,
+				mode: "none",
+				selectedAsset: null,
+				currentX: null,
+				currentZ: null,
+				grid: newGrid
+			};
+		}
+
+		case EDIT_ASSET: {
+			return {
+				...state,
+				mode: "editAsset"
+			};
+		}
+
+		case EDIT_STICKER: {
+			const gridCopy = JSON.parse(JSON.stringify(state.grid));
+			const stickers = getStickers(gridCopy, action.payload.x, action.payload.z);
+
+			const currSticker = stickers[action.payload.side];
+			const stickerIndex = action.payload.stickerTypes.indexOf(currSticker);
+			const numTypes = action.payload.stickerTypes.length;
+			const newStickerIndex = (stickerIndex + action.payload.direction + numTypes) % numTypes;
+			const newSticker = action.payload.stickerTypes[newStickerIndex];
+
+			return {
+				...state,
+				grid: setSticker(
+					gridCopy,
+					action.payload.x,
+					action.payload.z,
+					action.payload.side,
+					newSticker
+				)
+			}
+		}
+
 		default:
 			return state;
 	}
