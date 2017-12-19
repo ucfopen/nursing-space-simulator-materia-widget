@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { checkPropsExist } from '../utilities'
+import { checkPropsExist } from '../utils'
 
 import CategoryButton from './ui/category_button'
 import AssetControls from './ui/asset_controls'
