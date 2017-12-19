@@ -14,12 +14,19 @@ export default class MovementControls extends Component {
 		this.zoomIn = props.updateCameraPosition.bind(this, 'yDown')
 		this.zoomOut = props.updateCameraPosition.bind(this, 'yUp')
 	}
+
+	takeScreenShot() {
+		document
+			.querySelector("a-scene")
+			.components.screenshot.capture("perspective");
+	}
+
 	render() {
 		const { update, thirdPerson } = this.props
 		return (
 			<div id="UI-right-panel">
 				<div id="top-buttons" />
-				<button id="screenshot">
+				<button onClick={this.takeScreenShot.bind(this)} id="screenshot">
 					<ScreenshotSVG />
 				</button>
 				{thirdPerson ? (
