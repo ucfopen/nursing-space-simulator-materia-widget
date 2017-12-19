@@ -1,26 +1,29 @@
 import React, { Component } from "react";
 import AFRAME from "aframe";
+import registerClickDrag from "aframe-click-drag-component";
 import { Entity } from "aframe-react";
 
+registerClickDrag(AFRAME);
+
 export default props => {
-	const yScaleFactor = props.data.category === "walls"
-		? props.data.scale.y / 2
-		: 0;
+	const yScaleFactor =
+		props.data.category === "walls" ? props.data.scale.y / 2 : 0;
 	return (
 		<Entity
 			events={{ click: props.onClick }}
 			primitive={props.data.tag}
+			click-drag
 			// If an assets contains an .mtl (defined in qset), aframe will use obj-model. Otherwise, aframe will use material src
 			material={{ color: "green", opacity: 0.4 }}
 			obj-model={
 				props.isSelected
 					? "obj: #" + props.data.id + "-obj;"
 					: "obj: #" +
-							props.data.id +
-							"-obj;" +
-							"mtl: #" +
-							props.data.id +
-							"-mtl;"
+						props.data.id +
+						"-obj;" +
+						"mtl: #" +
+						props.data.id +
+						"-mtl;"
 			}
 			/** 
 			* The scale property grows an a-box in the +-y direction, but we want it to seem like the box is just growing in the +y direction.
