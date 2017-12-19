@@ -7,6 +7,10 @@ export const SELECT_ASSET = "SELECT_ASSET";
 export const SELECT_ASSET_TYPE = "SELECT_ASSET_TYPE";
 export const REMOVE_ASSET = "REMOVE_ASSET";
 export const UPDATE_ASSET_POSITION = "UPDATE_ASSET_POSITION";
+export const EXTEND_WALL = "EXTEND_WALL";
+export const FILL_WALLS = "FILL_WALLS";
+export const EDIT_ASSET = "EDIT_ASSET";
+export const EDIT_STICKER = "EDIT_STICKER";
 
 export function selectAssetType(asset) {
 	return {
@@ -22,9 +26,10 @@ export function selectAsset(asset, x, z) {
 	};
 }
 
-export function deselectAsset() {
+export function deselectAsset(restorePosition = false) {
 	return {
-		type: DESELECT_ASSET
+		type: DESELECT_ASSET,
+		payload: { restorePosition }
 	};
 }
 
@@ -53,5 +58,33 @@ export function updateAssetPosition(axisDirection) {
 	return {
 		type: UPDATE_ASSET_POSITION,
 		payload: axisDirection
+	};
+}
+
+export function extendWall(x, z) {
+	return {
+		type: EXTEND_WALL,
+		payload: { x, z }
+	};
+}
+
+export function fillWalls(x, z, extendX, extendZ, validX, validZ) {
+	return {
+		type: FILL_WALLS,
+		payload: { x, z, extendX, extendZ, validX, validZ }
+	};
+}
+
+export function editAsset(x, z) {
+	return {
+		type: EDIT_ASSET,
+		payload: { x, z }
+	};
+}
+
+export function editSticker(x, z, side, direction, stickerTypes) {
+	return {
+		type: EDIT_STICKER,
+		payload: { x, z, side, direction, stickerTypes }
 	};
 }

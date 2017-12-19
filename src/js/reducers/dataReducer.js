@@ -6,6 +6,7 @@ export default function(state = {}, action) {
 			return {
 				...state,
 				categories: action.payload.categories,
+				stickerTypes: action.payload.stickerTypes,
 				assets: action.payload.assets
 			};
 		default:

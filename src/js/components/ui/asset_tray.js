@@ -1,60 +1,46 @@
-import React from "react";
-import ReactDOM from "react-dom";
+import React, { Component } from 'react'
+import ReactDOM from 'react-dom'
 
 // Custom Assets
-import AssetButton from "./asset_button";
-import CategoryButton from "./category_button";
+import AssetButton from './asset_button'
+import CategoryButton from './category_button'
 
-export default class AssetTray extends React.Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			showMenu: true
-		};
-	}
-
-	toggleMenu() {
-		const showMenu = this.state.showMenu;
-		this.setState({ showMenu: !showMenu });
-	}
-
+export default class AssetTray extends Component {
 	render() {
-		const assets = this.props.assets;
-		const curCategory = this.props.currentCategory;
-		const selectAssetType = this.props.selectAssetType;
-		const selectedAsset = this.props.selectedAsset;
-
+		const { assets, currentCategory, selectedAsset, categories } = this.props
+		const { selectAssetType, setCategory } = this.props
 		return (
-			<div
-				id="UI-bottom-panel"
-				className={this.state.showMenu ? "open" : "closed"}>
-				<button onClick={this.toggleMenu.bind(this)} className="drawer-toggle">
-					{this.state.showMenu ? "[Close Menu]" : "[Open Menu]"}
+			<div id="UI-bottom-panel" className={this.props.showMenu ? 'open' : 'closed'}>
+				<button onClick={this.props.toggleMenu} className="drawer-toggle">
+					{this.props.showMenu ? '[Close Menu]' : '[Open Menu]'}
 				</button>
 				<div id="asset-selection-menu">
 					<button
 						id="vr-viewer-mode"
+						className={selectedAsset && selectedAsset.id == 'pov_camera' ? 'active-category' : ''}
 						onClick={() =>
-							this.props.selectAssetType({
-								id: "pov_camera",
-								title: "POV Camera"
-							})}>
+							selectAssetType({
+								id: 'pov_camera',
+								title: 'POV Camera'
+							})
+						}
+					>
 						First-Person Viewer
 					</button>
 					<div id="categories-list">
-						{this.props.categories.map((category, index) =>
+						{categories.map((category, index) => (
 							<CategoryButton
-								onClick={this.props.setCategory.bind(this, category)}
+								onClick={setCategory.bind(this, category)}
 								key={index}
 								category={category}
-								curCategory={curCategory}
+								currentCategory={currentCategory}
 							/>
-						)}
+						))}
 					</div>
 				</div>
 				<div id="asset-picker">
 					{Object.keys(assets).map(asset => {
-						if (curCategory === assets[asset].category) {
+						if (currentCategory === assets[asset].category) {
 							return (
 								<AssetButton
 									key={asset}
@@ -62,11 +48,11 @@ export default class AssetTray extends React.Component {
 									selectedAsset={selectedAsset}
 									onClick={selectAssetType.bind(this, assets[asset])}
 								/>
-							);
+							)
 						}
 					})}
 				</div>
 			</div>
-		);
+		)
 	}
 }
