@@ -258,7 +258,7 @@ export function insertWalls(grid, startX, startZ, endX, endZ) {
 	if (startX == endX)
 	{
 		let x = endX;
-		let z = Math.min(startZ, endZ) + 1;
+		let z = Math.min(startZ, endZ);
 		let end = Math.max(startZ, endZ);
 		while (z <= end)
 		{
@@ -269,7 +269,7 @@ export function insertWalls(grid, startX, startZ, endX, endZ) {
 	else
 	{
 		let z = endZ;
-		let x = Math.min(startX, endX) + 1;
+		let x = Math.min(startX, endX);
 		let end = Math.max(startX, endX);
 		while (x <= end)
 		{
