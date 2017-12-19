@@ -291,7 +291,6 @@ button svg.svg-icon:hover {
 
 #UI-bottom-panel #asset-selection-menu .asset-category.active-category {
 	background: #d1ebff;
-	text-decoration: underline;
 }
 
 #UI-bottom-panel #asset-selection-menu #vr-viewer-mode {
@@ -301,7 +300,6 @@ button svg.svg-icon:hover {
 
 #UI-bottom-panel #asset-selection-menu #vr-viewer-mode.active-category {
 	background: #fdd89c;
-	text-decoration: underline;
 	border: 1px solid black;
 }
 
