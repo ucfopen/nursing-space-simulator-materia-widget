@@ -155,7 +155,7 @@ function mapStateToProps({ position, data, grid }) {
 }
 
 export default connect(mapStateToProps, {
-	fillWalls
+	fillWalls,
 	insertAsset,
-	selectAsset,
+	selectAsset
 })(VRScene);
