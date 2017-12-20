@@ -7,9 +7,9 @@ import Tour from "./tourReducer";
 
 const rootReducer = combineReducers({
 	data: Data,
-	position: Position,
-	menu: Menu,
 	grid: Grid,
+	menu: Menu,
+	position: Position,
 	tour: Tour
 });
 

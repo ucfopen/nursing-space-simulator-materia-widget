@@ -1,43 +1,46 @@
 import React, { Component } from "react";
 import AFRAME from "aframe";
-import { Scene } from "aframe-react";
+import { Entity, Scene } from "aframe-react";
 import { connect } from "react-redux";
 
-import { insertAsset, selectAsset } from "../actions/grid_actions";
-import { updatePosition } from "../actions/camera_actions";
-
-// Scene Assets
-import CeilingUnit from "./assets/ceiling_unit";
+// Custom React Components
 import CameraTP from "./assets/camera_tp";
 import CameraFP from "./assets/camera_fp";
-import QsetAsset from "./assets/qset_asset";
+import Ceiling from "./assets/ceiling";
+import FloorTile from "./assets/floor_tile";
 import FloorUnit from "./assets/floor_unit";
+import QsetAsset from "./assets/qset_asset";
 import Skybox from "./assets/skybox";
+
+// Redux Actions and Custom Libraries
+import { updatePosition } from "../actions/camera_actions";
+import { insertAsset, selectAsset, fillWalls } from "../actions/grid_actions";
+import { checkPropsExist } from "../utils";
 
 export class VRScene extends Component {
 	renderAssets() {
-		const assets = this.props.assets;
-		const selectAsset = this.props.selectAsset;
-		const currentX = this.props.currentX;
-		const currentZ = this.props.currentZ;
+		const { assets, currentX, currentZ, grid, mode } = this.props;
+		const { selectAsset } = this.props;
 
-		const mappedAssets = this.props.grid.map(
+		const mappedAssets = grid.map(
 			(row, rowIndex) =>
 				row.map((column, colIndex) => {
 					return column !== "0" ? (
 						<QsetAsset
-							x={colIndex}
-							z={rowIndex}
+							attributes={column}
+							data={assets[column.id]}
+							isSelected={currentX === colIndex && currentZ === rowIndex}
+							key={`${rowIndex} ${colIndex}`}
+							mode={mode}
 							onClick={selectAsset.bind(
 								this,
 								assets[column.id],
 								colIndex,
 								rowIndex
 							)}
-							data={assets[column.id]}
 							rotation={column.rotation}
-							isSelected={currentX === colIndex && currentZ === rowIndex}
-							key={`${rowIndex} ${colIndex}`}
+							x={colIndex}
+							z={rowIndex}
 						/>
 					) : null;
 				}, this),
@@ -46,39 +49,37 @@ export class VRScene extends Component {
 		return mappedAssets;
 	}
 
-	renderCeiling() {
-		if (this.props.thirdPerson) return null;
-		const mappedCeiling = this.props.grid.map((row, rowIndex) =>
-			row.map((column, colIndex) => (
-				<CeilingUnit
-					x={colIndex}
-					z={rowIndex}
-					key={`${rowIndex} ${colIndex}`}
-				/>
-			))
-		);
-		return mappedCeiling;
-	}
-
 	renderFloor() {
-		const selectedAssetId = this.props.selectedAsset
-			? this.props.selectedAsset.id
-			: null;
+		const {
+			currentX,
+			currentZ,
+			grid,
+			mode,
+			selectedAsset,
+			thirdPerson,
+			validX,
+			validZ
+		} = this.props;
+		const { fillWalls, insertAsset } = this.props;
+		const selectedAssetId = selectedAsset ? selectedAsset.id : null;
 
-		const insertAsset = this.props.insertAsset;
-
-		const mappedFloor = this.props.grid.map(
+		const mappedFloor = grid.map(
 			(row, rowIndex) =>
 				row.map(
 					(column, colIndex) => (
 						<FloorUnit
-							thirdPerson={this.props.thirdPerson}
+							extendX={currentX}
+							extendZ={currentZ}
+							grid={grid}
+							key={`${rowIndex} ${colIndex}`}
+							mode={mode}
+							onClick={mode == "extendWall" ? fillWalls : insertAsset}
 							selectedAssetId={selectedAssetId}
+							thirdPerson={thirdPerson}
+							validX={validX}
+							validZ={validZ}
 							x={colIndex}
 							z={rowIndex}
-							onClick={insertAsset}
-							key={`${rowIndex} ${colIndex}`}
-							grid={this.props.grid}
 						/>
 					),
 					this
@@ -88,73 +89,73 @@ export class VRScene extends Component {
 		return mappedFloor;
 	}
 
+	renderScene() {
+		const { assets, position, thirdPerson } = this.props;
+		return (
+			<Scene className="vr-scene">
+				<a-assets>
+					<img
+						alt="ceiling-texture"
+						id="ceilingTexture"
+						src="assets/CEILING_TILE.jpg"
+					/>
+					{Object.keys(assets).map(asset => {
+						if (assets[asset].objSrc) {
+							return (
+								<a-asset-item
+									id={`${asset}-obj`}
+									key={`${asset}-obj`}
+									src={assets[asset].objSrc}
+								/>
+							);
+						}
+					})}
+					{Object.keys(assets).map(asset => {
+						if (assets[asset].mtlSrc) {
+							return (
+								<a-asset-item
+									id={`${asset}-mtl`}
+									key={`${asset}-mtl`}
+									src={assets[asset].mtlSrc}
+								/>
+							);
+						}
+					})}
+				</a-assets>
+				<Skybox />
+				<FloorTile />
+				<Ceiling thirdPerson={thirdPerson} />
+				<CameraFP active={!thirdPerson} position={position} />
+				<CameraTP active={thirdPerson} position={position} />
+				{this.renderFloor()}
+				{this.renderAssets()}
+			</Scene>
+		);
+	}
+
 	render() {
-		if (!this.props.grid || !this.props.position || !this.props.assets)
-			return <div>Loading</div>;
-		else {
-			const assets = this.props.assets;
-			return (
-				<Scene className="vr-scene">
-					<a-assets>
-						<img
-							id="ceilingTexture"
-							alt="sorry"
-							src="assets/CEILING_TILE.jpg"
-						/>
-						{Object.keys(assets).map(asset => {
-							if (assets[asset].objSrc) {
-								return (
-									<a-asset-item
-										id={asset + "-obj"}
-										src={assets[asset].objSrc}
-										key={`${asset}-obj`}
-									/>
-								);
-							}
-						})}
-						{Object.keys(assets).map(asset => {
-							if (assets[asset].mtlSrc) {
-								return (
-									<a-asset-item
-										id={asset + "-mtl"}
-										src={assets[asset].mtlSrc}
-										key={`${asset}-mtl`}
-									/>
-								);
-							}
-						})}
-					</a-assets>
-					<Skybox />
-					<CameraFP
-						active={!this.props.thirdPerson}
-						position={this.props.position}
-					/>
-					<CameraTP
-						active={this.props.thirdPerson}
-						position={this.props.position}
-					/>
-					{this.renderFloor()}
-					{this.renderAssets()}
-					{this.renderCeiling()}
-				</Scene>
-			);
-		} //end else
+		if (checkPropsExist(this.props)) return this.renderScene();
+		else return null;
 	}
 }
 
 function mapStateToProps({ position, data, grid }) {
 	return {
-		position: { x: position.x, y: position.y, z: position.z },
-		thirdPerson: position.thirdPerson,
 		assets: data.assets,
-		grid: grid.grid,
 		currentX: grid.currentX,
 		currentZ: grid.currentZ,
-		selectedAsset: grid.selectedAsset
+		grid: grid.grid,
+		mode: grid.mode,
+		position: { x: position.x, y: position.y, z: position.z },
+		selectedAsset: grid.selectedAsset,
+		thirdPerson: position.thirdPerson,
+		validX: grid.validX,
+		validZ: grid.validZ
 	};
 }
 
 export default connect(mapStateToProps, {
+	fillWalls,
 	insertAsset,
 	selectAsset
 })(VRScene);

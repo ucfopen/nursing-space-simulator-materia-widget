@@ -3,9 +3,11 @@ function _getAssetInfo(gridValue) {
 	if (gridValue === "0") return gridValue;
 
 	const assetInfo = gridValue.split(".");
+
 	return {
 		id: assetInfo[0],
-		rotation: parseInt(assetInfo[1])
+		rotation: parseInt(assetInfo[1]),
+		stickers: assetInfo.length == 3 ? assetInfo[2].split(",") : null
 	};
 }
 
@@ -52,7 +54,8 @@ export function loadGrid(gridString, rows, columns) {
 	}
 
 	let tempGrid = gridString.split(" ");
-	return _setInitialWallRotations(
+	//return _setInitialWallRotations(
+	return (
 		[...Array(rows)].map(() => {
 			return tempGrid.splice(0, columns).map(gridItem => {
 				return _getAssetInfo(gridItem);
@@ -79,8 +82,12 @@ export function rotateCell(grid, x, z) {
 		row = z;
 
 	if (grid[row][col] && grid[row][col] !== "0") {
-		grid[row][col].rotation = (grid[row][col].rotation - 90) % 360;
+		grid[row][col].rotation = (grid[row][col].rotation - 90 + 360) % 360;
 	}
+
+	// rotates the stickers, if available
+	if (grid[row][col].stickers)
+		grid[row][col].stickers.unshift(grid[row][col].stickers.pop())
 
 	return grid;
 }
@@ -118,7 +125,7 @@ export function deleteItem(grid, x, z) {
  *
  * @return updated grid
  */
-export function insertItem(grid, itemId, x, z, rotation = 180) {
+export function insertItem(grid, itemId, x, z, rotation = 180, stickers = null) {
 	if (grid === null || x === null || z === null) {
 		return null;
 	}
@@ -131,7 +138,8 @@ export function insertItem(grid, itemId, x, z, rotation = 180) {
 			? (grid[row][col] = "0")
 			: {
 					id: itemId,
-					rotation: rotation
+					rotation: rotation,
+					stickers: stickers
 				};
 
 	return grid;
@@ -191,4 +199,98 @@ export function getCellRotation(grid, col, row) {
 	}
 
 	return grid[row][col] === "0" ? 180 : grid[row][col].rotation;
+}
+
+/**
+ * returns two lists of valid X and Z coordinates for a wall to be extended
+ * from a given point
+ *
+ * @param {array} grid grid to be checked
+ * @param {int} x the x-component of the wall to be extended
+ * @param {int} z the z-component of the wall to be extended
+ *
+ * @return two lists for valid X and Z points
+ */
+export function findValidExtends(grid, x, z) {
+	let validX = [x];
+	let validZ = [z];
+	// Valid direction array in order: up, right, bottom, left
+	// In third-person view, Z is the horizontal axis, X is vertical
+	let dir = [true, true, true, true];
+	let level = 1;
+	while (dir[0] || dir[1] || dir[2] || dir[3])
+	{
+		if (dir[0]) // up
+		{
+			if (isCellAvailable(grid, x + level, z))
+				validX.push(x + level);
+			else
+				dir[0] = false;
+		}
+		if (dir[1]) // right
+		{
+			if (isCellAvailable(grid, x, z + level))
+				validZ.push(z + level);
+			else
+				dir[1] = false;
+		}
+		if (dir[2]) // down
+		{
+			if (isCellAvailable(grid, x - level, z))
+				validX.push(x - level);
+			else
+				dir[2] = false;
+		}
+		if (dir[3]) // left
+		{
+			if (isCellAvailable(grid, x, z - level))
+				validZ.push(z - level);
+			else
+				dir[3] = false;
+		}
+		level++;
+	}
+	return [validX, validZ];
+}
+
+export function insertWalls(grid, startX, startZ, endX, endZ) {
+	// If moving in the Z direction
+	if (startX == endX)
+	{
+		let x = endX;
+		let z = Math.min(startZ, endZ);
+		let end = Math.max(startZ, endZ);
+		while (z <= end)
+		{
+			grid = insertItem(grid, "wall-1", x, z, 0);
+			z++;
+		}
+	}
+	else
+	{
+		let z = endZ;
+		let x = Math.min(startX, endX);
+		let end = Math.max(startX, endX);
+		while (x <= end)
+		{
+			grid = insertItem(grid, "wall-1", x, z, 0);
+			x++;
+		}
+	}
+	return grid;
+}
+
+export function getStickers(grid, x, z) {
+	if (grid[z][x].stickers)
+		return grid[z][x].stickers;
+	else
+		return ["0", "0", "0", "0"];
+}
+
+export function setSticker(grid, x, z, side, sticker) {
+	if (grid[z][x].stickers == null)
+		grid[z][x].stickers = ["0", "0", "0", "0"];
+
+	grid[z][x].stickers[side] = sticker;
+	return grid;
 }
