@@ -6,7 +6,7 @@ import AssetTooltip from "../ui/asset_tooltip";
 import ConfirmSVG from "../assets/icon-svgs/confirm";
 import DeleteSVG from "../assets/icon-svgs/delete";
 import DeselectSVG from "../assets/icon-svgs/deselect";
-import EditSVG from "../assets/icon-svgs/edit_box";
+import ExtendSVG from "../assets/icon-svgs/extend";
 import RotateSVG from "../assets/icon-svgs/rotate";
 import StickerBox from "../assets/sticker_box";
 
@@ -114,7 +114,7 @@ export default props => {
 							<button
 								id="extendWall"
 								onClick={() => extendWall(currentX, currentZ)}>
-								<RotateSVG />
+								<ExtendSVG />
 							</button>
 						) : null}
 						{selectedAsset.id == "wall-1" || selectedAsset.id == "door-1" ? (
