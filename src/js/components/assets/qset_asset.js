@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import AFRAME from "aframe";
+import registerClickDrag from "aframe-click-drag-component";
 import { Entity } from "aframe-react";
 import Wall from "./wall";
 import { checkPropsExist } from "../../../js/utils";
