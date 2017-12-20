@@ -1,9 +1,11 @@
-import React from 'react'
+import React from "react";
 
 export default props => {
 	return (
-		<span id="selected-asset-tooltip" className={props.showTooltip ? 'shown' : 'hidden'}>
+		<span
+			className={props.showTooltip ? "shown" : "hidden"}
+			id="selected-asset-tooltip">
 			{props.toolTipText}
 		</span>
-	)
-}
+	);
+};
