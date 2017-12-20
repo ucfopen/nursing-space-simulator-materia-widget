@@ -2,7 +2,7 @@ import AFRAME from "aframe";
 import { Entity } from "aframe-react";
 import React, { Component } from "react";
 
-// Custom Imports
+// Custom React Components
 import { isCellAvailable } from "../../grid";
 
 export default class FloorUnit extends Component {

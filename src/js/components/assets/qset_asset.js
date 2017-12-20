@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import AFRAME from "aframe";
 import { Entity } from "aframe-react";
 
-// Custom Imports
+// Custom React Components
 import Wall from "./wall";
 
 export default props => {
