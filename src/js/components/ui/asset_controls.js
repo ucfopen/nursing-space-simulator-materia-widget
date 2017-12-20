@@ -61,8 +61,8 @@ export default props => {
 			<div id="UI-selected-asset-options">
 				<div>
 					<AssetTooltip showToolTip={true} toolTipText="Edit this item." />
-					<button id="deselect" onClick={() => deselectAsset(true)}>
-						<DeselectSVG />
+					<button id="confirm" onClick={() => deselectAsset(true)}>
+						<ConfirmSVG />
 					</button>
 					{selectedAsset.id == "wall-1" ? (
 						<div>
