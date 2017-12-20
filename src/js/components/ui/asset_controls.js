@@ -8,6 +8,7 @@ import DeleteSVG from "../assets/icon-svgs/delete";
 import DeselectSVG from "../assets/icon-svgs/deselect";
 import ExtendSVG from "../assets/icon-svgs/extend";
 import RotateSVG from "../assets/icon-svgs/rotate";
+import StickerSVG from '../assets/icon-svgs/sticker'
 import StickerBox from "../assets/sticker_box";
 
 // Redux Actions and Custom Libraries
@@ -117,11 +118,9 @@ export default props => {
 								<ExtendSVG />
 							</button>
 						) : null}
-						{selectedAsset.id == "wall-1" || selectedAsset.id == "door-1" ? (
-							<button
-								id="editAsset"
-								onClick={() => editAsset(currentX, currentZ)}>
-								<RotateSVG />
+						{selectedAsset.id == 'wall-1' || selectedAsset.id == 'door-1' ? (
+							<button id="editAsset" onClick={() => editAsset(currentX, currentZ)}>
+								<StickerSVG />
 							</button>
 						) : null}
 					</div>
