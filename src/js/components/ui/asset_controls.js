@@ -5,7 +5,7 @@ import DeleteSVG from '../assets/icon-svgs/delete'
 import DeselectSVG from '../assets/icon-svgs/deselect'
 import RotateSVG from '../assets/icon-svgs/rotate'
 import ConfirmSVG from '../assets/icon-svgs/confirm'
-import EditSVG from '../assets/icon-svgs/edit_box'
+import ExtendSVG from '../assets/icon-svgs/extend'
 import StickerBox from '../assets/sticker_box'
 
 import { getCellRotation, getStickers } from '../../grid'
@@ -92,7 +92,7 @@ export default props => {
 						</button>
 						{selectedAsset.id == 'wall-1' ? (
 							<button id="extendWall" onClick={() => extendWall(currentX, currentZ)}>
-								<RotateSVG />
+								<ExtendSVG />
 							</button>
 						) : null}
 						{selectedAsset.id == 'wall-1' || selectedAsset.id == 'door-1' ? (
