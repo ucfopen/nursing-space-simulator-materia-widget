@@ -19,9 +19,15 @@ import { checkPropsExist } from "../utils";
 
 export class VRScene extends Component {
 	renderAssets() {
-		const { assets, currentX, currentZ, grid, mode } = this.props;
-		const { selectAsset } = this.props;
-
+		const {
+			assets,
+			currentX,
+			currentZ,
+			grid,
+			mode,
+			selectedAsset
+		} = this.props;
+		const { insertAsset, selectAsset } = this.props;
 		const mappedAssets = grid.map(
 			(row, rowIndex) =>
 				row.map((column, colIndex) => {
@@ -29,6 +35,7 @@ export class VRScene extends Component {
 						<QsetAsset
 							attributes={column}
 							data={assets[column.id]}
+							insertAsset={insertAsset}
 							isSelected={currentX === colIndex && currentZ === rowIndex}
 							key={`${rowIndex} ${colIndex}`}
 							mode={mode}
@@ -38,6 +45,7 @@ export class VRScene extends Component {
 								colIndex,
 								rowIndex
 							)}
+							selectedAssetId={selectedAsset ? selectedAsset.id : null}
 							rotation={column.rotation}
 							x={colIndex}
 							z={rowIndex}
@@ -60,6 +68,7 @@ export class VRScene extends Component {
 			validX,
 			validZ
 		} = this.props;
+
 		const { fillWalls, insertAsset } = this.props;
 		const selectedAssetId = selectedAsset ? selectedAsset.id : null;
 
