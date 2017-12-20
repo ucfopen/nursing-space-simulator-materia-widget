@@ -2,19 +2,20 @@
 
 exports[`Asset Tray tests renders asset tray 1`] = `
 <div
-  className="open"
+  className="closed"
   id="UI-bottom-panel"
 >
   <button
     className="drawer-toggle"
-    onClick={[Function]}
+    onClick={undefined}
   >
-    [Close Menu]
+    [Open Menu]
   </button>
   <div
     id="asset-selection-menu"
   >
     <button
+      className=""
       id="vr-viewer-mode"
       onClick={[Function]}
     >
@@ -24,32 +25,32 @@ exports[`Asset Tray tests renders asset tray 1`] = `
       id="categories-list"
     >
       <button
-        className="asset-category"
+        className="active-category asset-category"
         data-category="beds"
         onClick={[Function]}
       >
-        beds
+        Beds
       </button>
       <button
         className="asset-category"
         data-category="equipment"
         onClick={[Function]}
       >
-        equipment
+        Equipment
       </button>
       <button
         className="asset-category"
         data-category="walls"
         onClick={[Function]}
       >
-        walls
+        Walls
       </button>
       <button
         className="asset-category"
         data-category="people"
         onClick={[Function]}
       >
-        people
+        People
       </button>
     </div>
   </div>
