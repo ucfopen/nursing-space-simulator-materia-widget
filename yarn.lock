@@ -51,6 +51,12 @@ acorn@~2.6.4:
   version "2.6.4"
   resolved "https://registry.yarnpkg.com/acorn/-/acorn-2.6.4.tgz#eb1f45b4a43fa31d03701a5ec46f3b52673e90ee"
 
+aframe-click-drag-component@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/aframe-click-drag-component/-/aframe-click-drag-component-3.0.1.tgz#cd2510937100c46ed87c2320519131edb9d4c3c7"
+  dependencies:
+    deep-equal "^1.0.1"
+
 aframe-mouse-cursor-component@^0.5.2:
   version "0.5.2"
   resolved "https://registry.yarnpkg.com/aframe-mouse-cursor-component/-/aframe-mouse-cursor-component-0.5.2.tgz#6ce6926a3718691fba3be7561d853de33ba5cce4"
