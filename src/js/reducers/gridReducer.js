@@ -26,6 +26,7 @@ import {
 	rotateCell,
 	setSticker
 } from "../grid";
+import { deepCopy } from "../utils";
 
 export default function(
 	state = {
@@ -57,7 +58,7 @@ export default function(
 		}
 
 		case EDIT_STICKER: {
-			const gridCopy = JSON.parse(JSON.stringify(state.grid));
+			const gridCopy = deepCopy(state.grid);
 			const stickers = getStickers(
 				gridCopy,
 				action.payload.x,
@@ -84,7 +85,7 @@ export default function(
 		}
 
 		case EXTEND_WALL: {
-			const gridCopy = JSON.parse(JSON.stringify(state.grid));
+			const gridCopy = deepCopy(state.grid);
 			let validX, validZ;
 			[validX, validZ] = findValidExtends(
 				gridCopy,
@@ -102,7 +103,7 @@ export default function(
 		}
 
 		case FILL_WALLS: {
-			const gridCopy = JSON.parse(JSON.stringify(state.grid));
+			const gridCopy = deepCopy(state.grid);
 			const endX = action.payload.x;
 			const endZ = action.payload.z;
 			const startX = action.payload.extendX;
@@ -140,7 +141,7 @@ export default function(
 				? { ...state.selectedAsset }
 				: null;
 
-			const gridCopy = JSON.parse(JSON.stringify(state.grid));
+			const gridCopy = deepCopy(state.grid);
 
 			if (
 				!selectedAsset ||
@@ -207,7 +208,7 @@ export default function(
 		}
 
 		case REMOVE_ASSET: {
-			const gridCopy = JSON.parse(JSON.stringify(state.grid));
+			const gridCopy = deepCopy(state.grid);
 			return {
 				...state,
 				currentX: null,
@@ -219,7 +220,7 @@ export default function(
 		}
 
 		case ROTATE_ASSET: {
-			const gridCopy = JSON.parse(JSON.stringify(state.grid));
+			const gridCopy = deepCopy(state.grid);
 			return {
 				...state,
 				grid: rotateCell(gridCopy, action.payload.x, action.payload.z)
@@ -227,7 +228,7 @@ export default function(
 		}
 
 		case SELECT_ASSET: {
-			const gridCopy = JSON.parse(JSON.stringify(state.grid));
+			const gridCopy = deepCopy(state.grid);
 
 			let oldSelectedAsset = state.selectedAsset
 				? { ...state.selectedAsset }
@@ -304,7 +305,7 @@ export default function(
 				return state;
 			}
 
-			const gridCopy = JSON.parse(JSON.stringify(state.grid));
+			const gridCopy = deepCopy(state.grid);
 			const currentX = state.currentX;
 			const currentZ = state.currentZ;
 			const currentRotation = getCellRotation(gridCopy, currentX, currentZ);
