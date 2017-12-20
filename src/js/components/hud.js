@@ -17,12 +17,12 @@ import { checkPropsExist } from "../utils";
 
 import {
 	deselectAsset,
-	editAsset
+	editAsset,
 	extendWall,
 	removeAsset,
 	rotateAsset,
 	selectAssetType,
-	updateAssetPosition,
+	updateAssetPosition
 } from "../actions/grid_actions";
 
 export class HUD extends Component {
@@ -57,8 +57,7 @@ export class HUD extends Component {
 								removeAsset={this.props.removeAsset}
 								rotateAsset={this.props.rotateAsset}
 								selectedAsset={this.props.selectedAsset}
-								toggleMenu={this.props.toggleMenuVisibility.bind(this)
-								}
+								toggleMenu={this.props.toggleMenuVisibility.bind(this)}
 							/>
 						) : null}
 						<AssetTray
@@ -98,14 +97,14 @@ function mapStateToProps({ data, menu, grid, position }) {
 		grid: grid.grid,
 		mode: grid.mode,
 		selectedAsset: grid.selectedAsset,
-		thirdPerson: position.thirdPerson
-		visible: menu.visible,
+		thirdPerson: position.thirdPerson,
+		visible: menu.visible
 	};
 }
 
 export default connect(mapStateToProps, {
 	deselectAsset,
-	editAsset
+	editAsset,
 	extendWall,
 	removeAsset,
 	rotateAsset,
@@ -114,5 +113,5 @@ export default connect(mapStateToProps, {
 	toggleMenuVisibility,
 	toggleThirdPerson,
 	updateAssetPosition,
-	updateCameraPosition,
+	updateCameraPosition
 })(HUD);
