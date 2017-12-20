@@ -1,12 +1,14 @@
 import React, { Component } from "react";
+import Joyride from "react-joyride";
 import { connect } from "react-redux";
-import { initData } from "../actions";
-import { startTourSection, endTour } from "../actions/tour_actions";
 
+// Custom React Components
 import HUD from "./hud";
 import VRScene from "./vr_scene";
 
-import Joyride from "react-joyride";
+// Redux Actions and Custom Libraries
+import { initData } from "../actions";
+import { startTourSection, endTour } from "../actions/tour_actions";
 
 export class App extends Component {
 	componentDidMount() {
@@ -33,15 +35,8 @@ export class App extends Component {
 				// When in first person, app container style must be modified to absolute position to support built in aframe UI
 				style={this.props.thirdPerson ? {} : { position: "absolute" }}>
 				<Joyride
-					ref={c => (this.joyride = c)}
 					callback={this.joyrideCallback.bind(this)}
-					steps={this.props.currentSteps}
 					debug={false}
-					showSkipButton={true}
-					showStepsProgress={false}
-					stepIndex={0}
-					run={false}
-					type={"continuous"}
 					disableOverlay={false}
 					locale={{
 						back: <span>Back</span>,
@@ -50,6 +45,13 @@ export class App extends Component {
 						next: <span>Next</span>,
 						skip: <span>Skip</span>
 					}}
+					ref={c => (this.joyride = c)}
+					run={false}
+					showSkipButton={true}
+					showStepsProgress={false}
+					stepIndex={0}
+					steps={this.props.currentSteps}
+					type={"continuous"}
 				/>
 				<VRScene />
 				<HUD />
@@ -62,13 +64,13 @@ function mapStateToProps({ tour, position }) {
 	return {
 		currentSteps: tour.currentSteps,
 		runNextSet: tour.runNextSet,
-		tourRunning: tour.tourRunning,
-		thirdPerson: position.thirdPerson
+		thirdPerson: position.thirdPerson,
+		tourRunning: tour.tourRunning
 	};
 }
 
 export default connect(mapStateToProps, {
+	endTour,
 	initData,
-	startTourSection,
-	endTour
+	startTourSection
 })(App);
