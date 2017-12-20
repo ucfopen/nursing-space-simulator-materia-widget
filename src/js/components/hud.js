@@ -1,78 +1,89 @@
 import React, { Component } from "react";
-
-import CategoryButton from "./ui/category_button";
-import AssetControls from "./ui/asset_controls";
-import AssetTray from "./ui/asset_tray";
-import MovementControls from "./ui/movement_controls";
-
 import { connect } from "react-redux";
 
+// Custom React Components
+import AssetControls from "./ui/asset_controls";
+import AssetTray from "./ui/asset_tray";
+import CategoryButton from "./ui/category_button";
+import MovementControls from "./ui/movement_controls";
+
+// Redux Actions and Custom Libraries
 import {
 	updateCameraPosition,
 	toggleThirdPerson
 } from "../actions/camera_actions.js";
 import { toggleMenuVisibility, setCategory } from "../actions/menu_actions";
+import { checkPropsExist } from "../utils";
 
 import {
-	selectAssetType,
 	deselectAsset,
-	rotateAsset,
+	editAsset,
+	extendWall,
 	removeAsset,
+	rotateAsset,
+	selectAssetType,
 	updateAssetPosition
 } from "../actions/grid_actions";
 
 export class HUD extends Component {
-	render() {
-		if (
-			!this.props.categories ||
-			!this.props.assets ||
-			!this.props.updateAssetPosition ||
-			!this.props.updateCameraPosition
-		) {
-			return <div>Loading</div>;
-		} else {
-			const update = this.props.selectedAsset
-				? this.props.updateAssetPosition
-				: this.props.updateCameraPosition;
-			return (
-				<div>
+	renderHUD() {
+		const { mode, selectedAsset, thirdPerson } = this.props;
+		const { updateAssetPosition, updateCameraPosition } = this.props;
+
+		const update =
+			mode === "manipulation" ? updateAssetPosition : updateCameraPosition;
+
+		return (
+			<div>
+				{mode !== "editAsset" ? (
 					<MovementControls
-						thirdPerson={this.props.thirdPerson}
+						thirdPerson={thirdPerson}
 						update={update}
-						updateCameraPosition={this.props.updateCameraPosition}
+						updateCameraPosition={updateCameraPosition}
 					/>
-					{this.props.thirdPerson ? (
-						<div>
-							{this.props.selectedAsset ? (
-								<AssetControls
-									selectedAsset={this.props.selectedAsset}
-									manipulationMode={this.props.manipulationMode}
-									removeAsset={this.props.removeAsset}
-									deselectAsset={this.props.deselectAsset}
-									rotateAsset={this.props.rotateAsset}
-									currentX={this.props.currentX}
-									currentZ={this.props.currentZ}
-								/>
-							) : null}
-							<AssetTray
-								assets={this.props.assets}
-								categories={this.props.categories}
-								selectAssetType={this.props.selectAssetType}
+				) : null}
+				{thirdPerson ? (
+					<div>
+						{selectedAsset ? (
+							<AssetControls
+								currentX={this.props.currentX}
+								currentZ={this.props.currentZ}
+								deselectAsset={this.props.deselectAsset}
+								editAsset={this.props.editAsset}
+								extendWall={this.props.extendWall}
+								grid={this.props.grid}
+								isMenuVisible={this.props.visible}
+								mode={this.props.mode}
+								removeAsset={this.props.removeAsset}
+								rotateAsset={this.props.rotateAsset}
 								selectedAsset={this.props.selectedAsset}
-								setCategory={this.props.setCategory}
-								currentCategory={this.props.currentCategory}
+								toggleMenu={this.props.toggleMenuVisibility.bind(this)}
 							/>
-						</div>
-					) : (
-						<div id="ground-top-panel">
-							<button id="back" onClick={() => this.props.toggleThirdPerson()}>
-								Back
-							</button>
-						</div>
-					)}
-				</div>
-			);
-		} //end else
+						) : null}
+						<AssetTray
+							assets={this.props.assets}
+							categories={this.props.categories}
+							currentCategory={this.props.currentCategory}
+							selectAssetType={this.props.selectAssetType}
+							selectedAsset={this.props.selectedAsset}
+							setCategory={this.props.setCategory}
+							showMenu={this.props.visible}
+							toggleMenu={this.props.toggleMenuVisibility.bind(this)}
+						/>
+					</div>
+				) : (
+					<div id="ground-top-panel">
+						<button id="back" onClick={() => this.props.toggleThirdPerson()}>
+							Back
+						</button>
+					</div>
+				)}
+			</div>
+		);
+	}
+	render() {
+		if (checkPropsExist(this.props)) return this.renderHUD();
+		else return null;
 	}
 }
 
@@ -81,23 +92,26 @@ function mapStateToProps({ data, menu, grid, position }) {
 		assets: data.assets,
 		categories: data.categories,
 		currentCategory: menu.currentCategory,
-		visible: menu.visible,
-		selectedAsset: grid.selectedAsset,
 		currentX: grid.currentX,
 		currentZ: grid.currentZ,
-		manipulationMode: grid.manipulationMode,
-		thirdPerson: position.thirdPerson
+		grid: grid.grid,
+		mode: grid.mode,
+		selectedAsset: grid.selectedAsset,
+		thirdPerson: position.thirdPerson,
+		visible: menu.visible
 	};
 }
 
 export default connect(mapStateToProps, {
-	updateCameraPosition,
-	toggleThirdPerson,
-	toggleMenuVisibility,
-	setCategory,
-	selectAssetType,
 	deselectAsset,
-	rotateAsset,
+	editAsset,
+	extendWall,
 	removeAsset,
-	updateAssetPosition
+	rotateAsset,
+	selectAssetType,
+	setCategory,
+	toggleMenuVisibility,
+	toggleThirdPerson,
+	updateAssetPosition,
+	updateCameraPosition
 })(HUD);

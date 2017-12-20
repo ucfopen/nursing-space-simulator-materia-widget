@@ -1,7 +1,6 @@
 import { loadGrid } from "../grid";
 
 export const INIT_DATA = "init_data";
-
 export function initData(qset) {
 	const grid = loadGrid(
 		qset.options.gridLoader.content,
@@ -10,10 +9,11 @@ export function initData(qset) {
 	);
 
 	const categories = qset.options.categories;
+	const stickerTypes = qset.options.stickerTypes;
 	const assets = qset.options.assets;
 
 	return {
 		type: INIT_DATA,
-		payload: { grid, categories, assets }
+		payload: { assets, categories, grid, stickerTypes }
 	};
 }

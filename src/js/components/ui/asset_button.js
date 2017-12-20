@@ -1,25 +1,25 @@
 import React from "react";
 
 export default props => {
+	const { item, onClick, selectedAsset } = props;
 	return (
 		<div className="button-container">
 			<button
 				className={
-				props.selectedAsset && props.selectedAsset.id === props.item.id
-					? "asset asset-selected-icon"
-					: "asset"
+					selectedAsset && selectedAsset.id === item.id
+						? "asset asset-selected-icon"
+						: "asset"
 				}
-				data-category={props.item.category}
-				data-title={props.item.title}
-				id={props.item.id}
-				onClick={() => props.onClick()}
+				data-category={item.category}
+				data-title={item.title}
+				id={item.id}
+				onClick={() => onClick()}
 				style={{
-					background:
-						"url(" + props.item.buttonSource + ") no-repeat center center",
+					background: `url(${item.buttonSource}) no-repeat center center`,
 					backgroundSize: "100% 100%"
 				}}
 			/>
-			<div>{props.item.title}</div>
+			<div>{item.title}</div>
 		</div>
 	);
 };
