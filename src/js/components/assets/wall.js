@@ -2,7 +2,7 @@ import AFRAME from "aframe";
 import { Entity } from "aframe-react";
 import React, { Component } from "react";
 
-// Custom Imports
+// Custom React Components
 import DoorPrimitive from "./primitive_assets/door";
 import Sticker from "./sticker";
 import WallPrimitive from "./primitive_assets/wall";
