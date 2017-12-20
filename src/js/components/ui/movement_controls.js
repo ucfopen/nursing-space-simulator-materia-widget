@@ -1,18 +1,20 @@
-import React, { Component } from 'react'
-import ReactDOM from 'react-dom'
-import ScreenshotSVG from '../assets/icon-svgs/screenshot'
-import UpArrowSVG from '../assets/icon-svgs/up_arrow'
-import DownArrowSVG from '../assets/icon-svgs/down_arrow'
-import LeftArrowSVG from '../assets/icon-svgs/left_arrow'
-import RightArrowSVG from '../assets/icon-svgs/right_arrow'
-import ZoomInSVG from '../assets/icon-svgs/zoom_in'
-import ZoomOutSVG from '../assets/icon-svgs/zoom_out'
+import React, { Component } from "react";
+import ReactDOM from "react-dom";
+
+// Custom Reaction Components
+import DownArrowSVG from "../assets/icon-svgs/down_arrow";
+import LeftArrowSVG from "../assets/icon-svgs/left_arrow";
+import RightArrowSVG from "../assets/icon-svgs/right_arrow";
+import ScreenshotSVG from "../assets/icon-svgs/screenshot";
+import UpArrowSVG from "../assets/icon-svgs/up_arrow";
+import ZoomInSVG from "../assets/icon-svgs/zoom_in";
+import ZoomOutSVG from "../assets/icon-svgs/zoom_out";
 
 export default class MovementControls extends Component {
 	constructor(props) {
-		super(props)
-		this.zoomIn = props.updateCameraPosition.bind(this, 'yDown')
-		this.zoomOut = props.updateCameraPosition.bind(this, 'yUp')
+		super(props);
+		this.zoomIn = props.updateCameraPosition.bind(this, "yDown");
+		this.zoomOut = props.updateCameraPosition.bind(this, "yUp");
 	}
 
 	takeScreenShot() {
@@ -22,28 +24,32 @@ export default class MovementControls extends Component {
 	}
 
 	render() {
-		const { update, thirdPerson } = this.props
+		const { thirdPerson, update } = this.props;
 		return (
 			<div id="UI-right-panel">
 				<div id="top-buttons" />
-				<button onClick={this.takeScreenShot.bind(this)} id="screenshot">
+				<button id="screenshot" onClick={this.takeScreenShot.bind(this)}>
 					<ScreenshotSVG />
 				</button>
 				{thirdPerson ? (
 					<div id="camera-controls">
 						<div id="camera-move">
-							<button id="camera-up" onMouseDown={update.bind(this, 'zUp')}>
+							<button id="camera-up" onMouseDown={update.bind(this, "zUp")}>
 								<UpArrowSVG />
 							</button>
 							<div id="camera-move-horizontal">
-								<button id="camera-left" onMouseDown={update.bind(this, 'xLeft')}>
+								<button
+									id="camera-left"
+									onMouseDown={update.bind(this, "xLeft")}>
 									<LeftArrowSVG />
 								</button>
-								<button id="camera-right" onMouseDown={update.bind(this, 'xRight')}>
+								<button
+									id="camera-right"
+									onMouseDown={update.bind(this, "xRight")}>
 									<RightArrowSVG />
 								</button>
 							</div>
-							<button id="camera-down" onMouseDown={update.bind(this, 'zDown')}>
+							<button id="camera-down" onMouseDown={update.bind(this, "zDown")}>
 								<DownArrowSVG />
 							</button>
 						</div>
@@ -56,6 +62,6 @@ export default class MovementControls extends Component {
 					</div>
 				) : null}
 			</div>
-		)
+		);
 	}
 }
