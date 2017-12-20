@@ -9,6 +9,7 @@ exports[`Movement Controls tests renders movement controls correctly 1`] = `
   />
   <button
     id="screenshot"
+    onClick={[Function]}
   >
     <svg
       height="60px"
@@ -287,6 +288,7 @@ exports[`Movement Controls tests renders movement controls correctly 2`] = `
   />
   <button
     id="screenshot"
+    onClick={[Function]}
   >
     <svg
       height="60px"

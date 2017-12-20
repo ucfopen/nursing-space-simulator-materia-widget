@@ -24,7 +24,7 @@ exports[`VR Scene Tests should display the scene when all props are passed in 1`
 >
   <a-assets>
     <img
-      alt="sorry"
+      alt="ceiling-texture"
       id="ceilingTexture"
       src="assets/CEILING_TILE.jpg"
     />
@@ -46,17 +46,9 @@ exports[`VR Scene Tests should display the scene when all props are passed in 1`
     />
   </a-assets>
   <a-sky />
+  <a-plane />
+  <a-plane />
   <a-entity />
-  <a-entity />
-  <a-plane />
-  <a-plane />
-  <a-plane />
-  <a-plane />
-  <a-plane />
-  <a-plane />
-  <a-plane />
-  <a-plane />
-  <a-plane />
   <a-entity />
   <a-plane />
   <a-plane />
@@ -76,7 +68,7 @@ exports[`VR Scene Tests should not render ceiling when in third person 1`] = `
 >
   <a-assets>
     <img
-      alt="sorry"
+      alt="ceiling-texture"
       id="ceilingTexture"
       src="assets/CEILING_TILE.jpg"
     />
@@ -98,18 +90,18 @@ exports[`VR Scene Tests should not render ceiling when in third person 1`] = `
     />
   </a-assets>
   <a-sky />
-  <a-entity />
-  <a-entity />
-  <a-plane />
-  <a-plane />
-  <a-plane />
-  <a-plane />
-  <a-plane />
-  <a-plane />
-  <a-plane />
-  <a-plane />
   <a-plane />
   <a-entity />
+  <a-entity />
+  <a-plane />
+  <a-plane />
+  <a-plane />
+  <a-plane />
+  <a-plane />
+  <a-plane />
+  <a-plane />
+  <a-plane />
+  <a-plane />
 </a-scene>
 `;
 
@@ -119,7 +111,7 @@ exports[`VR Scene Tests should render floor correctly if a selected asset is pas
 >
   <a-assets>
     <img
-      alt="sorry"
+      alt="ceiling-texture"
       id="ceilingTexture"
       src="assets/CEILING_TILE.jpg"
     />
@@ -141,17 +133,17 @@ exports[`VR Scene Tests should render floor correctly if a selected asset is pas
     />
   </a-assets>
   <a-sky />
-  <a-entity />
-  <a-entity />
-  <a-plane />
-  <a-plane />
-  <a-plane />
-  <a-plane />
-  <a-plane />
-  <a-plane />
-  <a-plane />
-  <a-plane />
   <a-plane />
   <a-entity />
+  <a-entity />
+  <a-plane />
+  <a-plane />
+  <a-plane />
+  <a-plane />
+  <a-plane />
+  <a-plane />
+  <a-plane />
+  <a-plane />
+  <a-plane />
 </a-scene>
 `;
