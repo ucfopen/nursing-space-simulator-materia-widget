@@ -1,25 +1,25 @@
-import AFRAME from 'aframe'
-import { Entity } from 'aframe-react'
-import React from 'react'
+import AFRAME from "aframe";
+import { Entity } from "aframe-react";
+import React from "react";
 
 export default props => {
 	// attributes
 	const {
-		x,
-		y,
-		z,
+		color,
+		isSelected,
+		metalness,
+		mode,
 		rotation,
 		selectionColor,
 		selectionOpacity,
-		color,
 		trimColor,
-		metalness,
-		mode,
-		isSelected
-	} = props
+		x,
+		y,
+		z
+	} = props;
 
 	// functions
-	const { onClick, processStickers } = props
+	const { onClick, processStickers } = props;
 
 	/*
 	Structure:
@@ -32,32 +32,31 @@ export default props => {
 		<Entity
 			events={{ click: onClick }}
 			position={{ x, y: 0, z }}
-			rotation={{ x: 0, y: rotation, z: 0 }}
-		>
+			rotation={{ x: 0, y: rotation, z: 0 }}>
 			<Entity
 				events={{ click: onClick }}
-				geometry={{ primitive: 'box', height: 3, width: 1, depth: 1 }}
+				geometry={{ depth: 1, height: 3, primitive: "box", width: 1 }}
 				material={
-					isSelected && mode != 'editAsset'
+					isSelected && mode != "editAsset"
 						? { color: selectionColor, opacity: selectionOpacity }
-						: { color, opacity: 1, metalness }
+						: { color, metalness, opacity: 1 }
 				}
 				position={{ x: 0, y: 1.5, z: 0 }}
 			/>
 			<Entity
-				primitive="a-box"
-				width="1.025"
-				height="1.025"
 				depth=".35"
+				height="1.025"
 				material={
-					isSelected && mode != 'editAsset'
+					isSelected && mode != "editAsset"
 						? { color: selectionColor, opacity: selectionOpacity }
 						: { color: trimColor, opacity: 1 }
 				}
 				position={{ x: 0, y: 0.15, z: 0 }}
+				primitive="a-box"
 				rotation={{ x: -90 }}
+				width="1.025"
 			/>
 			{processStickers()}
 		</Entity>
-	)
-}
+	);
+};

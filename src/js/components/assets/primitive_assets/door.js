@@ -1,25 +1,25 @@
-import AFRAME from 'aframe'
-import { Entity } from 'aframe-react'
-import React from 'react'
+import AFRAME from "aframe";
+import { Entity } from "aframe-react";
+import React from "react";
 
 export default props => {
-	// attributes
+	// attibutes
 	const {
-		x,
-		y,
-		z,
+		color,
+		isSelected,
+		metalness,
+		mode,
 		rotation,
 		selectionColor,
 		selectionOpacity,
-		color,
 		trimColor,
-		metalness,
-		mode,
-		isSelected
-	} = props
+		x,
+		y,
+		z
+	} = props;
 
 	// functions
-	const { onClick, processStickers } = props
+	const { onClick, processStickers } = props;
 
 	/*
 	Structure:
@@ -35,73 +35,76 @@ export default props => {
 	return (
 		<Entity
 			events={{ click: onClick }}
-			rotation={{ x: 0, y: rotation, z: 0 }}
 			position={{ x, y: 0, z }}
-		>
+			rotation={{ x: 0, y: rotation, z: 0 }}>
 			<Entity
-				geometry={{ primitive: 'box', height: 1, width: 1, depth: 1 }}
+				geometry={{ depth: 1, height: 1, primitive: "box", width: 1 }}
 				material={
-					isSelected && mode != 'editAsset'
+					isSelected && mode != "editAsset"
 						? { color: selectionColor, opacity: selectionOpacity }
-						: { color, opacity: 1, metalness }
+						: { color, metalness, opacity: 1 }
 				}
 				position={{ x: 0, y: 2.5, z: 0 }}
 			/>
 			<Entity
-				geometry={{ primitive: 'plane', height: 0.75, width: 2 }}
+				geometry={{ height: 0.75, primitive: "plane", width: 2 }}
 				material={
-					isSelected && mode != 'editAsset'
-						? { side: 'double', color: selectionColor, opacity: selectionOpacity }
-						: { side: 'double', color: 'white', opacity: 1, metalness }
+					isSelected && mode != "editAsset"
+						? {
+								color: selectionColor,
+								opacity: selectionOpacity,
+								side: "double"
+							}
+						: { side: "double", color: "white", opacity: 1, metalness }
 				}
 				position={{ y: 1 }}
 				rotation={{ y: -90, z: -90 }}
 			/>
 			<Entity
-				geometry={{ primitive: 'box', height: 3, width: 1, depth: 0.125 }}
+				geometry={{ primitive: "box", height: 3, width: 1, depth: 0.125 }}
 				material={
-					isSelected && mode != 'editAsset'
+					isSelected && mode != "editAsset"
 						? { color: selectionColor, opacity: selectionOpacity }
-						: { color, opacity: 1, metalness }
+						: { color, metalness, opacity: 1 }
 				}
 				position={{ y: 1.5, z: 0.4375 }}
 			/>
 			<Entity
-				geometry={{ primitive: 'box', height: 3, width: 1, depth: 0.125 }}
+				geometry={{ depth: 0.125, height: 3, primitive: "box", width: 1 }}
 				material={
-					isSelected && mode != 'editAsset'
+					isSelected && mode != "editAsset"
 						? { color: selectionColor, opacity: selectionOpacity }
 						: { color, opacity: 1, metalness }
 				}
 				position={{ y: 1.5, z: -0.4375 }}
 			/>
 			<Entity
-				primitive="a-box"
-				width="1.025"
-				height="0.15"
 				depth=".35"
+				height="0.15"
 				material={
-					isSelected && mode != 'editAsset'
+					isSelected && mode != "editAsset"
 						? { color: selectionColor, opacity: selectionOpacity }
-						: { color: trimColor, opacity: 1 }
+						: { opacity: 1, color: trimColor }
 				}
 				position={{ y: 0.15, z: 0.4375 }}
+				primitive="a-box"
 				rotation={{ x: -90 }}
+				width="1.025"
 			/>
 			<Entity
-				primitive="a-box"
-				width="1.025"
-				height="0.15"
 				depth=".35"
+				height="0.15"
 				material={
 					isSelected
 						? { color: selectionColor, opacity: selectionOpacity }
 						: { color: trimColor, opacity: 1 }
 				}
 				position={{ y: 0.15, z: -0.4375 }}
+				primitive="a-box"
 				rotation={{ x: -90 }}
+				width="1.025"
 			/>
 			{processStickers()}
 		</Entity>
-	)
-}
+	);
+};
