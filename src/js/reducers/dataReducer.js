@@ -4,10 +4,12 @@ export default function(state = {}, action) {
 	switch (action.type) {
 		case INIT_DATA:
 			return {
-				...state,
+				assets: action.payload.assets,
 				categories: action.payload.categories,
-				assets: action.payload.assets
+				stickerTypes: action.payload.stickerTypes,
+				...state
 			};
+
 		default:
 			return state;
 	}
