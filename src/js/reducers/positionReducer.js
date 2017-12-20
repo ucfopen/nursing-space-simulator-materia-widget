@@ -1,16 +1,26 @@
+// Redux Actions
 import {
 	CAMERA_UPDATE_POSITION,
-	TOGGLE_THIRD_PERSON,
+	TOGGLE_THIRD_PERSON
 } from "../actions/camera_actions";
 
+// Custom Libraries
 import {
 	INSERT_ASSET,
-	EDIT_ASSET,
-	DESELECT_ASSET
+	DESELECT_ASSET,
+	EDIT_ASSET
 } from "../actions/grid_actions";
 
 export default function(
-	state = { x: 14.5, y: 18, z: 9, thirdPerson: true, prevX: 14.5, prevY: 18, prevZ: 9 },
+	state = {
+		prevX: 14.5,
+		prevY: 18,
+		prevZ: 9,
+		thirdPerson: true,
+		x: 14.5,
+		y: 18,
+		z: 9
+	},
 	action
 ) {
 	switch (action.type) {
@@ -29,21 +39,29 @@ export default function(
 				case "zDown":
 					return { ...state, z: state.z + 1, prevZ: state.x };
 				case "reset":
-					return { ...state, x: 14.5, y: 18, z: 9, prevX: state.x, prevY: state.y, prevZ: state.z };
+					return {
+						...state,
+						x: 14.5,
+						y: 18,
+						z: 9,
+						prevX: state.x,
+						prevY: state.y,
+						prevZ: state.z
+					};
 			}
-		case TOGGLE_THIRD_PERSON:
-			return { ...state, x: state.prevX, y: state.prevY, z: state.prevZ, thirdPerson: true };
-		case INSERT_ASSET:
-			if (action.payload.assetId === "pov_camera") {
+
+		case DESELECT_ASSET:
+			// Go back to the previous camera location
+			if (action.payload.restorePosition)
 				return {
 					...state,
-					x: action.payload.x,
-					y: 1,
-					z: action.payload.z,
-					thirdPerson: false
+					thirdPerson: true,
+					x: state.prevX,
+					y: state.prevY,
+					z: state.prevZ
 				};
-			}
 			return state;
+
 		case EDIT_ASSET:
 			return {
 				...state,
@@ -51,11 +69,28 @@ export default function(
 				y: 6.5,
 				z: action.payload.z
 			};
-		case DESELECT_ASSET:
-			// Go back to the previous camera location
-			if (action.payload.restorePosition)
-				return { ...state, x: state.prevX, y: state.prevY, z: state.prevZ, thirdPerson: true };
+
+		case INSERT_ASSET:
+			if (action.payload.assetId === "pov_camera") {
+				return {
+					...state,
+					thirdPerson: false,
+					x: action.payload.x,
+					y: 1,
+					z: action.payload.z
+				};
+			}
 			return state;
+
+		case TOGGLE_THIRD_PERSON:
+			return {
+				...state,
+				thirdPerson: true,
+				x: state.prevX,
+				y: state.prevY,
+				z: state.prevZ
+			};
+
 		default:
 			return state;
 	}
