@@ -3,10 +3,12 @@ import { Entity } from "aframe-react";
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
-// Custom Imports
-import { editSticker } from "../../actions/grid_actions";
+// Custom React Components
 import LeftArrowSVG from "../assets/icon-svgs/mini_left_arrow";
 import RightArrowSVG from "../assets/icon-svgs/mini_right_arrow";
+
+// Redux Actions and Custom Libraries
+import { editSticker } from "../../actions/grid_actions";
 
 export class StickerBox extends Component {
 	render() {
