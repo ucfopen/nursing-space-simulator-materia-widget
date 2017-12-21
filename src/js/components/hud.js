@@ -57,7 +57,6 @@ export class HUD extends Component {
 								removeAsset={this.props.removeAsset}
 								rotateAsset={this.props.rotateAsset}
 								selectedAsset={this.props.selectedAsset}
-								toggleMenu={this.props.toggleMenuVisibility.bind(this)}
 							/>
 						) : null}
 						<AssetTray
@@ -67,7 +66,9 @@ export class HUD extends Component {
 							selectAssetType={this.props.selectAssetType}
 							selectedAsset={this.props.selectedAsset}
 							setCategory={this.props.setCategory}
-							showMenu={this.props.visible}
+							isMenuVisible={
+								this.props.mode === "editAsset" ? false : this.props.visible
+							}
 							toggleMenu={this.props.toggleMenuVisibility.bind(this)}
 						/>
 					</div>
