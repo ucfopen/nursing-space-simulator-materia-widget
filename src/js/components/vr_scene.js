@@ -25,7 +25,8 @@ export class VRScene extends Component {
 			currentZ,
 			grid,
 			mode,
-			selectedAsset
+			selectedAsset,
+			thirdPerson
 		} = this.props;
 		const { insertAsset, selectAsset } = this.props;
 		const mappedAssets = grid.map(
@@ -45,8 +46,9 @@ export class VRScene extends Component {
 								colIndex,
 								rowIndex
 							)}
-							selectedAssetId={selectedAsset ? selectedAsset.id : null}
 							rotation={column.rotation}
+							selectedAssetId={selectedAsset ? selectedAsset.id : null}
+							thirdPerson={thirdPerson}
 							x={colIndex}
 							z={rowIndex}
 						/>

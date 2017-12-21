@@ -119,10 +119,11 @@ export default class QsetAsset extends Component {
 	}
 
 	render() {
-		if (checkPropsExist(this.props))
+		if (checkPropsExist(this.props)) {
+			if (!this.props.thirdPerson) return this.renderAssetNonDrag();
 			return Namespace("HospitalSim").browserIsChrome
 				? this.renderAsset()
 				: this.renderAssetNonDrag();
-		else return null;
+		} else return null;
 	}
 }
