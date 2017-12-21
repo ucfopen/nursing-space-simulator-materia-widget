@@ -8,7 +8,7 @@ import DeleteSVG from "../assets/icon-svgs/delete";
 import DeselectSVG from "../assets/icon-svgs/deselect";
 import ExtendSVG from "../assets/icon-svgs/extend";
 import RotateSVG from "../assets/icon-svgs/rotate";
-import StickerSVG from '../assets/icon-svgs/sticker'
+import StickerSVG from "../assets/icon-svgs/sticker";
 import StickerBox from "../assets/sticker_box";
 
 // Redux Actions and Custom Libraries
@@ -55,8 +55,6 @@ export default props => {
 		const rotation = getCellRotation(grid, currentX, currentZ);
 		const stickers = getStickers(grid, currentX, currentZ);
 		const stickerProps = { stickers, x: currentX, z: currentZ };
-
-		if (props.isMenuVisible) props.toggleMenu();
 
 		return (
 			<div id="UI-selected-asset-options">
@@ -118,8 +116,10 @@ export default props => {
 								<ExtendSVG />
 							</button>
 						) : null}
-						{selectedAsset.id == 'wall-1' || selectedAsset.id == 'door-1' ? (
-							<button id="editAsset" onClick={() => editAsset(currentX, currentZ)}>
+						{selectedAsset.id == "wall-1" || selectedAsset.id == "door-1" ? (
+							<button
+								id="editAsset"
+								onClick={() => editAsset(currentX, currentZ)}>
 								<StickerSVG />
 							</button>
 						) : null}

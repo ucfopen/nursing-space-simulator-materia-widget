@@ -11,10 +11,10 @@ export default class AssetTray extends Component {
 		const { selectAssetType, setCategory } = this.props;
 		return (
 			<div
-				className={this.props.showMenu ? "open" : "closed"}
+				className={this.props.isMenuVisible ? "open" : "closed"}
 				id="UI-bottom-panel">
 				<button className="drawer-toggle" onClick={this.props.toggleMenu}>
-					{this.props.showMenu ? "[Close Menu]" : "[Open Menu]"}
+					{this.props.isMenuVisible ? "[Close Menu]" : "[Open Menu]"}
 				</button>
 				<div id="asset-selection-menu">
 					<button
