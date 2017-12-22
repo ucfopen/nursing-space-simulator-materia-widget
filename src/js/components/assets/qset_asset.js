@@ -36,9 +36,10 @@ export default class QsetAsset extends Component {
 		const { attributes, data, isSelected, mode, rotation, x, z } = this.props;
 		const { onClick } = this.props;
 		const id = data.id;
-		const yScaleFactor = data.category === "walls" ? data.scale.y / 2 : 0;
+		const yScaleFactor =
+			data.category === "construction" ? data.scale.y / 2 : 0;
 
-		return id === "wall-1" || id === "window" || id == "door-1" ? (
+		return data.category === "construction" ? (
 			<Wall
 				attributes={attributes}
 				isSelected={isSelected}
@@ -81,9 +82,10 @@ export default class QsetAsset extends Component {
 		const { attributes, data, isSelected, mode, rotation, x, z } = this.props;
 		const { onClick } = this.props;
 		const id = data.id;
-		const yScaleFactor = data.category === "walls" ? data.scale.y / 2 : 0;
+		const yScaleFactor =
+			data.category === "construction" ? data.scale.y / 2 : 0;
 
-		return id === "wall-1" || id === "window" || id == "door-1" ? (
+		return data.category === "construction" ? (
 			<Wall
 				type={data.id}
 				attributes={attributes}

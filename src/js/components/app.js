@@ -17,15 +17,13 @@ export class App extends Component {
 
 	componentWillUpdate(nextProps) {
 		if (nextProps.runNextSet === true && this.props.tourRunning) {
-			this.joyride.setState({ index: 0 }, () =>
-				setTimeout(this.joyride.start(true), 500)
-			);
+			this.joyride.setState({ index: 0 }, () => this.joyride.start(true));
 			this.props.startTourSection();
 		}
 	}
 
 	joyrideCallback(data) {
-		if (data.type === "finished") this.props.endTour();
+		if (data.isTourSkipped === true) this.props.endTour();
 	}
 
 	render() {
@@ -43,7 +41,7 @@ export class App extends Component {
 						close: <span>Close</span>,
 						last: <span>Ok</span>,
 						next: <span>Next</span>,
-						skip: <span>Skip</span>
+						skip: <span>Skip Tour</span>
 					}}
 					ref={c => (this.joyride = c)}
 					run={false}
