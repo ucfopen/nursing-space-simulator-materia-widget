@@ -3,22 +3,34 @@
 }
 
 .joyride-tooltip__header {
-	border-bottom: 1px solid #DC7627 !important;
+	border-bottom: 1px solid #dc7627;
 }
 
 .joyride-tooltip__button--primary {
-	background-color: #DC7627 !important;
-}
-
-.joyride-tooltip__button--secondary {
-	color: #DC7627 !important;
+	background-color: #dc7627 !important;
 }
 
 .joyride-beacon__inner {
-	background-color: #DC7627;
+	background-color: #dc7627;
 }
 
 .joyride-beacon__outer {
-	background-color: #DC7627;
-	border: 2px solid #DC7627;
+	background-color: #dc7627;
+	border: 2px solid #dc7627;
+}
+
+.joyride-tooltip__button--skip {
+	background-color: #dc7627;
+	border-radius: 4px;
+	color: #fff;
+	padding: 6px 12px;
+	transition: background-color 0.2s ease-in-out;
+}
+
+.joyride-tooltip__button--secondary {
+	background-color: #dc7627;
+	border-radius: 4px;
+	color: #fff;
+	padding: 6px 12px;
+	transition: background-color 0.2s ease-in-out;
 }

@@ -5,7 +5,7 @@
 		"data": {
 			"items": [],
 			"options": {
-				"categories": ["equipment", "walls", "people"],
+				"categories": ["equipment", "construction", "people"],
 				"stickerTypes": ["0", "fireSticker", "soapSticker", "tvSticker"],
 				"assets": {
 					"bed-1": {
@@ -318,7 +318,7 @@
 					},
 					"door-1": {
 						"buttonSource": "assets/icons/icon_door.png",
-						"canReplace": ["walls"],
+						"canReplace": ["construction"],
 						"defaultColor": "",
 						"id": "door-1",
 						"materialType": "complex",
@@ -342,7 +342,7 @@
 						},
 						"tag": "a-obj-model",
 						"type": "door",
-						"category": "walls",
+						"category": "construction",
 						"title": "Door"
 					},
 					"iv-1": {
@@ -431,7 +431,7 @@
 					},
 					"window": {
 						"buttonSource": "assets/icons/icon_window.png",
-						"canReplace": ["walls"],
+						"canReplace": ["construction"],
 						"defaultColor": "#9FCDB1",
 						"id": "window",
 						"materialType": "complex",
@@ -454,12 +454,12 @@
 						},
 						"tag": "a-obj-model",
 						"type": "wall",
-						"category": "walls",
+						"category": "construction",
 						"title": "Window"
 					},
 					"wall-1": {
 						"buttonSource": "assets/icons/icon_wall.png",
-						"canReplace": ["walls"],
+						"canReplace": ["construction"],
 						"defaultColor": "#9FCDB1",
 						"id": "wall-1",
 						"rotation": {
@@ -474,7 +474,7 @@
 						},
 						"tag": "a-box",
 						"type": "wall",
-						"category": "walls",
+						"category": "construction",
 						"title": "Wall"
 					},
 					"fireSticker": {
