@@ -20,7 +20,6 @@ import { checkPropsExist } from "../utils";
 export class VRScene extends Component {
 	renderAssets() {
 		const {
-			assets,
 			currentX,
 			currentZ,
 			grid,
@@ -35,14 +34,14 @@ export class VRScene extends Component {
 					return column !== "0" ? (
 						<QsetAsset
 							attributes={column}
-							data={assets[column.id]}
+							data={HS_ASSETS[column.id]}
 							insertAsset={insertAsset}
 							isSelected={currentX === colIndex && currentZ === rowIndex}
 							key={`${rowIndex} ${colIndex}`}
 							mode={mode}
 							onClick={selectAsset.bind(
 								this,
-								assets[column.id],
+								HS_ASSETS[column.id],
 								colIndex,
 								rowIndex
 							)}
@@ -101,7 +100,7 @@ export class VRScene extends Component {
 	}
 
 	renderScene() {
-		const { assets, position, thirdPerson } = this.props;
+		const { position, thirdPerson } = this.props;
 		return (
 			<Scene className="vr-scene">
 				<a-assets>
@@ -110,24 +109,24 @@ export class VRScene extends Component {
 						id="ceilingTexture"
 						src="assets/CEILING_TILE.jpg"
 					/>
-					{Object.keys(assets).map(asset => {
-						if (assets[asset].objSrc) {
+					{Object.keys(HS_ASSETS).map(asset => {
+						if (HS_ASSETS[asset].objSrc) {
 							return (
 								<a-asset-item
 									id={`${asset}-obj`}
 									key={`${asset}-obj`}
-									src={assets[asset].objSrc}
+									src={HS_ASSETS[asset].objSrc}
 								/>
 							);
 						}
 					})}
-					{Object.keys(assets).map(asset => {
-						if (assets[asset].mtlSrc) {
+					{Object.keys(HS_ASSETS).map(asset => {
+						if (HS_ASSETS[asset].mtlSrc) {
 							return (
 								<a-asset-item
 									id={`${asset}-mtl`}
 									key={`${asset}-mtl`}
-									src={assets[asset].mtlSrc}
+									src={HS_ASSETS[asset].mtlSrc}
 								/>
 							);
 						}
@@ -150,9 +149,8 @@ export class VRScene extends Component {
 	}
 }
 
-function mapStateToProps({ position, data, grid }) {
+function mapStateToProps({ grid, position }) {
 	return {
-		assets: data.assets,
 		currentX: grid.currentX,
 		currentZ: grid.currentZ,
 		grid: grid.grid,

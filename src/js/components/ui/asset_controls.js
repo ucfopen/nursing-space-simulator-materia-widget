@@ -32,6 +32,7 @@ export default props => {
 	const {
 		deselectAsset,
 		editAsset,
+		editSticker,
 		extendWall,
 		removeAsset,
 		rotateAsset
@@ -54,7 +55,12 @@ export default props => {
 	if (mode === "editAsset") {
 		const rotation = getCellRotation(grid, currentX, currentZ);
 		const stickers = getStickers(grid, currentX, currentZ);
-		const stickerProps = { stickers, x: currentX, z: currentZ };
+		const stickerProps = {
+			editSticker,
+			stickers,
+			x: currentX,
+			z: currentZ
+		};
 
 		return (
 			<div id="UI-selected-asset-options">

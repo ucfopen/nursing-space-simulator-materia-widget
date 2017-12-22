@@ -7,7 +7,7 @@ import CategoryButton from "./category_button";
 
 export default class AssetTray extends Component {
 	render() {
-		const { assets, categories, currentCategory, selectedAsset } = this.props;
+		const { currentCategory, selectedAsset } = this.props;
 		const { selectAssetType, setCategory } = this.props;
 		return (
 			<div
@@ -33,7 +33,7 @@ export default class AssetTray extends Component {
 						First-Person Viewer
 					</button>
 					<div id="categories-list">
-						{categories.map((category, index) => (
+						{HS_CATEGORIES.map((category, index) => (
 							<CategoryButton
 								category={category}
 								currentCategory={currentCategory}
@@ -44,13 +44,13 @@ export default class AssetTray extends Component {
 					</div>
 				</div>
 				<div id="asset-picker">
-					{Object.keys(assets).map(asset => {
-						if (currentCategory === assets[asset].category) {
+					{Object.keys(HS_ASSETS).map(asset => {
+						if (currentCategory === HS_ASSETS[asset].category) {
 							return (
 								<AssetButton
-									item={assets[asset]}
+									item={HS_ASSETS[asset]}
 									key={asset}
-									onClick={selectAssetType.bind(this, assets[asset])}
+									onClick={selectAssetType.bind(this, HS_ASSETS[asset])}
 									selectedAsset={selectedAsset}
 								/>
 							);

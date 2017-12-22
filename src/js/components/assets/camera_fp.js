@@ -7,7 +7,6 @@ export default props => {
 			camera={{ active: props.active }}
 			look-controls
 			position={props.position}
-			wasd-controls
 		/>
 	);
 };

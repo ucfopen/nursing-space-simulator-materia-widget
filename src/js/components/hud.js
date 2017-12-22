@@ -7,7 +7,7 @@ import AssetTray from "./ui/asset_tray";
 import CategoryButton from "./ui/category_button";
 import MovementControls from "./ui/movement_controls";
 
-// Redux Actions and Custom Libraries
+// Redux Actions
 import {
 	updateCameraPosition,
 	toggleThirdPerson
@@ -18,6 +18,7 @@ import { checkPropsExist } from "../utils";
 import {
 	deselectAsset,
 	editAsset,
+	editSticker,
 	extendWall,
 	removeAsset,
 	rotateAsset,
@@ -50,6 +51,7 @@ export class HUD extends Component {
 								currentZ={this.props.currentZ}
 								deselectAsset={this.props.deselectAsset}
 								editAsset={this.props.editAsset}
+								editSticker={this.props.editSticker}
 								extendWall={this.props.extendWall}
 								grid={this.props.grid}
 								isMenuVisible={this.props.visible}
@@ -60,8 +62,6 @@ export class HUD extends Component {
 							/>
 						) : null}
 						<AssetTray
-							assets={this.props.assets}
-							categories={this.props.categories}
 							currentCategory={this.props.currentCategory}
 							selectAssetType={this.props.selectAssetType}
 							selectedAsset={this.props.selectedAsset}
@@ -88,10 +88,8 @@ export class HUD extends Component {
 	}
 }
 
-function mapStateToProps({ data, menu, grid, position }) {
+function mapStateToProps({ menu, grid, position }) {
 	return {
-		assets: data.assets,
-		categories: data.categories,
 		currentCategory: menu.currentCategory,
 		currentX: grid.currentX,
 		currentZ: grid.currentZ,
@@ -106,6 +104,7 @@ function mapStateToProps({ data, menu, grid, position }) {
 export default connect(mapStateToProps, {
 	deselectAsset,
 	editAsset,
+	editSticker,
 	extendWall,
 	removeAsset,
 	rotateAsset,
