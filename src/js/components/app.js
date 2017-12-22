@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import HUD from "./hud";
 import VRScene from "./vr_scene";
 
-// Redux Actions and Custom Libraries
+// Redux Actions
 import { initData } from "../actions";
 import { startTourSection, endTour } from "../actions/tour_actions";
 
