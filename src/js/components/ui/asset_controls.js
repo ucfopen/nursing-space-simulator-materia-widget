@@ -11,7 +11,7 @@ import RotateSVG from "../assets/icon-svgs/rotate";
 import StickerSVG from "../assets/icon-svgs/sticker";
 import StickerBox from "../assets/sticker_box";
 
-// Redux Actions and Custom Libraries
+// Redux Actions
 import { getCellRotation, getStickers } from "../../grid";
 import {
 	deselectAsset,

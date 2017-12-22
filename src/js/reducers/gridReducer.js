@@ -13,8 +13,6 @@ import {
 	SELECT_ASSET,
 	UPDATE_ASSET_POSITION
 } from "../actions/grid_actions";
-
-// Custom Libraries
 import {
 	deleteItem,
 	findValidExtends,
@@ -26,6 +24,8 @@ import {
 	rotateCell,
 	setSticker
 } from "../grid";
+
+// Utilities
 import { deepCopy } from "../utils";
 
 export default function(
