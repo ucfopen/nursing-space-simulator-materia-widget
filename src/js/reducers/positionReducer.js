@@ -84,7 +84,7 @@ export default function(
 		case TOGGLE_THIRD_PERSON:
 			return {
 				...state,
-				thirdPerson: true,
+				thirdPerson: !state.thirdPerson,
 				x: state.prevX,
 				y: state.prevY,
 				z: state.prevZ

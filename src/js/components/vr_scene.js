@@ -132,7 +132,7 @@ export class VRScene extends Component {
 						}
 					})}
 				</a-assets>
-				<Skybox />
+				<Skybox thirdPerson={thirdPerson} />
 				<FloorTile />
 				<Ceiling thirdPerson={thirdPerson} />
 				<CameraFP active={!thirdPerson} position={position} />
