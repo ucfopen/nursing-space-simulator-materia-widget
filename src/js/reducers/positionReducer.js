@@ -4,7 +4,6 @@ import {
 	TOGGLE_THIRD_PERSON
 } from "../actions/camera_actions";
 
-// Custom Libraries
 import {
 	INSERT_ASSET,
 	DESELECT_ASSET,
