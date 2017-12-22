@@ -7,8 +7,8 @@ export default props => {
 		<button
 			className={
 				category == currentCategory
-					? "active-category asset-category"
-					: "asset-category"
+					? `active-category asset-category category-${category}`
+					: `asset-category category-${category}`
 			}
 			data-category={category}
 			onClick={onClick}>
