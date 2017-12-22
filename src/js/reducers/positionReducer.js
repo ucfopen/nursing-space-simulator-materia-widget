@@ -26,17 +26,17 @@ export default function(
 		case CAMERA_UPDATE_POSITION:
 			switch (action.payload) {
 				case "xRight":
-					return { ...state, x: state.x + 1, prevX: state.x };
+					return { ...state, x: state.x + 2, prevX: state.x };
 				case "xLeft":
-					return { ...state, x: state.x - 1, prevX: state.x };
+					return { ...state, x: state.x - 2, prevX: state.x };
 				case "yUp":
-					return { ...state, y: state.y + 1, prevY: state.y };
+					return { ...state, y: state.y + 2, prevY: state.y };
 				case "yDown":
-					return { ...state, y: state.y - 1, prevY: state.y };
+					return { ...state, y: state.y - 2, prevY: state.y };
 				case "zUp":
-					return { ...state, z: state.z - 1, prevZ: state.z };
+					return { ...state, z: state.z - 2, prevZ: state.z };
 				case "zDown":
-					return { ...state, z: state.z + 1, prevZ: state.x };
+					return { ...state, z: state.z + 2, prevZ: state.x };
 				case "reset":
 					return {
 						...state,

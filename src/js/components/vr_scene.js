@@ -12,9 +12,10 @@ import FloorUnit from "./assets/floor_unit";
 import QsetAsset from "./assets/qset_asset";
 import Skybox from "./assets/skybox";
 
-// Redux Actions and Custom Libraries
+// Redux Actions
 import { updatePosition } from "../actions/camera_actions";
 import { insertAsset, selectAsset, fillWalls } from "../actions/grid_actions";
+// Utilities
 import { checkPropsExist } from "../utils";
 
 export class VRScene extends Component {
