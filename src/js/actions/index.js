@@ -1,5 +1,4 @@
 import { loadGrid } from "../grid";
-import { initialGrid } from "../initialGrid";
 
 export const INIT_DATA = "init_data";
 export function initData(qset) {
