@@ -54,10 +54,12 @@ export default props => {
 		);
 	if (mode === "editAsset") {
 		const rotation = getCellRotation(grid, currentX, currentZ);
-		const stickers = getStickers(grid, currentX, currentZ);
+		const stickers = getStickers(grid, currentX, currentZ, true);
 		const stickerProps = {
 			editSticker,
 			stickers,
+			rotation,
+			id: selectedAsset.id,
 			x: currentX,
 			z: currentZ
 		};
@@ -69,24 +71,10 @@ export default props => {
 					<button id="confirm" onClick={() => deselectAsset(true)}>
 						<ConfirmSVG />
 					</button>
-					{selectedAsset.id == "wall-1" ? (
-						<div>
-							<StickerBox index={TOP} side="top" {...stickerProps} />
-							<StickerBox index={RIGHT} side="right" {...stickerProps} />
-							<StickerBox index={BOTTOM} side="bottom" {...stickerProps} />
-							<StickerBox index={LEFT} side="left" {...stickerProps} />
-						</div>
-					) : rotation % 180 == 0 ? (
-						<div>
-							<StickerBox index={TOP} side="top" {...stickerProps} />
-							<StickerBox index={BOTTOM} side="bottom" {...stickerProps} />
-						</div>
-					) : (
-						<div>
-							<StickerBox index={RIGHT} side="right" {...stickerProps} />
-							<StickerBox index={LEFT} side="left" {...stickerProps} />
-						</div>
-					)}
+					<StickerBox index={TOP} side="top" {...stickerProps} />
+					<StickerBox index={RIGHT} side="right" {...stickerProps} />
+					<StickerBox index={BOTTOM} side="bottom" {...stickerProps} />
+					<StickerBox index={LEFT} side="left" {...stickerProps} />
 				</div>
 			</div>
 		);

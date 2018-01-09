@@ -161,7 +161,7 @@ export default function(
 						state.currentX,
 						state.currentZ
 					);
-					prevStickers = getStickers(gridCopy, state.currentX, state.currentZ);
+					prevStickers = getStickers(gridCopy, state.currentX, state.currentZ, false);
 					newGrid = deleteItem(gridCopy, state.currentX, state.currentZ);
 				} else {
 					newGrid = gridCopy;
