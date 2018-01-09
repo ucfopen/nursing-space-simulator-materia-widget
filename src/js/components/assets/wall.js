@@ -14,7 +14,7 @@ export default class Wall extends Component {
 		let mappedStickers;
 		if (attributes.stickers) {
 			mappedStickers = attributes.stickers.map((item, itemIndex) => {
-				if (item != "0")
+				if (item != "0" && item != "X")
 					return (
 						<Sticker
 							id={item}

@@ -7,10 +7,23 @@ import LeftArrowSVG from "../assets/icon-svgs/mini_left_arrow";
 import RightArrowSVG from "../assets/icon-svgs/mini_right_arrow";
 
 export default class StickerBox extends Component {
+
+	isValidSide(index, id, rotation, stickerType)
+	{
+		return (
+			stickerType != "X" &&
+			(id == 'wall-1' || (rotation % 180 / 90) == index % 2)
+		);
+	}
+
 	render() {
-		const { index, side, stickers, x, z } = this.props;
+		const { index, side, stickers, x, z, id, rotation } = this.props;
 		const { editSticker } = this.props;
 		const stickerType = stickers[index];
+
+		if (!this.isValidSide(index, id, rotation, stickerType))
+			return null;
+
 		return (
 			<div className="sticker-box" id={`${side}-sticker-box`}>
 				<button
