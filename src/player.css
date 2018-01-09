@@ -223,6 +223,10 @@ button svg.svg-icon:hover {
 	border-radius: 5px;
 }
 
+#selected-asset-tooltip.hidden {
+	display: none;
+}
+
 /* Bottom panel */
 
 #UI-bottom-panel {
