@@ -142,6 +142,25 @@ export function insertItem(grid, itemId, x, z, rotation = 180, stickers = null) 
 					stickers: stickers
 				};
 
+	// check adjacent spots for stickers to remove if necessary
+	if (["wall-1", "door-1", "window"].includes(itemId))
+	{
+		for (let side = 0; side < 4; side++)
+		{
+			let adjItem = getItemId(grid, x + 2 - side, z);
+			if (side % 2 == 0) {
+				adjItem = getItemId(grid, x, z + side - 1);
+			}
+			if (["wall-1", "door-1", "window"].includes(adjItem))
+			{
+				if (side % 2 == 0)
+					getStickers(grid, x, z + side - 1, true)
+				else
+					getStickers(grid, x + 2 - side, z, true);
+			}
+		}
+	}
+
 	return grid;
 }
 
@@ -174,12 +193,14 @@ export function isCellAvailable(grid, x, z) {
  * @param {int} col column of gridcell to be checked
  * @param {int} row row of gridcell to be checked
  *
- * @return id of item in cell
+ * @return id of item in cell, "0" if it is is out of bounds
  */
 export function getItemId(grid, col, row) {
 	if (grid === null || col === null || row === null) {
 		return null;
 	}
+
+	if (!_isInBounds(grid, row, col)) return "0";
 
 	return grid[row][col] === "0" ? "0" : grid[row][col].id;
 }
@@ -262,7 +283,8 @@ export function insertWalls(grid, startX, startZ, endX, endZ) {
 		let end = Math.max(startZ, endZ);
 		while (z <= end)
 		{
-			grid = insertItem(grid, "wall-1", x, z, 0);
+			if (z != startZ)
+				grid = insertItem(grid, "wall-1", x, z, 0);
 			z++;
 		}
 	}
@@ -273,18 +295,39 @@ export function insertWalls(grid, startX, startZ, endX, endZ) {
 		let end = Math.max(startX, endX);
 		while (x <= end)
 		{
-			grid = insertItem(grid, "wall-1", x, z, 0);
+			if (x != startX)
+				grid = insertItem(grid, "wall-1", x, z, 0);
 			x++;
 		}
 	}
 	return grid;
 }
 
-export function getStickers(grid, x, z) {
-	if (grid[z][x].stickers)
-		return grid[z][x].stickers;
-	else
-		return ["0", "0", "0", "0"];
+export function getStickers(grid, x, z, checkAdj) {
+	if (!grid[z][x].stickers)
+		grid[z][x].stickers = ["0", "0", "0", "0"];
+
+	if (checkAdj)
+	{
+		// Check adjacent spots for a wall and remove the sticker if necessary
+		for (let side = 0; side < 4; side++)
+		{
+			let adjItem = getItemId(grid, x + 2 - side, z);
+			if (side % 2 == 0) {
+				adjItem = getItemId(grid, x, z + side - 1);
+			}
+
+			// The "X" is a flag to show that a sticker cannot go on this side
+			if (adjItem != "0" && ["wall-1", "door-1", "window"].includes(adjItem)) {
+				grid[z][x].stickers[side] = "X";
+			}
+			else if (grid[z][x].stickers[side] == "X") {
+				grid[z][x].stickers[side] = "0"
+			}
+		}
+	}
+
+	return grid[z][x].stickers;
 }
 
 export function setSticker(grid, x, z, side, sticker) {
