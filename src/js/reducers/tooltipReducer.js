@@ -3,7 +3,7 @@ import {
 	UPDATE_TEMPORARY_TOOLTIP
 } from "../actions/tooltip_actions";
 import {
-	EDIT_STICKER,
+	EDIT_ASSET,
 	EXTEND_WALL,
 	DESELECT_ASSET,
 	FILL_WALLS,
@@ -53,7 +53,14 @@ export default function(
 				persistentText: "Click on a valid space to place this item."
 			};
 
-		case EDIT_STICKER:
+		case EDIT_ASSET:
+			return {
+				...state,
+				temporary: false,
+				persistent: true,
+				persistentText: "Select items to attach to the sides of this item."
+			}
+
 		case DESELECT_ASSET:
 		case FILL_WALLS:
 		case INSERT_ASSET:

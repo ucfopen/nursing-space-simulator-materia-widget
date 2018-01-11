@@ -17,6 +17,7 @@ import {
 	deleteItem,
 	findValidExtends,
 	getCellRotation,
+	getItem,
 	getStickers,
 	insertItem,
 	insertWalls,
@@ -34,8 +35,10 @@ export default function(
 		currentZ: null,
 		mode: "none",
 		selectedAsset: null,
+		selectedItem: null,
 		validX: null,
-		validZ: null
+		validZ: null,
+		ready: false
 	},
 	action
 ) {
@@ -46,14 +49,21 @@ export default function(
 				currentX: null,
 				currentZ: null,
 				mode: "none",
-				selectedAsset: null
+				selectedAsset: null,
+				selectedItem: null,
 			};
 		}
 
 		case EDIT_ASSET: {
+			const gridCopy = deepCopy(state.grid);
 			return {
 				...state,
-				mode: "editAsset"
+				mode: "editAsset",
+				selectedItem: getItem(
+					gridCopy,
+					action.payload.x,
+					action.payload.z
+				),
 			};
 		}
 
@@ -80,6 +90,11 @@ export default function(
 					action.payload.z,
 					action.payload.side,
 					newSticker
+				),
+				selectedItem: getItem(
+					gridCopy,
+					action.payload.x,
+					action.payload.z
 				)
 			};
 		}
@@ -132,7 +147,8 @@ export default function(
 		case INIT_DATA: {
 			return {
 				...state,
-				grid: action.payload.grid
+				grid: action.payload.grid,
+				ready: true
 			};
 		}
 

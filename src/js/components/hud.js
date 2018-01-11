@@ -35,6 +35,7 @@ export class HUD extends Component {
 			isTooltipTemporary,
 			mode,
 			selectedAsset,
+			selectedItem,
 			thirdPerson,
 			tooltipPersistentText,
 			tooltipTemporaryText
@@ -69,12 +70,12 @@ export class HUD extends Component {
 								editAsset={this.props.editAsset}
 								editSticker={this.props.editSticker}
 								extendWall={this.props.extendWall}
-								grid={this.props.grid}
 								isMenuVisible={this.props.menuVisible}
 								mode={mode}
 								removeAsset={this.props.removeAsset}
 								rotateAsset={this.props.rotateAsset}
 								selectedAsset={this.props.selectedAsset}
+								selectedItem={this.props.selectedItem}
 								updatePersistentTooltip={this.props.updatePersistentTooltip}
 								updateTemporaryTooltip={this.props.updateTemporaryTooltip}
 							/>
@@ -101,7 +102,9 @@ export class HUD extends Component {
 		);
 	}
 	render() {
-		if (checkPropsExist(this.props)) return this.renderHUD();
+		if (checkPropsExist(this.props) && this.props.ready) {
+			return this.renderHUD();
+		}
 		else return null;
 	}
 }
@@ -111,9 +114,10 @@ function mapStateToProps({ menu, grid, position, tooltip }) {
 		currentCategory: menu.currentCategory,
 		currentX: grid.currentX,
 		currentZ: grid.currentZ,
-		grid: grid.grid,
+		ready: grid.ready,
 		mode: grid.mode,
 		selectedAsset: grid.selectedAsset,
+		selectedItem: grid.selectedItem,
 		thirdPerson: position.thirdPerson,
 		menuVisible: menu.visible,
 		isTooltipTemporary: tooltip.temporary,
