@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 
 // Custom React Components
 import AssetControls from "./ui/asset_controls";
+import AssetTooltip from "./ui/asset_tooltip";
 import AssetTray from "./ui/asset_tray";
 import CategoryButton from "./ui/category_button";
 import MovementControls from "./ui/movement_controls";
@@ -13,6 +14,7 @@ import {
 	toggleThirdPerson
 } from "../actions/camera_actions.js";
 import { toggleMenuVisibility, setCategory } from "../actions/menu_actions";
+import { updatePersistentTooltip, updateTemporaryTooltip } from "../actions/tooltip_actions";
 import { checkPropsExist } from "../utils";
 
 import {
@@ -28,18 +30,32 @@ import {
 
 export class HUD extends Component {
 	renderHUD() {
-		const { mode, selectedAsset, thirdPerson } = this.props;
+		const {
+			isTooltipPersistent,
+			isTooltipTemporary,
+			mode,
+			selectedAsset,
+			thirdPerson,
+			tooltipPersistentText,
+			tooltipTemporaryText
+		} = this.props;
 		const { updateAssetPosition, updateCameraPosition } = this.props;
 
 		const update =
 			mode === "manipulation" ? updateAssetPosition : updateCameraPosition;
-
 		return (
 			<div>
+				<AssetTooltip
+					visible={ (isTooltipTemporary || isTooltipPersistent) }
+					text={
+						isTooltipTemporary ? tooltipTemporaryText : tooltipPersistentText
+					}
+				/>
 				{mode !== "editAsset" ? (
 					<MovementControls
 						thirdPerson={thirdPerson}
 						update={update}
+						mode={mode}
 						updateCameraPosition={updateCameraPosition}
 					/>
 				) : null}
@@ -54,11 +70,13 @@ export class HUD extends Component {
 								editSticker={this.props.editSticker}
 								extendWall={this.props.extendWall}
 								grid={this.props.grid}
-								isMenuVisible={this.props.visible}
-								mode={this.props.mode}
+								isMenuVisible={this.props.menuVisible}
+								mode={mode}
 								removeAsset={this.props.removeAsset}
 								rotateAsset={this.props.rotateAsset}
 								selectedAsset={this.props.selectedAsset}
+								updatePersistentTooltip={this.props.updatePersistentTooltip}
+								updateTemporaryTooltip={this.props.updateTemporaryTooltip}
 							/>
 						) : null}
 						<AssetTray
@@ -67,7 +85,7 @@ export class HUD extends Component {
 							selectedAsset={this.props.selectedAsset}
 							setCategory={this.props.setCategory}
 							isMenuVisible={
-								this.props.mode === "editAsset" ? false : this.props.visible
+								mode === "editAsset" ? false : this.props.menuVisible
 							}
 							toggleMenu={this.props.toggleMenuVisibility.bind(this)}
 						/>
@@ -88,7 +106,7 @@ export class HUD extends Component {
 	}
 }
 
-function mapStateToProps({ menu, grid, position }) {
+function mapStateToProps({ menu, grid, position, tooltip }) {
 	return {
 		currentCategory: menu.currentCategory,
 		currentX: grid.currentX,
@@ -97,7 +115,11 @@ function mapStateToProps({ menu, grid, position }) {
 		mode: grid.mode,
 		selectedAsset: grid.selectedAsset,
 		thirdPerson: position.thirdPerson,
-		visible: menu.visible
+		menuVisible: menu.visible,
+		isTooltipTemporary: tooltip.temporary,
+		tooltipTemporaryText: tooltip.temporaryText,
+		isTooltipPersistent: tooltip.persistent,
+		tooltipPersistentText: tooltip.persistentText
 	};
 }
 
@@ -110,6 +132,8 @@ export default connect(mapStateToProps, {
 	rotateAsset,
 	selectAssetType,
 	setCategory,
+	updatePersistentTooltip,
+	updateTemporaryTooltip,
 	toggleMenuVisibility,
 	toggleThirdPerson,
 	updateAssetPosition,
