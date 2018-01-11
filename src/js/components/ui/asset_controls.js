@@ -13,12 +13,6 @@ import StickerBox from "../assets/sticker_box";
 
 // Redux Actions
 import { getCellRotation, getStickers } from "../../grid";
-import {
-	deselectAsset,
-	extendWall,
-	removeAsset,
-	rotateAsset
-} from "../../actions/grid_actions.js";
 
 const TOP = 0;
 const RIGHT = 1;
@@ -33,7 +27,7 @@ export default class AssetControls extends Component {
 
 	render() {
 		// matches keys from props to respective variables
-		const { currentX, currentZ, grid, mode, selectedAsset, stickers } = this.props;
+		const { currentX, currentZ, mode, selectedAsset, selectedItem, stickers } = this.props;
 
 		const {
 			deselectAsset,
@@ -61,8 +55,10 @@ export default class AssetControls extends Component {
 			);
 		}
 		if (mode === "editAsset") {
-			const rotation = getCellRotation(grid, currentX, currentZ);
-			const stickers = getStickers(grid, currentX, currentZ, true);
+			console.log(selectedItem);
+			const rotation = selectedItem.rotation;
+			const stickers =
+				selectedItem.stickers ? selectedItem.stickers : ["0", "0", "0", "0"];
 			const stickerProps = {
 				editSticker,
 				stickers,
