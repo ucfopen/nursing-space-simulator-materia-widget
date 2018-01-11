@@ -187,6 +187,25 @@ export function isCellAvailable(grid, x, z) {
 }
 
 /**
+ * returns the item placed in a grid cell
+ *
+ * @param {array} grid grid to be checked
+ * @param {int} col column of gridcell to be checked
+ * @param {int} row row of gridcell to be checked
+ *
+ * @return item in cell, "0" if it is is out of bounds
+ */
+export function getItem(grid, col, row) {
+	if (grid === null || col === null || row === null) {
+		return null;
+	}
+
+	if (!_isInBounds(grid, row, col)) return "0";
+
+	return grid[row][col] === "0" ? "0" : grid[row][col];
+}
+
+/**
  * returns the id of the item placed in a grid cell
  *
  * @param {array} grid grid to be checked
