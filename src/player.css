@@ -151,6 +151,10 @@ button svg.svg-icon:hover {
 	margin-right: 3px;
 }
 
+#camera-move.manipulation polygon{
+	fill: orange;
+}
+
 /* Selected asset options */
 
 #UI-selected-asset-options {
@@ -208,11 +212,14 @@ button svg.svg-icon:hover {
 }
 
 #selected-asset-tooltip {
-	position: absolute;
-	top: 10px;
-	left: 275px;
+	width: 100%;
+	text-align: center;
+}
 
-	width: 350px;
+#selected-asset-tooltip span {
+	display: inline-block;
+	position: relative;
+	top: 25px;
 
 	text-align: center;
 	font-size: 16px;
@@ -221,10 +228,6 @@ button svg.svg-icon:hover {
 	background: #fdd89c;
 	border: 1px solid black;
 	border-radius: 5px;
-}
-
-#selected-asset-tooltip.hidden {
-	display: none;
 }
 
 /* Bottom panel */

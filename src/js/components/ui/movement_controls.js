@@ -24,7 +24,7 @@ export default class MovementControls extends Component {
 	}
 
 	render() {
-		const { thirdPerson, update } = this.props;
+		const { thirdPerson, update, mode } = this.props;
 		return (
 			<div id="UI-right-panel">
 				<div id="top-buttons" />
@@ -33,7 +33,7 @@ export default class MovementControls extends Component {
 				</button>
 				{thirdPerson ? (
 					<div id="camera-controls">
-						<div id="camera-move">
+						<div id="camera-move" className={mode == "manipulation" ? "manipulation" : null}>
 							<button id="camera-up" onMouseDown={update.bind(this, "zUp")}>
 								<UpArrowSVG />
 							</button>
