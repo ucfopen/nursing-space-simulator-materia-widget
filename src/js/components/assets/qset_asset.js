@@ -33,7 +33,7 @@ export default class QsetAsset extends Component {
 	}
 
 	renderAsset() {
-		const { attributes, data, isSelected, mode, rotation, x, z } = this.props;
+		const { attributes, data, isSelected, mode, rotation, thirdPerson, x, z } = this.props;
 		const { onClick } = this.props;
 		const id = data.id;
 		const yScaleFactor =
@@ -54,7 +54,7 @@ export default class QsetAsset extends Component {
 			<Entity
 				click-drag
 				events={{
-					click: onClick,
+					click: thirdPerson ? onClick : null,
 					dragstart: this.dragStart.bind(this),
 					dragmove: this.dragMove.bind(this),
 					dragend: this.dragEnd.bind(this)
@@ -79,7 +79,7 @@ export default class QsetAsset extends Component {
 	}
 
 	renderAssetNonDrag() {
-		const { attributes, data, isSelected, mode, rotation, x, z } = this.props;
+		const { attributes, data, isSelected, mode, rotation, thirdPerson, x, z } = this.props;
 		const { onClick } = this.props;
 		const id = data.id;
 		const yScaleFactor =
@@ -91,7 +91,7 @@ export default class QsetAsset extends Component {
 				attributes={attributes}
 				isSelected={isSelected}
 				mode={mode}
-				onClick={onClick}
+				onClick={thirdPerson ? onClick : null}
 				rotation={rotation}
 				x={x}
 				z={z}
@@ -99,7 +99,7 @@ export default class QsetAsset extends Component {
 		) : (
 			<Entity
 				events={{
-					click: onClick
+					click: thirdPerson ? onClick : null
 				}}
 				// If an assets contains an .mtl (defined in qset), aframe will use obj-model. Otherwise, aframe will use material src
 				material={{ color: "green", opacity: 0.4 }}
