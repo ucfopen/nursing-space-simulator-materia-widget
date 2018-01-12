@@ -55,7 +55,6 @@ export default class AssetControls extends Component {
 			);
 		}
 		if (mode === "editAsset") {
-			console.log(selectedItem);
 			const rotation = selectedItem.rotation;
 			const stickers =
 				selectedItem.stickers ? selectedItem.stickers : ["0", "0", "0", "0"];
@@ -85,7 +84,7 @@ export default class AssetControls extends Component {
 					</div>
 				</div>
 			);
-		} else { // manipulationMode
+		} else {
 			return (
 				<div id="UI-selected-asset-options">
 					<span id="selected-asset-label">
@@ -129,18 +128,18 @@ export default class AssetControls extends Component {
 								<button
 									id="editAsset"
 									onClick={() => editAsset(currentX, currentZ)}
-									onMouseEnter={() => updateTemporaryTooltip(true, "Attach Mode")}
+									onMouseEnter={() => updateTemporaryTooltip(true, "Attach Items to this Wall")}
 									onMouseLeave={() => updateTemporaryTooltip(false)}>
 									<StickerSVG />
 								</button>
 							) : null}
 						</div>
-					) : (
+					) : ( // assetTypeSelected
 						<button
 							id="deselect"
 							onClick={() => deselectAsset()}
-							onMouseEnter={() => this.onMouseEnter("Back")}
-							onMouseLeave={() => this.onMouseLeave()}>
+							onMouseEnter={() => updateTemporaryTooltip(true, "Cancel")}
+							onMouseLeave={() => updateTemporaryTooltip(false)}>
 							<DeselectSVG />
 						</button>
 					)}
