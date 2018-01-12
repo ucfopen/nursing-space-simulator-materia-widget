@@ -160,7 +160,7 @@ export function insertItem(grid, itemId, x, z, rotation = 180, stickers = null) 
  * @return boolean
  */
 export function isCellAvailable(grid, x, z) {
-	if (grid === null || x === null || z === null) {
+	if (grid === null || x === null || z === null || isNaN(x)|| isNaN(z)) {
 		return false;
 	}
 
