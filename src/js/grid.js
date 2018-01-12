@@ -144,7 +144,7 @@ export function insertItem(grid, itemId, x, z, rotation = 180, stickers = null) 
 
 	// check adjacent spots for stickers to remove if necessary
 	if (["wall-1", "door-1", "window"].includes(itemId)) {
-		updateStickers(grid, x, z);
+		grid = updateStickers(grid, x, z, false);
 	}
 
 	return grid;
@@ -333,7 +333,7 @@ export function getStickers(grid, x, z, checkAdj) {
 		grid[z][x].stickers = ["0", "0", "0", "0"];
 
 	if (checkAdj) {
-		updateStickers(grid, x, z);
+		grid = updateStickers(grid, x, z, false);
 	}
 
 	return grid[z][x].stickers;
@@ -346,10 +346,14 @@ export function getStickers(grid, x, z, checkAdj) {
  * @param {array} grid initial grid
  * @param {int} x the x-component of the item
  * @param {int} z the z-component of the item
+ * @param {boolean} createNew whether to create stickers array if it doesn't exist
  *
  * @return updated grid
  */
-export function updateStickers(grid, x, z) {
+export function updateStickers(grid, x, z, createNew) {
+	if (createNew && !grid[z][x].stickers)
+		grid[z][x].stickers = ["0", "0", "0", "0"];
+
 	for (let side = 0; side < 4; side++) {
 		const adjX = side % 2 == 0 ? x : (x + 2 - side);
 		const adjZ = side % 2 == 0 ? (z + side - 1) : z;
@@ -376,6 +380,8 @@ export function updateStickers(grid, x, z) {
 			grid[z][x].stickers[side] = "0";
 		}
 	}
+
+	return grid;
 }
 
 /**

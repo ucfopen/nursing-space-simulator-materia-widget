@@ -59,15 +59,16 @@ export default function(
 			const gridCopy = deepCopy(state.grid);
 
 			// force creation of stickers and update adjacent points
-			getStickers(gridCopy, action.payload.x, action.payload.z, true);
+			let newGrid = updateStickers(gridCopy, action.payload.x, action.payload.z, true);
 			return {
 				...state,
 				mode: "editAsset",
 				selectedItem: getItem(
-					gridCopy,
+					newGrid,
 					action.payload.x,
 					action.payload.z
 				),
+				grid: newGrid
 			};
 		}
 
