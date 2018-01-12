@@ -50,7 +50,10 @@ export default function(
 				...state,
 				temporary: false,
 				persistent: true,
-				persistentText: "Click on a valid space to place this item."
+				persistentText:
+					action.payload.id == "pov_camera"
+						? "Click on a space to jump into first-person view."
+						: "Click on a valid space to place this item."
 			};
 
 		case EDIT_ASSET:
@@ -61,9 +64,23 @@ export default function(
 				persistentText: "Select items to attach to the sides of this item."
 			}
 
+		case INSERT_ASSET:
+			if (action.payload.assetId == "wall-1" && state.persistent) {
+				return {
+					...state,
+					temporary: false,
+					persistent: true,
+					persistentText: "Click on a valid space to auto-fill walls."
+				};
+			}
+			return {
+				...state,
+				temporary: false,
+				persistent: false
+			};
+
 		case DESELECT_ASSET:
 		case FILL_WALLS:
-		case INSERT_ASSET:
 		case REMOVE_ASSET:
 		case SELECT_ASSET:
 			return {
