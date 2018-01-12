@@ -23,7 +23,8 @@ import {
 	insertWalls,
 	isCellAvailable,
 	rotateCell,
-	setSticker
+	setSticker,
+	updateStickers
 } from "../grid";
 
 // Utilities
@@ -56,6 +57,8 @@ export default function(
 
 		case EDIT_ASSET: {
 			const gridCopy = deepCopy(state.grid);
+
+			updateStickers(gridCopy, action.payload.x, action.payload.z);
 			return {
 				...state,
 				mode: "editAsset",
@@ -81,18 +84,19 @@ export default function(
 			const newStickerIndex =
 				(stickerIndex + action.payload.direction + numTypes) % numTypes;
 			const newSticker = action.payload.stickerTypes[newStickerIndex];
+			const newGrid = setSticker(
+				gridCopy,
+				action.payload.x,
+				action.payload.z,
+				action.payload.side,
+				newSticker
+			)
 
 			return {
 				...state,
-				grid: setSticker(
-					gridCopy,
-					action.payload.x,
-					action.payload.z,
-					action.payload.side,
-					newSticker
-				),
+				grid: newGrid,
 				selectedItem: getItem(
-					gridCopy,
+					newGrid,
 					action.payload.x,
 					action.payload.z
 				)
@@ -301,7 +305,7 @@ export default function(
 					...state,
 					currentX: null,
 					currentZ: null,
-					mode: "none",
+					mode: "assetTypeSelected",
 					selectedAsset: null
 				};
 			else
@@ -309,7 +313,7 @@ export default function(
 					...state,
 					currentX: null,
 					currentZ: null,
-					mode: "none",
+					mode: "assetTypeSelected",
 					selectedAsset: action.payload
 				};
 		}
