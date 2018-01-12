@@ -143,22 +143,8 @@ export function insertItem(grid, itemId, x, z, rotation = 180, stickers = null) 
 				};
 
 	// check adjacent spots for stickers to remove if necessary
-	if (["wall-1", "door-1", "window"].includes(itemId))
-	{
-		for (let side = 0; side < 4; side++)
-		{
-			let adjItem = getItemId(grid, x + 2 - side, z);
-			if (side % 2 == 0) {
-				adjItem = getItemId(grid, x, z + side - 1);
-			}
-			if (["wall-1", "door-1", "window"].includes(adjItem))
-			{
-				if (side % 2 == 0)
-					getStickers(grid, x, z + side - 1, true)
-				else
-					getStickers(grid, x + 2 - side, z, true);
-			}
-		}
+	if (["wall-1", "door-1", "window"].includes(itemId)) {
+		updateStickers(grid, x, z);
 	}
 
 	return grid;
@@ -293,10 +279,20 @@ export function findValidExtends(grid, x, z) {
 	return [validX, validZ];
 }
 
+/**
+ * Wall Extend: fills walls from given start to given end
+ *
+ * @param {array} grid initial grid to fill in to
+ * @param {int} startX the x-component of the wall to be extended
+ * @param {int} startZ the z-component of the wall to be extended
+ * @param {int} endX the x-component of place selected to fill to
+ * @param {int} endZ the z-component of place selected to fill to
+ *
+ * @return new grid with inserted walls
+ */
 export function insertWalls(grid, startX, startZ, endX, endZ) {
 	// If moving in the Z direction
-	if (startX == endX)
-	{
+	if (startX == endX) {
 		let x = endX;
 		let z = Math.min(startZ, endZ);
 		let end = Math.max(startZ, endZ);
@@ -306,9 +302,7 @@ export function insertWalls(grid, startX, startZ, endX, endZ) {
 				grid = insertItem(grid, "wall-1", x, z, 0);
 			z++;
 		}
-	}
-	else
-	{
+	} else {
 		let z = endZ;
 		let x = Math.min(startX, endX);
 		let end = Math.max(startX, endX);
@@ -322,36 +316,84 @@ export function insertWalls(grid, startX, startZ, endX, endZ) {
 	return grid;
 }
 
+/**
+ * returns the stickers for a given element, if checkAdj is true,
+ * it will check adjacent spaces and flag sides that are adjacent
+ * to another wall
+ *
+ * @param {array} grid initial grid
+ * @param {int} x the x-component of the item
+ * @param {int} z the z-component of the item
+ * @param {boolean} checkAdj whether to check adjacent spaces and set flags
+ *
+ * @return stickers at given point
+ */
 export function getStickers(grid, x, z, checkAdj) {
 	if (!grid[z][x].stickers)
 		grid[z][x].stickers = ["0", "0", "0", "0"];
 
-	if (checkAdj)
-	{
-		// Check adjacent spots for a wall and remove the sticker if necessary
-		for (let side = 0; side < 4; side++)
-		{
-			let adjItem = getItemId(grid, x + 2 - side, z);
-			if (side % 2 == 0) {
-				adjItem = getItemId(grid, x, z + side - 1);
-			}
-
-			// The "X" is a flag to show that a sticker cannot go on this side
-			if (adjItem != "0" && ["wall-1", "door-1", "window"].includes(adjItem)) {
-				grid[z][x].stickers[side] = "X";
-			}
-			else if (grid[z][x].stickers[side] == "X") {
-				grid[z][x].stickers[side] = "0"
-			}
-		}
+	if (checkAdj) {
+		updateStickers(grid, x, z);
 	}
 
 	return grid[z][x].stickers;
 }
 
+/**
+ * checks adjacent spaces and flags sides that are adjacent
+ * to another wall, updates previously flagged sides
+ *
+ * @param {array} grid initial grid
+ * @param {int} x the x-component of the item
+ * @param {int} z the z-component of the item
+ *
+ * @return updated grid
+ */
+export function updateStickers(grid, x, z) {
+	for (let side = 0; side < 4; side++) {
+		const adjX = side % 2 == 0 ? x : (x + 2 - side);
+		const adjZ = side % 2 == 0 ? (z + side - 1) : z;
+		let adjItem = getItemId(grid, adjX, adjZ);
+
+		if (adjItem != "0" && ["wall-1", "door-1", "window"].includes(adjItem))
+		{
+			// The "X" is a flag to show that a sticker cannot go on this side
+			if (grid[z][x].stickers) {
+				grid[z][x].stickers[side] = "X";
+			}
+
+			// Also update the adjacent wall if necessary
+			if ( ["wall-1", "door-1"].includes(adjItem) && grid[adjZ][adjX].stickers)
+			{
+				if (side % 2 == 0) {
+					grid[adjZ][adjX].stickers[2 - side] = "X";
+				}
+				else {
+					grid[adjZ][adjX].stickers[4 - side] = "X";
+				}
+			}
+		} else if (grid[z][x].stickers && grid[z][x].stickers[side] == "X") {
+			grid[z][x].stickers[side] = "0";
+		}
+	}
+}
+
+/**
+ * sets the sticker for an item at a given position
+ *
+ * @param {array} grid initial grid to fill in to
+ * @param {int} x the x-component of the item
+ * @param {int} z the z-component of the item
+ * @param {int} side the index of the side to set
+ *   (0, 1, 2, 3) ==> (top, right, bottom, left)
+ * @param {string} sticker name of sticker to set it to
+ *
+ * @return modified grid
+ */
 export function setSticker(grid, x, z, side, sticker) {
-	if (grid[z][x].stickers == null)
+	if (grid[z][x].stickers == null) {
 		grid[z][x].stickers = ["0", "0", "0", "0"];
+	}
 
 	grid[z][x].stickers[side] = sticker;
 	return grid;
