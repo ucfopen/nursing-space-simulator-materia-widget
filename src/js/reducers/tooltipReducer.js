@@ -18,7 +18,8 @@ export default function(
 		temporaryText: "temp",
 		temporary: false,
 		persistentText: "persistent",
-		persistent: false
+		persistent: false,
+		prevSelectedType: null
 	},
 	action
 ) {
@@ -46,14 +47,23 @@ export default function(
 			};
 
 		case SELECT_ASSET_TYPE:
+			if (state.prevSelectedType != action.payload.id) {
+				return {
+					...state,
+					prevSelectedType: action.payload.id,
+					temporary: false,
+					persistent: true,
+					persistentText:
+						action.payload.id == "pov_camera"
+							? "Click on a space to jump into first-person view."
+							: "Click on a valid space to place this item."
+				};
+			}
 			return {
 				...state,
+				prevSelectedType: null,
 				temporary: false,
-				persistent: true,
-				persistentText:
-					action.payload.id == "pov_camera"
-						? "Click on a space to jump into first-person view."
-						: "Click on a valid space to place this item."
+				persistent: false
 			};
 
 		case EDIT_ASSET:
@@ -68,6 +78,7 @@ export default function(
 			if (action.payload.assetId == "wall-1" && state.persistent) {
 				return {
 					...state,
+					prevSelectedType: null,
 					temporary: false,
 					persistent: true,
 					persistentText: "Click on a valid space to auto-fill walls."
@@ -75,6 +86,7 @@ export default function(
 			}
 			return {
 				...state,
+				prevSelectedType: null,
 				temporary: false,
 				persistent: false
 			};
@@ -85,6 +97,7 @@ export default function(
 		case SELECT_ASSET:
 			return {
 				...state,
+				prevSelectedType: null,
 				temporary: false,
 				persistent: false
 			};
