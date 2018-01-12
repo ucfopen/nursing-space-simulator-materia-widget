@@ -101,7 +101,8 @@ export class VRScene extends Component {
 	}
 
 	renderScene() {
-		const { position, thirdPerson } = this.props;
+		const { posX, posY, posZ, thirdPerson } = this.props;
+		const position = { x: posX, y: posY, z: posZ }
 		return (
 			<Scene className="vr-scene">
 				<a-assets>
@@ -145,7 +146,9 @@ export class VRScene extends Component {
 	}
 
 	render() {
-		if (checkPropsExist(this.props)) return this.renderScene();
+		if (checkPropsExist(this.props)) {
+			return this.renderScene();
+		}
 		else return null;
 	}
 }
@@ -156,7 +159,9 @@ function mapStateToProps({ grid, position }) {
 		currentZ: grid.currentZ,
 		grid: grid.grid,
 		mode: grid.mode,
-		position: { x: position.x, y: position.y, z: position.z },
+		posX: position.x,
+		posY: position.y,
+		posZ: position.z,
 		selectedAsset: grid.selectedAsset,
 		thirdPerson: position.thirdPerson,
 		validX: grid.validX,
