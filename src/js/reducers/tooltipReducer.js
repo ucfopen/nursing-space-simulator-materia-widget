@@ -91,8 +91,32 @@ export default function(
 				persistent: false
 			};
 
-		case DESELECT_ASSET:
 		case FILL_WALLS:
+			const endX = action.payload.x;
+			const endZ = action.payload.z;
+			const startX = action.payload.extendX;
+			const startZ = action.payload.extendZ;
+			let validFill =
+				(startX == endX && action.payload.validZ.includes(endZ)) ||
+				(startZ == endZ && action.payload.validX.includes(endX));
+
+			if (!validFill) {
+				return {
+					...state,
+					prevSelectedType: null,
+					persistent: false,
+					temporary: true,
+					temporaryText: "Walls can only be extended horizontally and vertically."
+				};
+			}
+			return {
+				...state,
+				prevSelectedType: null,
+				temporary: false,
+				persistent: false
+			};
+
+		case DESELECT_ASSET:
 		case REMOVE_ASSET:
 		case SELECT_ASSET:
 			return {
