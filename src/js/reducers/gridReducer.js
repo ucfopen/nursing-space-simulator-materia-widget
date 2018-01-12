@@ -58,7 +58,8 @@ export default function(
 		case EDIT_ASSET: {
 			const gridCopy = deepCopy(state.grid);
 
-			updateStickers(gridCopy, action.payload.x, action.payload.z);
+			// force creation of stickers and update adjacent points
+			getStickers(gridCopy, action.payload.x, action.payload.z, true);
 			return {
 				...state,
 				mode: "editAsset",
