@@ -36,7 +36,7 @@ export default function(
 				case "zUp":
 					return { ...state, z: state.z - 2, prevZ: state.z };
 				case "zDown":
-					return { ...state, z: state.z + 2, prevZ: state.x };
+					return { ...state, z: state.z + 2, prevZ: state.z };
 				case "reset":
 					return {
 						...state,
