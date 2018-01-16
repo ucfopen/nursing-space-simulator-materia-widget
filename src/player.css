@@ -88,7 +88,7 @@ button svg.svg-icon:hover {
 }
 
 #camera-move {
-	width: 125px;
+	width: 150px;
 	height: 85px;
 	margin-left: auto;
 	margin-right: auto;
@@ -98,6 +98,7 @@ button svg.svg-icon:hover {
 	text-align: center;
 }
 
+#camera-move button:hover svg circle,
 #camera-move button:hover svg path,
 #camera-move button:hover svg polygon,
 #camera-move button:hover svg rect {
@@ -105,6 +106,7 @@ button svg.svg-icon:hover {
 }
 
 #camera-move button:active svg path,
+#camera-move button:active svg circle,
 #camera-move button:active svg polygon,
 #camera-move button:active svg rect {
 	fill: #ffffff;
