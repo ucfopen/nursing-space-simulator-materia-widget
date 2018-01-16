@@ -4,6 +4,7 @@ import ReactDOM from "react-dom";
 // Custom Reaction Components
 import DownArrowSVG from "../assets/icon-svgs/down_arrow";
 import LeftArrowSVG from "../assets/icon-svgs/left_arrow";
+import ResetCamera from "../assets/icon-svgs/reset_camera";
 import RightArrowSVG from "../assets/icon-svgs/right_arrow";
 import ScreenshotSVG from "../assets/icon-svgs/screenshot";
 import UpArrowSVG from "../assets/icon-svgs/up_arrow";
@@ -43,6 +44,16 @@ export default class MovementControls extends Component {
 									onMouseDown={update.bind(this, "xLeft")}>
 									<LeftArrowSVG />
 								</button>
+								{mode != "manipulation"
+									? (
+										<button
+											id="camera-reset"
+											onMouseDown={update.bind(this, "reset")}>
+											<ResetCamera />
+										</button>
+									)
+									: null
+								}
 								<button
 									id="camera-right"
 									onMouseDown={update.bind(this, "xRight")}>
