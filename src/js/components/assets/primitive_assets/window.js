@@ -71,7 +71,6 @@ export default props => {
 				rotation={{ x: -90 }}
 				width="1.025"
 			/>
-			{processStickers()}
 		</Entity>
 	);
 };
