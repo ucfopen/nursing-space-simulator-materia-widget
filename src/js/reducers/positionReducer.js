@@ -26,26 +26,38 @@ export default function(
 		case CAMERA_UPDATE_POSITION:
 			switch (action.payload) {
 				case "xRight":
-					return { ...state, x: state.x + 2, prevX: state.x };
+					return { ...state, x: state.x + 2, prevX: state.x + 2 };
 				case "xLeft":
-					return { ...state, x: state.x - 2, prevX: state.x };
-				case "yUp":
-					return { ...state, y: state.y + 2, prevY: state.y };
-				case "yDown":
-					return { ...state, y: state.y - 2, prevY: state.y };
+					return { ...state, x: state.x - 2, prevX: state.x - 2 };
+				case "yUp": {
+					const boundedY = state.y < 30 ? state.y + 2 : state.y;
+					return {
+						...state,
+						y: boundedY,
+						prevY: boundedY
+					};
+				}
+				case "yDown": {
+					const boundedY = state.y > 2 ? state.y - 2 : state.y;
+					return {
+						...state,
+						y: boundedY,
+						prevY: boundedY
+					};
+				}
 				case "zUp":
-					return { ...state, z: state.z - 2, prevZ: state.z };
+					return { ...state, z: state.z - 2, prevZ: state.z - 2 };
 				case "zDown":
-					return { ...state, z: state.z + 2, prevZ: state.z };
+					return { ...state, z: state.z + 2, prevZ: state.z + 2 };
 				case "reset":
 					return {
 						...state,
 						x: 14.5,
 						y: 18,
 						z: 9,
-						prevX: state.x,
-						prevY: state.y,
-						prevZ: state.z
+						prevX: 14.5,
+						prevY: 18,
+						prevZ: 9
 					};
 			}
 
