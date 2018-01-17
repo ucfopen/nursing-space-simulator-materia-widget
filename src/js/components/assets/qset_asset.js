@@ -28,8 +28,10 @@ export default class QsetAsset extends Component {
 	dragEnd(event) {
 		const roundedX = Math.round(this.lastX);
 		const roundedZ = Math.round(this.lastZ);
-		const { selectedAssetId } = this.props;
-		this.props.insertAsset(roundedX, roundedZ, selectedAssetId);
+		const { isSelected, selectedAssetId } = this.props;
+		if (!isNaN(roundedX) && !isNaN(roundedZ) && isSelected) {
+			this.props.insertAsset(roundedX, roundedZ, selectedAssetId);
+		}
 	}
 
 	renderAsset() {
@@ -54,7 +56,6 @@ export default class QsetAsset extends Component {
 			<Entity
 				click-drag
 				events={{
-					click: thirdPerson ? onClick : null,
 					dragstart: this.dragStart.bind(this),
 					dragmove: this.dragMove.bind(this),
 					dragend: this.dragEnd.bind(this)
