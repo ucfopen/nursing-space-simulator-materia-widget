@@ -38,7 +38,7 @@ export default class FloorUnit extends Component {
 		if (!thirdPerson || mode == "editAsset") return;
 
 		if (mode == "extendWall") onClick(x, z, extendX, extendZ, validX, validZ);
-		else onClick(x, z, selectedAssetId);
+		else if (selectedAssetId) onClick(x, z, selectedAssetId);
 	}
 
 	isValidPlace() {

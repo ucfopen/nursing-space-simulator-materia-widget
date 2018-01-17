@@ -171,7 +171,8 @@ export default function(
 				selectedAsset.id === "pov_camera"
 			) {
 				return {
-					...state
+					...state,
+					grid: gridCopy
 				};
 			} else {
 				let newGrid,
