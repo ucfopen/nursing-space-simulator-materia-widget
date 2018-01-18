@@ -13,8 +13,8 @@ import QsetAsset from "./assets/qset_asset";
 import Skybox from "./assets/skybox";
 
 // Redux Actions
-import { updatePosition } from "../actions/camera_actions";
-import { insertAsset, selectAsset, fillWalls } from "../actions/grid_actions";
+import { deselectAsset, insertAsset, selectAsset, fillWalls } from "../actions/grid_actions";
+import { updateTemporaryTooltip, updateTimedTooltip } from "../actions/tooltip_actions";
 // Utilities
 import { checkPropsExist } from "../utils";
 
@@ -59,6 +59,30 @@ export class VRScene extends Component {
 		return mappedAssets;
 	}
 
+	checkFillWalls(x, z, extendX, extendZ, validX, validZ) {
+		const {
+			deselectAsset,
+			fillWalls,
+			updateTemporaryTooltip,
+			updateTimedTooltip
+		} = this.props;
+		let validFill = (
+			(x == extendX && validZ.includes(z)) ||
+			(z == extendZ && validX.includes(x))
+		);
+
+		if (validFill) {
+			fillWalls(x, z, extendX, extendZ, validX, validZ);
+		}
+		else {
+			deselectAsset();
+			updateTemporaryTooltip(true, "Walls can only be extended horizontally and vertically.");
+			setTimeout(function() {
+				updateTimedTooltip("Walls can only be extended horizontally and vertically.");
+			}, 6000);
+		}
+	}
+
 	renderFloor() {
 		const {
 			currentX,
@@ -71,7 +95,7 @@ export class VRScene extends Component {
 			validZ
 		} = this.props;
 
-		const { fillWalls, insertAsset } = this.props;
+		const { insertAsset } = this.props;
 		const selectedAssetId = selectedAsset ? selectedAsset.id : null;
 
 		const mappedFloor = grid.map(
@@ -84,7 +108,7 @@ export class VRScene extends Component {
 							grid={grid}
 							key={`${rowIndex} ${colIndex}`}
 							mode={mode}
-							onClick={mode == "extendWall" ? fillWalls : insertAsset}
+							onClick={mode == "extendWall" ? this.checkFillWalls.bind(this) : insertAsset}
 							selectedAssetId={selectedAssetId}
 							thirdPerson={thirdPerson}
 							validX={validX}
@@ -170,7 +194,10 @@ function mapStateToProps({ grid, position }) {
 }
 
 export default connect(mapStateToProps, {
+	deselectAsset,
 	fillWalls,
 	insertAsset,
-	selectAsset
+	selectAsset,
+	updateTemporaryTooltip,
+	updateTimedTooltip
 })(VRScene);

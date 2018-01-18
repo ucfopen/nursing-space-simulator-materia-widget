@@ -13,3 +13,11 @@ export function updateTemporaryTooltip(enabled, text = "") {
 		payload: { enabled, text }
 	};
 }
+
+export const UPDATE_TIMED_TOOLTIP = "UPDATE_TIMED_TOOLTIP";
+export function updateTimedTooltip(matchingText) {
+	return {
+		type: UPDATE_TIMED_TOOLTIP,
+		payload: matchingText
+	};
+}

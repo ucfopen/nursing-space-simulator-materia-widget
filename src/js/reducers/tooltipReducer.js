@@ -1,6 +1,7 @@
 import {
 	UPDATE_PERSISTENT_TOOLTIP,
-	UPDATE_TEMPORARY_TOOLTIP
+	UPDATE_TEMPORARY_TOOLTIP,
+	UPDATE_TIMED_TOOLTIP
 } from "../actions/tooltip_actions";
 import {
 	EDIT_ASSET,
@@ -37,6 +38,15 @@ export default function(
 				temporary: action.payload.enabled,
 				temporaryText: action.payload.text
 			};
+
+		case UPDATE_TIMED_TOOLTIP:
+			if (state.temporaryText == action.payload) {
+				return {
+					...state,
+					temporary: false
+				}
+			}
+			return { ...state };
 
 		case EXTEND_WALL:
 			return {
@@ -82,31 +92,6 @@ export default function(
 					temporary: false,
 					persistent: true,
 					persistentText: "Click on a valid space to auto-fill walls."
-				};
-			}
-			return {
-				...state,
-				prevSelectedType: null,
-				temporary: false,
-				persistent: false
-			};
-
-		case FILL_WALLS:
-			const endX = action.payload.x;
-			const endZ = action.payload.z;
-			const startX = action.payload.extendX;
-			const startZ = action.payload.extendZ;
-			let validFill =
-				(startX == endX && action.payload.validZ.includes(endZ)) ||
-				(startZ == endZ && action.payload.validX.includes(endX));
-
-			if (!validFill) {
-				return {
-					...state,
-					prevSelectedType: null,
-					persistent: false,
-					temporary: true,
-					temporaryText: "Walls can only be extended horizontally and vertically."
 				};
 			}
 			return {
