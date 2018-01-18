@@ -129,17 +129,10 @@ export default function(
 			const endZ = action.payload.z;
 			const startX = action.payload.extendX;
 			const startZ = action.payload.extendZ;
-			let newGrid;
 
-			let validFill =
-				(startX == endX && action.payload.validZ.includes(endZ)) ||
-				(startZ == endZ && action.payload.validX.includes(endX));
+			// Fill validity should be checked before (in vr_scene)
+			let newGrid = insertWalls(gridCopy, startX, startZ, endX, endZ);
 
-			if (validFill)
-				newGrid = insertWalls(gridCopy, startX, startZ, endX, endZ);
-			else {
-				newGrid = gridCopy;
-			}
 			return {
 				...state,
 				currentX: null,
