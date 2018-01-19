@@ -32,7 +32,7 @@ export class VRScene extends Component {
 		const mappedAssets = grid.map(
 			(row, rowIndex) =>
 				row.map((column, colIndex) => {
-					return column !== "0" ? (
+					return (column !== "0" && column != "X") ? (
 						<QsetAsset
 							attributes={column}
 							data={HS_ASSETS[column.id]}
