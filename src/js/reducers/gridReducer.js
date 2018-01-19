@@ -156,11 +156,13 @@ export default function(
 				? { ...state.selectedAsset }
 				: null;
 
+			const { x, z } = action.payload;
+
 			const gridCopy = deepCopy(state.grid);
 
 			if (
 				!selectedAsset ||
-				!isCellAvailable(gridCopy, action.payload.x, action.payload.z) ||
+				!isCellAvailable(gridCopy, x, z) ||
 				selectedAsset.id === "pov_camera"
 			) {
 				return {
@@ -177,7 +179,9 @@ export default function(
 						state.currentX,
 						state.currentZ
 					);
-					prevStickers = getStickers(gridCopy, state.currentX, state.currentZ, false);
+					if (["wall-1", "door-1", "window"].includes(selectedAsset.id)) {
+						prevStickers = getStickers(gridCopy, state.currentX, state.currentZ, false);
+					}
 					newGrid = deleteItem(gridCopy, state.currentX, state.currentZ);
 				} else {
 					newGrid = gridCopy;
@@ -186,19 +190,19 @@ export default function(
 						newGrid = insertItem(
 							newGrid,
 							selectedAsset.id,
-							action.payload.x,
-							action.payload.z,
+							x,
+							z,
 							prevRotation
 						);
 						[validX, validZ] = findValidExtends(
 							newGrid,
-							action.payload.x,
-							action.payload.z
+							x,
+							z
 						);
 						return {
 							...state,
-							currentX: action.payload.x,
-							currentZ: action.payload.z,
+							currentX: x,
+							currentZ: z,
 							grid: newGrid,
 							mode: "extendWall",
 							validX: validX,
@@ -206,15 +210,25 @@ export default function(
 						};
 					}
 				}
+				// need to check other adjacent spaces for larger objects
+				if (["bed-1"].includes(selectedAsset.id)) {
+					const adjSide = 3 - ((prevRotation + 180) % 360) / 90;
+					if (!isCellAvailable(newGrid, x, z, adjSide)) {
+						return {
+							...state,
+							grid: deepCopy(state.grid)
+						};
+					}
+				}
 				return {
 					...state,
-					currentX: action.payload.x,
-					currentZ: action.payload.z,
+					currentX: x,
+					currentZ: z,
 					grid: insertItem(
 						newGrid,
 						selectedAsset.id,
-						action.payload.x,
-						action.payload.z,
+						x,
+						z,
 						prevRotation,
 						prevStickers
 					),
@@ -325,17 +339,18 @@ export default function(
 			const currentX = state.currentX;
 			const currentZ = state.currentZ;
 			const currentRotation = getCellRotation(gridCopy, currentX, currentZ);
-			const prevStickers = getStickers(
-				gridCopy,
-				state.currentX,
-				state.currentZ
-			);
+			const prevStickers = getStickers(gridCopy, currentX, currentZ);
+			let adjSide;
 			let newGrid;
+
+			if (["bed-1"].includes(selectedAsset.id)) {
+				adjSide = 3 - ((currentRotation + 180) % 360) / 90;
+			}
 
 			switch (action.payload) {
 				case "xRight":
-					if (isCellAvailable(gridCopy, currentX + 1, currentZ)) {
-						newGrid = deleteItem(gridCopy, currentX, currentZ);
+					newGrid = deleteItem(gridCopy, currentX, currentZ);
+					if (isCellAvailable(gridCopy, currentX + 1, currentZ, adjSide)) {
 						return {
 							...state,
 							currentX: currentX + 1,
@@ -351,8 +366,8 @@ export default function(
 					}
 					break;
 				case "xLeft":
-					if (isCellAvailable(gridCopy, currentX - 1, currentZ)) {
-						newGrid = deleteItem(gridCopy, currentX, currentZ);
+					newGrid = deleteItem(gridCopy, currentX, currentZ);
+					if (isCellAvailable(gridCopy, currentX - 1, currentZ, adjSide)) {
 						return {
 							...state,
 							currentX: currentX - 1,
@@ -368,8 +383,8 @@ export default function(
 					}
 					break;
 				case "zUp":
-					if (isCellAvailable(gridCopy, currentX, currentZ - 1)) {
-						newGrid = deleteItem(gridCopy, currentX, currentZ);
+					newGrid = deleteItem(gridCopy, currentX, currentZ);
+					if (isCellAvailable(gridCopy, currentX, currentZ - 1, adjSide)) {
 						return {
 							...state,
 							currentZ: currentZ - 1,
@@ -385,8 +400,8 @@ export default function(
 					}
 					break;
 				case "zDown":
-					if (isCellAvailable(gridCopy, currentX, currentZ + 1)) {
-						newGrid = deleteItem(gridCopy, currentX, currentZ);
+					newGrid = deleteItem(gridCopy, currentX, currentZ);
+					if (isCellAvailable(gridCopy, currentX, currentZ + 1, adjSide)) {
 						return {
 							...state,
 							currentZ: currentZ + 1,

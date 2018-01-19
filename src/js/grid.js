@@ -81,13 +81,40 @@ export function rotateCell(grid, x, z) {
 	const col = x,
 		row = z;
 
-	if (grid[row][col] && grid[row][col] !== "0") {
-		grid[row][col].rotation = (grid[row][col].rotation - 90 + 360) % 360;
+	if (grid[row][col] && grid[row][col] !== "0" && grid[row][col] !== "X") {
+		const rotationNew = (grid[row][col].rotation - 90 + 360) % 360;
+
+		if (["bed-1"].includes(grid[row][col].id)) {
+			const adjSideNew = 3 - ((rotationNew + 180) % 360) / 90;
+			const adjXNew = adjSideNew % 2 == 0 ? x : (x + 2 - adjSideNew);
+			const adjZNew = adjSideNew % 2 == 0 ? (z + adjSideNew - 1) : z;
+
+			const rotationOld = grid[row][col].rotation;
+			const adjSideOld = 3 - ((rotationOld + 180) % 360) / 90;
+			const adjXOld = adjSideOld % 2 == 0 ? x : (x + 2 - adjSideOld);
+			const adjZOld = adjSideOld % 2 == 0 ? (z + adjSideOld - 1) : z;
+
+			if (grid[adjZOld][adjXOld] == "X") {
+				grid[adjZOld][adjXOld] = "0";
+			}
+
+			if (!isCellAvailable(grid, adjXNew, adjZNew)) {
+				// if unable to rotate it, continue trying until either it works
+				// or it's back where it started
+				grid[row][col].rotation = rotationNew;
+				return rotateCell(grid, x, z);
+			}
+
+			grid[adjZNew][adjXNew] = "X";
+		}
+
+		grid[row][col].rotation = rotationNew;
 	}
 
 	// rotates the stickers, if available
-	if (grid[row][col].stickers)
+	if (grid[row][col].stickers) {
 		grid[row][col].stickers.unshift(grid[row][col].stickers.pop())
+	}
 
 	return grid;
 }
@@ -108,6 +135,16 @@ export function deleteItem(grid, x, z) {
 
 	const col = x,
 		row = z;
+
+	if (grid[row][col] != "0" && ["bed-1"].includes(grid[row][col].id)) {
+		const rotation = grid[row][col].rotation;
+		const adjSide = 3 - ((rotation + 180) % 360) / 90;
+		const adjX = adjSide % 2 == 0 ? x : (x + 2 - adjSide);
+		const adjZ = adjSide % 2 == 0 ? (z + adjSide - 1) : z;
+		if (grid[adjZ][adjX] == "X") {
+			grid[adjZ][adjX] = "0";
+		}
+	}
 
 	grid[row][col] = "0";
 
@@ -142,6 +179,16 @@ export function insertItem(grid, itemId, x, z, rotation = 180, stickers = null) 
 					stickers: stickers
 				};
 
+	// if an asset spans multiple spaces, flag those spaces as occupied
+	if (["bed-1"].includes(itemId)) {
+		const adjSide = 3 - ((rotation + 180) % 360) / 90;
+		const adjX = adjSide % 2 == 0 ? x : (x + 2 - adjSide);
+		const adjZ = adjSide % 2 == 0 ? (z + adjSide - 1) : z;
+		if (isCellAvailable(grid, adjX, adjZ)) {
+			grid[adjZ][adjX] = "X";
+		}
+	}
+
 	// check adjacent spots for stickers to remove if necessary
 	if (["wall-1", "door-1", "window"].includes(itemId)) {
 		grid = updateStickers(grid, x, z, false);
@@ -156,11 +203,12 @@ export function insertItem(grid, itemId, x, z, rotation = 180, stickers = null) 
  * @param {array} grid grid to be checked
  * @param {int} col column of gridcell to be checked
  * @param {int} row row of gridcell to be checked
+ * @param {int} adjSide adjacent side to be checked as well, if included
  *
  * @return boolean
  */
-export function isCellAvailable(grid, x, z) {
-	if (grid === null || x === null || z === null || isNaN(x)|| isNaN(z)) {
+export function isCellAvailable(grid, x, z, adjSide = null) {
+	if (grid === null || x === null || z === null || isNaN(x) || isNaN(z)) {
 		return false;
 	}
 
@@ -169,6 +217,12 @@ export function isCellAvailable(grid, x, z) {
 
 	if (!_isInBounds(grid, row, col)) return false;
 
+	if (adjSide != null)
+	{
+		const adjX = adjSide % 2 == 0 ? x : (x + 2 - adjSide);
+		const adjZ = adjSide % 2 == 0 ? (z + adjSide - 1) : z;
+		return (grid[row][col] === "0" && isCellAvailable(grid, adjX, adjZ));
+	}
 	return grid[row][col] === "0";
 }
 
@@ -207,7 +261,11 @@ export function getItemId(grid, col, row) {
 
 	if (!_isInBounds(grid, row, col)) return "0";
 
-	return grid[row][col] === "0" ? "0" : grid[row][col].id;
+	if (grid[row][col] === "0" || grid[row][col] === "X") {
+		return grid[row][col];
+	}
+
+	return grid[row][col].id;
 }
 
 /**
@@ -224,7 +282,11 @@ export function getCellRotation(grid, col, row) {
 		return null;
 	}
 
-	return grid[row][col] === "0" ? 180 : grid[row][col].rotation;
+	if (grid[row][col] === "0" || grid[row][col] === "X") {
+		return 180;
+	}
+
+	return grid[row][col].rotation;
 }
 
 /**
@@ -241,7 +303,6 @@ export function findValidExtends(grid, x, z) {
 	let validX = [x];
 	let validZ = [z];
 	// Valid direction array in order: up, right, bottom, left
-	// In third-person view, Z is the horizontal axis, X is vertical
 	let dir = [true, true, true, true];
 	let level = 1;
 	while (dir[0] || dir[1] || dir[2] || dir[3])
