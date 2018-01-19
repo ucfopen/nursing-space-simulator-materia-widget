@@ -102,6 +102,7 @@ export default function(
 			};
 
 		case DESELECT_ASSET:
+		case FILL_WALLS:
 		case REMOVE_ASSET:
 		case SELECT_ASSET:
 			return {
