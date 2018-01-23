@@ -48,7 +48,7 @@ export default class QsetAsset extends Component {
 				mode={mode}
 				onClick={onClick}
 				rotation={rotation}
-				type={data.id}
+				type={id}
 				x={x}
 				z={z}
 			/>
@@ -64,8 +64,8 @@ export default class QsetAsset extends Component {
 				material={{ color: "green", opacity: 0.4 }}
 				obj-model={
 					isSelected
-						? `obj: #${data.id}-obj;`
-						: `obj: #${data.id}-obj;mtl: #${data.id}-mtl;`
+						? `obj: #${id}-obj;`
+						: `obj: #${id}-obj;mtl: #${id}-mtl;`
 				}
 				/**
 				 * The scale property grows an a-box in the +-y direction, but we want it to seem like the box is just growing in the +y direction.
@@ -88,7 +88,7 @@ export default class QsetAsset extends Component {
 
 		return data.category === "construction" ? (
 			<Wall
-				type={data.id}
+				type={id}
 				attributes={attributes}
 				isSelected={isSelected}
 				mode={mode}
@@ -106,8 +106,8 @@ export default class QsetAsset extends Component {
 				material={{ color: "green", opacity: 0.4 }}
 				obj-model={
 					isSelected
-						? `obj: #${data.id}-obj;`
-						: `obj: #${data.id}-obj;mtl: #${data.id}-mtl;`
+						? `obj: #${id}-obj;`
+						: `obj: #${id}-obj;mtl: #${id}-mtl;`
 				}
 				/**
 				 * The scale property grows an a-box in the +-y direction, but we want it to seem like the box is just growing in the +y direction.

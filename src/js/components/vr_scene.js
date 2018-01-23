@@ -103,8 +103,8 @@ export class VRScene extends Component {
 				row.map(
 					(column, colIndex) => (
 						<FloorUnit
-							extendX={currentX}
-							extendZ={currentZ}
+							currentX={currentX}
+							currentZ={currentZ}
 							grid={grid}
 							key={`${rowIndex} ${colIndex}`}
 							mode={mode}
