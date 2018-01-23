@@ -286,7 +286,6 @@ export default function(
 						action.payload.z,
 						prevRotation
 					),
-
 					mode: "manipulation",
 					selectedAsset: oldSelectedAsset
 				};
