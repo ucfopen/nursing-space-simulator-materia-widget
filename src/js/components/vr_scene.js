@@ -24,7 +24,10 @@ export default class VRScene extends React.Component {
 		const assetYPosition = this.props.selectedAsset.y;
 
 		// Check if the asset covers this tile
-		if (assetXPosition === tileXPosition && assetYPosition === tileYPosition) {
+		if (
+			assetXPosition === tileXPosition &&
+			assetYPosition === tileYPosition
+		) {
 			return true;
 		}
 
@@ -37,18 +40,28 @@ export default class VRScene extends React.Component {
 		return (
 			<Scene className="vr-scene">
 				<a-assets>
-					<img id="ceilingTexture" alt="sorry" src="assets/CEILING_TILE.jpg" />
+					<img
+						id="ceilingTexture"
+						alt="sorry"
+						src="assets/CEILING_TILE.jpg"
+					/>
 					{Object.keys(assets).map(function(asset) {
 						if (assets[asset].objSrc) {
 							return (
-								<a-asset-item id={asset + "-obj"} src={assets[asset].objSrc} />
+								<a-asset-item
+									id={asset + "-obj"}
+									src={assets[asset].objSrc}
+								/>
 							);
 						}
 					})}
 					{Object.keys(assets).map(function(asset) {
 						if (assets[asset].mtlSrc) {
 							return (
-								<a-asset-item id={asset + "-mtl"} src={assets[asset].mtlSrc} />
+								<a-asset-item
+									id={asset + "-mtl"}
+									src={assets[asset].mtlSrc}
+								/>
 							);
 						}
 					})}
@@ -66,48 +79,68 @@ export default class VRScene extends React.Component {
 				this.props.grid.map((row, rowIndex) =>
 					row.map(
 						(column, colIndex) =>
-							this.props.grid[rowIndex][colIndex] !== "0"
-								? <QsetAsset
-										assetSelected={this.isAssetSelected(rowIndex, colIndex)}
-										x={rowIndex}
-										z={colIndex}
-										onClick={this.props.manipulateAsset.bind(
-											this,
-											this.props.assetsFromFile[
-												this.props.grid[rowIndex][colIndex].id
-											],
-											"select",
-											rowIndex,
-											colIndex
-										)}
-										data={
-											this.props.assetsFromFile[
-												this.props.grid[rowIndex][colIndex].id
-											]
-										}
-										rotation={this.props.grid[rowIndex][colIndex].rotation}
-									/>
-								: null
+							this.props.grid[rowIndex][colIndex] !== "0" ? (
+								<QsetAsset
+									assetSelected={this.isAssetSelected(
+										rowIndex,
+										colIndex
+									)}
+									x={rowIndex}
+									z={colIndex}
+									onClick={this.props.manipulateAsset.bind(
+										this,
+										this.props.assetsFromFile[
+											this.props.grid[rowIndex][colIndex]
+												.id
+										],
+										"select",
+										rowIndex,
+										colIndex
+									)}
+									data={
+										this.props.assetsFromFile[
+											this.props.grid[rowIndex][colIndex]
+												.id
+										]
+									}
+									rotation={
+										this.props.grid[rowIndex][colIndex]
+											.rotation
+									}
+								/>
+							) : null
 					)
 				)}
 				{// Draw the floor (tile by tile) to the scene
 				this.props.grid.map((row, rowIndex) =>
-					row.map((column, colIndex) =>
+					row.map((column, colIndex) => (
 						<FloorUnit
 							thirdPerson={this.props.thirdPerson}
 							x={rowIndex}
 							y={colIndex}
-							onClick={this.props.onClick.bind(this, rowIndex, colIndex)}
+							onClick={
+								this.props.deleteMultipleMode
+									? this.props.deleteMultipleAssets.bind(
+											this,
+											rowIndex,
+											colIndex
+										)
+									: this.props.onClick.bind(
+											this,
+											rowIndex,
+											colIndex
+										)
+							}
 						/>
-					)
+					))
 				)}
 				{// Draw the ceiling (tile by tile) to the scene
 				this.props.grid.map((row, rowIndex) =>
 					row.map(
 						(column, colIndex) =>
-							this.props.thirdPerson
-								? null
-								: <CeilingUnit x={rowIndex} z={colIndex} />
+							this.props.thirdPerson ? null : (
+								<CeilingUnit x={rowIndex} z={colIndex} />
+							)
 					)
 				)}
 			</Scene>

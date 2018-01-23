@@ -1,7 +1,7 @@
 import AFRAME from "aframe";
-import "aframe-mouse-cursor-component";
 import { Entity } from "aframe-react";
 import React from "react";
+import "aframe-mouse-cursor-component";
 
 export default class CameraTP extends React.Component {
 	render() {

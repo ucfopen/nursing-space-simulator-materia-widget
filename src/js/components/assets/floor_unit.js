@@ -31,7 +31,7 @@ export default class FloorUnit extends React.Component {
 				scale={{ x: "1", y: "1", z: "1" }}
 				events={{
 					click: this.props.onClick,
-					mouseenter: [this.onMouseEnter.bind(this), this.props.onMouseEnter],
+					mouseenter: this.onMouseEnter.bind(this),
 					mouseleave: this.onMouseLeave.bind(this)
 				}}
 				height="1"

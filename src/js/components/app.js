@@ -18,7 +18,7 @@ import {
 
 /**
  * App holds the state of the entire simulation. Calls the HUD and the VR Scene
- * 
+ *
  * @param map array Holds the 2D representation of the grid that represents the simulation's map
  */
 export default class App extends React.Component {
@@ -30,7 +30,10 @@ export default class App extends React.Component {
 			manipulationMode: false,
 			placementMode: false,
 			position: { x: 2.5, y: 18, z: 14 }, //TODO: make these variable dynamic based on map from qset
+			lastX: null,
+			lastY: null,
 			selectedAsset: null,
+			deleteMultipleMode: false,
 			thirdPerson: true,
 			vrSceneClicked: false,
 			vrSceneHaveEnteredFirstPerson: false,
@@ -104,7 +107,9 @@ export default class App extends React.Component {
 		}
 		let grid = cloneDeep(this.state.grid);
 
-		if (!this.state.selectedAsset || !this.state.thirdPerson) return;
+		if (!this.state.selectedAsset || !this.state.thirdPerson) {
+			return;
+		}
 
 		// Check if the user is entering first person mode
 		if (this.state.selectedAsset.asset.id === "pov_camera") {
@@ -143,8 +148,11 @@ export default class App extends React.Component {
 				this.state.selectedAsset.y > -1
 			) {
 				grid[x][y].rotation =
-					grid[this.state.selectedAsset.x][this.state.selectedAsset.y].rotation;
-				grid[this.state.selectedAsset.x][this.state.selectedAsset.y] = "0";
+					grid[this.state.selectedAsset.x][
+						this.state.selectedAsset.y
+					].rotation;
+				grid[this.state.selectedAsset.x][this.state.selectedAsset.y] =
+					"0";
 			}
 		}
 
@@ -155,6 +163,58 @@ export default class App extends React.Component {
 		});
 	}
 
+	setDeleteMode() {
+		this.setState({
+			deleteMultipleMode: true
+		});
+	}
+
+	deleteMultipleAssets(x, y) {
+		if (this.state.lastX == null && this.state.lastY == null) {
+			return this.setState({
+				lastX: x,
+				lastY: y
+			});
+		}
+		let grid = cloneDeep(this.state.grid);
+		let positions = {
+			xOne: this.state.lastX,
+			yOne: this.state.lastY,
+			xTwo: x,
+			yTwo: y
+		};
+		if (positions.yOne != null) {
+			positions.xTwo = x;
+			positions.yTwo = y;
+			var tiles =
+				(positions.xTwo - positions.xOne) *
+				(positions.yTwo - positions.yOne);
+			tiles = Math.abs(tiles);
+			var counter = positions.xOne;
+			var innerCounter = positions.yOne;
+
+			for (counter; counter <= positions.xTwo; counter++) {
+				grid[counter][positions.yOne] = "0";
+				for (
+					innerCounter;
+					innerCounter <= positions.yTwo;
+					innerCounter++
+				) {
+					grid[counter][innerCounter] = "0";
+				}
+				innerCounter = positions.yOne;
+			}
+			this.setState({
+				deleteMultipleMode: false,
+				lastX: null,
+				lastY: null,
+				grid: grid
+			});
+			return;
+		}
+		return;
+	}
+
 	manipulateAsset(asset, action, x, y) {
 		let grid = cloneDeep(this.state.grid);
 		if (action === "select") {
@@ -162,8 +222,11 @@ export default class App extends React.Component {
 			if (
 				this.state.selectedAsset &&
 				this.state.selectedAsset.asset.id !== "pov_camera" &&
-				this.state.selectedAsset.asset.id !== this.state.grid[x][y].id &&
-				this.state.selectedAsset.asset.canReplace.includes(asset.category)
+				this.state.selectedAsset.asset.id !==
+					this.state.grid[x][y].id &&
+				this.state.selectedAsset.asset.canReplace.includes(
+					asset.category
+				)
 			) {
 				grid[x][y] = {
 					id: this.state.selectedAsset.asset.id,
@@ -202,8 +265,11 @@ export default class App extends React.Component {
 		if (action === "rotate") {
 			if (x < 0 || y < 0) return;
 
-			grid[this.state.selectedAsset.x][this.state.selectedAsset.y].rotation =
-				(grid[this.state.selectedAsset.x][this.state.selectedAsset.y].rotation -
+			grid[this.state.selectedAsset.x][
+				this.state.selectedAsset.y
+			].rotation =
+				(grid[this.state.selectedAsset.x][this.state.selectedAsset.y]
+					.rotation -
 					90) %
 				360;
 
@@ -223,7 +289,10 @@ export default class App extends React.Component {
 		let stepsToAdd;
 
 		if (x === -1 && this.state.tourFinished === false) {
-			if (asset.id !== "pov_camera" && this.state.vrSceneClicked === false) {
+			if (
+				asset.id !== "pov_camera" &&
+				this.state.vrSceneClicked === false
+			) {
 				runSteps = true;
 				stepsToAdd = clickInScene;
 			}
@@ -240,9 +309,10 @@ export default class App extends React.Component {
 			this.setState(
 				{
 					selectedAsset: { asset: asset, x: x, y: y },
-					manipulationMode: asset.id === "pov_camera" || (x > -1 && y > -1)
-						? true
-						: false,
+					manipulationMode:
+						asset.id === "pov_camera" || (x > -1 && y > -1)
+							? true
+							: false,
 					steps: stepsToAdd,
 					stepIndex: 0
 				},
@@ -255,9 +325,10 @@ export default class App extends React.Component {
 			this.setState(
 				{
 					selectedAsset: { asset: asset, x: x, y: y },
-					manipulationMode: asset.id === "pov_camera" || (x > -1 && y > -1)
-						? true
-						: false
+					manipulationMode:
+						asset.id === "pov_camera" || (x > -1 && y > -1)
+							? true
+							: false
 				},
 				() => (typeof cb === "function" ? cb() : {})
 			);
@@ -361,7 +432,8 @@ export default class App extends React.Component {
 			<div
 				id="app"
 				// When in first person, app container style must be modified to absolute position to support built in aframe UI
-				style={this.state.thirdPerson ? {} : { position: "absolute" }}>
+				style={this.state.thirdPerson ? {} : { position: "absolute" }}
+			>
 				<Joyride
 					ref={c => (this.joyride = c)}
 					callback={this.joyrideCallback.bind(this)}
@@ -384,6 +456,8 @@ export default class App extends React.Component {
 				<VRScene
 					assetsFromFile={this.props.assetsFromFile}
 					manipulateAsset={this.manipulateAsset.bind(this)}
+					deleteMultipleAssets={this.deleteMultipleAssets.bind(this)}
+					deleteMultipleMode={this.state.deleteMultipleMode}
 					grid={this.state.grid}
 					thirdPerson={this.state.thirdPerson}
 					position={this.state.position}
@@ -397,6 +471,7 @@ export default class App extends React.Component {
 					assetsFromFile={this.props.assetsFromFile}
 					selectAsset={this.selectAsset.bind(this)}
 					selectedAsset={this.state.selectedAsset}
+					setDeleteMode={this.setDeleteMode.bind(this)}
 					xUp={this.updatePosition.bind(this, "x", 1, false)}
 					xDown={this.updatePosition.bind(this, "x", -1, false)}
 					yUp={this.updatePosition.bind(this, "y", 1, false)}

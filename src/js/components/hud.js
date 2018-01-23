@@ -20,28 +20,33 @@ export default class HUD extends React.Component {
 					zDown={this.props.zDown.bind(this)}
 					resetPosition={this.props.resetPosition.bind(this)}
 				/>
-				{this.props.thirdPerson
-					? <div>
-							{this.props.selectedAsset !== null
-								? <AssetControls
-										manipulateAsset={this.props.manipulateAsset}
-										selectedAsset={this.props.selectedAsset}
-										manipulationMode={this.props.manipulationMode}
-									/>
-								: null}
-							<AssetTray
-								assetsFromFile={this.props.assetsFromFile}
-								categories={this.props.categories}
-								selectAsset={this.props.selectAsset.bind(this)}
+				{this.props.thirdPerson ? (
+					<div>
+						{this.props.selectedAsset !== null ? (
+							<AssetControls
+								manipulateAsset={this.props.manipulateAsset}
 								selectedAsset={this.props.selectedAsset}
+								manipulationMode={this.props.manipulationMode}
 							/>
-						</div>
-					: <div id="ground-top-panel">
-							<button id="back" onClick={this.props.toggleCamera.bind(this)}>
-								Back
-							</button>
-
-						</div>}
+						) : null}
+						<AssetTray
+							assetsFromFile={this.props.assetsFromFile}
+							categories={this.props.categories}
+							selectAsset={this.props.selectAsset.bind(this)}
+							selectedAsset={this.props.selectedAsset}
+							setDeleteMode={this.props.setDeleteMode}
+						/>
+					</div>
+				) : (
+					<div id="ground-top-panel">
+						<button
+							id="back"
+							onClick={this.props.toggleCamera.bind(this)}
+						>
+							Back
+						</button>
+					</div>
+				)}
 			</div>
 		);
 	}

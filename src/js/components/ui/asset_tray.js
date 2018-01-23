@@ -26,13 +26,18 @@ export default class AssetTray extends React.Component {
 		const assets = this.props.assetsFromFile;
 		const curCategory = this.state.category;
 		const selectAsset = this.props.selectAsset;
+		const setDeleteMode = this.props.setDeleteMode;
 		let selectedAsset = this.props.selectedAsset;
 
 		return (
 			<div
 				id="UI-bottom-panel"
-				className={this.state.showMenu ? "open" : "closed"}>
-				<button onClick={this.toggleMenu.bind(this)} className="drawer-toggle">
+				className={this.state.showMenu ? "open" : "closed"}
+			>
+				<button
+					onClick={this.toggleMenu.bind(this)}
+					className="drawer-toggle"
+				>
 					{this.state.showMenu ? "[Close Menu]" : "[Open Menu]"}
 				</button>
 				<div id="asset-selection-menu">
@@ -43,17 +48,24 @@ export default class AssetTray extends React.Component {
 							{ id: "pov_camera", title: "POV Camera" },
 							null,
 							null
-						)}>
+						)}
+					>
 						First-Person Viewer
 					</button>
+					<button onClick={setDeleteMode}>
+						Delete Multiple Assets
+					</button>
 					<div id="categories-list">
-						{this.props.categories.map((category, index) =>
+						{this.props.categories.map((category, index) => (
 							<CategoryButton
-								onClick={this.setCurrentCategory.bind(this, category)}
+								onClick={this.setCurrentCategory.bind(
+									this,
+									category
+								)}
 								key={index}
 								category={category}
 							/>
-						)}
+						))}
 					</div>
 				</div>
 				<div id="asset-picker">
@@ -64,7 +76,12 @@ export default class AssetTray extends React.Component {
 									key={asset}
 									item={assets[asset]}
 									selectedAsset={selectedAsset}
-									onClick={selectAsset.bind(this, assets[asset], null, null)}
+									onClick={selectAsset.bind(
+										this,
+										assets[asset],
+										null,
+										null
+									)}
 								/>
 							);
 						}
