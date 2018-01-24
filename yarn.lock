@@ -4917,9 +4917,9 @@ map-obj@^1.0.0, map-obj@^1.0.1:
     style-loader "^0.18.2"
     webpack "^3.3.0"
 
-"materia-widget-development-kit@git+ssh://git@clu.cdl.ucf.edu:materia/materia-widget-development-kit#semver:>=1.0.6 <1.10.0":
+"materia-widget-development-kit@git+ssh://git@clu.cdl.ucf.edu:materia/materia-widget-development-kit#semver:>=1.0.7 <1.10.0":
   version "1.0.4"
-  resolved "git+ssh://git@clu.cdl.ucf.edu:materia/materia-widget-development-kit#cda1ffe7637ec1846f1e8a5f89392ba33a9dcb3f"
+  resolved "git+ssh://git@clu.cdl.ucf.edu:materia/materia-widget-development-kit#9f566eeb22dfc61cb580389a6d6e63099a3bbc43"
   dependencies:
     autoprefixer "^7.1.2"
     body-parser "^1.17.1"
