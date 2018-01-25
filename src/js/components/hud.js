@@ -12,13 +12,13 @@ export default class HUD extends React.Component {
 			<div>
 				<MovementControls
 					thirdPerson={this.props.thirdPerson}
-					xUp={this.props.xUp.bind(this)}
-					xDown={this.props.xDown.bind(this)}
-					yUp={this.props.yUp.bind(this)}
-					yDown={this.props.yDown.bind(this)}
-					zUp={this.props.zUp.bind(this)}
-					zDown={this.props.zDown.bind(this)}
-					resetPosition={this.props.resetPosition.bind(this)}
+					xUp={this.props.xUp}
+					xDown={this.props.xDown}
+					yUp={this.props.yUp}
+					yDown={this.props.yDown}
+					zUp={this.props.zUp}
+					zDown={this.props.zDown}
+					resetPosition={this.props.resetPosition}
 				/>
 				{this.props.thirdPerson ? (
 					<div>
@@ -32,17 +32,14 @@ export default class HUD extends React.Component {
 						<AssetTray
 							assetsFromFile={this.props.assetsFromFile}
 							categories={this.props.categories}
-							selectAsset={this.props.selectAsset.bind(this)}
+							selectAsset={this.props.selectAsset}
 							selectedAsset={this.props.selectedAsset}
 							setDeleteMode={this.props.setDeleteMode}
 						/>
 					</div>
 				) : (
 					<div id="ground-top-panel">
-						<button
-							id="back"
-							onClick={this.props.toggleCamera.bind(this)}
-						>
+						<button id="back" onClick={this.props.toggleCamera}>
 							Back
 						</button>
 					</div>

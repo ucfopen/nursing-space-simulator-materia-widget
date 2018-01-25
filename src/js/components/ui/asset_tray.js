@@ -44,7 +44,7 @@ export default class AssetTray extends React.Component {
 					<button
 						id="vr-viewer-mode"
 						onClick={selectAsset.bind(
-							this,
+							null,
 							{ id: "pov_camera", title: "POV Camera" },
 							null,
 							null
@@ -52,7 +52,7 @@ export default class AssetTray extends React.Component {
 					>
 						First-Person Viewer
 					</button>
-					<button onClick={setDeleteMode}>
+					<button id="delete-multiple-mode" onClick={setDeleteMode}>
 						Delete Multiple Assets
 					</button>
 					<div id="categories-list">
@@ -77,7 +77,7 @@ export default class AssetTray extends React.Component {
 									item={assets[asset]}
 									selectedAsset={selectedAsset}
 									onClick={selectAsset.bind(
-										this,
+										null,
 										assets[asset],
 										null,
 										null
