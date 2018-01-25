@@ -116,6 +116,7 @@ export default class VRScene extends React.Component {
 					row.map((column, colIndex) => (
 						<FloorUnit
 							thirdPerson={this.props.thirdPerson}
+							deleteMultipleMode={this.props.deleteMultipleMode}
 							x={rowIndex}
 							y={colIndex}
 							onClick={

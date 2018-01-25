@@ -164,9 +164,15 @@ export default class App extends React.Component {
 	}
 
 	setDeleteMode() {
-		this.setState({
-			deleteMultipleMode: true
-		});
+		if (this.state.deleteMultipleMode == false) {
+			this.setState({
+				deleteMultipleMode: true
+			});
+		} else {
+			this.setState({
+				deleteMultipleMode: false
+			});
+		}
 	}
 
 	deleteMultipleAssets(x, y) {
@@ -472,6 +478,7 @@ export default class App extends React.Component {
 					selectAsset={this.selectAsset.bind(this)}
 					selectedAsset={this.state.selectedAsset}
 					setDeleteMode={this.setDeleteMode.bind(this)}
+					deleteMultipleMode={this.state.deleteMultipleMode}
 					xUp={this.updatePosition.bind(this, "x", 1, false)}
 					xDown={this.updatePosition.bind(this, "x", -1, false)}
 					yUp={this.updatePosition.bind(this, "y", 1, false)}

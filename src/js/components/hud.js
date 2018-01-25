@@ -35,6 +35,7 @@ export default class HUD extends React.Component {
 							selectAsset={this.props.selectAsset}
 							selectedAsset={this.props.selectedAsset}
 							setDeleteMode={this.props.setDeleteMode}
+							deleteMultipleMode={this.props.deleteMultipleMode}
 						/>
 					</div>
 				) : (

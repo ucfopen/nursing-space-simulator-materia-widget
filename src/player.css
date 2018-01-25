@@ -287,6 +287,10 @@ button svg.svg-icon:hover {
 	margin-right: 15px;
 }
 
+#UI-bottom-panel #asset-selection-menu .active-button {
+	background: #d1ebff;
+}
+
 #asset-picker {
 	height: 140px;
 	margin: 10px 0px 5px 15px;

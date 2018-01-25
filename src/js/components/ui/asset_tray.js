@@ -28,6 +28,11 @@ export default class AssetTray extends React.Component {
 		const selectAsset = this.props.selectAsset;
 		const setDeleteMode = this.props.setDeleteMode;
 		let selectedAsset = this.props.selectedAsset;
+		let deleteMultipleMode = this.props.deleteMultipleMode;
+		let selectedAssetId;
+		if (selectedAsset != null) {
+			selectedAssetId = selectedAsset.asset.id;
+		}
 
 		return (
 			<div
@@ -43,6 +48,11 @@ export default class AssetTray extends React.Component {
 				<div id="asset-selection-menu">
 					<button
 						id="vr-viewer-mode"
+						className={
+							selectedAssetId == "pov_camera"
+								? "active-button"
+								: ""
+						}
 						onClick={selectAsset.bind(
 							null,
 							{ id: "pov_camera", title: "POV Camera" },
@@ -52,7 +62,11 @@ export default class AssetTray extends React.Component {
 					>
 						First-Person Viewer
 					</button>
-					<button id="delete-multiple-mode" onClick={setDeleteMode}>
+					<button
+						id="delete-multiple-mode"
+						className={deleteMultipleMode ? "active-button" : ""}
+						onClick={setDeleteMode}
+					>
 						Delete Multiple Assets
 					</button>
 					<div id="categories-list">
