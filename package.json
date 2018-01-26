@@ -20,7 +20,8 @@
 	},
 	"dependencies": {
 		"aframe": "^0.5.0",
-		"aframe-click-drag-component": "^3.0.1",
+		"aframe-click-drag-component":
+			"git+ssh://git@clu.cdl.ucf.edu:materia/aframe-click-drag-component" ,
 		"aframe-mouse-cursor-component": "^0.5.2",
 		"aframe-react": "^4.2.3",
 		"fs": "^0.0.2",
