@@ -33,7 +33,7 @@ export default props => {
 	return (
 		<Entity
 			position={{ x, y: 0, z }}
-			events={{ click: onClick }}
+			events={{ mouseup: onClick }}
 			rotation={{ x: 0, y: rotation, z: 0 }}>
 			<Entity
 				geometry={{ primitive: "box", height: 0.65, width: 1, depth: 1 }}
