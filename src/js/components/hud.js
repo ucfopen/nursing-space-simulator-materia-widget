@@ -29,6 +29,16 @@ import {
 } from "../actions/grid_actions";
 
 export class HUD extends Component {
+	checkSelectAssetType(asset) {
+		const { selectedAsset } = this.props;
+		if (selectedAsset && asset && selectedAsset.id == asset.id) {
+			this.props.deselectAsset()
+		}
+		else {
+			this.props.selectAssetType(asset);
+		}
+	}
+
 	renderHUD() {
 		const {
 			isTooltipPersistent,
@@ -37,6 +47,7 @@ export class HUD extends Component {
 			selectedAsset,
 			selectedItem,
 			thirdPerson,
+			tooltipClassName,
 			tooltipPersistentText,
 			tooltipTemporaryText
 		} = this.props;
@@ -51,6 +62,7 @@ export class HUD extends Component {
 					text={
 						isTooltipTemporary ? tooltipTemporaryText : tooltipPersistentText
 					}
+					className={tooltipClassName}
 				/>
 				{mode !== "editAsset" ? (
 					<MovementControls
@@ -82,7 +94,7 @@ export class HUD extends Component {
 						) : null}
 						<AssetTray
 							currentCategory={this.props.currentCategory}
-							selectAssetType={this.props.selectAssetType}
+							selectAssetType={this.checkSelectAssetType.bind(this)}
 							selectedAsset={this.props.selectedAsset}
 							setCategory={this.props.setCategory}
 							isMenuVisible={
@@ -120,6 +132,7 @@ function mapStateToProps({ menu, grid, position, tooltip }) {
 		selectedItem: grid.selectedItem,
 		thirdPerson: position.thirdPerson,
 		menuVisible: menu.visible,
+		tooltipClassName: tooltip.className,
 		isTooltipTemporary: tooltip.temporary,
 		tooltipTemporaryText: tooltip.temporaryText,
 		isTooltipPersistent: tooltip.persistent,

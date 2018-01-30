@@ -232,6 +232,10 @@ button svg.svg-icon:hover {
 	border-radius: 5px;
 }
 
+#selected-asset-tooltip span.error {
+	background: #ffaaaa;
+}
+
 /* Bottom panel */
 
 #UI-bottom-panel {

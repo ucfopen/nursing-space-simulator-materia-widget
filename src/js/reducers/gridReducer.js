@@ -7,6 +7,7 @@ import {
 	EXTEND_WALL,
 	FILL_WALLS,
 	INSERT_ASSET,
+	REFRESH_GRID,
 	REMOVE_ASSET,
 	ROTATE_ASSET,
 	SELECT_ASSET_TYPE,
@@ -32,6 +33,7 @@ import { deepCopy } from "../utils";
 
 export default function(
 	state = {
+		dragging: false,
 		currentX: null,
 		currentZ: null,
 		mode: "none",
@@ -52,6 +54,8 @@ export default function(
 				mode: "none",
 				selectedAsset: null,
 				selectedItem: null,
+				validX: null,
+				validZ: null
 			};
 		}
 
@@ -139,7 +143,9 @@ export default function(
 				currentZ: null,
 				grid: newGrid,
 				mode: "none",
-				selectedAsset: null
+				selectedAsset: null,
+				validX: null,
+				validZ: null
 			};
 		}
 
@@ -167,7 +173,8 @@ export default function(
 			) {
 				return {
 					...state,
-					grid: gridCopy
+					grid: gridCopy,
+					dragging: false
 				};
 			} else {
 				let newGrid,
@@ -203,6 +210,7 @@ export default function(
 							...state,
 							currentX: x,
 							currentZ: z,
+							dragging: false,
 							grid: newGrid,
 							mode: "extendWall",
 							validX: validX,
@@ -210,20 +218,11 @@ export default function(
 						};
 					}
 				}
-				// need to check other adjacent spaces for larger objects
-				if (["bed-1"].includes(selectedAsset.id)) {
-					const adjSide = 3 - ((prevRotation + 180) % 360) / 90;
-					if (!isCellAvailable(newGrid, x, z, adjSide)) {
-						return {
-							...state,
-							grid: deepCopy(state.grid)
-						};
-					}
-				}
 				return {
 					...state,
 					currentX: x,
 					currentZ: z,
+					dragging: false,
 					grid: insertItem(
 						newGrid,
 						selectedAsset.id,
@@ -235,6 +234,15 @@ export default function(
 					mode: "manipulation"
 				};
 			}
+		}
+
+		case REFRESH_GRID: {
+			const gridCopy = deepCopy(state.grid);
+			return {
+				...state,
+				dragging: false,
+				grid: gridCopy
+			};
 		}
 
 		case REMOVE_ASSET: {
@@ -294,6 +302,7 @@ export default function(
 					...state,
 					currentX: action.payload.x,
 					currentZ: action.payload.z,
+					dragging: action.payload.dragging,
 					mode: "manipulation",
 					selectedAsset: action.payload.asset
 				};
@@ -301,30 +310,13 @@ export default function(
 		}
 
 		case SELECT_ASSET_TYPE: {
-			let oldSelectedAsset = state.selectedAsset
-				? { ...state.selectedAsset }
-				: null;
-			// If the same asset type is clicked again, deselect it.
-			if (
-				oldSelectedAsset &&
-				action.payload &&
-				oldSelectedAsset.id == action.payload.id
-			)
-				return {
-					...state,
-					currentX: null,
-					currentZ: null,
-					mode: "assetTypeSelected",
-					selectedAsset: null
-				};
-			else
-				return {
-					...state,
-					currentX: null,
-					currentZ: null,
-					mode: "assetTypeSelected",
-					selectedAsset: action.payload
-				};
+			return {
+				...state,
+				currentX: null,
+				currentZ: null,
+				mode: "assetTypeSelected",
+				selectedAsset: action.payload
+			};
 		}
 
 		case UPDATE_ASSET_POSITION: {
