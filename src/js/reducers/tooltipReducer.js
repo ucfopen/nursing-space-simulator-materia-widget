@@ -1,8 +1,6 @@
-import {
-	UPDATE_PERSISTENT_TOOLTIP,
-	UPDATE_TEMPORARY_TOOLTIP,
-	UPDATE_TIMED_TOOLTIP
-} from "../actions/tooltip_actions";
+import React, { Component } from "react";
+
+import { TOGGLE_THIRD_PERSON } from "../actions/camera_actions";
 import {
 	EDIT_ASSET,
 	EXTEND_WALL,
@@ -11,11 +9,21 @@ import {
 	INSERT_ASSET,
 	REMOVE_ASSET,
 	SELECT_ASSET,
-	SELECT_ASSET_TYPE
+	SELECT_ASSET_TYPE,
  } from "../actions/grid_actions";
+import {
+	BAD_INSERT,
+	BAD_WALL_EXTEND,
+	SHOW_ERROR_TOOLTIP,
+	UPDATE_PERSISTENT_TOOLTIP,
+	UPDATE_TEMPORARY_TOOLTIP,
+	UPDATE_TIMED_TOOLTIP
+} from "../actions/tooltip_actions";
 
 export default function(
 	state = {
+		className: null,
+		temporaryKey: null,
 		temporaryText: "temp",
 		temporary: false,
 		persistentText: "persistent",
@@ -25,28 +33,63 @@ export default function(
 	action
 ) {
 	switch (action.type) {
+
+		case SHOW_ERROR_TOOLTIP:
+			switch (action.payload.error) {
+				case BAD_INSERT:
+					const text = (
+						<p>
+							Can't place a <strong>{action.payload.assetTitle}</strong> here.
+						</p>
+					).props.children;
+					return {
+						...state,
+						className: "error",
+						temporary: true,
+						temporaryText: text,
+						temporaryKey: action.payload.key
+					};
+				case BAD_WALL_EXTEND:
+					return {
+						...state,
+						className: "error",
+						temporary: true,
+						temporaryText: "Walls can only be extended horizontally and vertically.",
+						temporaryKey: action.payload.key
+					};
+				default:
+					return state;
+			}
+
 		case UPDATE_PERSISTENT_TOOLTIP:
 			return {
 				...state,
+				className: action.payload.className,
 				persistent: action.payload.enabled,
 				persistentText: action.payload.text
 			};
 
 		case UPDATE_TEMPORARY_TOOLTIP:
+			// Temporary messages are keyed (random number), so if they bubble
+			// they're removed properly
 			return {
 				...state,
+				className: action.payload.className,
 				temporary: action.payload.enabled,
-				temporaryText: action.payload.text
+				temporaryText: action.payload.text,
+				temporaryKey: action.payload.key
 			};
 
 		case UPDATE_TIMED_TOOLTIP:
-			if (state.temporaryText == action.payload) {
+			if (state.temporaryKey == action.payload) {
 				return {
 					...state,
-					temporary: false
+					className: null,
+					temporary: false,
+					temporaryKey: null
 				}
 			}
-			return { ...state };
+			return state;
 
 		case EXTEND_WALL:
 			return {
@@ -58,22 +101,37 @@ export default function(
 
 		case SELECT_ASSET_TYPE:
 			if (state.prevSelectedType != action.payload.id) {
+				const text = (
+					action.payload.id == "pov_camera"
+						? "Click on a space to jump into first-person view."
+						: (
+							<p>Click on a valid space to place a
+								<strong> {HS_ASSETS[action.payload.id].title}</strong>.
+							</p>
+						).props.children
+				);
 				return {
 					...state,
+					className: null,
 					prevSelectedType: action.payload.id,
 					temporary: false,
 					persistent: true,
-					persistentText:
-						action.payload.id == "pov_camera"
-							? "Click on a space to jump into first-person view."
-							: "Click on a valid space to place this item."
+					persistentText: text
 				};
 			}
 			return {
 				...state,
+				className: null,
 				prevSelectedType: null,
 				temporary: false,
 				persistent: false
+			};
+
+		case TOGGLE_THIRD_PERSON:
+			return {
+				...state,
+				persistent: true,
+				persistentText: "Click on a space to jump into first-person view."
 			};
 
 		case EDIT_ASSET:
@@ -93,6 +151,9 @@ export default function(
 					persistent: true,
 					persistentText: "Click on a valid space to auto-fill walls."
 				};
+			}
+			if (action.payload.assetId == "pov_camera") {
+				return state;
 			}
 			return {
 				...state,

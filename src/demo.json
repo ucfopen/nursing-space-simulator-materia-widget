@@ -427,7 +427,7 @@
 						"tag": "a-obj-model",
 						"type": "object",
 						"category": "equipment",
-						"title": "Biohazard Waste"
+						"title": "Biohazard Waste Bin"
 					},
 					"window": {
 						"buttonSource": "assets/icons/icon_window.png",

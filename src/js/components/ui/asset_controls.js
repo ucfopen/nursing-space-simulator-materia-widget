@@ -87,11 +87,13 @@ export default class AssetControls extends Component {
 		} else {
 			return (
 				<div id="UI-selected-asset-options">
-					<span id="selected-asset-label">
-						<span className="selected-asset-label-title">
-							Currently selected: {selectedAsset.title}
+					{mode != "assetTypeSelected" ? (
+						<span id="selected-asset-label">
+							<span className="selected-asset-label-title">
+								Currently selected: {selectedAsset.title}
+							</span>
 						</span>
-					</span>
+					) : null}
 					{mode == "manipulation" ? (
 						<div>
 							<button
