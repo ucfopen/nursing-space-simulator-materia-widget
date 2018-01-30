@@ -79,7 +79,7 @@ export class VRScene extends Component {
 		}
 
 		let validInsert = isCellAvailable(grid, x, z);
-		if (validInsert && ["bed-1"].includes(assetId)) {
+		if (validInsert && assetId && HS_ASSETS[assetId].spanX == 2) {
 			let prevRotation = getCellRotation(
 				grid,
 				currentX,
