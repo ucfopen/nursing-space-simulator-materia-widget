@@ -62,7 +62,9 @@ export function rotateCell(grid, x, z) {
 	if (grid[row][col] && grid[row][col] !== "0" && grid[row][col] !== "X") {
 		const rotationNew = (grid[row][col].rotation - 90 + 360) % 360;
 
-		if (["bed-1"].includes(grid[row][col].id)) {
+		// check the span of the asset, currenly only supports X-span of 2
+		const id = grid[row][col].id;
+		if (id && HS_ASSETS[id].spanX == 2) {
 			const adjSideNew = 3 - ((rotationNew + 180) % 360) / 90;
 			const adjXNew = adjSideNew % 2 == 0 ? x : (x + 2 - adjSideNew);
 			const adjZNew = adjSideNew % 2 == 0 ? (z + adjSideNew - 1) : z;
@@ -114,13 +116,19 @@ export function deleteItem(grid, x, z) {
 	const col = x,
 		row = z;
 
-	if (grid[row][col] != "0" && ["bed-1"].includes(grid[row][col].id)) {
-		const rotation = grid[row][col].rotation;
-		const adjSide = 3 - ((rotation + 180) % 360) / 90;
-		const adjX = adjSide % 2 == 0 ? x : (x + 2 - adjSide);
-		const adjZ = adjSide % 2 == 0 ? (z + adjSide - 1) : z;
-		if (grid[adjZ][adjX] == "X") {
-			grid[adjZ][adjX] = "0";
+
+	if (grid[row][col] && grid[row][col] != "0" && grid[row][col] != "X")
+	{
+		// check the span of the asset, currenly only supports X-span of 2
+		const id = grid[row][col].id;
+		if (id && HS_ASSETS[id].spanX == 2) {
+			const rotation = grid[row][col].rotation;
+			const adjSide = 3 - ((rotation + 180) % 360) / 90;
+			const adjX = adjSide % 2 == 0 ? x : (x + 2 - adjSide);
+			const adjZ = adjSide % 2 == 0 ? (z + adjSide - 1) : z;
+			if (grid[adjZ][adjX] == "X") {
+				grid[adjZ][adjX] = "0";
+			}
 		}
 	}
 
@@ -158,7 +166,7 @@ export function insertItem(grid, itemId, x, z, rotation = 180, stickers = null) 
 				};
 
 	// if an asset spans multiple spaces, flag those spaces as occupied
-	if (["bed-1"].includes(itemId)) {
+	if (itemId && HS_ASSETS[itemId].spanX == 2) {
 		const adjSide = 3 - ((rotation + 180) % 360) / 90;
 		const adjX = adjSide % 2 == 0 ? x : (x + 2 - adjSide);
 		const adjZ = adjSide % 2 == 0 ? (z + adjSide - 1) : z;

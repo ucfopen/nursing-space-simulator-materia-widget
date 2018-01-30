@@ -334,7 +334,7 @@ export default function(
 			let adjSide;
 			let newGrid;
 
-			if (["bed-1"].includes(selectedAsset.id)) {
+			if (selectedAsset.id && HS_ASSETS[selectedAsset.id].spanX == 2) {
 				adjSide = 3 - ((currentRotation + 180) % 360) / 90;
 			}
 
