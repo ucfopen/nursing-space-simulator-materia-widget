@@ -34,7 +34,9 @@
 						"tag": "a-obj-model",
 						"type": "object",
 						"category": "equipment",
-						"title": "Bed"
+						"title": "Bed",
+						"spanX":2,
+						"spanZ":1
 					},
 					"chair": {
 						"buttonSource": "assets/icons/icon_chair.png",
@@ -62,7 +64,9 @@
 						"tag": "a-obj-model",
 						"type": "object",
 						"category": "equipment",
-						"title": "Chair"
+						"title": "Chair",
+						"spanX":1,
+						"spanZ":1
 					},
 					"curtain": {
 						"buttonSource": "assets/icons/icon_curtain.png",
@@ -90,7 +94,9 @@
 						"tag": "a-obj-model",
 						"type": "object",
 						"category": "equipment",
-						"title": "Curtain"
+						"title": "Curtain",
+						"spanX":1,
+						"spanZ":1
 					},
 					"counter": {
 						"buttonSource": "assets/icons/icon_counter.png",
@@ -118,7 +124,9 @@
 						"tag": "a-obj-model",
 						"type": "object",
 						"category": "equipment",
-						"title": "Counter"
+						"title": "Counter",
+						"spanX":1,
+						"spanZ":1
 					},
 					"crashcart": {
 						"buttonSource": "assets/icons/icon_cart.png",
@@ -146,7 +154,9 @@
 						"tag": "a-obj-model",
 						"type": "object",
 						"category": "equipment",
-						"title": "Crash Cart"
+						"title": "Crash Cart",
+						"spanX":1,
+						"spanZ":1
 					},
 					"doctor": {
 						"buttonSource": "assets/icons/icon_doc.png",
@@ -174,7 +184,9 @@
 						"tag": "a-obj-model",
 						"type": "object",
 						"category": "people",
-						"title": "Doctor"
+						"title": "Doctor",
+						"spanX":1,
+						"spanZ":1
 					},
 					"nurse": {
 						"buttonSource": "assets/icons/icon_nurse.png",
@@ -202,7 +214,9 @@
 						"tag": "a-obj-model",
 						"type": "object",
 						"category": "people",
-						"title": "Nurse"
+						"title": "Nurse",
+						"spanX":1,
+						"spanZ":1
 					},
 					"desk": {
 						"buttonSource": "assets/icons/icon_desk.png",
@@ -230,7 +244,9 @@
 						"tag": "a-obj-model",
 						"type": "object",
 						"category": "equipment",
-						"title": "Desk"
+						"title": "Desk",
+						"spanX":1,
+						"spanZ":3
 					},
 					"monitor-1": {
 						"buttonSource": "assets/icons/icon_monitor.png",
@@ -258,7 +274,9 @@
 						"tag": "a-obj-model",
 						"type": "object",
 						"category": "equipment",
-						"title": "Monitor Stand"
+						"title": "Monitor Stand",
+						"spanX":1,
+						"spanZ":1
 					},
 					"computer": {
 						"buttonSource": "assets/icons/icon_computer.png",
@@ -286,7 +304,9 @@
 						"tag": "a-obj-model",
 						"type": "object",
 						"category": "equipment",
-						"title": "Computer"
+						"title": "Computer",
+						"spanX":1,
+						"spanZ":1
 					},
 					"sink-1": {
 						"buttonSource": "assets/icons/icon_sink.png",
@@ -314,7 +334,9 @@
 						"tag": "a-obj-model",
 						"type": "object",
 						"category": "equipment",
-						"title": "Sink"
+						"title": "Sink",
+						"spanX":1,
+						"spanZ":1
 					},
 					"door-1": {
 						"buttonSource": "assets/icons/icon_door.png",
@@ -343,7 +365,9 @@
 						"tag": "a-obj-model",
 						"type": "door",
 						"category": "construction",
-						"title": "Door"
+						"title": "Door",
+						"spanX":1,
+						"spanZ":1
 					},
 					"iv-1": {
 						"buttonSource": "assets/icons/icon_iv.png",
@@ -371,7 +395,9 @@
 						"tag": "a-obj-model",
 						"type": "object",
 						"category": "equipment",
-						"title": "IV Stand"
+						"title": "IV Stand",
+						"spanX":1,
+						"spanZ":1
 					},
 					"trashcan-1": {
 						"buttonSource": "assets/icons/icon_trash.png",
@@ -399,7 +425,9 @@
 						"tag": "a-obj-model",
 						"type": "object",
 						"category": "equipment",
-						"title": "Trash Can"
+						"title": "Trash Can",
+						"spanX":1,
+						"spanZ":1
 					},
 					"trashcan-bio": {
 						"buttonSource": "assets/icons/icon_trashbio.png",
@@ -427,7 +455,9 @@
 						"tag": "a-obj-model",
 						"type": "object",
 						"category": "equipment",
-						"title": "Biohazard Waste"
+						"title": "Biohazard Waste",
+						"spanX":1,
+						"spanZ":1
 					},
 					"window": {
 						"buttonSource": "assets/icons/icon_window.png",
@@ -455,7 +485,9 @@
 						"tag": "a-obj-model",
 						"type": "wall",
 						"category": "construction",
-						"title": "Window"
+						"title": "Window",
+						"spanX":1,
+						"spanZ":1
 					},
 					"wall-1": {
 						"buttonSource": "assets/icons/icon_wall.png",
@@ -475,7 +507,9 @@
 						"tag": "a-box",
 						"type": "wall",
 						"category": "construction",
-						"title": "Wall"
+						"title": "Wall",
+						"spanX":1,
+						"spanZ":1
 					},
 					"fireSticker": {
 						"buttonSource": "assets/icons/icon_fire.png",
