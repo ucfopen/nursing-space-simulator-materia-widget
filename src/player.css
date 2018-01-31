@@ -47,6 +47,44 @@ button svg.svg-icon:hover {
 	background: #ffffff;
 }
 
+#UI-asset-movement-panel {
+	position: absolute;
+	width: 160px;
+	padding: 0px;
+	background: none;
+	border-radius: 0px;
+
+	text-align: center;
+}
+
+#UI-asset-movement-panel .label {
+	padding: 2px 2px;
+	background: none;
+	border: 0px;
+	border-radius: 0px;
+	box-shadow: none;
+
+	cursor: pointer;
+}
+#UI-asset-movement-panel button {
+	background: none;
+	border: 0px;
+	border-radius: 0px;
+	box-shadow: none;
+}
+
+#UI-asset-movement-panel #camera-move {
+	width: 160px;
+}
+
+#UI-asset-movement-panel #camera-move-horizontal #camera-left {
+	float: left;
+}
+
+#UI-asset-movement-panel #camera-move-horizontal #camera-right {
+	float: right;
+}
+
 /* Top-right panel */
 
 #UI-right-panel {
