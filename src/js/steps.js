@@ -21,7 +21,7 @@ const beginning = [
 	},
 	{
 		title: "Moving the Camera",
-		text: "The camera's position can be adjusted using these buttons.",
+		text: "The camera's position can be adjusted using these buttons. Use the dot in the center of the arrows to jump back to the starting position.",
 		selector: "#camera-controls",
 		position: "left",
 		allowClicksThruHole: true
