@@ -162,78 +162,66 @@ export default function(
 				? { ...state.selectedAsset }
 				: null;
 
+			if (!selectedAsset || selectedAsset.id === "pov_camera") {
+				return state;
+			}
+
 			const { x, z } = action.payload;
-
 			const gridCopy = deepCopy(state.grid);
+			let newGrid,
+				prevRotation = 180,
+				prevStickers;
 
-			if (
-				!selectedAsset ||
-				!isCellAvailable(gridCopy, x, z) ||
-				selectedAsset.id === "pov_camera"
-			) {
-				return {
-					...state,
-					grid: gridCopy,
-					dragging: false
-				};
-			} else {
-				let newGrid,
-					prevRotation = 180,
-					prevStickers;
-				if (state.currentX !== null && state.currentZ !== null) {
-					prevRotation = getCellRotation(
-						gridCopy,
-						state.currentX,
-						state.currentZ
-					);
-					if (["wall-1", "door-1", "window"].includes(selectedAsset.id)) {
-						prevStickers = getStickers(gridCopy, state.currentX, state.currentZ, false);
-					}
-					newGrid = deleteItem(gridCopy, state.currentX, state.currentZ);
-				} else {
-					newGrid = gridCopy;
-					if (selectedAsset.id == "wall-1") {
-						let validX, validZ;
-						newGrid = insertItem(
-							newGrid,
-							selectedAsset.id,
-							x,
-							z,
-							prevRotation
-						);
-						[validX, validZ] = findValidExtends(
-							newGrid,
-							x,
-							z
-						);
-						return {
-							...state,
-							currentX: x,
-							currentZ: z,
-							dragging: false,
-							grid: newGrid,
-							mode: "extendWall",
-							validX: validX,
-							validZ: validZ
-						};
-					}
+			if (state.currentX !== null && state.currentZ !== null) {
+				prevRotation = getCellRotation(
+					gridCopy,
+					state.currentX,
+					state.currentZ
+				);
+				if (HS_ASSETS[selectedAsset.id].category == "construction") {
+					prevStickers = getStickers(gridCopy, state.currentX, state.currentZ, false);
 				}
-				return {
-					...state,
-					currentX: x,
-					currentZ: z,
-					dragging: false,
-					grid: insertItem(
+				newGrid = deleteItem(gridCopy, state.currentX, state.currentZ);
+			}
+			else {
+				newGrid = gridCopy;
+				if (selectedAsset.id == "wall-1") {
+					let validX, validZ;
+					newGrid = insertItem(
 						newGrid,
 						selectedAsset.id,
 						x,
 						z,
-						prevRotation,
-						prevStickers
-					),
-					mode: "manipulation"
-				};
+						prevRotation
+					);
+					[validX, validZ] = findValidExtends(newGrid, x, z);
+					return {
+						...state,
+						currentX: x,
+						currentZ: z,
+						dragging: false,
+						grid: newGrid,
+						mode: "extendWall",
+						validX: validX,
+						validZ: validZ
+					};
+				}
 			}
+			return {
+				...state,
+				currentX: x,
+				currentZ: z,
+				dragging: false,
+				grid: insertItem(
+					newGrid,
+					selectedAsset.id,
+					x,
+					z,
+					prevRotation,
+					prevStickers
+				),
+				mode: "manipulation"
+			};
 		}
 
 		case REFRESH_GRID: {
