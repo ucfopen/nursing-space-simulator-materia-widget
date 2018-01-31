@@ -43,7 +43,9 @@ export default class FloorUnit extends Component {
 
 	isValidPlace() {
 		const { grid, selectedAssetId, x, z } = this.props;
-		if (selectedAssetId && HS_ASSETS[selectedAssetId].spanX == 2) {
+		if (selectedAssetId &&
+			HS_ASSETS[selectedAssetId] &&
+			HS_ASSETS[selectedAssetId].spanX == 2) {
 			const { currentX, currentZ } = this.props;
 			const rotation = (
 				currentX && currentZ
@@ -109,7 +111,10 @@ export default class FloorUnit extends Component {
 					scale={{ x: "1", y: "1", z: "1" }}
 					width="1"
 				/>
-				{this.state.active && selectedAssetId && HS_ASSETS[selectedAssetId].spanX == 2
+				{	this.state.active &&
+					selectedAssetId &&
+					HS_ASSETS[selectedAssetId] &&
+					HS_ASSETS[selectedAssetId].spanX == 2
 					? (
 						<Entity
 							height="1"
