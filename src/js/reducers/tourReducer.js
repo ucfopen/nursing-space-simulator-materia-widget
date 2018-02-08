@@ -9,8 +9,8 @@ import {
 	SELECT_ASSET
 } from "../actions/grid_actions";
 import { INIT_DATA } from "../actions/index";
-import { START_TOUR_SECTION, END_TOUR } from "../actions/tour_actions";
-import { SET_CATEGORY } from "../actions/menu_actions";
+import { START_TOUR_SECTION, END_TOUR, RESTART_TOUR } from "../actions/tour_actions";
+import { SET_CATEGORY, TOGGLE_HELP_VISIBILITY } from "../actions/menu_actions";
 import { TOGGLE_THIRD_PERSON } from "../actions/camera_actions";
 
 import steps from "../steps";
@@ -113,6 +113,14 @@ export default function(
 			}
 			return state;
 
+		case RESTART_TOUR:
+			return {
+				...state,
+				runNextSet: true,
+				stepCompletion: 0,
+				tourRunning: true
+			};
+
 		case SELECT_ASSET:
 			if (state.tourRunning && state.stepCompletion === 7) {
 				return {
@@ -182,6 +190,13 @@ export default function(
 				runNextSet: false,
 				stepCompletion: state.stepCompletion + 1
 			};
+
+		case TOGGLE_HELP_VISIBILITY:
+			if (state.tourRunning && state.stepCompletion === 16)
+				return {
+					...state,
+					runNextSet: true
+				};
 
 		case TOGGLE_THIRD_PERSON:
 			if (state.tourRunning && state.stepCompletion === 15)
