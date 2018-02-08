@@ -193,10 +193,10 @@ export class VRScene extends Component {
 	}
 
 	renderScene() {
-		const { posX, posY, posZ, thirdPerson } = this.props;
+		const { mode, posX, posY, posZ, shortcutsEnabled, thirdPerson } = this.props;
 		const position = { x: posX, y: posY, z: posZ }
 		return (
-			<Scene className="vr-scene">
+			<Scene className="vr-scene" keyboard-shortcuts="enterVR: false">
 				<a-assets>
 					<img
 						alt="ceiling-texture"
@@ -229,8 +229,17 @@ export class VRScene extends Component {
 				<Skybox thirdPerson={thirdPerson} />
 				<FloorTile />
 				<Ceiling thirdPerson={thirdPerson} />
-				<CameraFP active={!thirdPerson} position={position} />
-				<CameraTP active={thirdPerson} position={position} />
+				<CameraFP
+					active={!thirdPerson}
+					position={position}
+					shortcutsEnabled={shortcutsEnabled}
+				/>
+				<CameraTP
+					active={thirdPerson}
+					position={position}
+					shortcutsEnabled={shortcutsEnabled}
+					mode={mode}
+				/>
 				{this.renderFloor()}
 				{this.renderAssets()}
 			</Scene>
@@ -245,7 +254,7 @@ export class VRScene extends Component {
 	}
 }
 
-function mapStateToProps({ grid, position }) {
+function mapStateToProps({ grid, position, menu }) {
 	return {
 		currentX: grid.currentX,
 		currentZ: grid.currentZ,
@@ -256,6 +265,7 @@ function mapStateToProps({ grid, position }) {
 		posY: position.y,
 		posZ: position.z,
 		selectedAsset: grid.selectedAsset,
+		shortcutsEnabled: menu.shortcutsEnabled,
 		thirdPerson: position.thirdPerson,
 		validX: grid.validX,
 		validZ: grid.validZ
