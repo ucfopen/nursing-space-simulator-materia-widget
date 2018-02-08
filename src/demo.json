@@ -534,7 +534,7 @@
 						"defaultColor": "#9FCDB1",
 						"id": "soapSticker",
 						"mtlSrc": "",
-						"objSrc": "assets/stickers/soap.obj",
+						"objSrc": "assets/stickers/soap/soap.obj",
 						"rotation": {
 							"x": 0,
 							"y": 180,
@@ -550,8 +550,8 @@
 						"canReplace": [],
 						"defaultColor": "#9FCDB1",
 						"id": "tvSticker",
-						"mtlSrc": "",
-						"objSrc": "assets/stickers/tv.obj",
+						"mtlSrc": "assets/stickers/tv/tv.mtl",
+						"objSrc": "assets/stickers/tv/tv.obj",
 						"rotation": {
 							"x": 0,
 							"y": 180,
