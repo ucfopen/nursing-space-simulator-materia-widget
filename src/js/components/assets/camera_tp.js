@@ -9,7 +9,11 @@ export default props => {
 			camera={{ active: props.active }}
 			mouse-cursor
 			wasd-controls={{
-				enabled: props.shortcutsEnabled && props.mode != "manipulation",
+				enabled: (
+					props.shortcutsEnabled &&
+					props.mode != "manipulation" &&
+					props.mode != "editAsset"
+				),
 				acceleration: 100
 			}}
 			position={props.position}
