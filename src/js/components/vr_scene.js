@@ -11,9 +11,10 @@ import FloorTile from "./assets/floor_tile";
 import FloorUnit from "./assets/floor_unit";
 import QsetAsset from "./assets/qset_asset";
 import Skybox from "./assets/skybox";
+import AssetMovementControls from "./ui/asset_movement_controls";
 
 // Redux Actions
-import { deselectAsset, insertAsset, selectAsset, fillWalls } from "../actions/grid_actions";
+import { deselectAsset, insertAsset, selectAsset, updateAssetPosition, fillWalls } from "../actions/grid_actions";
 import { updateTemporaryTooltip, updateTimedTooltip } from "../actions/tooltip_actions";
 // Utilities
 import { checkPropsExist } from "../utils";
@@ -26,9 +27,10 @@ export class VRScene extends Component {
 			grid,
 			mode,
 			selectedAsset,
-			thirdPerson
+			thirdPerson,
+			insertAsset,
+			selectAsset,
 		} = this.props;
-		const { insertAsset, selectAsset } = this.props;
 		const mappedAssets = grid.map(
 			(row, rowIndex) =>
 				row.map((column, colIndex) => {
@@ -125,7 +127,12 @@ export class VRScene extends Component {
 	}
 
 	renderScene() {
-		const { posX, posY, posZ, thirdPerson } = this.props;
+		const {
+			posX,
+			posY,
+			posZ,
+			thirdPerson,
+			updateAssetPosition } = this.props;
 		const position = { x: posX, y: posY, z: posZ }
 		return (
 			<Scene className="vr-scene">
@@ -165,6 +172,14 @@ export class VRScene extends Component {
 				<CameraTP active={thirdPerson} position={position} />
 				{this.renderFloor()}
 				{this.renderAssets()}
+				{ this.props.currentX && this.props.currentZ ? (
+				<AssetMovementControls 
+					currentX={this.props.currentX}
+					currentZ={this.props.currentZ}
+					asset={this.props.selectedAsset}
+					position={position}
+					updateAssetPosition={updateAssetPosition}/>
+				) : null}
 			</Scene>
 		);
 	}
@@ -198,6 +213,7 @@ export default connect(mapStateToProps, {
 	fillWalls,
 	insertAsset,
 	selectAsset,
+	updateAssetPosition,
 	updateTemporaryTooltip,
 	updateTimedTooltip
 })(VRScene);
