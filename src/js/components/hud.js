@@ -131,6 +131,7 @@ export class HUD extends Component {
 				)}
 				<KeyboardControls />
 				<HelpPane
+					mode={mode}
 					restartTour={this.restartTour.bind(this)}
 					shortcutsEnabled={shortcutsEnabled}
 					toggleHelpVisibility={toggleHelpVisibility}
