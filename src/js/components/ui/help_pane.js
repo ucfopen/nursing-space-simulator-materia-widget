@@ -5,7 +5,10 @@ export default props => {
 	return (
 		props.visible
 			? ( // preventDefault on mousedown prevents items underneath from being dragged
-				<div id="help-pane" onMouseDown={(e)=>e.preventDefault()}>
+				<div
+					id="help-pane"
+					className={props.mode == "editAsset" ? "reduced" : null}
+					onMouseDown={(e)=>e.preventDefault()}>
 					<button id="close-help-pane" onClick={()=>props.toggleHelpVisibility()}>x</button>
 					<div id="keyboard-checkbox">
 						<input

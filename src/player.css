@@ -479,6 +479,12 @@ button.a-enter-vr-button {
 	border-radius: 10px
 }
 
+#help-pane.reduced {
+	width: 375px;
+	height: 275px;
+	overflow: scroll;
+}
+
 #help-pane h1 {
 	text-decoration: underline;
 	font-size: 20px;
