@@ -43,10 +43,10 @@ export class App extends Component {
 					debug={false}
 					disableOverlay={false}
 					locale={{
-						back: <span>&lt;- Back</span>,
+						back: <span>Back</span>,
 						close: <span>Close</span>,
 						last: <span>Ok</span>,
-						next: <span>Next -&gt;</span>,
+						next: <span>Next</span>,
 						skip: <span>Skip Tour</span>
 					}}
 					ref={c => (this.joyride = c)}
