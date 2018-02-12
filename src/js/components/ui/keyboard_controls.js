@@ -170,7 +170,9 @@ export class KeyboardControls extends Component {
 			<button
 				id="keyboard-shortcut"
 				className={shortcutsEnabled ? "active" : null}
-				onClick={(e) => this.props.toggleHelpVisibility()}>
+				onClick={(e) => this.props.toggleHelpVisibility()}
+				// preventDefault on mousedown prevents items underneath from being dragged
+				onMouseDown={(e)=>e.preventDefault()}>
 				Help and Keyboard Shortcuts
 			</button>
 		);

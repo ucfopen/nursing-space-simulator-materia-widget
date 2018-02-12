@@ -12,7 +12,9 @@ export default class AssetTray extends Component {
 		return (
 			<div
 				className={this.props.isMenuVisible ? "open" : "closed"}
-				id="UI-bottom-panel">
+				id="UI-bottom-panel"
+				// preventDefault on mousedown prevents items underneath from being dragged
+				onMouseDown={(e)=>e.preventDefault()}>
 				<button className="drawer-toggle" onClick={this.props.toggleMenu}>
 					{this.props.isMenuVisible ? "[Close Menu]" : "[Open Menu]"}
 				</button>
