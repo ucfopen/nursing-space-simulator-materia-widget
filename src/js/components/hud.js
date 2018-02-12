@@ -65,20 +65,6 @@ export class HUD extends Component {
 						updateCameraPosition={updateCameraPosition}
 					/>
 				) : null}
-				{mode === "manipulation" ? (
-					<AssetMovementControls
-						thirdPerson={thirdPerson}
-						update={update}
-						mode={mode}
-						updateCameraPosition={updateCameraPosition}
-						currentX={
-							this.props.currentX * 26 + 10 + (selectedAsset.spanX * 5)
-						}
-						currentY={
-							this.props.currentZ * 26 + 60 + (selectedAsset.spanZ * 10)
-						}
-					/>
-				) : null}
 				{thirdPerson ? (
 					<div>
 						{selectedAsset ? (

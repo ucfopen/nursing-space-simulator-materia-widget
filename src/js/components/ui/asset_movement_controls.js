@@ -1,46 +1,36 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
+import AFRAME from "aframe";
+import { Entity } from "aframe-react";
 
 // Custom Reaction Components
-import DownArrowSVG from "../assets/icon-svgs/down_arrow";
-import LeftArrowSVG from "../assets/icon-svgs/left_arrow";
-import RightArrowSVG from "../assets/icon-svgs/right_arrow";
-import ScreenshotSVG from "../assets/icon-svgs/screenshot";
-import UpArrowSVG from "../assets/icon-svgs/up_arrow";
+import Arrow from "../assets/arrow";
 
 export default class AssetMovementControls extends Component {
 	constructor(props) {
 		super(props);
 	}
+
+	controlClicked(direction, e) {
+		e.stopPropagation();
+		this.props.updateAssetPosition(direction);
+	}
     
 	render() {
-		const { thirdPerson, update, mode, currentX, currentY } = this.props;
+		const { currentX, currentZ, asset, position, offsets, updateAssetPosition } = this.props;
+
+		// compute offsets based on the difference in camera position and asset position
+		// this is to center the asset within the arrows when it would otherwise be offset due to the difference in height between the asset and arrows
+		let xOffset = (position.x - currentX) / 4;
+		let zOffset = (position.z - currentZ) / 4 - 0.5;
+
 		return (
-			<div id="UI-asset-movement-panel" style={{ left: currentX + "px", top: currentY + "px" }}>
-					<div id="camera-controls">
-						<div id="camera-move">
-							<button id="camera-up" onMouseDown={update.bind(this, "zUp")}>
-								<UpArrowSVG />
-							</button>
-							<div id="camera-move-horizontal">
-								<button
-									id="camera-left"
-									onMouseDown={update.bind(this, "xLeft")}>
-									<LeftArrowSVG />
-								</button>
-								
-								<button
-									id="camera-right"
-									onMouseDown={update.bind(this, "xRight")}>
-									<RightArrowSVG />
-								</button>
-							</div>
-							<button id="camera-down" onMouseDown={update.bind(this, "zDown")}>
-								<DownArrowSVG />
-							</button>
-						</div>
-					</div>
-			</div>
+				<Entity>
+					<Arrow x={currentX + xOffset} z={currentZ + zOffset} onClick={this.controlClicked.bind(this, "zUp")}/>
+					<Arrow x={currentX + (asset.spanX/2) + xOffset} z={currentZ + (asset.spanZ/2) + zOffset} rotation={270} onClick={this.controlClicked.bind(this, "xRight")}/>
+					<Arrow x={currentX - (asset.spanX/2) + xOffset} z={currentZ + (asset.spanZ/2) + zOffset} rotation={90} onClick={this.controlClicked.bind(this, "xLeft")}/>
+					<Arrow x={currentX + xOffset} z={currentZ + (asset.spanZ) + zOffset} rotation={180} onClick={this.controlClicked.bind(this, "zDown")}/>
+				</Entity>
 		);
 	}
 }
