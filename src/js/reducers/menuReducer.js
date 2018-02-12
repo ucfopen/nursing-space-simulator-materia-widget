@@ -9,7 +9,7 @@ export default function(
 	state = {
 		currentCategory: "equipment",
 		helpVisible: false,
-		shortcutsEnabled: false,
+		shortcutsEnabled: true,
 		visible: true },
 	action
 ) {
