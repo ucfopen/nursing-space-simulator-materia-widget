@@ -1,10 +1,11 @@
 import React from "react";
 
 export default props => {
+
 	return (
 		props.visible
-			? (
-				<div id="help-pane">
+			? ( // preventDefault on mousedown prevents items underneath from being dragged
+				<div id="help-pane" onMouseDown={(e)=>e.preventDefault()}>
 					<button id="close-help-pane" onClick={()=>props.toggleHelpVisibility()}>x</button>
 					<div id="keyboard-checkbox">
 						<input
