@@ -6,7 +6,8 @@ const beginning = [
 		selector: "#app",
 		position: "top",
 		style: {
-			hole: { visibility: "hidden" }
+			hole: { visibility: "hidden" },
+			arrow: { display: "none" }
 		}
 	},
 	{
@@ -16,7 +17,8 @@ const beginning = [
 		selector: ".vr-scene",
 		position: "top",
 		style: {
-			hole: { visibility: "hidden" }
+			hole: { visibility: "hidden" },
+			arrow: { display: "none" }
 		}
 	},
 	{
@@ -139,6 +141,9 @@ const clickToExtendWall = [
 		style: {
 			button: {
 				visibility: "hidden"
+			},
+			arrow: {
+				display: "none"
 			}
 		}
 	}
@@ -155,6 +160,9 @@ const selectWallInScene = [
 		style: {
 			button: {
 				visibility: "hidden"
+			},
+			main: {
+				padding: "10px 0"
 			}
 		}
 	}
@@ -186,6 +194,9 @@ const extendWallAgain = [
 		style: {
 			button: {
 				visibility: "hidden"
+			},
+			arrow: {
+				display: "none"
 			}
 		}
 	}
@@ -201,6 +212,9 @@ const selectWallAgain = [
 		style: {
 			button: {
 				visibility: "hidden"
+			},
+			arrow: {
+				display: "none"
 			}
 		}
 	}
@@ -227,17 +241,27 @@ const attachMode = [
 		title: "Attach Mode",
 		text:
 			"In <strong>Attach</strong> mode you can add various objects to your walls and doors.",
-		selector: "#top-sticker-box",
+		selector: ".vr-scene",
 		position: "top",
-		allowClicksThruHole: true
+		allowClicksThruHole: true,
+		style: {
+			arrow: {
+				display: "none"
+			}
+		}
 	},
 	{
 		title: "Attach Mode",
 		text:
 			"Use the left and right arrows to cycle through the available objects. After you have made your selections, <strong>click/touch</strong> the checkmark in the top left to continue.",
-		selector: ".sticker-arrow-right",
+		selector: ".a-canvas",
 		position: "top",
-		allowClicksThruHole: true
+		allowClicksThruHole: true,
+		style: {
+			arrow: {
+				display: "none"
+			}
+		}
 	}
 ];
 
@@ -248,7 +272,12 @@ const beforeClickFirstPersonViewr = [
 			"You can view your creation from a more personal point of view with the <strong>First-Person Viewer</strong>.",
 		selector: ".a-canvas",
 		position: "bottom",
-		allowClicksThruHole: true
+		allowClicksThruHole: true,
+		style: {
+			arrow: {
+				display: "none"
+			}
+		}
 	},
 	{
 		title: "First-Person Viewer",
@@ -275,6 +304,9 @@ const clickFirstPersonViewer = [
 		style: {
 			button: {
 				visibility: "hidden"
+			},
+			arrow: {
+				display: "none"
 			}
 		}
 	}
@@ -287,7 +319,12 @@ const clickCameraInScene = [
 			"You are now in <strong>First-Person</strong>. Click and drag (or use your finger on a mobile device) to take a peek around.",
 		selector: ".vr-scene",
 		position: "bottom",
-		allowClicksThruHole: true
+		allowClicksThruHole: true,
+		style: {
+			arrow: {
+				display: "none"
+			}
+		}
 	},
 	{
 		title: "VR Mode",
@@ -332,7 +369,7 @@ const endTour = [
 		text:
 			"Here you can restart this tour anytime.<br/>There's also a list of keyboard shortcuts, if you chose to enable them.",
 		selector: "#help-pane",
-		position: "bottom"
+		position: "top"
 	},
 	{
 		title: "Tour Complete",
@@ -344,6 +381,9 @@ const endTour = [
 			hole: { visibility: "hidden" },
 			skip: {
 				visibility: "hidden"
+			},
+			arrow: {
+				display: "none"
 			}
 		}
 	}
