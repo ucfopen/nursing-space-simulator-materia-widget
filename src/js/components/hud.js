@@ -9,8 +9,6 @@ import CategoryButton from "./ui/category_button";
 import MovementControls from "./ui/movement_controls";
 import AssetMovementControls from "./ui/asset_movement_controls";
 
-import CameraTP from "./assets/camera_tp";
-
 // Redux Actions
 import {
 	updateCameraPosition,
