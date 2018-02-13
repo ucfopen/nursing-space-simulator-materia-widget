@@ -124,7 +124,8 @@ export default class VRScene extends React.Component {
 									? this.props.deleteMultipleAssets.bind(
 											this,
 											rowIndex,
-											colIndex
+											colIndex,
+											window.mouseCoords
 										)
 									: this.props.onClick.bind(
 											this,

@@ -6,6 +6,7 @@ import ReactDOM from "react-dom";
 
 import HUD from "./hud";
 import VRScene from "./vr_scene";
+import SelectionCanvas from "./selection_canvas";
 
 import Joyride from "react-joyride";
 import {
@@ -175,14 +176,17 @@ export default class App extends React.Component {
 		}
 	}
 
-	deleteMultipleAssets(x, y) {
+	deleteMultipleAssets(x, y, lastCoords, event) {
 		if (this.state.lastX == null && this.state.lastY == null) {
+			window.lastMouseCoords = { x: lastCoords.x, y: lastCoords.y };
+
 			return this.setState({
 				lastX: x,
 				lastY: y
 			});
 		}
 		let grid = cloneDeep(this.state.grid);
+
 		let positions = {
 			xOne: this.state.lastX,
 			yOne: this.state.lastY,
@@ -210,6 +214,7 @@ export default class App extends React.Component {
 				}
 				innerCounter = positions.yOne;
 			}
+			window.lastMouseCoords = { x: null, y: null };
 			this.setState({
 				deleteMultipleMode: false,
 				lastX: null,
@@ -488,6 +493,9 @@ export default class App extends React.Component {
 					resetPosition={this.updatePosition.bind(this, "y", 0, true)}
 					thirdPerson={this.state.thirdPerson}
 					toggleCamera={this.toggleCamera.bind(this)}
+				/>
+				<SelectionCanvas
+					deleteMultipleMode={this.state.deleteMultipleMode}
 				/>
 			</div>
 		);

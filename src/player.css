@@ -378,3 +378,8 @@ button svg.svg-icon:hover {
 
 	font-size: 12px;
 }
+
+#selection_canvas {
+	position: relative;
+	pointer-events: none;
+}

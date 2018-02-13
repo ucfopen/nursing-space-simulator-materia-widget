@@ -36,6 +36,13 @@ function loadGrid(gridString, gLen, gWid) {
 /*
 ** Places the first--and main--React element in the document.
 */
+window.mouseCoords = { x: null, y: null };
+window.lastMouseCoords = { x: null, y: null };
+document.addEventListener("mousemove", event => {
+	window.mouseCoords.x = event.clientX;
+	window.mouseCoords.y = event.clientY;
+});
+
 Namespace("HospitalSim").Engine = {
 	start: function(instance, qset, version) {
 		let data = {

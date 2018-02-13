@@ -12,7 +12,7 @@
 }
 
 button {
-	border: solid 1px #A9A9A9;
+	border: solid 1px #a9a9a9;
 	border-radius: 5px;
 	box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.2);
 	outline: none;
@@ -64,7 +64,7 @@ button {
 
 #UI-right-panel button {
 	padding: 10px;
-	background: #FFFFFF;
+	background: #ffffff;
 }
 
 #UI-right-panel button:hover {
@@ -92,10 +92,12 @@ button {
 
 	text-align: center;
 }
-#camera-left, #camera-right {
+#camera-left,
+#camera-right {
 	display: inline-block;
 }
-#camera-up, #camera-down {
+#camera-up,
+#camera-down {
 	display: block;
 	margin-left: auto;
 	margin-right: auto;
@@ -112,7 +114,7 @@ button {
 
 	padding: 5px;
 
-	background: #FFFFFF;
+	background: #ffffff;
 
 	border-radius: 5px;
 
@@ -137,7 +139,7 @@ button {
 
 	padding: 8px;
 
-	background: #FFFFFF;
+	background: #ffffff;
 
 	cursor: pointer;
 }
@@ -153,7 +155,7 @@ button {
 	z-index: 1;
 
 	padding: 3px 5px;
-	background: #F9F9F9;
+	background: #f9f9f9;
 
 	border-radius: 5px 5px 0px 0px;
 }
@@ -190,7 +192,7 @@ button {
 
 	padding: 0px;
 
-	background: #FFFFFF;
+	background: #ffffff;
 	border-radius: 0px;
 	border: none;
 
@@ -215,8 +217,8 @@ button {
 	padding: 5px 10px;
 	font-size: 12px;
 
-	background: #FFFFFF;
-	border: solid 1px #E0E0E0;
+	background: #ffffff;
+	border: solid 1px #e0e0e0;
 
 	cursor: pointer;
 }
@@ -279,16 +281,18 @@ button {
 
 	vertical-align: top;
 }
-#previous-asset, #next-asset {
+#previous-asset,
+#next-asset {
 	width: 8%; /* 10% of 80% */
 	height: 100%;
 
-	background: #FFFFFF;
+	background: #ffffff;
 
 	font-size: 32px;
 	font-weight: bold;
 }
-#previous-asset:hover, #next-asset:hover {
+#previous-asset:hover,
+#next-asset:hover {
 	background: #d1ebff;
 }
 
