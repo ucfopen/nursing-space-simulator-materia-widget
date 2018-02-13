@@ -7,7 +7,6 @@ import AssetTooltip from "./ui/asset_tooltip";
 import AssetTray from "./ui/asset_tray";
 import CategoryButton from "./ui/category_button";
 import MovementControls from "./ui/movement_controls";
-import AssetMovementControls from "./ui/asset_movement_controls";
 
 // Redux Actions
 import {
@@ -46,7 +45,7 @@ export class HUD extends Component {
 
 		const update =
 			mode === "manipulation" ? updateAssetPosition : updateCameraPosition;
-			
+
 		return (
 			<div>
 				<AssetTooltip
