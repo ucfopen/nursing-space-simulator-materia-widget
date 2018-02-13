@@ -42,7 +42,7 @@ export default props => {
 						<li><strong>V</strong> enter wall edit mode (when wall or door is selected)</li>
 						<li><strong>H</strong> toggle help (this menu)</li>
 					</ul>
-					<p id="version-info">Build 3, Spring 2017</p>
+					<p id="version-info">Build 3, Spring 2018</p>
 				</div>
 			)
 			: null
