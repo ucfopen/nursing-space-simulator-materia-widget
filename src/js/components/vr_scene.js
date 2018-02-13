@@ -172,14 +172,16 @@ export class VRScene extends Component {
 				<CameraTP active={thirdPerson} position={position} />
 				{this.renderFloor()}
 				{this.renderAssets()}
-				{ this.props.currentX && this.props.currentZ ? (
-				<AssetMovementControls 
-					currentX={this.props.currentX}
-					currentZ={this.props.currentZ}
-					asset={this.props.selectedAsset}
-					position={position}
-					updateAssetPosition={updateAssetPosition}/>
-				) : null}
+				{ this.props.mode == "manipulation"
+					? (
+						<AssetMovementControls
+							currentX={this.props.currentX}
+							currentZ={this.props.currentZ}
+							asset={this.props.selectedAsset}
+							position={position}
+							updateAssetPosition={updateAssetPosition}/>
+					) : null
+				}
 			</Scene>
 		);
 	}

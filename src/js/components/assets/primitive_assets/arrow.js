@@ -6,15 +6,13 @@ export default props => {
 	// attributes
 	const {
 		color,
-		isSelected,
 		metalness,
-		mode,
+		radius,
 		rotation,
 		selectionColor,
 		selectionOpacity,
 		trimColor,
 		x,
-		y,
 		z
 	} = props;
 
@@ -24,29 +22,20 @@ export default props => {
 	return (
 		<Entity
 			events={{ click: onClick }}
-			position={{ x, y: 5, z }}
+			position={{ x, y: 3.2, z }}
 			rotation={{ x: -90, y: rotation, z: 0 }}>
 			<Entity
 				events={{ click: onClick }}
-				geometry={{ primitive: "plane", height: 1, width: 1 }}
-				material={
-					isSelected && mode != "editAsset"
-						? { color: selectionColor, opacity: selectionOpacity, side: "double" }
-                        : { color: "#e8a26d", opacity: 1, side: "double" }
-				}
-                position={{ x: 0, y:0.6, z: 0 }}
-                scale={{x: 0.6, y: 0.8, z: 1}}
+				geometry={{ primitive: "plane", height: .8, width: .5 }}
+				material={{ color: "#e8a26d", opacity: 1, side: "double" }}
+				position={{ x: 0, y: radius + 1, z: 0 }}
 			/>
-            <Entity
-                geometry={{ primitive: "triangle", vertices: "0 0 -2, 2 0 -2, 1 1 -2" }}
-                material={
-					isSelected && mode != "editAsset"
-						? { color: selectionColor, opacity: selectionOpacity, side: "double" }
-						: { color: "#e8a26d", opacity: 1, side: "double" }
-				}
-                position={{ x:-0.5, y: 0.9, z: 1 }}
-                scale={{x: 0.5, y: 1, z: 0.5}}
-            />
+			<Entity
+				geometry={{ primitive: "triangle", vertices: "0 0 0, 2 0 0, 1 1 0" }}
+				material={{ color: "#e8a26d", opacity: 1, side: "double" }}
+				position={{ x:-0.55, y: radius + 1.25, z: 0 }}
+				scale={{x: 0.55, y: 0.8}}
+			/>
 		</Entity>
 	);
 };
