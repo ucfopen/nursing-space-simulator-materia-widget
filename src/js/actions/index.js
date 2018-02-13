@@ -18,6 +18,7 @@ export function initData(qset) {
 	window.HS_STICKER_TYPES = qset.options.stickerTypes;
 	window.HS_ASSETS = qset.options.assets;
 
+	// Register triangle geometry with Aframe since it's not available as a primitive in the version we're using
 	AFRAME.registerGeometry('triangle', {
         schema: {
             vertices: {
