@@ -6,6 +6,8 @@ import AssetControls from "./ui/asset_controls";
 import AssetTooltip from "./ui/asset_tooltip";
 import AssetTray from "./ui/asset_tray";
 import CategoryButton from "./ui/category_button";
+import HelpPane from "./ui/help_pane";
+import KeyboardControls from "./ui/keyboard_controls";
 import MovementControls from "./ui/movement_controls";
 
 // Redux Actions
@@ -13,10 +15,13 @@ import {
 	updateCameraPosition,
 	toggleThirdPerson
 } from "../actions/camera_actions.js";
-import { toggleMenuVisibility, setCategory } from "../actions/menu_actions";
-import { updatePersistentTooltip, updateTemporaryTooltip } from "../actions/tooltip_actions";
-import { checkPropsExist } from "../utils";
-
+import {
+	toggleHelpVisibility,
+	toggleKeyboardShortcuts,
+	toggleMenuVisibility,
+	setCategory
+} from "../actions/menu_actions";
+import { updateTemporaryTooltip } from "../actions/tooltip_actions";
 import {
 	deselectAsset,
 	editAsset,
@@ -28,20 +33,45 @@ import {
 	selectAssetType,
 	updateAssetPosition
 } from "../actions/grid_actions";
+import { restartTour } from "../actions/tour_actions";
+import { checkPropsExist } from "../utils";
 
 export class HUD extends Component {
+	checkSelectAssetType(asset) {
+		const { selectedAsset } = this.props;
+		if (selectedAsset && asset && selectedAsset.id == asset.id) {
+			this.props.deselectAsset()
+		}
+		else {
+			this.props.selectAssetType(asset);
+		}
+	}
+
+	restartTour() {
+		if (this.props.helpVisible) this.props.toggleHelpVisibility();
+		this.props.restartTour();
+	}
+
 	renderHUD() {
 		const {
+			helpVisible,
 			isTooltipPersistent,
 			isTooltipTemporary,
 			mode,
 			selectedAsset,
 			selectedItem,
+			shortcutsEnabled,
 			thirdPerson,
+			tooltipClassName,
 			tooltipPersistentText,
 			tooltipTemporaryText
 		} = this.props;
-		const { updateAssetPosition, updateCameraPosition } = this.props;
+		const {
+			toggleHelpVisibility,
+			toggleKeyboardShortcuts,
+			updateAssetPosition,
+			updateCameraPosition
+		} = this.props;
 
 		const update =
 			mode === "manipulation" ? updateAssetPosition : updateCameraPosition;
@@ -53,6 +83,7 @@ export class HUD extends Component {
 					text={
 						isTooltipTemporary ? tooltipTemporaryText : tooltipPersistentText
 					}
+					className={tooltipClassName}
 				/>
 				{mode !== "editAsset" ? (
 					<MovementControls
@@ -78,13 +109,12 @@ export class HUD extends Component {
 								rotateAsset={this.props.rotateAsset}
 								selectedAsset={this.props.selectedAsset}
 								selectedItem={this.props.selectedItem}
-								updatePersistentTooltip={this.props.updatePersistentTooltip}
 								updateTemporaryTooltip={this.props.updateTemporaryTooltip}
 							/>
 						) : null}
 						<AssetTray
 							currentCategory={this.props.currentCategory}
-							selectAssetType={this.props.selectAssetType}
+							selectAssetType={this.checkSelectAssetType.bind(this)}
 							selectedAsset={this.props.selectedAsset}
 							setCategory={this.props.setCategory}
 							isMenuVisible={
@@ -100,6 +130,16 @@ export class HUD extends Component {
 						</button>
 					</div>
 				)}
+				<KeyboardControls />
+				<HelpPane
+					mode={mode}
+					restartTour={this.restartTour.bind(this)}
+					shortcutsEnabled={shortcutsEnabled}
+					toggleHelpVisibility={toggleHelpVisibility}
+					toggleKeyboardShortcuts={toggleKeyboardShortcuts}
+					visible={helpVisible}
+
+				/>
 			</div>
 		);
 	}
@@ -121,7 +161,10 @@ function mapStateToProps({ menu, grid, position, tooltip }) {
 		selectedAsset: grid.selectedAsset,
 		selectedItem: grid.selectedItem,
 		thirdPerson: position.thirdPerson,
+		helpVisible: menu.helpVisible,
 		menuVisible: menu.visible,
+		shortcutsEnabled: menu.shortcutsEnabled,
+		tooltipClassName: tooltip.className,
 		isTooltipTemporary: tooltip.temporary,
 		tooltipTemporaryText: tooltip.temporaryText,
 		isTooltipPersistent: tooltip.persistent,
@@ -138,8 +181,10 @@ export default connect(mapStateToProps, {
 	rotateAsset,
 	selectAssetType,
 	setCategory,
-	updatePersistentTooltip,
+	restartTour,
 	updateTemporaryTooltip,
+	toggleHelpVisibility,
+	toggleKeyboardShortcuts,
 	toggleMenuVisibility,
 	toggleThirdPerson,
 	updateAssetPosition,

@@ -126,7 +126,7 @@ button svg.svg-icon:hover {
 }
 
 #camera-move {
-	width: 135px;
+	width: 145px;
 	height: 85px;
 	margin-left: auto;
 	margin-right: auto;
@@ -268,6 +268,10 @@ button svg.svg-icon:hover {
 	background: #fdd89c;
 	border: 1px solid black;
 	border-radius: 5px;
+}
+
+#selected-asset-tooltip span.error {
+	background: #ffaaaa;
 }
 
 /* Bottom panel */
@@ -417,6 +421,10 @@ button svg.svg-icon:hover {
 	width: 31%;
 }
 
+button.a-enter-vr-button {
+	margin-bottom: 10px;
+}
+
 #vr-gif {
 	display: block;
 	margin: 0 auto;
@@ -484,3 +492,68 @@ button svg.svg-icon:hover {
 	background-size: 100% 100% !important;
 	background-position: center center;
 }
+
+#keyboard-shortcut {
+	position: absolute;
+	bottom: 5px;
+	right: 15px;
+}
+
+#keyboard-shortcut.active {
+	background-color: #ddeeff;
+}
+
+#help-pane {
+	width: 350px;
+	height: 450px;
+	position: absolute;
+	bottom: 25px;
+	right: 5px;
+	background: beige;
+	font-size: 15px;
+	padding: 5px;
+	overflow: overlay;
+	border: 1px solid black;
+	border-radius: 10px
+}
+
+#help-pane.reduced {
+	width: 375px;
+	height: 275px;
+	overflow: scroll;
+}
+
+#help-pane h1 {
+	text-decoration: underline;
+	font-size: 20px;
+	font-weight: bold;
+}
+
+#help-pane ul {
+	padding-left: 20px;
+}
+
+#help-pane ul li {
+	padding-bottom: 3px;
+}
+
+#help-pane #version-info {
+	text-align: center;
+	font-size: 12px;
+	margin-bottom: 0;
+}
+
+#close-help-pane {
+	position: absolute;
+	top: 3px;
+	right: 3px;
+	font-size: 12px;
+}
+
+#keyboard-checkbox {
+	position: absolute;
+	top: 55px;
+	right: 15px;
+	font-size: 16px;
+}
+

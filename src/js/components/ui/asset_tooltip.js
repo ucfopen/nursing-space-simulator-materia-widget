@@ -5,7 +5,7 @@ export default props => {
 		props.visible
 			? (
 				<div id="selected-asset-tooltip">
-					<span>
+					<span className={props.className}>
 						{ props.text }
 					</span>
 				</div>

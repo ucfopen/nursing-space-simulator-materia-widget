@@ -43,7 +43,9 @@ export default class FloorUnit extends Component {
 
 	isValidPlace() {
 		const { grid, selectedAssetId, x, z } = this.props;
-		if (selectedAssetId && ["bed-1"].includes(selectedAssetId)) {
+		if (selectedAssetId &&
+			HS_ASSETS[selectedAssetId] &&
+			HS_ASSETS[selectedAssetId].spanX == 2) {
 			const { currentX, currentZ } = this.props;
 			const rotation = (
 				currentX && currentZ
@@ -51,9 +53,7 @@ export default class FloorUnit extends Component {
 					: 180
 			);
 			const adjSide = 3 - ((rotation + 180) % 360) / 90;
-			const adjX = adjSide % 2 == 0 ? x : (x + 2 - adjSide);
-			const adjZ = adjSide % 2 == 0 ? (z + adjSide - 1) : z;
-			return isCellAvailable(grid, x, z) && isCellAvailable(grid, adjX, adjZ);
+			return isCellAvailable(grid, x, z, adjSide);
 		}
 		return isCellAvailable(grid, x, z);
 	}
@@ -86,7 +86,7 @@ export default class FloorUnit extends Component {
 			<Entity>
 				<Entity
 					events={{
-						click: this.handleClick.bind(this),
+						mouseup: this.handleClick.bind(this),
 						mouseenter: this.onMouseEnter.bind(this),
 						mouseleave: this.onMouseLeave.bind(this)
 					}}
@@ -111,7 +111,10 @@ export default class FloorUnit extends Component {
 					scale={{ x: "1", y: "1", z: "1" }}
 					width="1"
 				/>
-				{this.state.active && selectedAssetId && ["bed-1"].includes(selectedAssetId)
+				{	this.state.active &&
+					selectedAssetId &&
+					HS_ASSETS[selectedAssetId] &&
+					HS_ASSETS[selectedAssetId].spanX == 2
 					? (
 						<Entity
 							height="1"
