@@ -12,12 +12,19 @@ export default class SelectionCanvas extends React.Component {
 	}
 
 	componentDidUpdate() {
+		console.log(this.props);
 		if (window.lastMouseCoords.x && window.lastMouseCoords.y) {
 			this.updateCanvas();
 		}
 	}
 
 	updateCanvas() {
+		if (
+			this.props.secondDeletionClick != null ||
+			this.props.lastX == null
+		) {
+			return;
+		}
 		const ctx = this.refs.canvas.getContext("2d");
 		ctx.fillStyle = "rgba(192, 57, 43, 0.2)";
 		ctx.clearRect(0, 0, 2000, 2000);

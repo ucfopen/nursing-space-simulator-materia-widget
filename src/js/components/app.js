@@ -33,6 +33,7 @@ export default class App extends React.Component {
 			position: { x: 2.5, y: 18, z: 14 }, //TODO: make these variable dynamic based on map from qset
 			lastX: null,
 			lastY: null,
+			secondDeletionClick: null,
 			selectedAsset: null,
 			deleteMultipleMode: false,
 			thirdPerson: true,
@@ -193,6 +194,11 @@ export default class App extends React.Component {
 			xTwo: x,
 			yTwo: y
 		};
+
+		this.setState({
+			secondDeletionClick: x
+		});
+
 		if (positions.yOne != null) {
 			positions.xTwo = x;
 			positions.yTwo = y;
@@ -217,6 +223,7 @@ export default class App extends React.Component {
 			window.lastMouseCoords = { x: null, y: null };
 			this.setState({
 				deleteMultipleMode: false,
+				secondDeletionClick: null,
 				lastX: null,
 				lastY: null,
 				grid: grid
@@ -495,6 +502,9 @@ export default class App extends React.Component {
 					toggleCamera={this.toggleCamera.bind(this)}
 				/>
 				<SelectionCanvas
+					lastX={this.state.lastX}
+					lastY={this.state.lastY}
+					secondDeletionClick={this.state.secondDeletionClick}
 					deleteMultipleMode={this.state.deleteMultipleMode}
 				/>
 			</div>
