@@ -14,8 +14,18 @@ import Skybox from "./assets/skybox";
 import AssetMovementControls from "./ui/asset_movement_controls";
 
 // Redux Actions
-import { deselectAsset, insertAsset, selectAsset, updateAssetPosition, fillWalls } from "../actions/grid_actions";
-import { updateTemporaryTooltip, updateTimedTooltip } from "../actions/tooltip_actions";
+import {
+	deselectAsset,
+	insertAsset,
+	selectAsset,
+	updateAssetPosition,
+	fillWalls
+} from "../actions/grid_actions";
+import {
+	updateTemporaryTooltip,
+	updateTimedTooltip
+} from "../actions/tooltip_actions";
+
 // Utilities
 import { checkPropsExist } from "../utils";
 
