@@ -11,3 +11,10 @@ export function startTourSection() {
 		type: START_TOUR_SECTION
 	};
 }
+
+export const RESTART_TOUR = "RESTART_TOUR";
+export function restartTour() {
+	return {
+		type: RESTART_TOUR
+	};
+}

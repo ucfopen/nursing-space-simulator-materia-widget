@@ -30,11 +30,10 @@ export default props => {
 
 	return (
 		<Entity
-			events={{ click: onClick }}
+			events={{ mouseup: onClick }}
 			position={{ x, y: 0, z }}
 			rotation={{ x: 0, y: rotation, z: 0 }}>
 			<Entity
-				events={{ click: onClick }}
 				geometry={{ depth: 1, height: 3, primitive: "box", width: 1 }}
 				material={
 					isSelected && mode != "editAsset"

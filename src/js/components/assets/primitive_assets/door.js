@@ -34,7 +34,7 @@ export default props => {
 
 	return (
 		<Entity
-			events={{ click: onClick }}
+			events={{ mouseup: onClick }}
 			position={{ x, y: 0, z }}
 			rotation={{ x: 0, y: rotation, z: 0 }}>
 			<Entity
