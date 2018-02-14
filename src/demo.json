@@ -31,12 +31,12 @@
 							"y": 0.25,
 							"z": 0.25
 						},
+						"spanX": 2,
+						"spanZ": 1,
 						"tag": "a-obj-model",
 						"type": "object",
 						"category": "equipment",
-						"title": "Bed",
-						"spanX":2,
-						"spanZ":1
+						"title": "Bed"
 					},
 					"chair": {
 						"buttonSource": "assets/icons/icon_chair.png",
@@ -61,12 +61,12 @@
 							"y": 0.25,
 							"z": 0.25
 						},
+						"spanX": 1,
+						"spanZ": 1,
 						"tag": "a-obj-model",
 						"type": "object",
 						"category": "equipment",
-						"title": "Chair",
-						"spanX":1,
-						"spanZ":1
+						"title": "Chair"
 					},
 					"curtain": {
 						"buttonSource": "assets/icons/icon_curtain.png",
@@ -91,12 +91,12 @@
 							"y": 0.25,
 							"z": 0.25
 						},
+						"spanX": 1,
+						"spanZ": 1,
 						"tag": "a-obj-model",
 						"type": "object",
 						"category": "equipment",
-						"title": "Curtain",
-						"spanX":1,
-						"spanZ":1
+						"title": "Curtain"
 					},
 					"counter": {
 						"buttonSource": "assets/icons/icon_counter.png",
@@ -121,12 +121,12 @@
 							"y": 0.25,
 							"z": 0.25
 						},
+						"spanX": 1,
+						"spanZ": 1,
 						"tag": "a-obj-model",
 						"type": "object",
 						"category": "equipment",
-						"title": "Counter",
-						"spanX":1,
-						"spanZ":1
+						"title": "Counter"
 					},
 					"crashcart": {
 						"buttonSource": "assets/icons/icon_cart.png",
@@ -151,12 +151,12 @@
 							"y": 0.25,
 							"z": 0.25
 						},
+						"spanX": 1,
+						"spanZ": 1,
 						"tag": "a-obj-model",
 						"type": "object",
 						"category": "equipment",
-						"title": "Crash Cart",
-						"spanX":1,
-						"spanZ":1
+						"title": "Crash Cart"
 					},
 					"doctor": {
 						"buttonSource": "assets/icons/icon_doc.png",
@@ -181,12 +181,12 @@
 							"y": 0.25,
 							"z": 0.25
 						},
+						"spanX": 1,
+						"spanZ": 1,
 						"tag": "a-obj-model",
 						"type": "object",
 						"category": "people",
-						"title": "Doctor",
-						"spanX":1,
-						"spanZ":1
+						"title": "Doctor"
 					},
 					"nurse": {
 						"buttonSource": "assets/icons/icon_nurse.png",
@@ -211,12 +211,12 @@
 							"y": 0.25,
 							"z": 0.25
 						},
+						"spanX": 1,
+						"spanZ": 1,
 						"tag": "a-obj-model",
 						"type": "object",
 						"category": "people",
-						"title": "Nurse",
-						"spanX":1,
-						"spanZ":1
+						"title": "Nurse"
 					},
 					"desk": {
 						"buttonSource": "assets/icons/icon_desk.png",
@@ -241,12 +241,12 @@
 							"y": 0.25,
 							"z": 0.25
 						},
+						"spanX": 1,
+						"spanZ": 1,
 						"tag": "a-obj-model",
 						"type": "object",
 						"category": "equipment",
-						"title": "Desk",
-						"spanX":1,
-						"spanZ":3
+						"title": "Desk"
 					},
 					"monitor-1": {
 						"buttonSource": "assets/icons/icon_monitor.png",
@@ -271,12 +271,12 @@
 							"y": 0.25,
 							"z": 0.25
 						},
+						"spanX": 1,
+						"spanZ": 1,
 						"tag": "a-obj-model",
 						"type": "object",
 						"category": "equipment",
-						"title": "Monitor Stand",
-						"spanX":1,
-						"spanZ":1
+						"title": "Monitor Stand"
 					},
 					"computer": {
 						"buttonSource": "assets/icons/icon_computer.png",
@@ -301,12 +301,12 @@
 							"y": 0.25,
 							"z": 0.25
 						},
+						"spanX": 1,
+						"spanZ": 1,
 						"tag": "a-obj-model",
 						"type": "object",
 						"category": "equipment",
-						"title": "Computer",
-						"spanX":1,
-						"spanZ":1
+						"title": "Computer"
 					},
 					"sink-1": {
 						"buttonSource": "assets/icons/icon_sink.png",
@@ -331,12 +331,12 @@
 							"y": 0.25,
 							"z": 0.25
 						},
+						"spanX": 1,
+						"spanZ": 1,
 						"tag": "a-obj-model",
 						"type": "object",
 						"category": "equipment",
-						"title": "Sink",
-						"spanX":1,
-						"spanZ":1
+						"title": "Sink"
 					},
 					"door-1": {
 						"buttonSource": "assets/icons/icon_door.png",
@@ -362,12 +362,12 @@
 							"y": 0.25,
 							"z": 0.25
 						},
+						"spanX": 1,
+						"spanZ": 1,
 						"tag": "a-obj-model",
 						"type": "door",
 						"category": "construction",
-						"title": "Door",
-						"spanX":1,
-						"spanZ":1
+						"title": "Door"
 					},
 					"iv-1": {
 						"buttonSource": "assets/icons/icon_iv.png",
@@ -392,12 +392,12 @@
 							"y": 0.25,
 							"z": 0.25
 						},
+						"spanX": 1,
+						"spanZ": 1,
 						"tag": "a-obj-model",
 						"type": "object",
 						"category": "equipment",
-						"title": "IV Stand",
-						"spanX":1,
-						"spanZ":1
+						"title": "IV Stand"
 					},
 					"trashcan-1": {
 						"buttonSource": "assets/icons/icon_trash.png",
@@ -422,12 +422,12 @@
 							"y": 0.18,
 							"z": 0.18
 						},
+						"spanX": 1,
+						"spanZ": 1,
 						"tag": "a-obj-model",
 						"type": "object",
 						"category": "equipment",
-						"title": "Trash Can",
-						"spanX":1,
-						"spanZ":1
+						"title": "Trash Can"
 					},
 					"trashcan-bio": {
 						"buttonSource": "assets/icons/icon_trashbio.png",
@@ -452,12 +452,12 @@
 							"y": 0.18,
 							"z": 0.18
 						},
+						"spanX": 1,
+						"spanZ": 1,
 						"tag": "a-obj-model",
 						"type": "object",
 						"category": "equipment",
-						"title": "Biohazard Waste",
-						"spanX":1,
-						"spanZ":1
+						"title": "Biohazard Waste Bin"
 					},
 					"window": {
 						"buttonSource": "assets/icons/icon_window.png",
@@ -482,12 +482,12 @@
 							"y": 0.25,
 							"z": 0.25
 						},
+						"spanX": 1,
+						"spanZ": 1,
 						"tag": "a-obj-model",
 						"type": "wall",
 						"category": "construction",
-						"title": "Window",
-						"spanX":1,
-						"spanZ":1
+						"title": "Window"
 					},
 					"wall-1": {
 						"buttonSource": "assets/icons/icon_wall.png",
@@ -504,12 +504,12 @@
 							"y": 0.25,
 							"z": 0.25
 						},
+						"spanX": 1,
+						"spanZ": 1,
 						"tag": "a-box",
 						"type": "wall",
 						"category": "construction",
-						"title": "Wall",
-						"spanX":1,
-						"spanZ":1
+						"title": "Wall"
 					},
 					"fireSticker": {
 						"buttonSource": "assets/icons/icon_fire.png",
@@ -523,11 +523,6 @@
 							"y": 180,
 							"z": 0
 						},
-						"scale": {
-							"x": 0.25,
-							"y": 0.25,
-							"z": 0.25
-						},
 						"tag": "a-obj-model",
 						"type": "sticker",
 						"category": "sticker",
@@ -539,16 +534,11 @@
 						"defaultColor": "#9FCDB1",
 						"id": "soapSticker",
 						"mtlSrc": "",
-						"objSrc": "assets/stickers/soap.obj",
+						"objSrc": "assets/stickers/soap/soap.obj",
 						"rotation": {
 							"x": 0,
 							"y": 180,
 							"z": 0
-						},
-						"scale": {
-							"x": 0.25,
-							"y": 0.25,
-							"z": 0.25
 						},
 						"tag": "a-obj-model",
 						"type": "sticker",
@@ -560,17 +550,12 @@
 						"canReplace": [],
 						"defaultColor": "#9FCDB1",
 						"id": "tvSticker",
-						"mtlSrc": "",
-						"objSrc": "assets/stickers/tv.obj",
+						"mtlSrc": "assets/stickers/tv/tv.mtl",
+						"objSrc": "assets/stickers/tv/tv.obj",
 						"rotation": {
 							"x": 0,
 							"y": 180,
 							"z": 0
-						},
-						"scale": {
-							"x": 0.25,
-							"y": 0.25,
-							"z": 0.25
 						},
 						"tag": "a-obj-model",
 						"type": "sticker",
