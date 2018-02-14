@@ -46,6 +46,11 @@ export function insertAsset(x, z, assetId = null) {
 	};
 }
 
+export const REFRESH_GRID = "REFRESH_GRID";
+export function refreshGrid() {
+	return { type: REFRESH_GRID };
+}
+
 export const REMOVE_ASSET = "REMOVE_ASSET";
 export function removeAsset(x, z) {
 	return {
@@ -63,10 +68,10 @@ export function rotateAsset(x, z) {
 }
 
 export const SELECT_ASSET = "SELECT_ASSET";
-export function selectAsset(asset, x, z) {
+export function selectAsset(asset, x, z, dragging = null) {
 	return {
 		type: SELECT_ASSET,
-		payload: { asset, x, z }
+		payload: { asset, x, z, dragging }
 	};
 }
 

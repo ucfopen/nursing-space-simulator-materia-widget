@@ -17,7 +17,8 @@ export default class QsetAsset extends Component {
 	}
 
 	dragStart(event) {
-		this.props.onClick();
+		this.props.onClick(true);
+		this.lastX = this.lastY = null;
 	}
 
 	dragMove(event) {
@@ -26,11 +27,14 @@ export default class QsetAsset extends Component {
 	}
 
 	dragEnd(event) {
+		const { isSelected, selectedAssetId, x, z } = this.props;
 		const roundedX = Math.round(this.lastX);
 		const roundedZ = Math.round(this.lastZ);
-		const { isSelected, selectedAssetId } = this.props;
-		if (!isNaN(roundedX) && !isNaN(roundedZ) && isSelected) {
+		if (roundedX && roundedZ &&!isNaN(roundedX) && !isNaN(roundedZ) && isSelected) {
 			this.props.insertAsset(roundedX, roundedZ, selectedAssetId);
+		}
+		else {
+			this.props.insertAsset(x, z, selectedAssetId);
 		}
 	}
 

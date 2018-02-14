@@ -26,8 +26,8 @@ export default class MovementControls extends Component {
 
 	render() {
 		const { thirdPerson, update, mode } = this.props;
-		return (
-			<div id="UI-right-panel">
+		return ( // preventDefault on mousedown prevents items underneath from being dragged
+			<div id="UI-right-panel" onMouseDown={(e)=>e.preventDefault()}>
 				<div id="top-buttons" />
 				<button id="screenshot" onClick={this.takeScreenShot.bind(this)}>
 					<ScreenshotSVG />
