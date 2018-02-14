@@ -6,6 +6,10 @@ export default props => {
 		<Entity
 			camera={{ active: props.active }}
 			look-controls
+			wasd-controls={{
+				enabled: props.shortcutsEnabled,
+				acceleration: 50
+			}}
 			position={props.position}
 		/>
 	);
