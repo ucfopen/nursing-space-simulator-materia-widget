@@ -31,6 +31,8 @@
 							"y": 0.25,
 							"z": 0.25
 						},
+						"spanX": 2,
+						"spanZ": 1,
 						"tag": "a-obj-model",
 						"type": "object",
 						"category": "equipment",
@@ -59,6 +61,8 @@
 							"y": 0.25,
 							"z": 0.25
 						},
+						"spanX": 1,
+						"spanZ": 1,
 						"tag": "a-obj-model",
 						"type": "object",
 						"category": "equipment",
@@ -87,6 +91,8 @@
 							"y": 0.25,
 							"z": 0.25
 						},
+						"spanX": 1,
+						"spanZ": 1,
 						"tag": "a-obj-model",
 						"type": "object",
 						"category": "equipment",
@@ -115,6 +121,8 @@
 							"y": 0.25,
 							"z": 0.25
 						},
+						"spanX": 1,
+						"spanZ": 1,
 						"tag": "a-obj-model",
 						"type": "object",
 						"category": "equipment",
@@ -143,6 +151,8 @@
 							"y": 0.25,
 							"z": 0.25
 						},
+						"spanX": 1,
+						"spanZ": 1,
 						"tag": "a-obj-model",
 						"type": "object",
 						"category": "equipment",
@@ -171,6 +181,8 @@
 							"y": 0.25,
 							"z": 0.25
 						},
+						"spanX": 1,
+						"spanZ": 1,
 						"tag": "a-obj-model",
 						"type": "object",
 						"category": "people",
@@ -199,6 +211,8 @@
 							"y": 0.25,
 							"z": 0.25
 						},
+						"spanX": 1,
+						"spanZ": 1,
 						"tag": "a-obj-model",
 						"type": "object",
 						"category": "people",
@@ -227,6 +241,8 @@
 							"y": 0.25,
 							"z": 0.25
 						},
+						"spanX": 1,
+						"spanZ": 1,
 						"tag": "a-obj-model",
 						"type": "object",
 						"category": "equipment",
@@ -255,6 +271,8 @@
 							"y": 0.25,
 							"z": 0.25
 						},
+						"spanX": 1,
+						"spanZ": 1,
 						"tag": "a-obj-model",
 						"type": "object",
 						"category": "equipment",
@@ -283,6 +301,8 @@
 							"y": 0.25,
 							"z": 0.25
 						},
+						"spanX": 1,
+						"spanZ": 1,
 						"tag": "a-obj-model",
 						"type": "object",
 						"category": "equipment",
@@ -311,6 +331,8 @@
 							"y": 0.25,
 							"z": 0.25
 						},
+						"spanX": 1,
+						"spanZ": 1,
 						"tag": "a-obj-model",
 						"type": "object",
 						"category": "equipment",
@@ -340,6 +362,8 @@
 							"y": 0.25,
 							"z": 0.25
 						},
+						"spanX": 1,
+						"spanZ": 1,
 						"tag": "a-obj-model",
 						"type": "door",
 						"category": "construction",
@@ -368,6 +392,8 @@
 							"y": 0.25,
 							"z": 0.25
 						},
+						"spanX": 1,
+						"spanZ": 1,
 						"tag": "a-obj-model",
 						"type": "object",
 						"category": "equipment",
@@ -396,6 +422,8 @@
 							"y": 0.18,
 							"z": 0.18
 						},
+						"spanX": 1,
+						"spanZ": 1,
 						"tag": "a-obj-model",
 						"type": "object",
 						"category": "equipment",
@@ -424,10 +452,12 @@
 							"y": 0.18,
 							"z": 0.18
 						},
+						"spanX": 1,
+						"spanZ": 1,
 						"tag": "a-obj-model",
 						"type": "object",
 						"category": "equipment",
-						"title": "Biohazard Waste"
+						"title": "Biohazard Waste Bin"
 					},
 					"window": {
 						"buttonSource": "assets/icons/icon_window.png",
@@ -452,6 +482,8 @@
 							"y": 0.25,
 							"z": 0.25
 						},
+						"spanX": 1,
+						"spanZ": 1,
 						"tag": "a-obj-model",
 						"type": "wall",
 						"category": "construction",
@@ -472,6 +504,8 @@
 							"y": 0.25,
 							"z": 0.25
 						},
+						"spanX": 1,
+						"spanZ": 1,
 						"tag": "a-box",
 						"type": "wall",
 						"category": "construction",
@@ -489,11 +523,6 @@
 							"y": 180,
 							"z": 0
 						},
-						"scale": {
-							"x": 0.25,
-							"y": 0.25,
-							"z": 0.25
-						},
 						"tag": "a-obj-model",
 						"type": "sticker",
 						"category": "sticker",
@@ -505,16 +534,11 @@
 						"defaultColor": "#9FCDB1",
 						"id": "soapSticker",
 						"mtlSrc": "",
-						"objSrc": "assets/stickers/soap.obj",
+						"objSrc": "assets/stickers/soap/soap.obj",
 						"rotation": {
 							"x": 0,
 							"y": 180,
 							"z": 0
-						},
-						"scale": {
-							"x": 0.25,
-							"y": 0.25,
-							"z": 0.25
 						},
 						"tag": "a-obj-model",
 						"type": "sticker",
@@ -526,17 +550,12 @@
 						"canReplace": [],
 						"defaultColor": "#9FCDB1",
 						"id": "tvSticker",
-						"mtlSrc": "",
-						"objSrc": "assets/stickers/tv.obj",
+						"mtlSrc": "assets/stickers/tv/tv.mtl",
+						"objSrc": "assets/stickers/tv/tv.obj",
 						"rotation": {
 							"x": 0,
 							"y": 180,
 							"z": 0
-						},
-						"scale": {
-							"x": 0.25,
-							"y": 0.25,
-							"z": 0.25
 						},
 						"tag": "a-obj-model",
 						"type": "sticker",

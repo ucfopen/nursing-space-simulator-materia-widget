@@ -11,28 +11,7 @@ function _getAssetInfo(gridValue) {
 	};
 }
 
-// Sets walls that border the entire scene to face inward. Helps users add wall assets to those walls.
-function _setInitialWallRotations(grid) {
-	const height = grid.length;
-	const width = grid[0].length;
-
-	let rotation = 0;
-	for (let i = 0; i < height; i++) {
-		for (let j = 0; j < width; j++) {
-			if (grid[i][j] == "0") continue;
-			rotation = 0;
-
-			if (i == 0) grid[i][j].rotation = 270;
-			else if (i == height - 1) grid[i][j].rotation = 90;
-			if (j == 0) grid[i][j].rotation = 0;
-			else if (j == width - 1) grid[i][j].rotation = 180;
-		}
-	}
-
-	return grid;
-}
-
-function _isInBounds(grid, row, col) {
+export function isInBounds(grid, row, col) {
 	if (row < 0 || row >= grid.length) return false;
 	if (col < 0 || col >= grid[0].length) return false;
 
@@ -54,7 +33,6 @@ export function loadGrid(gridString, rows, columns) {
 	}
 
 	let tempGrid = gridString.split(" ");
-	//return _setInitialWallRotations(
 	return (
 		[...Array(rows)].map(() => {
 			return tempGrid.splice(0, columns).map(gridItem => {
@@ -84,7 +62,9 @@ export function rotateCell(grid, x, z) {
 	if (grid[row][col] && grid[row][col] !== "0" && grid[row][col] !== "X") {
 		const rotationNew = (grid[row][col].rotation - 90 + 360) % 360;
 
-		if (["bed-1"].includes(grid[row][col].id)) {
+		// check the span of the asset, currenly only supports X-span of 2
+		const id = grid[row][col].id;
+		if (id && HS_ASSETS[id].spanX == 2) {
 			const adjSideNew = 3 - ((rotationNew + 180) % 360) / 90;
 			const adjXNew = adjSideNew % 2 == 0 ? x : (x + 2 - adjSideNew);
 			const adjZNew = adjSideNew % 2 == 0 ? (z + adjSideNew - 1) : z;
@@ -136,13 +116,19 @@ export function deleteItem(grid, x, z) {
 	const col = x,
 		row = z;
 
-	if (grid[row][col] != "0" && ["bed-1"].includes(grid[row][col].id)) {
-		const rotation = grid[row][col].rotation;
-		const adjSide = 3 - ((rotation + 180) % 360) / 90;
-		const adjX = adjSide % 2 == 0 ? x : (x + 2 - adjSide);
-		const adjZ = adjSide % 2 == 0 ? (z + adjSide - 1) : z;
-		if (grid[adjZ][adjX] == "X") {
-			grid[adjZ][adjX] = "0";
+
+	if (grid[row][col] && grid[row][col] != "0" && grid[row][col] != "X")
+	{
+		// check the span of the asset, currenly only supports X-span of 2
+		const id = grid[row][col].id;
+		if (id && HS_ASSETS[id].spanX == 2) {
+			const rotation = grid[row][col].rotation;
+			const adjSide = 3 - ((rotation + 180) % 360) / 90;
+			const adjX = adjSide % 2 == 0 ? x : (x + 2 - adjSide);
+			const adjZ = adjSide % 2 == 0 ? (z + adjSide - 1) : z;
+			if (grid[adjZ][adjX] == "X") {
+				grid[adjZ][adjX] = "0";
+			}
 		}
 	}
 
@@ -180,7 +166,7 @@ export function insertItem(grid, itemId, x, z, rotation = 180, stickers = null) 
 				};
 
 	// if an asset spans multiple spaces, flag those spaces as occupied
-	if (["bed-1"].includes(itemId)) {
+	if (itemId && HS_ASSETS[itemId].spanX == 2) {
 		const adjSide = 3 - ((rotation + 180) % 360) / 90;
 		const adjX = adjSide % 2 == 0 ? x : (x + 2 - adjSide);
 		const adjZ = adjSide % 2 == 0 ? (z + adjSide - 1) : z;
@@ -215,7 +201,7 @@ export function isCellAvailable(grid, x, z, adjSide = null) {
 	const col = x,
 		row = z;
 
-	if (!_isInBounds(grid, row, col)) return false;
+	if (!isInBounds(grid, row, col)) return false;
 
 	if (adjSide != null)
 	{
@@ -240,7 +226,7 @@ export function getItem(grid, col, row) {
 		return null;
 	}
 
-	if (!_isInBounds(grid, row, col)) return "0";
+	if (!isInBounds(grid, row, col)) return "0";
 
 	return grid[row][col] === "0" ? "0" : grid[row][col];
 }
@@ -259,7 +245,7 @@ export function getItemId(grid, col, row) {
 		return null;
 	}
 
-	if (!_isInBounds(grid, row, col)) return "0";
+	if (!isInBounds(grid, row, col)) return "0";
 
 	if (grid[row][col] === "0" || grid[row][col] === "X") {
 		return grid[row][col];
@@ -302,36 +288,36 @@ export function getCellRotation(grid, col, row) {
 export function findValidExtends(grid, x, z) {
 	let validX = [x];
 	let validZ = [z];
-	// Valid direction array in order: up, right, bottom, left
+	// Valid direction array in order: up, right, down, left
 	let dir = [true, true, true, true];
 	let level = 1;
 	while (dir[0] || dir[1] || dir[2] || dir[3])
 	{
 		if (dir[0]) // up
 		{
-			if (isCellAvailable(grid, x + level, z))
-				validX.push(x + level);
+			if (isCellAvailable(grid, x, z - level))
+				validZ.push(z - level);
 			else
 				dir[0] = false;
 		}
 		if (dir[1]) // right
 		{
-			if (isCellAvailable(grid, x, z + level))
-				validZ.push(z + level);
+			if (isCellAvailable(grid, x + level, z))
+				validX.push(x + level);
 			else
 				dir[1] = false;
 		}
 		if (dir[2]) // down
 		{
-			if (isCellAvailable(grid, x - level, z))
-				validX.push(x - level);
+			if (isCellAvailable(grid, x, z + level))
+				validZ.push(z + level);
 			else
 				dir[2] = false;
 		}
 		if (dir[3]) // left
 		{
-			if (isCellAvailable(grid, x, z - level))
-				validZ.push(z - level);
+			if (isCellAvailable(grid, x - level, z))
+				validX.push(x - level);
 			else
 				dir[3] = false;
 		}

@@ -13,57 +13,27 @@ import QsetAsset from "./assets/qset_asset";
 import Skybox from "./assets/skybox";
 
 // Redux Actions
-import { deselectAsset, insertAsset, selectAsset, fillWalls } from "../actions/grid_actions";
-import { updateTemporaryTooltip, updateTimedTooltip } from "../actions/tooltip_actions";
+import {
+	insertAsset,
+	selectAsset,
+	fillWalls,
+	refreshGrid
+} from "../actions/grid_actions";
+import {
+	BAD_INSERT,
+	BAD_WALL_EXTEND,
+	showErrorTooltip,
+	updateTimedTooltip
+} from "../actions/tooltip_actions";
+import { getCellRotation, isCellAvailable, isInBounds } from "../grid";
 // Utilities
 import { checkPropsExist } from "../utils";
 
 export class VRScene extends Component {
-	renderAssets() {
-		const {
-			currentX,
-			currentZ,
-			grid,
-			mode,
-			selectedAsset,
-			thirdPerson
-		} = this.props;
-		const { insertAsset, selectAsset } = this.props;
-		const mappedAssets = grid.map(
-			(row, rowIndex) =>
-				row.map((column, colIndex) => {
-					return (column !== "0" && column != "X") ? (
-						<QsetAsset
-							attributes={column}
-							data={HS_ASSETS[column.id]}
-							insertAsset={insertAsset}
-							isSelected={currentX === colIndex && currentZ === rowIndex}
-							key={`${rowIndex} ${colIndex}`}
-							mode={mode}
-							onClick={selectAsset.bind(
-								this,
-								HS_ASSETS[column.id],
-								colIndex,
-								rowIndex
-							)}
-							rotation={column.rotation}
-							selectedAssetId={selectedAsset ? selectedAsset.id : null}
-							thirdPerson={thirdPerson}
-							x={colIndex}
-							z={rowIndex}
-						/>
-					) : null;
-				}, this),
-			this
-		);
-		return mappedAssets;
-	}
-
 	checkFillWalls(x, z, extendX, extendZ, validX, validZ) {
 		const {
-			deselectAsset,
 			fillWalls,
-			updateTemporaryTooltip,
+			showErrorTooltip,
 			updateTimedTooltip
 		} = this.props;
 		let validFill = (
@@ -75,12 +45,108 @@ export class VRScene extends Component {
 			fillWalls(x, z, extendX, extendZ, validX, validZ);
 		}
 		else {
-			deselectAsset();
-			updateTemporaryTooltip(true, "Walls can only be extended horizontally and vertically.");
+			const key = Math.random();
+			showErrorTooltip(BAD_WALL_EXTEND, key);
 			setTimeout(function() {
-				updateTimedTooltip("Walls can only be extended horizontally and vertically.");
-			}, 6000);
+				updateTimedTooltip(key);
+			}, 5000);
 		}
+	}
+
+	checkAssetDrag(x, z, assetId) {
+		const { currentX, currentZ, grid } = this.props;
+		const { refreshGrid } = this.props;
+
+		if (!isInBounds(grid, z, x) || (currentX == x && currentZ == z)) {
+			refreshGrid(); // refresh needed to reset the drag
+		}
+		else {
+			this.checkInsertAsset(x, z, assetId);
+		}
+	}
+
+	checkInsertAsset(x, z, assetId = null) {
+		const {
+			insertAsset,
+			refreshGrid,
+			showErrorTooltip,
+			updateTimedTooltip
+		} = this.props;
+		const { currentX, currentZ, dragging, grid } = this.props;
+
+		if (assetId == "pov_camera") {
+			return insertAsset(x, z, assetId);
+		}
+
+		let validInsert = isCellAvailable(grid, x, z);
+		if (validInsert && assetId && HS_ASSETS[assetId].spanX == 2) {
+			let prevRotation = getCellRotation(
+				grid,
+				currentX,
+				currentZ
+			);
+			if (prevRotation == null) prevRotation = 180;
+			const adjSide = 3 - ((prevRotation + 180) % 360) / 90;
+			validInsert = isCellAvailable(grid, x, z, adjSide);
+		}
+
+		if (validInsert) {
+			insertAsset(x, z, assetId);
+		}
+		else if (dragging) {
+			refreshGrid();
+		}
+		else {
+			const key = Math.random();
+			showErrorTooltip(BAD_INSERT, key, HS_ASSETS[assetId].title);
+			setTimeout(function() {
+				updateTimedTooltip(key);
+			}, 2000);
+		}
+	}
+
+	renderAssets() {
+		const {
+			currentX,
+			currentZ,
+			grid,
+			mode,
+			selectedAsset,
+			thirdPerson
+		} = this.props;
+		const { selectAsset } = this.props;
+		const mappedAssets = grid.map(
+			(row, rowIndex) =>
+				row.map((column, colIndex) => {
+					return (column !== "0" && column != "X") ? (
+						<QsetAsset
+							attributes={column}
+							data={HS_ASSETS[column.id]}
+							insertAsset={this.checkAssetDrag.bind(this)}
+							isSelected={currentX === colIndex && currentZ === rowIndex}
+							key={`${rowIndex} ${colIndex}`}
+							mode={mode}
+							onClick={
+								mode != "editAsset" ? (
+									selectAsset.bind(
+										this,
+										HS_ASSETS[column.id],
+										colIndex,
+										rowIndex
+									)
+								) : null
+							}
+							rotation={column.rotation}
+							selectedAssetId={selectedAsset ? selectedAsset.id : null}
+							thirdPerson={thirdPerson}
+							x={colIndex}
+							z={rowIndex}
+						/>
+					) : null;
+				}, this),
+			this
+		);
+		return mappedAssets;
 	}
 
 	renderFloor() {
@@ -95,7 +161,6 @@ export class VRScene extends Component {
 			validZ
 		} = this.props;
 
-		const { insertAsset } = this.props;
 		const selectedAssetId = selectedAsset ? selectedAsset.id : null;
 
 		const mappedFloor = grid.map(
@@ -108,7 +173,10 @@ export class VRScene extends Component {
 							grid={grid}
 							key={`${rowIndex} ${colIndex}`}
 							mode={mode}
-							onClick={mode == "extendWall" ? this.checkFillWalls.bind(this) : insertAsset}
+							onClick={
+								mode == "extendWall"
+									? this.checkFillWalls.bind(this)
+									: this.checkInsertAsset.bind(this)}
 							selectedAssetId={selectedAssetId}
 							thirdPerson={thirdPerson}
 							validX={validX}
@@ -125,10 +193,10 @@ export class VRScene extends Component {
 	}
 
 	renderScene() {
-		const { posX, posY, posZ, thirdPerson } = this.props;
+		const { mode, posX, posY, posZ, shortcutsEnabled, thirdPerson } = this.props;
 		const position = { x: posX, y: posY, z: posZ }
 		return (
-			<Scene className="vr-scene">
+			<Scene className="vr-scene" keyboard-shortcuts="enterVR: false">
 				<a-assets>
 					<img
 						alt="ceiling-texture"
@@ -161,8 +229,17 @@ export class VRScene extends Component {
 				<Skybox thirdPerson={thirdPerson} />
 				<FloorTile />
 				<Ceiling thirdPerson={thirdPerson} />
-				<CameraFP active={!thirdPerson} position={position} />
-				<CameraTP active={thirdPerson} position={position} />
+				<CameraFP
+					active={!thirdPerson}
+					position={position}
+					shortcutsEnabled={shortcutsEnabled}
+				/>
+				<CameraTP
+					active={thirdPerson}
+					position={position}
+					shortcutsEnabled={shortcutsEnabled}
+					mode={mode}
+				/>
 				{this.renderFloor()}
 				{this.renderAssets()}
 			</Scene>
@@ -177,16 +254,18 @@ export class VRScene extends Component {
 	}
 }
 
-function mapStateToProps({ grid, position }) {
+function mapStateToProps({ grid, position, menu }) {
 	return {
 		currentX: grid.currentX,
 		currentZ: grid.currentZ,
+		dragging: grid.dragging,
 		grid: grid.grid,
 		mode: grid.mode,
 		posX: position.x,
 		posY: position.y,
 		posZ: position.z,
 		selectedAsset: grid.selectedAsset,
+		shortcutsEnabled: menu.shortcutsEnabled,
 		thirdPerson: position.thirdPerson,
 		validX: grid.validX,
 		validZ: grid.validZ
@@ -194,10 +273,10 @@ function mapStateToProps({ grid, position }) {
 }
 
 export default connect(mapStateToProps, {
-	deselectAsset,
 	fillWalls,
 	insertAsset,
+	refreshGrid,
 	selectAsset,
-	updateTemporaryTooltip,
+	showErrorTooltip,
 	updateTimedTooltip
 })(VRScene);
