@@ -9,6 +9,7 @@ export default props => {
 		metalness,
 		radius,
 		rotation,
+		scale,
 		selectionColor,
 		selectionOpacity,
 		trimColor,
@@ -23,7 +24,8 @@ export default props => {
 		<Entity
 			events={{ click: onClick }}
 			position={{ x, y: 3.2, z }}
-			rotation={{ x: -90, y: rotation, z: 0 }}>
+			rotation={{ x: -90, y: rotation, z: 0 }}
+			scale={{ x:scale, y: scale, z: scale }}>
 			<Entity
 				events={{ click: onClick }}
 				geometry={{ primitive: "plane", height: .8, width: .5 }}
