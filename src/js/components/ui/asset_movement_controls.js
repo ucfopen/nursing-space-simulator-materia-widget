@@ -24,45 +24,59 @@ export default class AssetMovementControls extends Component {
 		// this is to center the asset within the arrows when it would otherwise be offset due to the difference in height between the asset and arrows
 		// TODO: does not currently take rotation into account, because passing rotation state into this component is gonna be annoying
 
+		// width and height are shifted based on the asset spanX and spanZ
 		const widthShift = asset.spanX/2 - 0.5;
 		const heightShift = asset.spanZ/2 - 0.5;
 		const centerX = currentX - widthShift;
 		const centerZ = currentZ - heightShift;
 
+		// assumes that most assets are about 0.5 units in height
 		const assetHeight = 0.5;
-		const depthShift = (position.y - 3.2) / (position.y - assetHeight);
-		let xOffset = ((centerX - position.x) * depthShift) - (centerX - position.x);
-		let zOffset = ((centerZ - position.z) * depthShift) - (centerZ - position.z);
 
-		console.log("center: (" + centerX + ", " + centerZ + ")");
-		console.log("offset: " + xOffset + ", " + zOffset + ")");
-		console.log("total: " + (currentX + xOffset) + ", " + (currentZ + zOffset));
+		// adjusts the position of the arrows to make them seem like they're in
+		// the right place. (math based on similar triangles where one is from the
+		// camera to the arrow position (y=3.2) and the other one is from the
+		// camera to the top of the asset (assetHeight)
+		const depthShift = (position.y - 3.2) / (position.y - assetHeight);
+		const xOffset = (centerX - position.x) * (depthShift - 1);
+		const zOffset = (centerZ - position.z) * (depthShift - 1);
+
+		// scale the arrows so that they're smaller when zoomed in (base is y=18)
+		const scale = (
+			position.y < 5
+				? 0.25
+				: (position.y * 2/3 + 18 * 1/3) / 18 // linear scale biased to 1
+		);
 
 		return (
 				<Entity>
 					<Arrow
-						x={centerX + xOffset}
-						z={centerZ + zOffset}
+						onClick={this.controlClicked.bind(this, "zUp")}
 						radius={heightShift}
-						onClick={this.controlClicked.bind(this, "zUp")}/>
-					<Arrow
+						scale={scale}
 						x={centerX + xOffset}
-						z={centerZ + zOffset}
+						z={centerZ + zOffset}/>
+					<Arrow
+						onClick={this.controlClicked.bind(this, "xRight")}
 						radius={widthShift}
 						rotation={270}
-						onClick={this.controlClicked.bind(this, "xRight")}/>
-					<Arrow
+						scale={scale}
 						x={centerX + xOffset}
-						z={centerZ + zOffset}
+						z={centerZ + zOffset}/>
+					<Arrow
+						onClick={this.controlClicked.bind(this, "zDown")}
 						radius={heightShift}
 						rotation={180}
-						onClick={this.controlClicked.bind(this, "zDown")}/>
-					<Arrow
+						scale={scale}
 						x={centerX + xOffset}
-						z={centerZ + zOffset}
+						z={centerZ + zOffset}/>
+					<Arrow
+						onClick={this.controlClicked.bind(this, "xLeft")}
 						radius={widthShift}
 						rotation={90}
-						onClick={this.controlClicked.bind(this, "xLeft")}/>
+						scale={scale}
+						x={centerX + xOffset}
+						z={centerZ + zOffset}/>
 				</Entity>
 		);
 	}
