@@ -6,10 +6,6 @@
 	border-bottom: 1px solid #dc7627;
 }
 
-.joyride-tooltip__button--primary {
-	background-color: #dc7627 !important;
-}
-
 .joyride-beacon__inner {
 	background-color: #dc7627;
 }
@@ -19,18 +15,31 @@
 	border: 2px solid #dc7627;
 }
 
+.joyride-tooltip__button {
+	font-size: 12px;
+}
+
+.joyride-tooltip__button:hover {
+	text-decoration: underline;
+}
+
+.joyride-tooltip__button--primary {
+	background-color: #dc7627 !important;
+}
+
 .joyride-tooltip__button--skip {
-	background-color: #dc7627;
+	background: none;
+	box-shadow: none;
 	border-radius: 4px;
-	color: #fff;
+	color: #aaa;
 	padding: 6px 12px;
 	transition: background-color 0.2s ease-in-out;
 }
 
 .joyride-tooltip__button--secondary {
-	background-color: #dc7627;
-	border-radius: 4px;
-	color: #fff;
+	background: none;
+	box-shadow: none;
+	color: #dc7627;
 	padding: 6px 12px;
 	transition: background-color 0.2s ease-in-out;
 }

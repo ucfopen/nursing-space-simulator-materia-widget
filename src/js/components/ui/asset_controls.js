@@ -40,8 +40,8 @@ export default class AssetControls extends Component {
 		} = this.props;
 
 		if (mode === "extendWall") {
-			return (
-				<div id="UI-selected-asset-options">
+			return ( // preventDefault on mousedown prevents items underneath from being dragged
+				<div id="UI-selected-asset-options" onMouseDown={(e)=>e.preventDefault()}>
 					<div>
 						<button
 							id="deselect"
@@ -68,7 +68,7 @@ export default class AssetControls extends Component {
 			};
 
 			return (
-				<div id="UI-selected-asset-options">
+				<div id="UI-selected-asset-options" onMouseDown={(e)=>e.preventDefault()}>
 					<div>
 						<button
 							id="confirm"
@@ -86,12 +86,14 @@ export default class AssetControls extends Component {
 			);
 		} else {
 			return (
-				<div id="UI-selected-asset-options">
-					<span id="selected-asset-label">
-						<span className="selected-asset-label-title">
-							Currently selected: {selectedAsset.title}
+				<div id="UI-selected-asset-options" onMouseDown={(e)=>e.preventDefault()}>
+					{mode != "assetTypeSelected" ? (
+						<span id="selected-asset-label">
+							<span className="selected-asset-label-title">
+								Currently selected: {selectedAsset.title}
+							</span>
 						</span>
-					</span>
+					) : null}
 					{mode == "manipulation" ? (
 						<div>
 							<button

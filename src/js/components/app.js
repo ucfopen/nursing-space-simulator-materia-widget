@@ -16,10 +16,16 @@ export class App extends Component {
 	}
 
 	componentWillUpdate(nextProps) {
-		if (nextProps.runNextSet === true && this.props.tourRunning) {
+		if (nextProps.runNextSet === true && nextProps.tourRunning) {
 			this.joyride.setState({ index: 0 }, () => this.joyride.start(true));
-			this.props.startTourSection();
+			// this.props.startTourSection();
+			this.startNext = true;
 		}
+	}
+
+	componentDidUpdate() {
+		if (this.startNext) this.props.startTourSection();
+		this.startNext = false;
 	}
 
 	joyrideCallback(data) {
