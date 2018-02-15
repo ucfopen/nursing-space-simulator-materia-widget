@@ -29,7 +29,6 @@ import {
 	extendWall,
 	removeAsset,
 	rotateAsset,
-	selectAsset,
 	selectAssetType,
 	updateAssetPosition
 } from "../actions/grid_actions";
