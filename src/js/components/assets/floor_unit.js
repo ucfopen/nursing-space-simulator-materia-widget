@@ -3,7 +3,7 @@ import { Entity } from "aframe-react";
 import React, { Component } from "react";
 
 // Custom React Components
-import { isCellAvailable, getCellRotation } from "../../grid";
+import { isCellAvailable } from "../../grid";
 
 export default class FloorUnit extends Component {
 	constructor(props) {
@@ -26,7 +26,7 @@ export default class FloorUnit extends Component {
 			currentX,
 			currentZ,
 			mode,
-			selectedAssetId,
+			selectedAsset,
 			thirdPerson,
 			validX,
 			validZ,
@@ -38,20 +38,14 @@ export default class FloorUnit extends Component {
 		if (!thirdPerson || mode == "editAsset") return;
 
 		if (mode == "extendWall") onClick(x, z, currentX, currentZ, validX, validZ);
-		else if (selectedAssetId) onClick(x, z, selectedAssetId);
+		else if (selectedAsset) onClick(x, z, selectedAsset.id);
 	}
 
 	isValidPlace() {
-		const { grid, selectedAssetId, x, z } = this.props;
-		if (selectedAssetId &&
-			HS_ASSETS[selectedAssetId] &&
-			HS_ASSETS[selectedAssetId].spanX == 2) {
-			const { currentX, currentZ } = this.props;
-			const rotation = (
-				currentX && currentZ
-					? getCellRotation(grid, currentX, currentZ)
-					: 180
-			);
+		const { grid, selectedAsset, x, z } = this.props;
+		if (selectedAsset && selectedAsset.spanX == 2) {
+			const { currentX, currentZ, selectedItem } = this.props;
+			const rotation = selectedItem ? selectedItem.rotation : 180;
 			const adjSide = 3 - ((rotation + 180) % 360) / 90;
 			return isCellAvailable(grid, x, z, adjSide);
 		}
@@ -65,12 +59,8 @@ export default class FloorUnit extends Component {
 	}
 
 	nextBedPosition(x, y, z) {
-		const { currentX, currentZ, grid } = this.props;
-		const rotation = (
-			currentX && currentZ
-				? getCellRotation(grid, currentX, currentZ)
-				: 180
-		);
+		const { currentX, currentZ, grid, selectedItem } = this.props;
+		const rotation = selectedItem ? selectedItem.rotation : 180;
 		const adjSide = 3 - ((rotation + 180) % 360) / 90;
 		return {
 			x: adjSide % 2 == 0 ? x : (x + 2 - adjSide),
@@ -80,7 +70,7 @@ export default class FloorUnit extends Component {
 	}
 
 	render() {
-		const { mode, selectedAssetId, x, z } = this.props;
+		const { mode, selectedAsset, x, z } = this.props;
 
 		return (
 			<Entity>
@@ -98,7 +88,7 @@ export default class FloorUnit extends Component {
 								opacity: this.state.active ? 0.7 : 0.4
 							})
 							: (
-								this.state.active && selectedAssetId
+								this.state.active && selectedAsset
 									? this.isValidPlace()
 										? "color: green; opacity: 0.5;"
 										: "color: red; opacity: 0.5;"
@@ -112,9 +102,8 @@ export default class FloorUnit extends Component {
 					width="1"
 				/>
 				{	this.state.active &&
-					selectedAssetId &&
-					HS_ASSETS[selectedAssetId] &&
-					HS_ASSETS[selectedAssetId].spanX == 2
+					selectedAsset &&
+					selectedAsset.spanX == 2
 					? (
 						<Entity
 							height="1"

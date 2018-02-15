@@ -61,51 +61,41 @@ export default function(
 
 		case EDIT_ASSET: {
 			const gridCopy = deepCopy(state.grid);
+			const { x, z } = action.payload;
 
 			// force creation of stickers and update adjacent points
-			let newGrid = updateStickers(gridCopy, action.payload.x, action.payload.z, true);
+			let newGrid = updateStickers(gridCopy, x, z, true);
 			return {
 				...state,
 				mode: "editAsset",
-				selectedItem: getItem(
-					newGrid,
-					action.payload.x,
-					action.payload.z
-				),
-				grid: newGrid
+				grid: newGrid,
+				selectedItem: getItem(newGrid, x, z)
 			};
 		}
 
 		case EDIT_STICKER: {
 			const gridCopy = deepCopy(state.grid);
-			const stickers = getStickers(
-				gridCopy,
-				action.payload.x,
-				action.payload.z
-			);
+			const { side, stickerTypes, direction, x, z } = action.payload;
+			const stickers = getStickers(gridCopy, x, z);
 
-			const currSticker = stickers[action.payload.side];
-			const stickerIndex = action.payload.stickerTypes.indexOf(currSticker);
-			const numTypes = action.payload.stickerTypes.length;
+			const currSticker = stickers[side];
+			const stickerIndex = stickerTypes.indexOf(currSticker);
+			const numTypes = stickerTypes.length;
 			const newStickerIndex =
-				(stickerIndex + action.payload.direction + numTypes) % numTypes;
-			const newSticker = action.payload.stickerTypes[newStickerIndex];
+				(stickerIndex + direction + numTypes) % numTypes;
+			const newSticker = stickerTypes[newStickerIndex];
 			const newGrid = setSticker(
 				gridCopy,
-				action.payload.x,
-				action.payload.z,
-				action.payload.side,
+				x,
+				z,
+				side,
 				newSticker
 			)
 
 			return {
 				...state,
 				grid: newGrid,
-				selectedItem: getItem(
-					newGrid,
-					action.payload.x,
-					action.payload.z
-				)
+				selectedItem: getItem(newGrid, x, z)
 			};
 		}
 
@@ -144,6 +134,7 @@ export default function(
 				grid: newGrid,
 				mode: "none",
 				selectedAsset: null,
+				selectedItem: null,
 				validX: null,
 				validZ: null
 			};
@@ -202,25 +193,28 @@ export default function(
 						dragging: false,
 						grid: newGrid,
 						mode: "extendWall",
+						selectedItem: getItem(newGrid, x, z),
 						validX: validX,
 						validZ: validZ
 					};
 				}
 			}
+			newGrid = insertItem(
+				newGrid,
+				selectedAsset.id,
+				x,
+				z,
+				prevRotation,
+				prevStickers
+			)
 			return {
 				...state,
 				currentX: x,
 				currentZ: z,
 				dragging: false,
-				grid: insertItem(
-					newGrid,
-					selectedAsset.id,
-					x,
-					z,
-					prevRotation,
-					prevStickers
-				),
-				mode: "manipulation"
+				grid: newGrid,
+				mode: "manipulation",
+				selectedItem: getItem(newGrid, x, z)
 			};
 		}
 
@@ -241,20 +235,25 @@ export default function(
 				currentZ: null,
 				grid: deleteItem(gridCopy, action.payload.x, action.payload.z),
 				mode: "none",
-				selectedAsset: null
+				selectedAsset: null,
+				selectedItem: null
 			};
 		}
 
 		case ROTATE_ASSET: {
 			const gridCopy = deepCopy(state.grid);
+			const { x, z } = action.payload;
+			let newGrid = rotateCell(gridCopy, x, z)
 			return {
 				...state,
-				grid: rotateCell(gridCopy, action.payload.x, action.payload.z)
+				grid: newGrid,
+				selectedItem: getItem(newGrid, x, z)
 			};
 		}
 
 		case SELECT_ASSET: {
 			const gridCopy = deepCopy(state.grid);
+			const { asset, dragging, x, z } = action.payload;
 
 			let oldSelectedAsset = state.selectedAsset
 				? { ...state.selectedAsset }
@@ -263,36 +262,35 @@ export default function(
 			if (
 				oldSelectedAsset &&
 				oldSelectedAsset.id !== "pov_camera" &&
-				oldSelectedAsset.id !== action.payload.asset.id &&
-				oldSelectedAsset.canReplace.includes(action.payload.asset.category)
+				oldSelectedAsset.id !== asset.id &&
+				oldSelectedAsset.canReplace.includes(asset.category)
 			) {
-				const prevRotation = getCellRotation(
+				const prevRotation = getCellRotation(gridCopy, x, z);
+				let newGrid = insertItem(
 					gridCopy,
-					action.payload.x,
-					action.payload.z
+					oldSelectedAsset.id,
+					x,
+					z,
+					prevRotation
 				);
 				return {
 					...state,
-					currentX: action.payload.x,
-					currentZ: action.payload.z,
-					grid: insertItem(
-						gridCopy,
-						oldSelectedAsset.id,
-						action.payload.x,
-						action.payload.z,
-						prevRotation
-					),
+					currentX: x,
+					currentZ: z,
+					grid: newGrid,
 					mode: "manipulation",
-					selectedAsset: oldSelectedAsset
+					selectedAsset: oldSelectedAsset,
+					selectedItem: getItem(newGrid, x, z)
 				};
 			} else {
 				return {
 					...state,
-					currentX: action.payload.x,
-					currentZ: action.payload.z,
-					dragging: action.payload.dragging,
+					currentX: x,
+					currentZ: z,
+					dragging: dragging,
 					mode: "manipulation",
-					selectedAsset: action.payload.asset
+					selectedAsset: asset,
+					selectedItem: getItem(gridCopy, x, z)
 				};
 			}
 		}
@@ -303,7 +301,8 @@ export default function(
 				currentX: null,
 				currentZ: null,
 				mode: "assetTypeSelected",
-				selectedAsset: action.payload
+				selectedAsset: action.payload,
+				selectedItem: null
 			};
 		}
 
