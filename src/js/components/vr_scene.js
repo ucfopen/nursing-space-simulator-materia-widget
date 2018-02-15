@@ -11,13 +11,15 @@ import FloorTile from "./assets/floor_tile";
 import FloorUnit from "./assets/floor_unit";
 import QsetAsset from "./assets/qset_asset";
 import Skybox from "./assets/skybox";
+import AssetMovementControls from "./ui/asset_movement_controls";
 
 // Redux Actions
 import {
 	insertAsset,
 	selectAsset,
 	fillWalls,
-	refreshGrid
+	refreshGrid,
+	updateAssetPosition
 } from "../actions/grid_actions";
 import {
 	BAD_INSERT,
@@ -26,6 +28,7 @@ import {
 	updateTimedTooltip
 } from "../actions/tooltip_actions";
 import { getCellRotation, isCellAvailable, isInBounds } from "../grid";
+
 // Utilities
 import { checkPropsExist } from "../utils";
 
@@ -194,6 +197,7 @@ export class VRScene extends Component {
 
 	renderScene() {
 		const { mode, posX, posY, posZ, shortcutsEnabled, thirdPerson } = this.props;
+		const { updateAssetPosition } = this.props;
 		const position = { x: posX, y: posY, z: posZ }
 		return (
 			<Scene className="vr-scene" keyboard-shortcuts="enterVR: false">
@@ -242,6 +246,16 @@ export class VRScene extends Component {
 				/>
 				{this.renderFloor()}
 				{this.renderAssets()}
+				{ this.props.mode == "manipulation"
+					? (
+						<AssetMovementControls
+							currentX={this.props.currentX}
+							currentZ={this.props.currentZ}
+							asset={this.props.selectedAsset}
+							position={position}
+							updateAssetPosition={updateAssetPosition}/>
+					) : null
+				}
 			</Scene>
 		);
 	}
@@ -278,5 +292,6 @@ export default connect(mapStateToProps, {
 	refreshGrid,
 	selectAsset,
 	showErrorTooltip,
+	updateAssetPosition,
 	updateTimedTooltip
 })(VRScene);
