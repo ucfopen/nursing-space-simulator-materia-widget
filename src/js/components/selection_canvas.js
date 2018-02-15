@@ -12,7 +12,6 @@ export default class SelectionCanvas extends React.Component {
 	}
 
 	componentDidUpdate() {
-		console.log(this.props);
 		if (window.lastMouseCoords.x && window.lastMouseCoords.y) {
 			this.updateCanvas();
 		}

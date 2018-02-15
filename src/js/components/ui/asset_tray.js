@@ -69,6 +69,9 @@ export default class AssetTray extends React.Component {
 					>
 						Delete Multiple Assets
 					</button>
+					<button id="delete-multiple-mode" onClick={setDeleteMode}>
+						Undo
+					</button>
 					<div id="categories-list">
 						{this.props.categories.map((category, index) => (
 							<CategoryButton

@@ -27,6 +27,7 @@ export default class App extends React.Component {
 		super(props);
 		this.state = {
 			grid: this.props.map,
+			gridHistory: null,
 			hoveredAsset: null,
 			manipulationMode: false,
 			placementMode: false,
@@ -196,7 +197,8 @@ export default class App extends React.Component {
 		};
 
 		this.setState({
-			secondDeletionClick: x
+			secondDeletionClick: x,
+			gridHistory: grid
 		});
 
 		if (positions.yOne != null) {
@@ -206,20 +208,68 @@ export default class App extends React.Component {
 				(positions.xTwo - positions.xOne) *
 				(positions.yTwo - positions.yOne);
 			tiles = Math.abs(tiles);
-			var counter = positions.xOne;
-			var innerCounter = positions.yOne;
 
-			for (counter; counter <= positions.xTwo; counter++) {
-				grid[counter][positions.yOne] = "0";
-				for (
-					innerCounter;
-					innerCounter <= positions.yTwo;
-					innerCounter++
-				) {
-					grid[counter][innerCounter] = "0";
+			if (
+				positions.xOne > positions.xTwo &&
+				positions.yOne > positions.yTwo
+			) {
+				var counter = positions.xTwo;
+				var innerCounter = positions.yTwo;
+				for (counter; counter <= positions.xOne; counter++) {
+					grid[counter][positions.yOne] = "0";
+					for (
+						innerCounter;
+						innerCounter <= positions.yOne;
+						innerCounter++
+					) {
+						grid[counter][innerCounter] = "0";
+					}
+					innerCounter = positions.yTwo;
 				}
-				innerCounter = positions.yOne;
+			} else if (positions.xOne > positions.xTwo) {
+				var counter = positions.xTwo;
+				var innerCounter = positions.yOne;
+				for (counter; counter <= positions.xOne; counter++) {
+					grid[counter][positions.yOne] = "0";
+					for (
+						innerCounter;
+						innerCounter <= positions.yTwo;
+						innerCounter++
+					) {
+						grid[counter][innerCounter] = "0";
+					}
+					innerCounter = positions.yOne;
+				}
+			} else if (positions.yOne > positions.yTwo) {
+				var counter = positions.xOne;
+				var innerCounter = positions.yTwo;
+				for (counter; counter <= positions.xTwo; counter++) {
+					grid[counter][positions.yOne] = "0";
+					for (
+						innerCounter;
+						innerCounter <= positions.yOne;
+						innerCounter++
+					) {
+						grid[counter][innerCounter] = "0";
+					}
+					innerCounter = positions.yTwo;
+				}
+			} else {
+				var counter = positions.xOne;
+				var innerCounter = positions.yOne;
+				for (counter; counter <= positions.xTwo; counter++) {
+					grid[counter][positions.yOne] = "0";
+					for (
+						innerCounter;
+						innerCounter <= positions.yTwo;
+						innerCounter++
+					) {
+						grid[counter][innerCounter] = "0";
+					}
+					innerCounter = positions.yOne;
+				}
 			}
+
 			window.lastMouseCoords = { x: null, y: null };
 			this.setState({
 				deleteMultipleMode: false,
