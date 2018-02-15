@@ -367,7 +367,7 @@ const endTour = [
 	{
 		title: "Help & Keyboard Shortcuts",
 		text:
-			"Here you can restart this tour anytime.<br/>There's also a list of keyboard shortcuts, if you chose to enable them.",
+			"Here you can restart this tour anytime.<br/>There's also a list of keyboard shortcuts and an option to disable them.",
 		selector: "#help-pane",
 		position: "top"
 	},

@@ -12,7 +12,7 @@ import StickerSVG from "../assets/icon-svgs/sticker";
 import StickerBox from "../assets/sticker_box";
 
 // Redux Actions
-import { getCellRotation, getStickers } from "../../grid";
+import { getStickers } from "../../grid";
 
 const TOP = 0;
 const RIGHT = 1;
