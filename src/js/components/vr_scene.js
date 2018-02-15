@@ -27,7 +27,7 @@ import {
 	showErrorTooltip,
 	updateTimedTooltip
 } from "../actions/tooltip_actions";
-import { getCellRotation, isCellAvailable, isInBounds } from "../grid";
+import { isCellAvailable, isInBounds } from "../grid";
 
 // Utilities
 import { checkPropsExist } from "../utils";
@@ -69,26 +69,20 @@ export class VRScene extends Component {
 	}
 
 	checkInsertAsset(x, z, assetId = null) {
+		const { currentX, currentZ, dragging, grid, selectedItem } = this.props;
 		const {
 			insertAsset,
 			refreshGrid,
 			showErrorTooltip,
 			updateTimedTooltip
 		} = this.props;
-		const { currentX, currentZ, dragging, grid } = this.props;
 
 		if (assetId == "pov_camera") {
 			return insertAsset(x, z, assetId);
 		}
-
 		let validInsert = isCellAvailable(grid, x, z);
 		if (validInsert && assetId && HS_ASSETS[assetId].spanX == 2) {
-			let prevRotation = getCellRotation(
-				grid,
-				currentX,
-				currentZ
-			);
-			if (prevRotation == null) prevRotation = 180;
+			let prevRotation = selectedItem ? selectedItem.rotation : 180;
 			const adjSide = 3 - ((prevRotation + 180) % 360) / 90;
 			validInsert = isCellAvailable(grid, x, z, adjSide);
 		}
@@ -159,12 +153,11 @@ export class VRScene extends Component {
 			grid,
 			mode,
 			selectedAsset,
+			selectedItem,
 			thirdPerson,
 			validX,
 			validZ
 		} = this.props;
-
-		const selectedAssetId = selectedAsset ? selectedAsset.id : null;
 
 		const mappedFloor = grid.map(
 			(row, rowIndex) =>
@@ -180,7 +173,8 @@ export class VRScene extends Component {
 								mode == "extendWall"
 									? this.checkFillWalls.bind(this)
 									: this.checkInsertAsset.bind(this)}
-							selectedAssetId={selectedAssetId}
+							selectedAsset={selectedAsset}
+							selectedItem={selectedItem}
 							thirdPerson={thirdPerson}
 							validX={validX}
 							validZ={validZ}
@@ -279,6 +273,7 @@ function mapStateToProps({ grid, position, menu }) {
 		posY: position.y,
 		posZ: position.z,
 		selectedAsset: grid.selectedAsset,
+		selectedItem: grid.selectedItem,
 		shortcutsEnabled: menu.shortcutsEnabled,
 		thirdPerson: position.thirdPerson,
 		validX: grid.validX,
