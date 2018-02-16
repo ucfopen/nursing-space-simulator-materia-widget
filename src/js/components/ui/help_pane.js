@@ -10,17 +10,9 @@ export default props => {
 					className={props.mode == "editAsset" ? "reduced" : null}
 					onMouseDown={(e)=>e.preventDefault()}>
 					<button id="close-help-pane" onClick={()=>props.toggleHelpVisibility()}>x</button>
-					<div id="keyboard-checkbox">
-						<input
-							type="checkbox"
-							id="keyboard"
-							onChange={props.toggleKeyboardShortcuts}
-							checked={props.shortcutsEnabled}
-						/>
-						<label htmlFor="keyboard">Enable</label>
-					</div>
-					<p onClick={()=>props.restartTour()}>Click here to restart the tour.</p>
-					<h1>Keyboard Shortcuts</h1>
+					<h1>Help</h1>
+					<a onClick={()=>props.restartTour()}>Click here to restart the tour.</a>
+					<h3>Keyboard Shortcuts</h3>
 					<ul>
 						<li>
 							<strong>WASD</strong> or <strong>Arrow Keys</strong> control the camera, or, if an asset is selected, move that selected asset
@@ -42,6 +34,15 @@ export default props => {
 						<li><strong>V</strong> enter wall edit mode (when wall or door is selected)</li>
 						<li><strong>H</strong> toggle help (this menu)</li>
 					</ul>
+					<div id="keyboard-checkbox">
+						<input
+							type="checkbox"
+							id="keyboard"
+							onChange={props.toggleKeyboardShortcuts}
+							checked={props.shortcutsEnabled}
+						/>
+						<label htmlFor="keyboard">Enable keyboard shortcuts</label>
+					</div>
 					<p id="version-info">Build 3, Spring 2018</p>
 				</div>
 			)
