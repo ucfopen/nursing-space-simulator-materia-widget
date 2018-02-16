@@ -93,7 +93,7 @@ export class VRScene extends Component {
 		else if (dragging) {
 			refreshGrid();
 		}
-		else {
+		else if (currentX != x || currentZ != z) {
 			const key = Math.random();
 			showErrorTooltip(BAD_INSERT, key, HS_ASSETS[assetId].title);
 			setTimeout(function() {
