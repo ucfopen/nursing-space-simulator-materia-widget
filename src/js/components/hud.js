@@ -72,9 +72,6 @@ export class HUD extends Component {
 			updateCameraPosition
 		} = this.props;
 
-		const update =
-			mode === "manipulation" ? updateAssetPosition : updateCameraPosition;
-
 		return (
 			<div>
 				<AssetTooltip
@@ -87,8 +84,6 @@ export class HUD extends Component {
 				{mode !== "editAsset" ? (
 					<MovementControls
 						thirdPerson={thirdPerson}
-						update={update}
-						mode={mode}
 						updateCameraPosition={updateCameraPosition}
 					/>
 				) : null}
