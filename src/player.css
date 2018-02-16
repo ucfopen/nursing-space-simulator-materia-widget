@@ -497,6 +497,7 @@ button.a-enter-vr-button {
 	position: absolute;
 	bottom: 5px;
 	right: 15px;
+	cursor: pointer;
 }
 
 #keyboard-shortcut.active {
@@ -504,17 +505,19 @@ button.a-enter-vr-button {
 }
 
 #help-pane {
-	width: 350px;
-	height: 450px;
+	width: 360px;
+	/* height: 460px; */
 	position: absolute;
 	bottom: 25px;
 	right: 5px;
-	background: beige;
-	font-size: 15px;
-	padding: 5px;
+	background: #ffffff;
+	font-size: 12px;
+	padding: 10px;
 	overflow: overlay;
-	border: 1px solid black;
-	border-radius: 10px
+	border: 1px solid #A9A9A9;
+	border-radius: 3px;
+
+	box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.2);
 }
 
 #help-pane.reduced {
@@ -523,8 +526,14 @@ button.a-enter-vr-button {
 	overflow: scroll;
 }
 
-#help-pane h1 {
+#help-pane a {
+	cursor: pointer;
 	text-decoration: underline;
+	font-weight: bold;
+}
+
+#help-pane h1 {
+	/* text-decoration: underline; */
 	font-size: 20px;
 	font-weight: bold;
 }
@@ -548,12 +557,13 @@ button.a-enter-vr-button {
 	top: 3px;
 	right: 3px;
 	font-size: 12px;
+	cursor: pointer;
 }
 
 #keyboard-checkbox {
-	position: absolute;
-	top: 55px;
-	right: 15px;
+	/* position: absolute;
+	top: 75px;
+	right: 15px; */
 	font-size: 16px;
 }
 
