@@ -17,13 +17,14 @@ export function initData(qset) {
 	window.HS_CATEGORIES = qset.options.categories;
 	window.HS_STICKER_TYPES = qset.options.stickerTypes;
 	window.HS_ASSETS = qset.options.assets;
+	window.IS_TOUCHSCREEN = 'ontouchstart' in window || navigator.maxTouchPoints;
 
 	// Register triangle geometry with Aframe since it's not available as a primitive in the version we're using
 	AFRAME.registerGeometry('triangle', {
-        schema: {
-            vertices: {
-                default: ['-1 1 0', '-1 -1 0', '1 -1 0'],
-              }
+		schema: {
+			vertices: {
+				default: ['-1 1 0', '-1 -1 0', '1 -1 0'],
+			}
 		},
 		init: function (data) {
 			var geometry = new THREE.Geometry();
@@ -38,7 +39,7 @@ export function initData(qset) {
 			geometry.computeVertexNormals();
 			this.geometry = geometry;
 		  }
-    });
+	});
 
 	return {
 		type: INIT_DATA,
