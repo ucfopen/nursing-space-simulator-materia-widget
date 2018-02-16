@@ -42,7 +42,7 @@ export default class AssetMovementControls extends Component {
 		}
 
 		// assumes that most assets are about 0.5 units in height
-		const assetHeight = 0.5;
+		const assetHeight = asset.category == "construction" ? 3 : 0.5;
 
 		// adjusts the position of the arrows to make them seem like they're in
 		// the right place. (math based on similar triangles where one is from the
