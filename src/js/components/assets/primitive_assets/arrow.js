@@ -42,7 +42,6 @@ export default class ArrowPrimitive extends Component {
 				rotation={{ x: -90, y: rotation, z: 0 }}
 				scale={{ x:scale, y: scale, z: scale }}>
 				<Entity
-					events={{ click: onClick }}
 					geometry={{ primitive: "plane", height: .8, width: .5 }}
 					material={
 						this.state.active

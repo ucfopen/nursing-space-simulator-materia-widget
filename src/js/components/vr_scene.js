@@ -240,13 +240,14 @@ export class VRScene extends Component {
 				/>
 				{this.renderFloor()}
 				{this.renderAssets()}
-				{ this.props.mode == "manipulation"
+				{ this.props.mode == "manipulation" && !this.props.dragging
 					? (
 						<AssetMovementControls
 							currentX={this.props.currentX}
 							currentZ={this.props.currentZ}
 							asset={this.props.selectedAsset}
 							position={position}
+							selectedItem={this.props.selectedItem}
 							updateAssetPosition={updateAssetPosition}/>
 					) : null
 				}

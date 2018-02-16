@@ -50,7 +50,7 @@ export default class QsetAsset extends Component {
 				attributes={attributes}
 				isSelected={isSelected}
 				mode={mode}
-				onClick={onClick}
+				onClick={() => onClick(false)}
 				rotation={rotation}
 				type={id}
 				x={x}
@@ -96,7 +96,7 @@ export default class QsetAsset extends Component {
 				attributes={attributes}
 				isSelected={isSelected}
 				mode={mode}
-				onClick={thirdPerson ? onClick : null}
+				onClick={thirdPerson ? () => onClick(false) : null}
 				rotation={rotation}
 				x={x}
 				z={z}
@@ -104,7 +104,7 @@ export default class QsetAsset extends Component {
 		) : (
 			<Entity
 				events={{
-					click: thirdPerson ? onClick : null
+					click: thirdPerson ? () => onClick(false) : null
 				}}
 				// If an assets contains an .mtl (defined in qset), aframe will use obj-model. Otherwise, aframe will use material src
 				material={{ color: "green", opacity: 0.4 }}
