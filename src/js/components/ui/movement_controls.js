@@ -25,7 +25,7 @@ export default class MovementControls extends Component {
 	}
 
 	render() {
-		const { thirdPerson, update, mode } = this.props;
+		const { thirdPerson, updateCameraPosition } = this.props;
 		return ( // preventDefault on mousedown prevents items underneath from being dragged
 			<div id="UI-right-panel" onMouseDown={(e)=>e.preventDefault()}>
 				<div id="top-buttons" />
@@ -34,33 +34,28 @@ export default class MovementControls extends Component {
 				</button>
 				{thirdPerson ? (
 					<div id="camera-controls">
-						<div id="camera-move" className={mode == "manipulation" ? "manipulation" : null}>
-							<button id="camera-up" onMouseDown={update.bind(this, "zUp")}>
+						<div id="camera-move">
+							<button id="camera-up" onMouseDown={updateCameraPosition.bind(this, "zUp")}>
 								<UpArrowSVG />
 							</button>
 							<div id="camera-move-horizontal">
 								<button
 									id="camera-left"
-									onMouseDown={update.bind(this, "xLeft")}>
+									onMouseDown={updateCameraPosition.bind(this, "xLeft")}>
 									<LeftArrowSVG />
 								</button>
-								{mode != "manipulation"
-									? (
-										<button
-											id="camera-reset"
-											onMouseDown={update.bind(this, "reset")}>
-											<ResetCamera />
-										</button>
-									)
-									: null
-								}
+									<button
+										id="camera-reset"
+										onMouseDown={updateCameraPosition.bind(this, "reset")}>
+										<ResetCamera />
+									</button>
 								<button
 									id="camera-right"
-									onMouseDown={update.bind(this, "xRight")}>
+									onMouseDown={updateCameraPosition.bind(this, "xRight")}>
 									<RightArrowSVG />
 								</button>
 							</div>
-							<button id="camera-down" onMouseDown={update.bind(this, "zDown")}>
+							<button id="camera-down" onMouseDown={updateCameraPosition.bind(this, "zDown")}>
 								<DownArrowSVG />
 							</button>
 						</div>
