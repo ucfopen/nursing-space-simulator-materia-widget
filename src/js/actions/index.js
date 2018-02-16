@@ -17,7 +17,6 @@ export function initData(qset) {
 	window.HS_CATEGORIES = qset.options.categories;
 	window.HS_STICKER_TYPES = qset.options.stickerTypes;
 	window.HS_ASSETS = qset.options.assets;
-	window.IS_TOUCHSCREEN = 'ontouchstart' in window || navigator.maxTouchPoints;
 
 	// Register triangle geometry with Aframe since it's not available as a primitive in the version we're using
 	AFRAME.registerGeometry('triangle', {
