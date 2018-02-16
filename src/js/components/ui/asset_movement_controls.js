@@ -18,17 +18,28 @@ export default class AssetMovementControls extends Component {
 	}
 
 	render() {
-		const { currentX, currentZ, asset, position, offsets, updateAssetPosition } = this.props;
+		const { currentX, currentZ, asset, position, selectedItem } = this.props;
+		const { updateAssetPosition } = this.props;
 
 		// compute offsets based on the difference in camera position and asset position
 		// this is to center the asset within the arrows when it would otherwise be offset due to the difference in height between the asset and arrows
-		// TODO: does not currently take rotation into account, because passing rotation state into this component is gonna be annoying
 
 		// width and height are shifted based on the asset spanX and spanZ
-		const widthShift = asset.spanX/2 - 0.5;
-		const heightShift = asset.spanZ/2 - 0.5;
-		const centerX = currentX - widthShift;
-		const centerZ = currentZ - heightShift;
+		const side = selectedItem ? (450 - selectedItem.rotation) % 360 / 90 : 3;
+		let widthShift = (asset.spanX/2 - 0.5);
+		let heightShift = asset.spanZ/2 - 0.5;
+		let centerX, centerZ;
+		if (side % 2 == 0) {
+			[widthShift, heightShift] = [heightShift, widthShift];
+		}
+		if (side == 1 || side == 2) {
+			centerX = currentX + widthShift;
+			centerZ = currentZ + heightShift;
+		}
+		else {
+			centerX = currentX - widthShift;
+			centerZ = currentZ - heightShift;
+		}
 
 		// assumes that most assets are about 0.5 units in height
 		const assetHeight = 0.5;
@@ -44,7 +55,7 @@ export default class AssetMovementControls extends Component {
 		// scale the arrows so that they're smaller when zoomed in (base is y=18)
 		const scale = (
 			position.y < 5
-				? 0.25
+				? 0.2
 				: (position.y * 2/3 + 18 * 1/3) / 18 // linear scale biased to 1
 		);
 
