@@ -61,33 +61,41 @@ export default class AssetMovementControls extends Component {
 
 		return (
 				<Entity>
-					<Arrow
-						onClick={this.controlClicked.bind(this, "zUp")}
-						radius={heightShift}
-						scale={scale}
-						x={centerX + xOffset}
-						z={centerZ + zOffset}/>
-					<Arrow
-						onClick={this.controlClicked.bind(this, "xRight")}
-						radius={widthShift}
-						rotation={270}
-						scale={scale}
-						x={centerX + xOffset}
-						z={centerZ + zOffset}/>
-					<Arrow
-						onClick={this.controlClicked.bind(this, "zDown")}
-						radius={heightShift}
-						rotation={180}
-						scale={scale}
-						x={centerX + xOffset}
-						z={centerZ + zOffset}/>
-					<Arrow
-						onClick={this.controlClicked.bind(this, "xLeft")}
-						radius={widthShift}
-						rotation={90}
-						scale={scale}
-						x={centerX + xOffset}
-						z={centerZ + zOffset}/>
+					{ selectedItem.adj[0] ? (
+						<Arrow
+							onClick={this.controlClicked.bind(this, "zUp")}
+							radius={heightShift}
+							scale={scale}
+							x={centerX + xOffset}
+							z={centerZ + zOffset}/>
+					): null}
+					{ selectedItem.adj[1] ? (
+						<Arrow
+							onClick={this.controlClicked.bind(this, "xRight")}
+							radius={widthShift}
+							rotation={270}
+							scale={scale}
+							x={centerX + xOffset}
+							z={centerZ + zOffset}/>
+					): null}
+					{ selectedItem.adj[2] ? (
+						<Arrow
+							onClick={this.controlClicked.bind(this, "zDown")}
+							radius={heightShift}
+							rotation={180}
+							scale={scale}
+							x={centerX + xOffset}
+							z={centerZ + zOffset}/>
+					): null}
+					{ selectedItem.adj[3] ? (
+						<Arrow
+							onClick={this.controlClicked.bind(this, "xLeft")}
+							radius={widthShift}
+							rotation={90}
+							scale={scale}
+							x={centerX + xOffset}
+							z={centerZ + zOffset}/>
+					): null}
 				</Entity>
 		);
 	}

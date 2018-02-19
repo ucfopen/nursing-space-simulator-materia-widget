@@ -17,6 +17,7 @@ import {
 import {
 	deleteItem,
 	findValidExtends,
+	getAdjacentSpaces,
 	getCellRotation,
 	getItem,
 	getStickers,
@@ -193,7 +194,6 @@ export default function(
 						dragging: false,
 						grid: newGrid,
 						mode: "extendWall",
-						selectedItem: getItem(newGrid, x, z),
 						validX: validX,
 						validZ: validZ
 					};
@@ -207,6 +207,8 @@ export default function(
 				prevRotation,
 				prevStickers
 			)
+			let selectedItem = getItem(newGrid, x, z);
+			selectedItem.adj = getAdjacentSpaces(newGrid, x, z, selectedAsset);
 			return {
 				...state,
 				currentX: x,
@@ -214,7 +216,7 @@ export default function(
 				dragging: false,
 				grid: newGrid,
 				mode: "manipulation",
-				selectedItem: getItem(newGrid, x, z)
+				selectedItem: selectedItem
 			};
 		}
 
@@ -243,11 +245,13 @@ export default function(
 		case ROTATE_ASSET: {
 			const gridCopy = deepCopy(state.grid);
 			const { x, z } = action.payload;
-			let newGrid = rotateCell(gridCopy, x, z)
+			let newGrid = rotateCell(gridCopy, x, z);
+			let selectedItem = getItem(newGrid, x, z);
+			selectedItem.adj = getAdjacentSpaces(newGrid, x, z, state.selectedAsset);
 			return {
 				...state,
 				grid: newGrid,
-				selectedItem: getItem(newGrid, x, z)
+				selectedItem: selectedItem
 			};
 		}
 
@@ -273,6 +277,8 @@ export default function(
 					z,
 					prevRotation
 				);
+				let selectedItem = getItem(newGrid, x, z);
+				selectedItem.adj = getAdjacentSpaces(newGrid, x, z, asset);
 				return {
 					...state,
 					currentX: x,
@@ -283,6 +289,8 @@ export default function(
 					selectedItem: getItem(newGrid, x, z)
 				};
 			} else {
+				let selectedItem = getItem(gridCopy, x, z);
+				selectedItem.adj = getAdjacentSpaces(gridCopy, x, z, asset);
 				return {
 					...state,
 					currentX: x,
@@ -290,7 +298,7 @@ export default function(
 					dragging: dragging,
 					mode: "manipulation",
 					selectedAsset: asset,
-					selectedItem: getItem(gridCopy, x, z)
+					selectedItem: selectedItem
 				};
 			}
 		}
@@ -318,6 +326,7 @@ export default function(
 			const currentZ = state.currentZ;
 			const currentRotation = getCellRotation(gridCopy, currentX, currentZ);
 			const prevStickers = getStickers(gridCopy, currentX, currentZ);
+			let selectedItem = getItem(gridCopy, currentX, currentZ);
 			let adjSide;
 			let newGrid;
 
@@ -329,68 +338,80 @@ export default function(
 				case "xRight":
 					newGrid = deleteItem(gridCopy, currentX, currentZ);
 					if (isCellAvailable(gridCopy, currentX + 1, currentZ, adjSide)) {
+						newGrid = insertItem(
+							newGrid,
+							selectedAsset.id,
+							currentX + 1,
+							currentZ,
+							currentRotation,
+							prevStickers
+						);
+						selectedItem.adj = getAdjacentSpaces(newGrid, currentX + 1, currentZ, selectedAsset);
 						return {
 							...state,
 							currentX: currentX + 1,
-							grid: insertItem(
-								newGrid,
-								selectedAsset.id,
-								currentX + 1,
-								currentZ,
-								currentRotation,
-								prevStickers
-							)
+							grid: newGrid,
+							selectedItem: selectedItem
 						};
 					}
 					break;
 				case "xLeft":
 					newGrid = deleteItem(gridCopy, currentX, currentZ);
 					if (isCellAvailable(gridCopy, currentX - 1, currentZ, adjSide)) {
+						newGrid = insertItem(
+							newGrid,
+							selectedAsset.id,
+							currentX - 1,
+							currentZ,
+							currentRotation,
+							prevStickers
+						);
+						selectedItem.adj = getAdjacentSpaces(newGrid, currentX - 1, currentZ, selectedAsset);
 						return {
 							...state,
 							currentX: currentX - 1,
-							grid: insertItem(
-								newGrid,
-								selectedAsset.id,
-								currentX - 1,
-								currentZ,
-								currentRotation,
-								prevStickers
-							)
+							grid: newGrid,
+							selectedItem: selectedItem
 						};
 					}
 					break;
 				case "zUp":
 					newGrid = deleteItem(gridCopy, currentX, currentZ);
 					if (isCellAvailable(gridCopy, currentX, currentZ - 1, adjSide)) {
+						newGrid = insertItem(
+							newGrid,
+							selectedAsset.id,
+							currentX,
+							currentZ - 1,
+							currentRotation,
+							prevStickers
+						);
+						selectedItem.adj = getAdjacentSpaces(newGrid, currentX, currentZ - 1, selectedAsset);
 						return {
 							...state,
 							currentZ: currentZ - 1,
-							grid: insertItem(
-								newGrid,
-								selectedAsset.id,
-								currentX,
-								currentZ - 1,
-								currentRotation,
-								prevStickers
-							)
+							grid: newGrid,
+							selectedItem: selectedItem
 						};
 					}
 					break;
 				case "zDown":
 					newGrid = deleteItem(gridCopy, currentX, currentZ);
 					if (isCellAvailable(gridCopy, currentX, currentZ + 1, adjSide)) {
+						newGrid = insertItem(
+							newGrid,
+							selectedAsset.id,
+							currentX,
+							currentZ + 1,
+							currentRotation,
+							prevStickers
+						);
+						selectedItem.adj = getAdjacentSpaces(newGrid, currentX, currentZ + 1, selectedAsset);
 						return {
 							...state,
 							currentZ: currentZ + 1,
-							grid: insertItem(
-								newGrid,
-								selectedAsset.id,
-								currentX,
-								currentZ + 1,
-								currentRotation,
-								prevStickers
-							)
+							grid: newGrid,
+							selectedItem: selectedItem
 						};
 					}
 					break;
