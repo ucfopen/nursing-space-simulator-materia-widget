@@ -225,11 +225,11 @@
 						"id": "desk",
 						"materialType": "complex",
 						"mtlSrc": "assets/desk/mesh_desk.mtl",
-						"objSrc": "assets/desk/mesh_desk.obj",
+						"objSrc": "assets/desk/model.obj",
 						"position": {
 							"x": -100,
 							"y": 0,
-							"z": -50
+							"z": -100
 						},
 						"rotation": {
 							"x": 0,
@@ -237,12 +237,12 @@
 							"z": 0
 						},
 						"scale": {
-							"x": 0.25,
-							"y": 0.25,
-							"z": 0.25
+							"x": 0.0004,
+							"y": 0.0004,
+							"z": 0.0004
 						},
-						"spanX": 1,
-						"spanZ": 3,
+						"spanX": 2,
+						"spanZ": 1,
 						"tag": "a-obj-model",
 						"type": "object",
 						"category": "equipment",
