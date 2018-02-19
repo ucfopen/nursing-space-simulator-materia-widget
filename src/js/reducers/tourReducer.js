@@ -48,7 +48,6 @@ export default function(
 				...state,
 				tourRunning: false
 			};
-			return state;
 
 		case EXTEND_WALL:
 			if (state.tourRunning && state.stepCompletion === 8) {

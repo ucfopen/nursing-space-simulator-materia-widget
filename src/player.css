@@ -73,18 +73,6 @@ button svg.svg-icon:hover {
 	box-shadow: none;
 }
 
-#UI-asset-movement-panel #camera-move {
-	width: 160px;
-}
-
-#UI-asset-movement-panel #camera-move-horizontal #camera-left {
-	float: left;
-}
-
-#UI-asset-movement-panel #camera-move-horizontal #camera-right {
-	float: right;
-}
-
 /* Top-right panel */
 
 #UI-right-panel {
@@ -418,7 +406,7 @@ button svg.svg-icon:hover {
 }
 
 #categories-list {
-	width: 31%;
+	width: 33%;
 }
 
 button.a-enter-vr-button {
