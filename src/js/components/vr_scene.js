@@ -94,6 +94,7 @@ export class VRScene extends Component {
 			refreshGrid();
 		}
 		else if (currentX != x || currentZ != z) {
+			if (assetId === null) return;
 			const key = Math.random();
 			showErrorTooltip(BAD_INSERT, key, HS_ASSETS[assetId].title);
 			setTimeout(function() {
