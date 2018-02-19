@@ -49,6 +49,8 @@ export default () => {
                     d="M51.59,89.7,28.83,79.91C24,77.84,20,72.18,20,67.35V44.59c0-4.83,4-7.09,8.79-5l22.76,9.78c4.83,2.08,8.79,7.73,8.79,12.56V84.69C60.38,89.52,56.42,91.78,51.59,89.7Z"
                     transform="translate(-6.48 -2.23)"
                 />
+                <rect x="88" y="87" width="35" height="35" rx="12" ry="12" fill="#fff" strokeWidth="2" stroke="#000" strokeWidth="3" strokeMiterlimit="10"/>
+				<text fontSize="26px" fill="#000" fontFamily="Arial-BoldMT Arial" transform="translate(97 114)">V</text>
 			</g>
 		</svg>
 	);
