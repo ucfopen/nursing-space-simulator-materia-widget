@@ -451,3 +451,24 @@ export function setSticker(grid, x, z, side, sticker) {
 	grid[z][x].stickers[side] = sticker;
 	return grid;
 }
+
+export function getAdjacentSpaces(grid, x, z, selectedAsset) {
+	let adjSpaces = [];
+	if (selectedAsset.spanX == 2) {
+		return [true, true, true, true];
+		/* turns out this is kinda complicated
+		const rotation = getItem(grid, x, z).rotation;
+		for (let side = 0; side < 4; side++) {
+			const adjx = side % 2 == 0 ? x : () ???
+		}
+		*/
+	}
+	else {
+		for (let side = 0; side < 4; side++) {
+			const adjX = side % 2 == 0 ? x : (x + 2 - side);
+			const adjZ = side % 2 == 0 ? (z + side - 1) : z;
+			adjSpaces.push(isCellAvailable(grid, adjX, adjZ));
+		}
+	}
+	return adjSpaces;
+}
