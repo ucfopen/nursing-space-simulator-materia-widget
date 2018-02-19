@@ -65,6 +65,8 @@ export default () => {
 					width="9.7"
 					height="77"
 				/>
+				<rect x="88" y="84" width="35" height="35" rx="12" ry="12" fill="#fff" strokeWidth="2" stroke="#000" strokeWidth="3" strokeMiterlimit="10"/>
+				<text fontSize="26px" fill="#000" fontFamily="Arial-BoldMT Arial" transform="translate(97 111)">T</text>
 			</g>
 		</svg>
 	);
