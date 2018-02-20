@@ -219,7 +219,7 @@
             "id": "desk",
             "materialType": "complex",
             "mtlSrc": "assets/desk/mesh_desk.mtl",
-            "objSrc": "assets/desk/model.obj",
+            "objSrc": "assets/desk/blenderDesk.obj",
             "position": {
                 "x": -100,
                 "y": 0,
@@ -231,9 +231,9 @@
                 "z": 0
             },
             "scale": {
-                "x": 0.0004,
-                "y": 0.0004,
-                "z": 0.0004
+                "x": 0.25,
+                "y": 0.25,
+                "z": 0.25
             },
             "spanX": 2,
             "spanZ": 1,
