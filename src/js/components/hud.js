@@ -103,6 +103,7 @@ export class HUD extends Component {
 								rotateAsset={this.props.rotateAsset}
 								selectedAsset={this.props.selectedAsset}
 								selectedItem={this.props.selectedItem}
+								shortcutsEnabled={shortcutsEnabled}
 								updateTemporaryTooltip={this.props.updateTemporaryTooltip}
 							/>
 						) : null}
