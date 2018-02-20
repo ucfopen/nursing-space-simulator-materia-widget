@@ -1,6 +1,6 @@
 {
     "categories": ["equipment", "construction", "people"],
-    "stickerTypes": ["0", "soapSticker", "tvSticker"],
+    "stickerTypes": ["0", "fireSticker", "soapSticker", "tvSticker"],
     "assets": {
         "bed-1": {
             "buttonSource": "assets/icons/icon_bed.png",
@@ -504,6 +504,23 @@
             "type": "wall",
             "category": "construction",
             "title": "Wall"
+        },
+        "fireSticker": {
+            "buttonSource": "assets/icons/icon_fire.png",
+            "canReplace": [],
+            "defaultColor": "#9FCDB1",
+            "id": "fireSticker",
+            "mtlSrc": "",
+            "objSrc": "",
+            "rotation": {
+                "x": 0,
+                "y": 180,
+                "z": 0
+            },
+            "tag": "a-obj-model",
+            "type": "sticker",
+            "category": "sticker",
+            "title": "Fire Sticker"
         },
         "soapSticker": {
             "buttonSource": "assets/icons/icon_soap.png",
