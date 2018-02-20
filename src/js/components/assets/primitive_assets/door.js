@@ -55,7 +55,7 @@ export default props => {
 								opacity: selectionOpacity,
 								side: "double"
 							}
-						: { side: "double", color: "white", opacity: 1, metalness }
+						: { side: "double", color: "white", src: "#doorTexture", opacity: 1 }
 				}
 				position={{ y: 1 }}
 				rotation={{ y: -90, z: -90 }}
