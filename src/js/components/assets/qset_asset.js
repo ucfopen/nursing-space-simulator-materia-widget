@@ -89,6 +89,7 @@ export default class QsetAsset extends Component {
 		const id = data.id;
 		const yScaleFactor =
 			data.category === "construction" ? data.scale.y / 2 : 0;
+		const validClick = thirdPerson &&  mode != "editAsset";
 
 		return data.category === "construction" ? (
 			<Wall
@@ -96,7 +97,7 @@ export default class QsetAsset extends Component {
 				attributes={attributes}
 				isSelected={isSelected}
 				mode={mode}
-				onClick={thirdPerson ? () => onClick(false) : null}
+				onClick={validClick ? () => onClick(false) : null}
 				rotation={rotation}
 				x={x}
 				z={z}
@@ -104,7 +105,7 @@ export default class QsetAsset extends Component {
 		) : (
 			<Entity
 				events={{
-					click: thirdPerson ? () => onClick(false) : null
+					click: validClick ? () => onClick(false) : null
 				}}
 				// If an assets contains an .mtl (defined in qset), aframe will use obj-model. Otherwise, aframe will use material src
 				material={{ color: "green", opacity: 0.4 }}
@@ -127,7 +128,8 @@ export default class QsetAsset extends Component {
 
 	render() {
 		if (checkPropsExist(this.props)) {
-			if (!this.props.thirdPerson) return this.renderAssetNonDrag();
+			if (!this.props.thirdPerson || this.props.mode == "editAsset")
+				return this.renderAssetNonDrag();
 			return Namespace("HospitalSim").browserIsChrome
 				? this.renderAsset()
 				: this.renderAssetNonDrag();
