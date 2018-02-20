@@ -27,7 +27,15 @@ export default class AssetControls extends Component {
 
 	render() {
 		// matches keys from props to respective variables
-		const { currentX, currentZ, mode, selectedAsset, selectedItem, stickers } = this.props;
+		const {
+			currentX,
+			currentZ,
+			mode,
+			selectedAsset,
+			selectedItem,
+			shortcutsEnabled,
+			stickers
+		} = this.props;
 
 		const {
 			deselectAsset,
@@ -48,7 +56,7 @@ export default class AssetControls extends Component {
 							onClick={() => deselectAsset()}
 							onMouseEnter={() => updateTemporaryTooltip(true, "Back")}
 							onMouseLeave={() => updateTemporaryTooltip(false)}>
-							<DeselectSVG />
+							<DeselectSVG shortcutsEnabled={shortcutsEnabled}/>
 						</button>
 					</div>
 				</div>
@@ -75,7 +83,7 @@ export default class AssetControls extends Component {
 							onClick={() => deselectAsset(true)}
 							onMouseEnter={() => updateTemporaryTooltip(true, "Confirm")}
 							onMouseLeave={() => updateTemporaryTooltip(false)}>
-							<ConfirmSVG />
+							<ConfirmSVG shortcutsEnabled={shortcutsEnabled}/>
 						</button>
 						<StickerBox index={TOP} side="top" {...stickerProps} />
 						<StickerBox index={RIGHT} side="right" {...stickerProps} />
@@ -101,21 +109,21 @@ export default class AssetControls extends Component {
 								onClick={() => deselectAsset()}
 								onMouseEnter={() => updateTemporaryTooltip(true, "Confirm")}
 								onMouseLeave={() => updateTemporaryTooltip(false)}>
-								<ConfirmSVG/>
+								<ConfirmSVG shortcutsEnabled={shortcutsEnabled}/>
 							</button>
 							<button
 								id="rotate"
 								onClick={() => rotateAsset(currentX, currentZ)}
 								onMouseEnter={() => updateTemporaryTooltip(true, "Rotate")}
 								onMouseLeave={() => updateTemporaryTooltip(false)}>
-								<RotateSVG />
+								<RotateSVG shortcutsEnabled={shortcutsEnabled}/>
 							</button>
 							<button
 								id="remove"
 								onClick={() => removeAsset(currentX, currentZ)}
 								onMouseEnter={() => updateTemporaryTooltip(true, "Remove")}
 								onMouseLeave={() => updateTemporaryTooltip(false)}>
-								<DeleteSVG />
+								<DeleteSVG shortcutsEnabled={shortcutsEnabled}/>
 							</button>
 							{selectedAsset.id == "wall-1" ? (
 								<button
@@ -123,7 +131,7 @@ export default class AssetControls extends Component {
 									onClick={() => extendWall(currentX, currentZ)}
 									onMouseEnter={() => updateTemporaryTooltip(true, "Extend Wall")}
 									onMouseLeave={() => updateTemporaryTooltip(false)}>
-									<ExtendSVG />
+									<ExtendSVG shortcutsEnabled={shortcutsEnabled}/>
 								</button>
 							) : null}
 							{selectedAsset.id == "wall-1" || selectedAsset.id == "door-1" ? (
@@ -132,7 +140,7 @@ export default class AssetControls extends Component {
 									onClick={() => editAsset(currentX, currentZ)}
 									onMouseEnter={() => updateTemporaryTooltip(true, "Attach Items to this Wall")}
 									onMouseLeave={() => updateTemporaryTooltip(false)}>
-									<StickerSVG />
+									<StickerSVG shortcutsEnabled={shortcutsEnabled}/>
 								</button>
 							) : null}
 						</div>
@@ -142,7 +150,7 @@ export default class AssetControls extends Component {
 							onClick={() => deselectAsset()}
 							onMouseEnter={() => updateTemporaryTooltip(true, "Cancel")}
 							onMouseLeave={() => updateTemporaryTooltip(false)}>
-							<DeselectSVG />
+							<DeselectSVG shortcutsEnabled={shortcutsEnabled}/>
 						</button>
 					)}
 				</div>

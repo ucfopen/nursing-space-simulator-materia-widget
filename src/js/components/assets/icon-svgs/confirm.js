@@ -1,6 +1,6 @@
 import React from "react";
 
-export default () => {
+export default props => {
 	return (
 		<svg
 			version="1.1"
@@ -12,8 +12,12 @@ export default () => {
 			width="55px"
 			height="55px">
 			<g id="Layer_9">
-				<rect x="82" y="72" width="35" height="35" rx="12" ry="12" fill="#fff" strokeWidth="2" stroke="#000" strokeWidth="3" strokeMiterlimit="10"/>
-				<text fontSize="26px" fill="#000" fontFamily="Arial-BoldMT Arial" transform="translate(89 98)">Q</text>
+				{props.shortcutsEnabled ? (
+					<rect x="82" y="72" width="35" height="35" rx="12" ry="12" fill="#fff" strokeWidth="2" stroke="#000" strokeWidth="3" strokeMiterlimit="10"/>
+				): null}
+				{props.shortcutsEnabled ? (
+					<text fontSize="26px" fill="#000" fontFamily="Arial-BoldMT Arial" transform="translate(89 98)">Q</text>
+				) : null}
 				<polygon
 					fill="#DC7627"
 					stroke="#000000"
