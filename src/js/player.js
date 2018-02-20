@@ -38,9 +38,14 @@ function loadGrid(gridString, gLen, gWid) {
 */
 window.mouseCoords = { x: null, y: null };
 window.lastMouseCoords = { x: null, y: null };
+window.shiftKeyIsPressed = false;
 document.addEventListener("mousemove", event => {
 	window.mouseCoords.x = event.clientX;
 	window.mouseCoords.y = event.clientY;
+});
+
+document.addEventListener("keydown", event => {
+	window.shiftKeyIsPressed = event.shiftKey;
 });
 
 Namespace("HospitalSim").Engine = {
