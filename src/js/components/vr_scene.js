@@ -202,6 +202,11 @@ export class VRScene extends Component {
 						id="ceilingTexture"
 						src="assets/CEILING_TILE.jpg"
 					/>
+					<img
+						alt="door-texture"
+						id="doorTexture"
+						src="assets/DOOR_TEX.png"
+					/>
 					{Object.keys(HS_ASSETS).map(asset => {
 						if (HS_ASSETS[asset].objSrc) {
 							return (
