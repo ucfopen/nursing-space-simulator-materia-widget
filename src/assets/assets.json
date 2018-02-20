@@ -527,7 +527,7 @@
             "canReplace": [],
             "defaultColor": "#9FCDB1",
             "id": "soapSticker",
-            "mtlSrc": "",
+            "mtlSrc": "assets/stickers/soap/soap.mtl",
             "objSrc": "assets/stickers/soap/soap.obj",
             "rotation": {
                 "x": 0,
