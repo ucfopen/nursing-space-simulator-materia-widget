@@ -1,22 +1,24 @@
 import { loadGrid } from "../grid";
 
+// Default grid structure to use as a fallback for old qsets
+import defaultData from '../../assets/default.json';
+
 export const INIT_DATA = "init_data";
-export function initData(qset) {
-	// loadGrid function may be needed if structure of grid state changes
-	// in future releases
-	// const grid = loadGrid(
-	// 	qset.options.gridLoader.content,
-	// 	qset.options.gridLoader.rows,
-	// 	qset.options.gridLoader.columns
-	// );
+export function initData(qset, assetData) {
 
 	// The grid state is stored and loaded directly from JSON
-	const grid = JSON.parse(qset.options.gridLoader.grid);
+	// NOTE: old qsets have the grid structure saved differently; if loading fails, fallback to the default
+	let grid = {};
+	try {
+		grid = JSON.parse(qset.options.gridLoader.grid);
+	} catch (error) {
+		grid = JSON.parse(defaultData.grid);
+	}
 
 	// As these do not change, there is no need to track them in state
-	window.HS_CATEGORIES = qset.options.categories;
-	window.HS_STICKER_TYPES = qset.options.stickerTypes;
-	window.HS_ASSETS = qset.options.assets;
+	window.HS_CATEGORIES = assetData.categories;
+	window.HS_STICKER_TYPES = assetData.stickerTypes;
+	window.HS_ASSETS = assetData.assets;
 
 	// Register triangle geometry with Aframe since it's not available as a primitive in the version we're using
 	AFRAME.registerGeometry('triangle', {

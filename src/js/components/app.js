@@ -10,9 +10,12 @@ import VRScene from "./vr_scene";
 import { initData } from "../actions";
 import { startTourSection, endTour } from "../actions/tour_actions";
 
+// JSON structure describing asset data
+import assetData from '../../assets/assets.json';
+
 export class App extends Component {
 	componentDidMount() {
-		this.props.initData(this.props.qset);
+		this.props.initData(this.props.qset, assetData);
 	}
 
 	componentWillUpdate(nextProps) {
