@@ -456,6 +456,8 @@ export function getAdjacentSpaces(grid, x, z, selectedAsset) {
 	let adjSpaces = [];
 
 	if (selectedAsset.spanX == 2) {
+		return [true, true, true, true];
+		/* math is hard
 		const rotation = getItem(grid, x, z).rotation;
 		if (rotation % 180 == 0) { // it's horizontal
 			// top
@@ -485,6 +487,7 @@ export function getAdjacentSpaces(grid, x, z, selectedAsset) {
 			adjSide = rotation == 90 ? 2 : 0;
 			adjSpaces.push(isCellAvailable(grid, x - 1, z, adjSide));
 		}
+		*/
 	}
 	else {
 		for (let side = 0; side < 4; side++) {
