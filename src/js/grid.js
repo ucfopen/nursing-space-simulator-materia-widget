@@ -454,14 +454,37 @@ export function setSticker(grid, x, z, side, sticker) {
 
 export function getAdjacentSpaces(grid, x, z, selectedAsset) {
 	let adjSpaces = [];
+
 	if (selectedAsset.spanX == 2) {
-		return [true, true, true, true];
-		/* turns out this is kinda complicated
 		const rotation = getItem(grid, x, z).rotation;
-		for (let side = 0; side < 4; side++) {
-			const adjx = side % 2 == 0 ? x : () ???
+		if (rotation % 180 == 0) { // it's horizontal
+			// top
+			let adjSide = rotation == 180 ? 3 : 1
+			adjSpaces.push(isCellAvailable(grid, x, z - 1, adjSide));
+			// right
+			let adjX = rotation == 180 ? x + 1 : x + 2;
+			adjSpaces.push(isCellAvailable(grid, adjX, z));
+			// bottom
+			adjSide = rotation == 180 ? 3 : 1
+			adjSpaces.push(isCellAvailable(grid, x, z + 1, adjSide));
+			// right
+			adjX = rotation == 180 ? x - 2 : x - 1;
+			adjSpaces.push(isCellAvailable(grid, adjX, z));
 		}
-		*/
+		else { // vertical
+			// top
+			let adjZ = rotation == 90 ? z - 1 : z - 2;
+			adjSpaces.push(isCellAvailable(grid, x, adjZ))
+			// right
+			let adjSide = rotation == 90 ? 2 : 0;
+			adjSpaces.push(isCellAvailable(grid, x + 1, z, adjSide));
+			// bottom
+			adjZ = rotation == 90 ? z + 2 : z + 1;
+			adjSpaces.push(isCellAvailable(grid, x, adjZ));
+			// left
+			adjSide = rotation == 90 ? 2 : 0;
+			adjSpaces.push(isCellAvailable(grid, x - 1, z, adjSide));
+		}
 	}
 	else {
 		for (let side = 0; side < 4; side++) {
@@ -470,5 +493,6 @@ export function getAdjacentSpaces(grid, x, z, selectedAsset) {
 			adjSpaces.push(isCellAvailable(grid, adjX, adjZ));
 		}
 	}
+
 	return adjSpaces;
 }
