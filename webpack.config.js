@@ -3,7 +3,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const baseConfig = require('materia-widget-development-kit/webpack-widget').getLegacyWidgetBuildConfig()
 
 baseConfig.entry = {
-	'creator.js': ['./src/js/creator.js'],
+	'js/creator.js': ['./src/js/creator.js'],
 	'js/player.js': ['./src/js/player.js'],
 	'creator.css': ['./src/creator.scss', './src/creator.html'],
 	'player.css': ['./src/player.css', './src/player.html'],
