@@ -209,65 +209,46 @@ export default class App extends React.Component {
 				(positions.yTwo - positions.yOne);
 			tiles = Math.abs(tiles);
 
+			//Check the starting point of the mass deletion then pass appropriate points into the massDelete function
 			if (
 				positions.xOne > positions.xTwo &&
 				positions.yOne > positions.yTwo
 			) {
-				var counter = positions.xTwo;
-				var innerCounter = positions.yTwo;
-				for (counter; counter <= positions.xOne; counter++) {
-					grid[counter][positions.yOne] = "0";
-					for (
-						innerCounter;
-						innerCounter <= positions.yOne;
-						innerCounter++
-					) {
-						grid[counter][innerCounter] = "0";
-					}
-					innerCounter = positions.yTwo;
-				}
+				this.massDelete(
+					positions.yTwo,
+					positions.xOne,
+					positions.yOne,
+					positions.xTwo,
+					positions.yTwo,
+					grid
+				);
 			} else if (positions.xOne > positions.xTwo) {
-				var counter = positions.xTwo;
-				var innerCounter = positions.yOne;
-				for (counter; counter <= positions.xOne; counter++) {
-					grid[counter][positions.yOne] = "0";
-					for (
-						innerCounter;
-						innerCounter <= positions.yTwo;
-						innerCounter++
-					) {
-						grid[counter][innerCounter] = "0";
-					}
-					innerCounter = positions.yOne;
-				}
+				this.massDelete(
+					positions.yOne,
+					positions.xOne,
+					positions.yTwo,
+					positions.xTwo,
+					positions.yOne,
+					grid
+				);
 			} else if (positions.yOne > positions.yTwo) {
-				var counter = positions.xOne;
-				var innerCounter = positions.yTwo;
-				for (counter; counter <= positions.xTwo; counter++) {
-					grid[counter][positions.yOne] = "0";
-					for (
-						innerCounter;
-						innerCounter <= positions.yOne;
-						innerCounter++
-					) {
-						grid[counter][innerCounter] = "0";
-					}
-					innerCounter = positions.yTwo;
-				}
+				this.massDelete(
+					positions.yTwo,
+					positions.xTwo,
+					positions.yOne,
+					positions.xOne,
+					positions.yTwo,
+					grid
+				);
 			} else {
-				var counter = positions.xOne;
-				var innerCounter = positions.yOne;
-				for (counter; counter <= positions.xTwo; counter++) {
-					grid[counter][positions.yOne] = "0";
-					for (
-						innerCounter;
-						innerCounter <= positions.yTwo;
-						innerCounter++
-					) {
-						grid[counter][innerCounter] = "0";
-					}
-					innerCounter = positions.yOne;
-				}
+				this.massDelete(
+					positions.yOne,
+					positions.xTwo,
+					positions.yTwo,
+					positions.xOne,
+					positions.yOne,
+					grid
+				);
 			}
 
 			window.lastMouseCoords = { x: null, y: null };
@@ -281,6 +262,27 @@ export default class App extends React.Component {
 			return;
 		}
 		return;
+	}
+
+	massDelete(
+		innerCounterReset,
+		stopper,
+		innerStopper,
+		counter,
+		innerCounter,
+		grid
+	) {
+		for (counter; counter <= stopper; counter++) {
+			grid[counter][innerStopper] = "0";
+			for (innerCounter; innerCounter <= innerStopper; innerCounter++) {
+				grid[counter][innerCounter] = "0";
+			}
+			innerCounter = innerCounterReset;
+		}
+		this.setState({
+			grid: grid
+		});
+		return grid;
 	}
 
 	manipulateAsset(asset, action, x, y) {
