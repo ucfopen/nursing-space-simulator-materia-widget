@@ -452,6 +452,17 @@ export function setSticker(grid, x, z, side, sticker) {
 	return grid;
 }
 
+/**
+ * returns which of the four adjacent sides are available in order:
+ *   top, right, bottom, left
+ *
+ * @param {array} grid current grid
+ * @param {int} x the x-component of the space to check around
+ * @param {int} z the z-component of the space to check around
+ * @param {object} selectedAsset the asset at that position
+ *
+ * @return boolean array of length 4
+ */
 export function getAdjacentSpaces(grid, x, z, selectedAsset) {
 	let adjSpaces = [];
 
@@ -473,7 +484,6 @@ export function getAdjacentSpaces(grid, x, z, selectedAsset) {
 		}
 		else { // vertical
 			// top
-			console.log(rotation);
 			let adjZ = rotation == 90 ? z - 2 : z - 1;
 			adjSpaces.push(isCellAvailable(grid, x, adjZ));
 			// right
