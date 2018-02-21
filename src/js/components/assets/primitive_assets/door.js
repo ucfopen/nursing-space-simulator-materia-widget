@@ -26,6 +26,7 @@ export default props => {
 	Entity to set position
 		top
 		door
+		door bottom
 		side
 		side
 		trim
@@ -60,10 +61,33 @@ export default props => {
 								color: "white",
 								src: "#doorTexture",
 								opacity: 1,
-								transparent: true
+								transparent: true,
+								metalness
 						}
 				}
 				position={{ y: 1 }}
+				rotation={{ y: -90, z: -90 }}
+			/>
+			<Entity
+				// this is the bottom part of the door, which is necessary since
+				// the other part (above) is transparent and doesn't reach the
+				// ground all the way otherwise
+				geometry={{ height: 0.75, primitive: "plane", width: 0.275 }}
+				material={
+					isSelected && mode != "editAsset"
+						? {
+								color: selectionColor,
+								opacity: selectionOpacity,
+								side: "double"
+						}
+						: {
+								side: "double",
+								color: "#d1d1d1",
+								opacity: 1,
+								metalness
+						}
+				}
+				position={{ y: 0.1375 }}
 				rotation={{ y: -90, z: -90 }}
 			/>
 			<Entity
