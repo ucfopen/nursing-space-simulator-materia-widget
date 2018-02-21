@@ -27,10 +27,10 @@ import {
 	showErrorTooltip,
 	updateTimedTooltip
 } from "../actions/tooltip_actions";
-import { isCellAvailable, isInBounds } from "../grid";
+import { deleteItem, isCellAvailable, isInBounds } from "../grid";
 
 // Utilities
-import { checkPropsExist } from "../utils";
+import { checkPropsExist, deepCopy } from "../utils";
 
 export class VRScene extends Component {
 	checkFillWalls(x, z, extendX, extendZ, validX, validZ) {
@@ -80,11 +80,20 @@ export class VRScene extends Component {
 		if (assetId == "pov_camera") {
 			return insertAsset(x, z, assetId);
 		}
-		let validInsert = isCellAvailable(grid, x, z);
-		if (validInsert && assetId && HS_ASSETS[assetId].spanX == 2) {
+
+		let validInsert;
+		if (assetId && HS_ASSETS[assetId].spanX == 2) {
+			let gridModified = (
+				currentX != null && currentZ
+					? deleteItem(deepCopy(grid), currentX, currentZ)
+					: grid
+			);
 			let prevRotation = selectedItem ? selectedItem.rotation : 180;
 			const adjSide = 3 - ((prevRotation + 180) % 360) / 90;
-			validInsert = isCellAvailable(grid, x, z, adjSide);
+			validInsert = isCellAvailable(gridModified, x, z, adjSide);
+		}
+		else {
+			validInsert = isCellAvailable(grid, x, z);
 		}
 
 		if (validInsert) {
