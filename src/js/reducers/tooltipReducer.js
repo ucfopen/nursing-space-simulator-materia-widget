@@ -14,6 +14,7 @@ import {
 import {
 	BAD_INSERT,
 	BAD_WALL_EXTEND,
+	IMPOSSIBLE_WALL_EXTEND,
 	SHOW_ERROR_TOOLTIP,
 	UPDATE_PERSISTENT_TOOLTIP,
 	UPDATE_TEMPORARY_TOOLTIP,
@@ -55,6 +56,14 @@ export default function(
 						className: "error",
 						temporary: true,
 						temporaryText: "Walls can only be extended horizontally and vertically.",
+						temporaryKey: action.payload.key
+					};
+				case IMPOSSIBLE_WALL_EXTEND:
+					return {
+						...state,
+						className: "error",
+						temporary: true,
+						temporaryText: "This wall cannot be extended.",
 						temporaryKey: action.payload.key
 					};
 				default:
