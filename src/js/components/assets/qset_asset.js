@@ -42,8 +42,6 @@ export default class QsetAsset extends Component {
 		const { attributes, data, isSelected, mode, rotation, thirdPerson, x, z } = this.props;
 		const { onClick } = this.props;
 		const id = data.id;
-		const yScaleFactor =
-			data.category === "construction" ? data.scale.y / 2 : 0;
 
 		return data.category === "construction" ? (
 			<Wall
@@ -75,7 +73,7 @@ export default class QsetAsset extends Component {
 				 * The scale property grows an a-box in the +-y direction, but we want it to seem like the box is just growing in the +y direction.
 				 *   To do this, the position of the box must be shifted upward half of the total scaling value.
 				 */
-				position={{ x, y: yScaleFactor, z }}
+				position={{ x, y: 0.1, z }}
 				primitive={data.tag}
 				rotation={{ x: 0, y: rotation, z: 0 }}
 				scale={data.scale}
@@ -87,8 +85,6 @@ export default class QsetAsset extends Component {
 		const { attributes, data, isSelected, mode, rotation, thirdPerson, x, z } = this.props;
 		const { onClick } = this.props;
 		const id = data.id;
-		const yScaleFactor =
-			data.category === "construction" ? data.scale.y / 2 : 0;
 		const validClick = thirdPerson &&  mode != "editAsset";
 
 		return data.category === "construction" ? (
@@ -118,7 +114,7 @@ export default class QsetAsset extends Component {
 				 * The scale property grows an a-box in the +-y direction, but we want it to seem like the box is just growing in the +y direction.
 				 *   To do this, the position of the box must be shifted upward half of the total scaling value.
 				 */
-				position={{ x, y: yScaleFactor, z }}
+				position={{ x, y: 0.1, z }}
 				primitive={data.tag}
 				rotation={{ x: 0, y: rotation, z: 0 }}
 				scale={data.scale}
