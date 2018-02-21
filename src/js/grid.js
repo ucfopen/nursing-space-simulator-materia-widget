@@ -456,8 +456,6 @@ export function getAdjacentSpaces(grid, x, z, selectedAsset) {
 	let adjSpaces = [];
 
 	if (selectedAsset.spanX == 2) {
-		return [true, true, true, true];
-		/* math is hard
 		const rotation = getItem(grid, x, z).rotation;
 		if (rotation % 180 == 0) { // it's horizontal
 			// top
@@ -475,19 +473,19 @@ export function getAdjacentSpaces(grid, x, z, selectedAsset) {
 		}
 		else { // vertical
 			// top
-			let adjZ = rotation == 90 ? z - 1 : z - 2;
-			adjSpaces.push(isCellAvailable(grid, x, adjZ))
+			console.log(rotation);
+			let adjZ = rotation == 90 ? z - 2 : z - 1;
+			adjSpaces.push(isCellAvailable(grid, x, adjZ));
 			// right
-			let adjSide = rotation == 90 ? 2 : 0;
+			let adjSide = rotation == 90 ? 0 : 2;
 			adjSpaces.push(isCellAvailable(grid, x + 1, z, adjSide));
 			// bottom
-			adjZ = rotation == 90 ? z + 2 : z + 1;
+			adjZ = rotation == 90 ? z + 1 : z + 2;
 			adjSpaces.push(isCellAvailable(grid, x, adjZ));
 			// left
-			adjSide = rotation == 90 ? 2 : 0;
+			adjSide = rotation == 90 ? 0 : 2;
 			adjSpaces.push(isCellAvailable(grid, x - 1, z, adjSide));
 		}
-		*/
 	}
 	else {
 		for (let side = 0; side < 4; side++) {
