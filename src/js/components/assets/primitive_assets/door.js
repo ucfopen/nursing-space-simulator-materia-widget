@@ -54,8 +54,14 @@ export default props => {
 								color: selectionColor,
 								opacity: selectionOpacity,
 								side: "double"
-							}
-						: { side: "double", color: "white", src: "#doorTexture", opacity: 1 }
+						}
+						: {
+								side: "double",
+								color: "white",
+								src: "#doorTexture",
+								opacity: 1,
+								transparent: true
+						}
 				}
 				position={{ y: 1 }}
 				rotation={{ y: -90, z: -90 }}
