@@ -85,7 +85,8 @@ const objectOptions = [
 		text:
 			"The arrow buttons can be used to move a selected object within the scene. Clicking/touching an empty space will also move the object. Additionally, if using the Chrome Browser, objects can be dragged around the scene.",
 		selector: ".a-canvas",
-		position: "left"
+		position: "left",
+		allowClicksThruHole: true
 	},
 	{
 		title: "Placing Walls",
