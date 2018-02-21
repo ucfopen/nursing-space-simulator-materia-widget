@@ -33,3 +33,4 @@ export function updateTimedTooltip(key) {
 // Error types
 export const BAD_WALL_EXTEND = "BAD_WALL_EXTEND";
 export const BAD_INSERT = "BAD_INSERT";
+export const IMPOSSIBLE_WALL_EXTEND = "IMPOSSIBLE_WALL_EXTEND";
