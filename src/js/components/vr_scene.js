@@ -15,6 +15,7 @@ import AssetMovementControls from "./ui/asset_movement_controls";
 
 // Redux Actions
 import {
+	deselectAsset,
 	insertAsset,
 	selectAsset,
 	fillWalls,
@@ -24,6 +25,7 @@ import {
 import {
 	BAD_INSERT,
 	BAD_WALL_EXTEND,
+	IMPOSSIBLE_WALL_EXTEND,
 	showErrorTooltip,
 	updateTimedTooltip
 } from "../actions/tooltip_actions";
@@ -33,12 +35,22 @@ import { deleteItem, isCellAvailable, isInBounds } from "../grid";
 import { checkPropsExist, deepCopy } from "../utils";
 
 export class VRScene extends Component {
-	checkFillWalls(x, z, extendX, extendZ, validX, validZ) {
+	cancelExtend() {
+		const key = Math.random();
 		const {
-			fillWalls,
+			deselectAsset,
 			showErrorTooltip,
 			updateTimedTooltip
 		} = this.props;
+
+		deselectAsset();
+		showErrorTooltip(IMPOSSIBLE_WALL_EXTEND, key);
+		setTimeout(function() {
+			updateTimedTooltip(key);
+		}, 3000);
+	}
+	checkFillWalls(x, z, extendX, extendZ, validX, validZ) {
+		const { fillWalls, showErrorTooltip, updateTimedTooltip } = this.props;
 		let validFill = (
 			(x == extendX && validZ.includes(z)) ||
 			(z == extendZ && validX.includes(x))
@@ -109,6 +121,13 @@ export class VRScene extends Component {
 			setTimeout(function() {
 				updateTimedTooltip(key);
 			}, 2000);
+		}
+	}
+
+	componentDidUpdate() {
+		const { mode, validX, validZ } = this.props;
+		if (mode == "extendWall" && validX.length == 1 && validZ.length == 1) {
+			this.cancelExtend();
 		}
 	}
 
@@ -303,6 +322,7 @@ function mapStateToProps({ grid, position, menu }) {
 }
 
 export default connect(mapStateToProps, {
+	deselectAsset,
 	fillWalls,
 	insertAsset,
 	refreshGrid,

@@ -62,17 +62,12 @@ export default class QsetAsset extends Component {
 					dragmove: this.dragMove.bind(this),
 					dragend: this.dragEnd.bind(this)
 				}}
-				// If an assets contains an .mtl (defined in qset), aframe will use obj-model. Otherwise, aframe will use material src
 				material={{ color: "green", opacity: 0.4 }}
 				obj-model={
 					isSelected
 						? `obj: #${id}-obj;`
 						: `obj: #${id}-obj;mtl: #${id}-mtl;`
 				}
-				/**
-				 * The scale property grows an a-box in the +-y direction, but we want it to seem like the box is just growing in the +y direction.
-				 *   To do this, the position of the box must be shifted upward half of the total scaling value.
-				 */
 				position={{ x, y: 0.1, z }}
 				primitive={data.tag}
 				rotation={{ x: 0, y: rotation, z: 0 }}
@@ -103,17 +98,12 @@ export default class QsetAsset extends Component {
 				events={{
 					click: validClick ? () => onClick(false) : null
 				}}
-				// If an assets contains an .mtl (defined in qset), aframe will use obj-model. Otherwise, aframe will use material src
 				material={{ color: "green", opacity: 0.4 }}
 				obj-model={
 					isSelected
 						? `obj: #${id}-obj;`
 						: `obj: #${id}-obj;mtl: #${id}-mtl;`
 				}
-				/**
-				 * The scale property grows an a-box in the +-y direction, but we want it to seem like the box is just growing in the +y direction.
-				 *   To do this, the position of the box must be shifted upward half of the total scaling value.
-				 */
 				position={{ x, y: 0.1, z }}
 				primitive={data.tag}
 				rotation={{ x: 0, y: rotation, z: 0 }}
