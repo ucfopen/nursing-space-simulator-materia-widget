@@ -27,7 +27,6 @@ export default class App extends React.Component {
 		super(props);
 		this.state = {
 			grid: this.props.map,
-			gridHistory: null,
 			hoveredAsset: null,
 			manipulationMode: false,
 			placementMode: false,
@@ -159,7 +158,6 @@ export default class App extends React.Component {
 					"0";
 			}
 		}
-
 		this.selectAsset(this.state.selectedAsset.asset, x, y);
 
 		this.setState({
@@ -344,7 +342,8 @@ export default class App extends React.Component {
 			this.setState({
 				grid: grid,
 				manipulationMode: false,
-				selectedAsset: null
+				selectedAsset: null,
+				selectedAssets: []
 			});
 		}
 
@@ -429,9 +428,6 @@ export default class App extends React.Component {
 		} else if (window.shiftKeyIsPressed == true) {
 			var assetsArray = this.state.selectedAssets.slice();
 			assetsArray.push({ asset: asset, x: x, y: y });
-			// this.setState({
-			// 	selectedAssets: assetsArray
-			// });
 			this.setState(
 				{
 					selectedAssets: assetsArray,
