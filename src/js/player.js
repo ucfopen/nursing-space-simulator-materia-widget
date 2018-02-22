@@ -48,6 +48,10 @@ document.addEventListener("keydown", event => {
 	window.shiftKeyIsPressed = event.shiftKey;
 });
 
+document.addEventListener("keyup", event => {
+	window.shiftKeyIsPressed = false;
+});
+
 Namespace("HospitalSim").Engine = {
 	start: function(instance, qset, version) {
 		let data = {

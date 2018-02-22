@@ -36,6 +36,7 @@ export default class App extends React.Component {
 			lastY: null,
 			secondDeletionClick: null,
 			selectedAsset: null,
+			selectedAssets: [],
 			deleteMultipleMode: false,
 			thirdPerson: true,
 			vrSceneClicked: false,
@@ -316,14 +317,29 @@ export default class App extends React.Component {
 		if (action === "deselect") {
 			this.setState({
 				manipulationMode: false,
-				selectedAsset: null
+				selectedAsset: null,
+				selectedAssets: []
 			});
 		}
 
 		if (action === "remove") {
 			if (x < 0 || y < 0) return;
 
+			//Delete single asset
 			grid[this.state.selectedAsset.x][this.state.selectedAsset.y] = "0";
+
+			//Delete multiple assets
+			var counter = 0;
+			for (
+				counter;
+				counter < this.state.selectedAssets.length;
+				counter++
+			) {
+				grid[this.state.selectedAssets[counter].x][
+					this.state.selectedAssets[counter].y
+				] =
+					"0";
+			}
 
 			this.setState({
 				grid: grid,
@@ -342,6 +358,22 @@ export default class App extends React.Component {
 					.rotation -
 					90) %
 				360;
+
+			var counter = 0;
+			for (
+				counter;
+				counter < this.state.selectedAssets.length;
+				counter++
+			) {
+				grid[this.state.selectedAssets[counter].x][
+					this.state.selectedAssets[counter].y
+				].rotation =
+					(grid[this.state.selectedAssets[counter].x][
+						this.state.selectedAssets[counter].y
+					].rotation -
+						90) %
+					360;
+			}
 
 			this.setState({
 				grid: grid
@@ -390,6 +422,23 @@ export default class App extends React.Component {
 					typeof cb === "function" ? cb() : {};
 					this.applyNewSteps();
 				}
+			);
+		} else if (window.shiftKeyIsPressed == true) {
+			var assetsArray = this.state.selectedAssets.slice();
+			assetsArray.push({ asset: asset, x: x, y: y });
+			// this.setState({
+			// 	selectedAssets: assetsArray
+			// });
+			this.setState(
+				{
+					selectedAssets: assetsArray,
+					selectedAsset: { asset: asset, x: x, y: y },
+					manipulationMode:
+						asset.id === "pov_camera" || (x > -1 && y > -1)
+							? true
+							: false
+				},
+				() => (typeof cb === "function" ? cb() : {})
 			);
 		} else {
 			this.setState(
@@ -533,6 +582,7 @@ export default class App extends React.Component {
 					position={this.state.position}
 					onClick={this.handleClick.bind(this)}
 					selectedAsset={this.state.selectedAsset}
+					selectedAssets={this.state.selectedAssets}
 				/>
 				<HUD
 					manipulateAsset={this.manipulateAsset.bind(this)}

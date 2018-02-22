@@ -22,6 +22,17 @@ export default class VRScene extends React.Component {
 
 		const assetXPosition = this.props.selectedAsset.x;
 		const assetYPosition = this.props.selectedAsset.y;
+		const assetPositions = this.props.selectedAssets;
+		var counter = 0;
+
+		for (counter; counter < assetPositions.length; counter++) {
+			if (
+				assetPositions[counter].x === tileXPosition &&
+				assetPositions[counter].y === tileYPosition
+			) {
+				return true;
+			}
+		}
 
 		// Check if the asset covers this tile
 		if (
