@@ -338,8 +338,8 @@
             "defaultColor": "",
             "id": "door-1",
             "materialType": "complex",
-            "mtlSrc": "assets/door/mesh_door.mtl",
-            "objSrc": "assets/door/mesh_door.obj",
+            "mtlSrc": "",
+            "objSrc": "",
             "position": {
                 "x": -100,
                 "y": 0,
@@ -459,8 +459,8 @@
             "defaultColor": "#9FCDB1",
             "id": "window",
             "materialType": "complex",
-            "mtlSrc": "assets/window/mesh_window.mtl",
-            "objSrc": "assets/window/mesh_window.obj",
+            "mtlSrc": "",
+            "objSrc": "",
             "position": {
                 "x": -100,
                 "y": 0,
