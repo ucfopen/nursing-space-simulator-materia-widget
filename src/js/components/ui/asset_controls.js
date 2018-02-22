@@ -11,56 +11,65 @@ export default class AssetControls extends React.Component {
 			<div id="UI-selected-asset-options">
 				<span id="selected-asset-label">
 					<span className="selected-asset-label-title">
-						Currently selected: {this.props.selectedAsset.asset.title}
+						Currently selected:{" "}
+						{this.props.selectedAssets.length > 1
+							? "Multiple Assets"
+							: this.props.selectedAsset.asset.title}
 					</span>
 				</span>
-				{this.props.manipulationMode
-					? <div>
-							<button
-								id="confirm"
-								onClick={this.props.manipulateAsset.bind(
-									this,
-									this.props.selectedAsset.asset,
-									"deselect",
-									this.props.selectedAsset.x,
-									this.props.selectedAsset.y
-								)}>
-								<ConfirmSVG />
-							</button>
-							<button
-								id="rotate"
-								onClick={this.props.manipulateAsset.bind(
-									this,
-									this.props.selectedAsset.asset,
-									"rotate",
-									this.props.selectedAsset.x,
-									this.props.selectedAsset.y
-								)}>
-								<RotateSVG />
-							</button>
-							<button
-								id="remove"
-								onClick={this.props.manipulateAsset.bind(
-									this,
-									this.props.selectedAsset.asset,
-									"remove",
-									this.props.selectedAsset.x,
-									this.props.selectedAsset.y
-								)}>
-								<DeleteSVG />
-							</button>
-						</div>
-					: <button
-							id="deselect"
+				{this.props.manipulationMode ? (
+					<div>
+						<button
+							id="confirm"
 							onClick={this.props.manipulateAsset.bind(
 								this,
 								this.props.selectedAsset.asset,
 								"deselect",
 								this.props.selectedAsset.x,
 								this.props.selectedAsset.y
-							)}>
-							<DeselectSVG />
-						</button>}
+							)}
+						>
+							<ConfirmSVG />
+						</button>
+						<button
+							id="rotate"
+							onClick={this.props.manipulateAsset.bind(
+								this,
+								this.props.selectedAsset.asset,
+								"rotate",
+								this.props.selectedAsset.x,
+								this.props.selectedAsset.y
+							)}
+						>
+							<RotateSVG />
+						</button>
+						<button
+							id="remove"
+							onClick={this.props.manipulateAsset.bind(
+								this,
+								this.props.selectedAsset.asset,
+								"remove",
+								this.props.selectedAsset.x,
+								this.props.selectedAsset.y
+							)}
+						>
+							<DeleteSVG />
+						</button>
+					</div>
+				) : (
+					<button
+						id="deselect"
+						onClick={this.props.manipulateAsset.bind(
+							this,
+							this.props.selectedAsset.asset,
+							"deselect",
+							this.props.selectedAsset.x,
+							this.props.selectedAsset.y
+						)}
+					>
+						<DeselectSVG />
+					</button>
+				)}
 			</div>
 		);
 	}

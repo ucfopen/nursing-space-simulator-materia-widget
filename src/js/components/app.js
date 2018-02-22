@@ -351,28 +351,31 @@ export default class App extends React.Component {
 		if (action === "rotate") {
 			if (x < 0 || y < 0) return;
 
-			grid[this.state.selectedAsset.x][
-				this.state.selectedAsset.y
-			].rotation =
-				(grid[this.state.selectedAsset.x][this.state.selectedAsset.y]
-					.rotation -
-					90) %
-				360;
-
-			var counter = 0;
-			for (
-				counter;
-				counter < this.state.selectedAssets.length;
-				counter++
-			) {
-				grid[this.state.selectedAssets[counter].x][
-					this.state.selectedAssets[counter].y
+			if (this.state.selectedAssets.length == 0) {
+				grid[this.state.selectedAsset.x][
+					this.state.selectedAsset.y
 				].rotation =
-					(grid[this.state.selectedAssets[counter].x][
-						this.state.selectedAssets[counter].y
+					(grid[this.state.selectedAsset.x][
+						this.state.selectedAsset.y
 					].rotation -
 						90) %
 					360;
+			} else {
+				var counter = 0;
+				for (
+					counter;
+					counter < this.state.selectedAssets.length;
+					counter++
+				) {
+					grid[this.state.selectedAssets[counter].x][
+						this.state.selectedAssets[counter].y
+					].rotation =
+						(grid[this.state.selectedAssets[counter].x][
+							this.state.selectedAssets[counter].y
+						].rotation -
+							90) %
+						360;
+				}
 			}
 
 			this.setState({
@@ -591,6 +594,7 @@ export default class App extends React.Component {
 					assetsFromFile={this.props.assetsFromFile}
 					selectAsset={this.selectAsset.bind(this)}
 					selectedAsset={this.state.selectedAsset}
+					selectedAssets={this.state.selectedAssets}
 					setDeleteMode={this.setDeleteMode.bind(this)}
 					deleteMultipleMode={this.state.deleteMultipleMode}
 					xUp={this.updatePosition.bind(this, "x", 1, false)}

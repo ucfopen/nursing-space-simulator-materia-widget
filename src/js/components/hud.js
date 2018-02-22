@@ -26,6 +26,7 @@ export default class HUD extends React.Component {
 							<AssetControls
 								manipulateAsset={this.props.manipulateAsset}
 								selectedAsset={this.props.selectedAsset}
+								selectedAssets={this.props.selectedAssets}
 								manipulationMode={this.props.manipulationMode}
 							/>
 						) : null}
