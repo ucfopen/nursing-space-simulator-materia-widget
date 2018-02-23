@@ -1,5 +1,3 @@
-import { loadGrid } from "../grid";
-
 // Default grid structure to use as a fallback for old qsets
 import defaultData from '../../assets/default.json';
 
@@ -13,6 +11,14 @@ export function initData(qset, assetData) {
 		grid = JSON.parse(qset.options.gridLoader.grid);
 	} catch (error) {
 		grid = JSON.parse(defaultData.grid);
+	}
+	if (qset.options.gridLoader.rows) {
+		window.GRID_ROWS = qset.options.gridLoader.rows;
+		window.GRID_COLS = qset.options.gridLoader.columns;
+	}
+	else { // maybe these should be calculated
+		window.GRID_ROWS = defaultData.rows;
+		window.GRID_COLS = defaultData.columns;
 	}
 
 	// As these do not change, there is no need to track them in state
