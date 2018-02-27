@@ -5,7 +5,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
 		if (event.target.tagName == "BUTTON") {
 			event.target.blur();
 			let prev = document.querySelectorAll('button.selected');
-			console.log(prev);
 			if (prev.length) {
 				prev[0].classList.remove('selected');
 			}
@@ -30,7 +29,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
 		var xhr = new XMLHttpRequest();
 		xhr.open("GET", url, false);
 		xhr.send(null);
-		console.log("got " + url)
 		return xhr.responseText;
 	}
 

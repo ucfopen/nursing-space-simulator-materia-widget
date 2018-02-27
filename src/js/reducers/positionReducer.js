@@ -133,7 +133,6 @@ export default function(
 		}
 
 		case INIT_DATA: {
-			console.log(window.GRID_ROWS);
 			return {
 				...state,
 				x: window.GRID_COLS / 2 - 0.5,
