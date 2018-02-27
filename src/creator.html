@@ -23,9 +23,25 @@
 		Nursing Simulation Creator
 	</header>
 
-	<!-- <div class="container">
-		Give your widget a title!
-	</div> -->
-	<textarea id="title" class="container" placeholder="Give your widget a title!"></textarea>
+	<div id="options">
+		<label htmlFor="title">Give your widget a title: </label>
+		<input id="title" class="container" value="My Hospital"></input>
+		<br>
+
+		<div id="presets">
+			<div class="preset-row">
+					<button filename="large-empty.json" style="background: url(assets/preset-qsets/large-empty.png) 0 / contain"/>
+					<button filename="large-fill.json" style="background: url(assets/preset-qsets/large-fill.png) 0 / contain"/>
+			</div>
+			<div class="preset-row">
+				<button filename="medium-empty.json" style="background: url(assets/preset-qsets/medium-empty.png) 0 / contain"/>
+					<button filename="medium-fill.json" style="background: url(assets/preset-qsets/medium-fill.png) 0 / contain"/>
+			</div>
+			<div class="preset-row">
+				<button filename="small-empty.json" style="background: url(assets/preset-qsets/small-empty.png) 0 / contain"/>
+				<button filename="small-fill.json" style="background: url(assets/preset-qsets/small-fill.png) 0 / contain"/>
+			</div>
+		</div>
+	</div>
 </body>
 </html>

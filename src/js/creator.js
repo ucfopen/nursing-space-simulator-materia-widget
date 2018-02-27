@@ -1,8 +1,23 @@
 document.addEventListener("DOMContentLoaded", function(event) {
 
+	var outer = document.getElementById("presets");
+	console.log(outer);
+	outer.addEventListener('click', function(event) {
+		if (event.target.tagName == "BUTTON") {
+			event.target.blur();
+			let prev = document.querySelectorAll('button.selected');
+			console.log(prev);
+			if (prev.length) {
+				prev[0].classList.remove('selected');
+			}
+			event.target.classList.add('selected');
+		}
+	})
+
+
 	var qset = {
 		items: [],
-		options: {}
+		options: { gridLoader: {} }
 	};
 
 	var widget = {
@@ -11,14 +26,27 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	};
 
 	var materiaInterface = {};
-	
-	qset.options.gridLoader = {
-		grid: "[[{\"id\":\"wall-1\",\"rotation\":0,\"stickers\":null},{\"id\":\"wall-1\",\"rotation\":0,\"stickers\":null},{\"id\":\"wall-1\",\"rotation\":0,\"stickers\":null},{\"id\":\"wall-1\",\"rotation\":0,\"stickers\":null},{\"id\":\"wall-1\",\"rotation\":0,\"stickers\":null},{\"id\":\"wall-1\",\"rotation\":0,\"stickers\":null},{\"id\":\"wall-1\",\"rotation\":0,\"stickers\":null},{\"id\":\"wall-1\",\"rotation\":0,\"stickers\":null},{\"id\":\"wall-1\",\"rotation\":0,\"stickers\":null},{\"id\":\"wall-1\",\"rotation\":0,\"stickers\":null},{\"id\":\"wall-1\",\"rotation\":0,\"stickers\":null},{\"id\":\"wall-1\",\"rotation\":0,\"stickers\":null},{\"id\":\"wall-1\",\"rotation\":0,\"stickers\":null},{\"id\":\"wall-1\",\"rotation\":0,\"stickers\":null},{\"id\":\"wall-1\",\"rotation\":0,\"stickers\":null},{\"id\":\"wall-1\",\"rotation\":0,\"stickers\":null},{\"id\":\"wall-1\",\"rotation\":0,\"stickers\":null},{\"id\":\"wall-1\",\"rotation\":0,\"stickers\":null},{\"id\":\"wall-1\",\"rotation\":0,\"stickers\":null},{\"id\":\"wall-1\",\"rotation\":0,\"stickers\":null},{\"id\":\"wall-1\",\"rotation\":0,\"stickers\":null},{\"id\":\"wall-1\",\"rotation\":0,\"stickers\":null},{\"id\":\"wall-1\",\"rotation\":0,\"stickers\":null},{\"id\":\"wall-1\",\"rotation\":0,\"stickers\":null},{\"id\":\"wall-1\",\"rotation\":0,\"stickers\":null},{\"id\":\"wall-1\",\"rotation\":0,\"stickers\":null},{\"id\":\"wall-1\",\"rotation\":0,\"stickers\":null},{\"id\":\"wall-1\",\"rotation\":0,\"stickers\":null},{\"id\":\"wall-1\",\"rotation\":0,\"stickers\":null},{\"id\":\"wall-1\",\"rotation\":0,\"stickers\":null}],[{\"id\":\"wall-1\",\"rotation\":0,\"stickers\":null},\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",{\"id\":\"wall-1\",\"rotation\":0,\"stickers\":null}],[{\"id\":\"wall-1\",\"rotation\":0,\"stickers\":null},\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",{\"id\":\"wall-1\",\"rotation\":0,\"stickers\":null}],[{\"id\":\"wall-1\",\"rotation\":0,\"stickers\":null},\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",{\"id\":\"wall-1\",\"rotation\":0,\"stickers\":null}],[{\"id\":\"wall-1\",\"rotation\":0,\"stickers\":null},\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",{\"id\":\"wall-1\",\"rotation\":0,\"stickers\":null}],[{\"id\":\"wall-1\",\"rotation\":0,\"stickers\":null},\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",{\"id\":\"wall-1\",\"rotation\":0,\"stickers\":null}],[{\"id\":\"wall-1\",\"rotation\":0,\"stickers\":null},\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",{\"id\":\"wall-1\",\"rotation\":0,\"stickers\":null}],[{\"id\":\"wall-1\",\"rotation\":0,\"stickers\":null},\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",{\"id\":\"wall-1\",\"rotation\":0,\"stickers\":null}],[{\"id\":\"wall-1\",\"rotation\":0,\"stickers\":null},\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",{\"id\":\"wall-1\",\"rotation\":0,\"stickers\":null}],[{\"id\":\"wall-1\",\"rotation\":0,\"stickers\":null},\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",{\"id\":\"wall-1\",\"rotation\":0,\"stickers\":null}],[{\"id\":\"wall-1\",\"rotation\":0,\"stickers\":null},\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",\"0\",{\"id\":\"wall-1\",\"rotation\":0,\"stickers\":null}],[{\"id\":\"wall-1\",\"rotation\":0,\"stickers\":null},{\"id\":\"wall-1\",\"rotation\":0,\"stickers\":null},{\"id\":\"wall-1\",\"rotation\":0,\"stickers\":null},{\"id\":\"wall-1\",\"rotation\":0,\"stickers\":null},{\"id\":\"wall-1\",\"rotation\":0,\"stickers\":null},{\"id\":\"wall-1\",\"rotation\":0,\"stickers\":null},{\"id\":\"wall-1\",\"rotation\":0,\"stickers\":null},{\"id\":\"wall-1\",\"rotation\":0,\"stickers\":null},{\"id\":\"wall-1\",\"rotation\":0,\"stickers\":null},{\"id\":\"wall-1\",\"rotation\":0,\"stickers\":null},{\"id\":\"wall-1\",\"rotation\":0,\"stickers\":null},{\"id\":\"wall-1\",\"rotation\":0,\"stickers\":null},{\"id\":\"wall-1\",\"rotation\":0,\"stickers\":null},{\"id\":\"wall-1\",\"rotation\":0,\"stickers\":null},{\"id\":\"wall-1\",\"rotation\":0,\"stickers\":null},{\"id\":\"wall-1\",\"rotation\":0,\"stickers\":null},{\"id\":\"wall-1\",\"rotation\":0,\"stickers\":null},{\"id\":\"wall-1\",\"rotation\":0,\"stickers\":null},{\"id\":\"wall-1\",\"rotation\":0,\"stickers\":null},{\"id\":\"wall-1\",\"rotation\":0,\"stickers\":null},{\"id\":\"wall-1\",\"rotation\":0,\"stickers\":null},{\"id\":\"wall-1\",\"rotation\":0,\"stickers\":null},{\"id\":\"wall-1\",\"rotation\":0,\"stickers\":null},{\"id\":\"wall-1\",\"rotation\":0,\"stickers\":null},{\"id\":\"wall-1\",\"rotation\":0,\"stickers\":null},{\"id\":\"wall-1\",\"rotation\":0,\"stickers\":null},{\"id\":\"wall-1\",\"rotation\":0,\"stickers\":null},{\"id\":\"wall-1\",\"rotation\":0,\"stickers\":null},{\"id\":\"wall-1\",\"rotation\":0,\"stickers\":null},{\"id\":\"wall-1\",\"rotation\":0,\"stickers\":null}]]",
-		columns: 30,
-		content:
-		"wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 wall-1.0 wall-1.0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 wall-1.0 wall-1.0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 wall-1.0 wall-1.0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 wall-1.0 wall-1.0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 wall-1.0 wall-1.0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 wall-1.0 wall-1.0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 wall-1.0 wall-1.0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 wall-1.0 wall-1.0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 wall-1.0 wall-1.0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0",
-		rows: 12
+
+	function getJSON(url){
+		var xhr = new XMLHttpRequest();
+		xhr.open("GET", url, false);
+		xhr.send(null);
+		console.log("got " + url)
+		return xhr.responseText;
+	}
+
+	function generateGrid() {
+		let filePath = 'assets/preset-qsets/';
+		let filename = 'standard.json';
+		let selected = document.querySelectorAll('button.selected');
+
+		if (selected.length) {
+			filename = selected[0].getAttribute('filename');
+		}
+		qset.options.gridLoader.grid = JSON.parse(getJSON(filePath + filename));
+		return;
 	};
+
 
 	materiaInterface.initNewWidget = function(w) {
 		console.log("new");
@@ -37,7 +65,13 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
 	materiaInterface.onSaveClicked = function() {
 		var title = document.getElementById("title").value;
-		Materia.CreatorCore.save(title, qset, 1);
+		qset.options.gridLoader.columns = 30;
+		qset.options.gridLoader.rows = 12;
+		generateGrid();
+
+		// version 2 has a real .json qset (rather than string)
+		const version = 2;
+		Materia.CreatorCore.save(title, qset, version);
 	};
 
 	materiaInterface.onSaveComplete = function() {

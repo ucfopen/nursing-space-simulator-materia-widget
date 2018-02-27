@@ -1,0 +1,770 @@
+{
+	"rows": 10,
+	"columns": 20,
+	"grid": [
+		[
+			{
+				"id": "wall-1",
+				"rotation": 0,
+				"stickers": null
+			},
+			{
+				"id": "wall-1",
+				"rotation": 0,
+				"stickers": null
+			},
+			{
+				"id": "wall-1",
+				"rotation": 0,
+				"stickers": null
+			},
+			{
+				"id": "window",
+				"rotation": 0,
+				"stickers": null
+			},
+			{
+				"id": "wall-1",
+				"rotation": 0,
+				"stickers": null
+			},
+			{
+				"id": "wall-1",
+				"rotation": 0,
+				"stickers": null
+			},
+			{
+				"id": "window",
+				"rotation": 0,
+				"stickers": null
+			},
+			{
+				"id": "wall-1",
+				"rotation": 0,
+				"stickers": null
+			},
+			{
+				"id": "wall-1",
+				"rotation": 0,
+				"stickers": null
+			},
+			{
+				"id": "wall-1",
+				"rotation": 0,
+				"stickers": null
+			},
+			{
+				"id": "wall-1",
+				"rotation": 0,
+				"stickers": null
+			},
+			{
+				"id": "wall-1",
+				"rotation": 0,
+				"stickers": null
+			},
+			{
+				"id": "window",
+				"rotation": 0,
+				"stickers": null
+			},
+			{
+				"id": "wall-1",
+				"rotation": 0,
+				"stickers": null
+			},
+			{
+				"id": "wall-1",
+				"rotation": 0,
+				"stickers": null
+			},
+			{
+				"id": "wall-1",
+				"rotation": 0,
+				"stickers": null
+			},
+			{
+				"id": "window",
+				"rotation": 0,
+				"stickers": null
+			},
+			{
+				"id": "wall-1",
+				"rotation": 0,
+				"stickers": null
+			},
+			{
+				"id": "wall-1",
+				"rotation": 0,
+				"stickers": null
+			},
+			{
+				"id": "wall-1",
+				"rotation": 0,
+				"stickers": null
+			}
+		],
+		[
+			{
+				"id": "wall-1",
+				"rotation": 0,
+				"stickers": null
+			},
+			{
+				"id": "chair",
+				"rotation": 270,
+				"stickers": null
+			},
+			{
+				"id": "bed-1",
+				"rotation": 270,
+				"stickers": null
+			},
+			{
+				"id": "iv-1",
+				"rotation": 180,
+				"stickers": null
+			},
+			{
+				"id": "curtain",
+				"rotation": 180,
+				"stickers": null
+			},
+			{
+				"id": "trashcan-bio",
+				"rotation": 0,
+				"stickers": null
+			},
+			{
+				"id": "chair",
+				"rotation": 270,
+				"stickers": null
+			},
+			{
+				"id": "bed-1",
+				"rotation": 270,
+				"stickers": null
+			},
+			{
+				"id": "iv-1",
+				"rotation": 180,
+				"stickers": null
+			},
+			{
+				"id": "curtain",
+				"rotation": 180,
+				"stickers": null
+			},
+			{
+				"id": "iv-1",
+				"rotation": 180,
+				"stickers": null
+			},
+			{
+				"id": "bed-1",
+				"rotation": 270,
+				"stickers": null
+			},
+			{
+				"id": "chair",
+				"rotation": 270,
+				"stickers": null
+			},
+			{
+				"id": "curtain",
+				"rotation": 180,
+				"stickers": null
+			},
+			{
+				"id": "iv-1",
+				"rotation": 180,
+				"stickers": null
+			},
+			{
+				"id": "bed-1",
+				"rotation": 270,
+				"stickers": null
+			},
+			{
+				"id": "chair",
+				"rotation": 270,
+				"stickers": null
+			},
+			{
+				"id": "doctor",
+				"rotation": 180,
+				"stickers": null
+			},
+			{
+				"id": "monitor-1",
+				"rotation": 180,
+				"stickers": null
+			},
+			{
+				"id": "wall-1",
+				"rotation": 0,
+				"stickers": null
+			}
+		],
+		[
+			{
+				"id": "wall-1",
+				"rotation": 0,
+				"stickers": null
+			},
+			"0",
+			"X",
+			"0",
+			{
+				"id": "curtain",
+				"rotation": 180,
+				"stickers": null
+			},
+			"0",
+			"0",
+			"X",
+			"0",
+			{
+				"id": "curtain",
+				"rotation": 180,
+				"stickers": null
+			},
+			"0",
+			"X",
+			"0",
+			{
+				"id": "curtain",
+				"rotation": 180,
+				"stickers": null
+			},
+			"0",
+			"X",
+			"0",
+			{
+				"id": "nurse",
+				"rotation": 180,
+				"stickers": null
+			},
+			{
+				"id": "computer",
+				"rotation": 180,
+				"stickers": null
+			},
+			{
+				"id": "wall-1",
+				"rotation": 0,
+				"stickers": null
+			}
+		],
+		[
+			{
+				"id": "wall-1",
+				"rotation": 0,
+				"stickers": null
+			},
+			{
+				"id": "trashcan-1",
+				"rotation": 0,
+				"stickers": null
+			},
+			"0",
+			"0",
+			"0",
+			"0",
+			"0",
+			"0",
+			"0",
+			"0",
+			"0",
+			"0",
+			"0",
+			"0",
+			"0",
+			"0",
+			"0",
+			"0",
+			"0",
+			{
+				"id": "wall-1",
+				"rotation": 0,
+				"stickers": null
+			}
+		],
+		[
+			{
+				"id": "wall-1",
+				"rotation": 0,
+				"stickers": null
+			},
+			{
+				"id": "wall-1",
+				"rotation": 0,
+				"stickers": null
+			},
+			{
+				"id": "wall-1",
+				"rotation": 0,
+				"stickers": [
+					"tvSticker",
+					"X",
+					"0",
+					"X"
+				]
+			},
+			{
+				"id": "wall-1",
+				"rotation": 0,
+				"stickers": null
+			},
+			{
+				"id": "wall-1",
+				"rotation": 0,
+				"stickers": null
+			},
+			{
+				"id": "wall-1",
+				"rotation": 0,
+				"stickers": null
+			},
+			{
+				"id": "wall-1",
+				"rotation": 0,
+				"stickers": null
+			},
+			{
+				"id": "wall-1",
+				"rotation": 0,
+				"stickers": [
+					"tvSticker",
+					"X",
+					"0",
+					"X"
+				]
+			},
+			{
+				"id": "wall-1",
+				"rotation": 0,
+				"stickers": null
+			},
+			{
+				"id": "wall-1",
+				"rotation": 0,
+				"stickers": null
+			},
+			{
+				"id": "curtain",
+				"rotation": 270,
+				"stickers": null
+			},
+			{
+				"id": "curtain",
+				"rotation": 270,
+				"stickers": null
+			},
+			{
+				"id": "curtain",
+				"rotation": 270,
+				"stickers": null
+			},
+			"0",
+			{
+				"id": "curtain",
+				"rotation": 270,
+				"stickers": null
+			},
+			{
+				"id": "curtain",
+				"rotation": 270,
+				"stickers": null
+			},
+			{
+				"id": "curtain",
+				"rotation": 270,
+				"stickers": null
+			},
+			{
+				"id": "curtain",
+				"rotation": 270,
+				"stickers": null
+			},
+			"0",
+			{
+				"id": "wall-1",
+				"rotation": 0,
+				"stickers": null
+			}
+		],
+		[
+			{
+				"id": "wall-1",
+				"rotation": 0,
+				"stickers": null
+			},
+			"0",
+			{
+				"id": "chair",
+				"rotation": 270,
+				"stickers": null
+			},
+			{
+				"id": "chair",
+				"rotation": 270,
+				"stickers": null
+			},
+			{
+				"id": "chair",
+				"rotation": 270,
+				"stickers": null
+			},
+			{
+				"id": "chair",
+				"rotation": 270,
+				"stickers": null
+			},
+			"0",
+			"0",
+			"0",
+			{
+				"id": "door-1",
+				"rotation": 0,
+				"stickers": [
+					"X",
+					"0",
+					"X",
+					"0"
+				]
+			},
+			"0",
+			"0",
+			"0",
+			"0",
+			"0",
+			"0",
+			"0",
+			"0",
+			"0",
+			{
+				"id": "wall-1",
+				"rotation": 0,
+				"stickers": null
+			}
+		],
+		[
+			{
+				"id": "window",
+				"rotation": 270,
+				"stickers": null
+			},
+			"0",
+			{
+				"id": "chair",
+				"rotation": 90,
+				"stickers": null
+			},
+			{
+				"id": "chair",
+				"rotation": 90,
+				"stickers": null
+			},
+			{
+				"id": "chair",
+				"rotation": 90,
+				"stickers": null
+			},
+			{
+				"id": "chair",
+				"rotation": 90,
+				"stickers": null
+			},
+			"0",
+			"X",
+			{
+				"id": "nurse",
+				"rotation": 180,
+				"stickers": null
+			},
+			{
+				"id": "wall-1",
+				"rotation": 0,
+				"stickers": null
+			},
+			"0",
+			"0",
+			"0",
+			"0",
+			{
+				"id": "crashcart",
+				"rotation": 180,
+				"stickers": null
+			},
+			{
+				"id": "crashcart",
+				"rotation": 0,
+				"stickers": null
+			},
+			"0",
+			"0",
+			"0",
+			{
+				"id": "wall-1",
+				"rotation": 0,
+				"stickers": null
+			}
+		],
+		[
+			{
+				"id": "window",
+				"rotation": 180,
+				"stickers": null
+			},
+			"0",
+			{
+				"id": "chair",
+				"rotation": 270,
+				"stickers": null
+			},
+			{
+				"id": "chair",
+				"rotation": 270,
+				"stickers": null
+			},
+			{
+				"id": "chair",
+				"rotation": 270,
+				"stickers": null
+			},
+			{
+				"id": "chair",
+				"rotation": 270,
+				"stickers": null
+			},
+			"0",
+			{
+				"id": "desk",
+				"rotation": 90,
+				"stickers": null
+			},
+			{
+				"id": "doctor",
+				"rotation": 180,
+				"stickers": null
+			},
+			{
+				"id": "wall-1",
+				"rotation": 0,
+				"stickers": null
+			},
+			"0",
+			"0",
+			{
+				"id": "nurse",
+				"rotation": 90,
+				"stickers": [
+					"0",
+					"0",
+					"0",
+					"0"
+				]
+			},
+			"0",
+			"0",
+			"0",
+			{
+				"id": "nurse",
+				"rotation": 90,
+				"stickers": null
+			},
+			"0",
+			"0",
+			{
+				"id": "wall-1",
+				"rotation": 0,
+				"stickers": null
+			}
+		],
+		[
+			{
+				"id": "wall-1",
+				"rotation": 0,
+				"stickers": null
+			},
+			"0",
+			"0",
+			"0",
+			"0",
+			"0",
+			{
+				"id": "crashcart",
+				"rotation": 90,
+				"stickers": null
+			},
+			{
+				"id": "crashcart",
+				"rotation": 90,
+				"stickers": null
+			},
+			{
+				"id": "crashcart",
+				"rotation": 90,
+				"stickers": null
+			},
+			{
+				"id": "wall-1",
+				"rotation": 0,
+				"stickers": null
+			},
+			{
+				"id": "trashcan-1",
+				"rotation": 90,
+				"stickers": null
+			},
+			{
+				"id": "counter",
+				"rotation": 90,
+				"stickers": null
+			},
+			{
+				"id": "sink-1",
+				"rotation": 90,
+				"stickers": null
+			},
+			{
+				"id": "crashcart",
+				"rotation": 90,
+				"stickers": null
+			},
+			{
+				"id": "crashcart",
+				"rotation": 90,
+				"stickers": null
+			},
+			{
+				"id": "counter",
+				"rotation": 90,
+				"stickers": null
+			},
+			{
+				"id": "sink-1",
+				"rotation": 90,
+				"stickers": null
+			},
+			{
+				"id": "counter",
+				"rotation": 90,
+				"stickers": null
+			},
+			{
+				"id": "monitor-1",
+				"rotation": 90,
+				"stickers": null
+			},
+			{
+				"id": "wall-1",
+				"rotation": 0,
+				"stickers": null
+			}
+		],
+		[
+			{
+				"id": "wall-1",
+				"rotation": 0,
+				"stickers": null
+			},
+			{
+				"id": "wall-1",
+				"rotation": 0,
+				"stickers": null
+			},
+			{
+				"id": "window",
+				"rotation": 270,
+				"stickers": null
+			},
+			{
+				"id": "door-1",
+				"rotation": 270,
+				"stickers": null
+			},
+			{
+				"id": "wall-1",
+				"rotation": 0,
+				"stickers": null
+			},
+			{
+				"id": "window",
+				"rotation": 270,
+				"stickers": null
+			},
+			{
+				"id": "wall-1",
+				"rotation": 0,
+				"stickers": null
+			},
+			{
+				"id": "wall-1",
+				"rotation": 0,
+				"stickers": null
+			},
+			{
+				"id": "wall-1",
+				"rotation": 0,
+				"stickers": null
+			},
+			{
+				"id": "wall-1",
+				"rotation": 0,
+				"stickers": null
+			},
+			{
+				"id": "wall-1",
+				"rotation": 0,
+				"stickers": null
+			},
+			{
+				"id": "wall-1",
+				"rotation": 0,
+				"stickers": null
+			},
+			{
+				"id": "wall-1",
+				"rotation": 0,
+				"stickers": null
+			},
+			{
+				"id": "wall-1",
+				"rotation": 0,
+				"stickers": null
+			},
+			{
+				"id": "wall-1",
+				"rotation": 0,
+				"stickers": null
+			},
+			{
+				"id": "wall-1",
+				"rotation": 0,
+				"stickers": null
+			},
+			{
+				"id": "wall-1",
+				"rotation": 0,
+				"stickers": null
+			},
+			{
+				"id": "wall-1",
+				"rotation": 0,
+				"stickers": null
+			},
+			{
+				"id": "wall-1",
+				"rotation": 0,
+				"stickers": null
+			},
+			{
+				"id": "wall-1",
+				"rotation": 0,
+				"stickers": null
+			}
+		]
+	]
+}

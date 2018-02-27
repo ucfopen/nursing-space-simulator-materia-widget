@@ -104,20 +104,53 @@ textarea
 	font-size: 14pt;
 }
 
-.container
-{
-	position: absolute;
-	left: 50%;
-	top: 50%;
+#options {
+	height: auto;
+	width: auto;
+	text-align: center;
+	position: relative;
+	top: 30px;
+}
 
-	width: 500px;
-	height: 50%;
-	min-height: 250px;
-	max-height: 300px;
-	padding: 20px;
+.container {
+	display: inline-block;
+	font-size: 20px;
+	height: auto;
+	width: 300px;
+	margin: 20px;
+	padding: 10px;
 	color: black;
 
 	background: white;
 	border: 1px solid rgba(0, 0, 0, .2);
-	transform: translate(-50%, -50%);
+
+	&[type="number"] {
+		width: 75px;
+	}
+}
+
+#title {
+	font-size: 18px;
+}
+
+#presets {
+	display: block;
+}
+
+.preset-row {
+	display: block;
+
+	button {
+		display: inline;
+		width: 240px;
+		height: 180px;
+		margin: 25px;
+
+		&.selected {
+			border: 3px solid orange;
+			width: 244px;
+			height: 184px;
+			margin: 23px;
+		}
+	}
 }

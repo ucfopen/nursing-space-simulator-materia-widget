@@ -1,0 +1,512 @@
+{
+	"rows": 10,
+	"columns": 20,
+	"grid": [
+		[
+			{
+				"id": "wall-1",
+				"rotation": 0,
+				"stickers": null
+			},
+			{
+				"id": "wall-1",
+				"rotation": 0,
+				"stickers": null
+			},
+			{
+				"id": "wall-1",
+				"rotation": 0,
+				"stickers": null
+			},
+			{
+				"id": "wall-1",
+				"rotation": 0,
+				"stickers": null
+			},
+			{
+				"id": "wall-1",
+				"rotation": 0,
+				"stickers": null
+			},
+			{
+				"id": "wall-1",
+				"rotation": 0,
+				"stickers": null
+			},
+			{
+				"id": "wall-1",
+				"rotation": 0,
+				"stickers": null
+			},
+			{
+				"id": "wall-1",
+				"rotation": 0,
+				"stickers": null
+			},
+			{
+				"id": "wall-1",
+				"rotation": 0,
+				"stickers": null
+			},
+			{
+				"id": "wall-1",
+				"rotation": 0,
+				"stickers": null
+			},
+			{
+				"id": "wall-1",
+				"rotation": 0,
+				"stickers": null
+			},
+			{
+				"id": "wall-1",
+				"rotation": 0,
+				"stickers": null
+			},
+			{
+				"id": "wall-1",
+				"rotation": 0,
+				"stickers": null
+			},
+			{
+				"id": "wall-1",
+				"rotation": 0,
+				"stickers": null
+			},
+			{
+				"id": "wall-1",
+				"rotation": 0,
+				"stickers": null
+			},
+			{
+				"id": "wall-1",
+				"rotation": 0,
+				"stickers": null
+			},
+			{
+				"id": "wall-1",
+				"rotation": 0,
+				"stickers": null
+			},
+			{
+				"id": "wall-1",
+				"rotation": 0,
+				"stickers": null
+			},
+			{
+				"id": "wall-1",
+				"rotation": 0,
+				"stickers": null
+			},
+			{
+				"id": "wall-1",
+				"rotation": 0,
+				"stickers": null
+			}
+		],
+		[
+			{
+				"id": "wall-1",
+				"rotation": 0,
+				"stickers": null
+			},
+			"0",
+			"0",
+			"0",
+			"0",
+			"0",
+			"0",
+			"0",
+			"0",
+			"0",
+			"0",
+			"0",
+			"0",
+			"0",
+			"0",
+			"0",
+			"0",
+			"0",
+			"0",
+			{
+				"id": "wall-1",
+				"rotation": 0,
+				"stickers": null
+			}
+		],
+		[
+			{
+				"id": "wall-1",
+				"rotation": 0,
+				"stickers": null
+			},
+			"0",
+			"0",
+			"0",
+			"0",
+			"0",
+			"0",
+			"0",
+			"0",
+			"0",
+			"0",
+			"0",
+			"0",
+			"0",
+			"0",
+			"0",
+			"0",
+			"0",
+			"0",
+			{
+				"id": "wall-1",
+				"rotation": 0,
+				"stickers": null
+			}
+		],
+		[
+			{
+				"id": "wall-1",
+				"rotation": 0,
+				"stickers": null
+			},
+			"0",
+			"0",
+			"0",
+			"0",
+			"0",
+			"0",
+			"0",
+			"0",
+			"0",
+			"0",
+			"0",
+			"0",
+			"0",
+			"0",
+			"0",
+			"0",
+			"0",
+			"0",
+			{
+				"id": "wall-1",
+				"rotation": 0,
+				"stickers": null
+			}
+		],
+		[
+			{
+				"id": "wall-1",
+				"rotation": 0,
+				"stickers": null
+			},
+			{
+				"id": "wall-1",
+				"rotation": 0,
+				"stickers": null
+			},
+			{
+				"id": "wall-1",
+				"rotation": 0,
+				"stickers": [
+					"0",
+					"X",
+					"0",
+					"X"
+				]
+			},
+			{
+				"id": "wall-1",
+				"rotation": 0,
+				"stickers": null
+			},
+			{
+				"id": "wall-1",
+				"rotation": 0,
+				"stickers": null
+			},
+			{
+				"id": "wall-1",
+				"rotation": 0,
+				"stickers": null
+			},
+			{
+				"id": "wall-1",
+				"rotation": 0,
+				"stickers": null
+			},
+			{
+				"id": "wall-1",
+				"rotation": 0,
+				"stickers": [
+					"0",
+					"X",
+					"0",
+					"X"
+				]
+			},
+			{
+				"id": "wall-1",
+				"rotation": 0,
+				"stickers": null
+			},
+			{
+				"id": "wall-1",
+				"rotation": 0,
+				"stickers": null
+			},
+			"0",
+			"0",
+			"0",
+			"0",
+			"0",
+			"0",
+			"0",
+			"0",
+			"0",
+			{
+				"id": "wall-1",
+				"rotation": 0,
+				"stickers": null
+			}
+		],
+		[
+			{
+				"id": "wall-1",
+				"rotation": 0,
+				"stickers": null
+			},
+			"0",
+			"0",
+			"0",
+			"0",
+			"0",
+			"0",
+			"0",
+			"0",
+			{
+				"id": "wall-1",
+				"rotation": 0,
+				"stickers": null
+			},
+			"0",
+			"0",
+			"0",
+			"0",
+			"0",
+			"0",
+			"0",
+			"0",
+			"0",
+			{
+				"id": "wall-1",
+				"rotation": 0,
+				"stickers": null
+			}
+		],
+		[
+			{
+				"id": "wall-1",
+				"rotation": 270,
+				"stickers": null
+			},
+			"0",
+			"0",
+			"0",
+			"0",
+			"0",
+			"0",
+			"0",
+			"0",
+			{
+				"id": "wall-1",
+				"rotation": 0,
+				"stickers": null
+			},
+			"0",
+			"0",
+			"0",
+			"0",
+			"0",
+			"0",
+			"0",
+			"0",
+			"0",
+			{
+				"id": "wall-1",
+				"rotation": 0,
+				"stickers": null
+			}
+		],
+		[
+			{
+				"id": "wall-1",
+				"rotation": 180,
+				"stickers": null
+			},
+			"0",
+			"0",
+			"0",
+			"0",
+			"0",
+			"0",
+			"0",
+			"0",
+			{
+				"id": "wall-1",
+				"rotation": 0,
+				"stickers": null
+			},
+			"0",
+			"0",
+			"0",
+			"0",
+			"0",
+			"0",
+			"0",
+			"0",
+			"0",
+			{
+				"id": "wall-1",
+				"rotation": 0,
+				"stickers": null
+			}
+		],
+		[
+			{
+				"id": "wall-1",
+				"rotation": 0,
+				"stickers": null
+			},
+			"0",
+			"0",
+			"0",
+			"0",
+			"0",
+			"0",
+			"0",
+			"0",
+			{
+				"id": "wall-1",
+				"rotation": 0,
+				"stickers": null
+			},
+			"0",
+			"0",
+			"0",
+			"0",
+			"0",
+			"0",
+			"0",
+			"0",
+			"0",
+			{
+				"id": "wall-1",
+				"rotation": 0,
+				"stickers": null
+			}
+		],
+		[
+			{
+				"id": "wall-1",
+				"rotation": 0,
+				"stickers": null
+			},
+			{
+				"id": "wall-1",
+				"rotation": 0,
+				"stickers": null
+			},
+			{
+				"id": "wall-1",
+				"rotation": 270,
+				"stickers": null
+			},
+			{
+				"id": "wall-1",
+				"rotation": 270,
+				"stickers": null
+			},
+			{
+				"id": "wall-1",
+				"rotation": 0,
+				"stickers": null
+			},
+			{
+				"id": "wall-1",
+				"rotation": 270,
+				"stickers": null
+			},
+			{
+				"id": "wall-1",
+				"rotation": 0,
+				"stickers": null
+			},
+			{
+				"id": "wall-1",
+				"rotation": 0,
+				"stickers": null
+			},
+			{
+				"id": "wall-1",
+				"rotation": 0,
+				"stickers": null
+			},
+			{
+				"id": "wall-1",
+				"rotation": 0,
+				"stickers": null
+			},
+			{
+				"id": "wall-1",
+				"rotation": 0,
+				"stickers": null
+			},
+			{
+				"id": "wall-1",
+				"rotation": 0,
+				"stickers": null
+			},
+			{
+				"id": "wall-1",
+				"rotation": 0,
+				"stickers": null
+			},
+			{
+				"id": "wall-1",
+				"rotation": 0,
+				"stickers": null
+			},
+			{
+				"id": "wall-1",
+				"rotation": 0,
+				"stickers": null
+			},
+			{
+				"id": "wall-1",
+				"rotation": 0,
+				"stickers": null
+			},
+			{
+				"id": "wall-1",
+				"rotation": 0,
+				"stickers": null
+			},
+			{
+				"id": "wall-1",
+				"rotation": 0,
+				"stickers": null
+			},
+			{
+				"id": "wall-1",
+				"rotation": 0,
+				"stickers": null
+			},
+			{
+				"id": "wall-1",
+				"rotation": 0,
+				"stickers": null
+			}
+		]
+	]
+}

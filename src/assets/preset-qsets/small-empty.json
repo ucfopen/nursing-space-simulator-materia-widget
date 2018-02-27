@@ -1,0 +1,738 @@
+{
+  "grid": [
+    [
+      {
+        "id": "wall-1",
+        "rotation": 0,
+        "stickers": null
+      },
+      {
+        "id": "wall-1",
+        "rotation": 0,
+        "stickers": null
+      },
+      {
+        "id": "wall-1",
+        "rotation": 0,
+        "stickers": null
+      },
+      {
+        "id": "wall-1",
+        "rotation": 0,
+        "stickers": null
+      },
+      {
+        "id": "wall-1",
+        "rotation": 0,
+        "stickers": null
+      },
+      {
+        "id": "wall-1",
+        "rotation": 0,
+        "stickers": null
+      },
+      {
+        "id": "wall-1",
+        "rotation": 0,
+        "stickers": null
+      },
+      {
+        "id": "wall-1",
+        "rotation": 0,
+        "stickers": null
+      },
+      {
+        "id": "wall-1",
+        "rotation": 0,
+        "stickers": null
+      },
+      {
+        "id": "wall-1",
+        "rotation": 0,
+        "stickers": null
+      },
+      "0",
+      {
+        "id": "wall-1",
+        "rotation": 0,
+        "stickers": null
+      },
+      {
+        "id": "wall-1",
+        "rotation": 0,
+        "stickers": null
+      },
+      {
+        "id": "wall-1",
+        "rotation": 0,
+        "stickers": null
+      },
+      {
+        "id": "wall-1",
+        "rotation": 0,
+        "stickers": null
+      },
+      {
+        "id": "wall-1",
+        "rotation": 0,
+        "stickers": null
+      },
+      {
+        "id": "wall-1",
+        "rotation": 0,
+        "stickers": null
+      },
+      {
+        "id": "wall-1",
+        "rotation": 0,
+        "stickers": null
+      },
+      {
+        "id": "wall-1",
+        "rotation": 0,
+        "stickers": null
+      },
+      {
+        "id": "wall-1",
+        "rotation": 0,
+        "stickers": null
+      },
+      {
+        "id": "wall-1",
+        "rotation": 0,
+        "stickers": null
+      },
+      {
+        "id": "wall-1",
+        "rotation": 0,
+        "stickers": null
+      },
+      {
+        "id": "wall-1",
+        "rotation": 0,
+        "stickers": null
+      },
+      {
+        "id": "wall-1",
+        "rotation": 0,
+        "stickers": null
+      },
+      {
+        "id": "wall-1",
+        "rotation": 0,
+        "stickers": null
+      },
+      {
+        "id": "wall-1",
+        "rotation": 0,
+        "stickers": null
+      },
+      {
+        "id": "wall-1",
+        "rotation": 0,
+        "stickers": null
+      },
+      {
+        "id": "wall-1",
+        "rotation": 0,
+        "stickers": null
+      },
+      {
+        "id": "wall-1",
+        "rotation": 0,
+        "stickers": null
+      },
+      {
+        "id": "wall-1",
+        "rotation": 0,
+        "stickers": null
+      }
+    ],
+    [
+      {
+        "id": "wall-1",
+        "rotation": 0,
+        "stickers": null
+      },
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      {
+        "id": "wall-1",
+        "rotation": 0,
+        "stickers": null
+      }
+    ],
+    [
+      {
+        "id": "wall-1",
+        "rotation": 0,
+        "stickers": null
+      },
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      {
+        "id": "wall-1",
+        "rotation": 0,
+        "stickers": null
+      }
+    ],
+    [
+      {
+        "id": "wall-1",
+        "rotation": 0,
+        "stickers": null
+      },
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      {
+        "id": "wall-1",
+        "rotation": 0,
+        "stickers": [
+          "0",
+          "0",
+          "soapSticker",
+          "fireSticker"
+        ],
+        "adj": [
+          true,
+          true,
+          true,
+          true
+        ]
+      },
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      {
+        "id": "wall-1",
+        "rotation": 0,
+        "stickers": null
+      }
+    ],
+    [
+      {
+        "id": "wall-1",
+        "rotation": 0,
+        "stickers": null
+      },
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "X",
+      {
+        "id": "chair",
+        "rotation": 180,
+        "stickers": null,
+        "adj": [
+          true,
+          true,
+          true,
+          false
+        ]
+      },
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      {
+        "id": "wall-1",
+        "rotation": 0,
+        "stickers": null
+      }
+    ],
+    [
+      {
+        "id": "wall-1",
+        "rotation": 0,
+        "stickers": null
+      },
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      {
+        "id": "bed-1",
+        "rotation": 90,
+        "stickers": [
+          "0",
+          "0",
+          "0",
+          "0"
+        ]
+      },
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      {
+        "id": "wall-1",
+        "rotation": 0,
+        "stickers": null
+      }
+    ],
+    [
+      {
+        "id": "wall-1",
+        "rotation": 0,
+        "stickers": null
+      },
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      {
+        "id": "wall-1",
+        "rotation": 0,
+        "stickers": null
+      }
+    ],
+    [
+      {
+        "id": "wall-1",
+        "rotation": 0,
+        "stickers": null
+      },
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      {
+        "id": "wall-1",
+        "rotation": 0,
+        "stickers": null
+      }
+    ],
+    [
+      {
+        "id": "wall-1",
+        "rotation": 0,
+        "stickers": null
+      },
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      {
+        "id": "wall-1",
+        "rotation": 0,
+        "stickers": null
+      }
+    ],
+    [
+      {
+        "id": "wall-1",
+        "rotation": 0,
+        "stickers": null
+      },
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      {
+        "id": "wall-1",
+        "rotation": 0,
+        "stickers": null
+      }
+    ],
+    [
+      {
+        "id": "wall-1",
+        "rotation": 0,
+        "stickers": null
+      },
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      {
+        "id": "wall-1",
+        "rotation": 0,
+        "stickers": null
+      }
+    ],
+    [
+      {
+        "id": "wall-1",
+        "rotation": 0,
+        "stickers": null
+      },
+      {
+        "id": "wall-1",
+        "rotation": 0,
+        "stickers": null
+      },
+      {
+        "id": "wall-1",
+        "rotation": 0,
+        "stickers": null
+      },
+      {
+        "id": "wall-1",
+        "rotation": 0,
+        "stickers": null
+      },
+      {
+        "id": "wall-1",
+        "rotation": 0,
+        "stickers": null
+      },
+      {
+        "id": "wall-1",
+        "rotation": 0,
+        "stickers": null
+      },
+      {
+        "id": "wall-1",
+        "rotation": 0,
+        "stickers": null
+      },
+      {
+        "id": "wall-1",
+        "rotation": 0,
+        "stickers": null
+      },
+      {
+        "id": "wall-1",
+        "rotation": 0,
+        "stickers": null
+      },
+      {
+        "id": "wall-1",
+        "rotation": 0,
+        "stickers": null
+      },
+      {
+        "id": "wall-1",
+        "rotation": 0,
+        "stickers": null
+      },
+      {
+        "id": "wall-1",
+        "rotation": 0,
+        "stickers": null
+      },
+      {
+        "id": "wall-1",
+        "rotation": 0,
+        "stickers": null
+      },
+      {
+        "id": "wall-1",
+        "rotation": 0,
+        "stickers": null
+      },
+      {
+        "id": "wall-1",
+        "rotation": 0,
+        "stickers": null
+      },
+      {
+        "id": "wall-1",
+        "rotation": 0,
+        "stickers": null
+      },
+      {
+        "id": "wall-1",
+        "rotation": 0,
+        "stickers": null
+      },
+      {
+        "id": "wall-1",
+        "rotation": 0,
+        "stickers": null
+      },
+      {
+        "id": "wall-1",
+        "rotation": 0,
+        "stickers": null
+      },
+      {
+        "id": "wall-1",
+        "rotation": 0,
+        "stickers": null
+      },
+      {
+        "id": "wall-1",
+        "rotation": 0,
+        "stickers": null
+      },
+      {
+        "id": "wall-1",
+        "rotation": 0,
+        "stickers": null
+      },
+      {
+        "id": "wall-1",
+        "rotation": 0,
+        "stickers": null
+      },
+      {
+        "id": "wall-1",
+        "rotation": 0,
+        "stickers": null
+      },
+      {
+        "id": "wall-1",
+        "rotation": 0,
+        "stickers": null
+      },
+      {
+        "id": "wall-1",
+        "rotation": 0,
+        "stickers": null
+      },
+      {
+        "id": "wall-1",
+        "rotation": 0,
+        "stickers": null
+      },
+      {
+        "id": "wall-1",
+        "rotation": 0,
+        "stickers": null
+      },
+      {
+        "id": "wall-1",
+        "rotation": 0,
+        "stickers": null
+      },
+      {
+        "id": "wall-1",
+        "rotation": 0,
+        "stickers": null
+      }
+    ]
+  ]
+}
