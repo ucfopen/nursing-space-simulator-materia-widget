@@ -1,9 +1,9 @@
 // Redux Actions
+import { INIT_DATA } from "../actions";
 import {
 	CAMERA_UPDATE_POSITION,
 	TOGGLE_THIRD_PERSON
 } from "../actions/camera_actions";
-
 import {
 	INSERT_ASSET,
 	DESELECT_ASSET,
@@ -15,11 +15,11 @@ export default function(
 	state = {
 		prevX: 14.5,
 		prevY: 18,
-		prevZ: 9,
+		prevZ: 8.5,
 		thirdPerson: true,
 		x: 14.5,
 		y: 18,
-		z: 9
+		z: 8.5
 	},
 	action
 ) {
@@ -73,9 +73,9 @@ export default function(
 					// math.random to force it to update
 					return {
 						...state,
-						x: 14.5,
-						y: 18 + Math.random() * 0.00001,
-						z: 9
+						x: window.GRID_COLS / 2 - 0.5,
+						y: window.GRID_ROWS * 3 / 2 + Math.random() * 0.00001,
+						z: window.GRID_ROWS / 2 + 2.5
 					};
 			}
 		}
@@ -130,6 +130,16 @@ export default function(
 				y: pos.y,
 				z: pos.z
 			}
+		}
+
+		case INIT_DATA: {
+			console.log(window.GRID_ROWS);
+			return {
+				...state,
+				x: window.GRID_COLS / 2 - 0.5,
+				y: window.GRID_ROWS * 3 / 2,
+				z: window.GRID_ROWS / 2 + 2.5
+			};
 		}
 
 		case TOGGLE_THIRD_PERSON:

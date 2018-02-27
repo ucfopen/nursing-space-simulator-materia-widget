@@ -1,7 +1,6 @@
 document.addEventListener("DOMContentLoaded", function(event) {
 
 	var outer = document.getElementById("presets");
-	console.log(outer);
 	outer.addEventListener('click', function(event) {
 		if (event.target.tagName == "BUTTON") {
 			event.target.blur();
@@ -43,7 +42,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 		if (selected.length) {
 			filename = selected[0].getAttribute('filename');
 		}
-		qset.options.gridLoader.grid = JSON.parse(getJSON(filePath + filename));
+		qset.options.gridLoader = JSON.parse(getJSON(filePath + filename));
 		return;
 	};
 
@@ -69,9 +68,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 		qset.options.gridLoader.rows = 12;
 		generateGrid();
 
-		// version 2 has a real .json qset (rather than string)
-		const version = 2;
-		Materia.CreatorCore.save(title, qset, version);
+		Materia.CreatorCore.save(title, qset, 1);
 	};
 
 	materiaInterface.onSaveComplete = function() {

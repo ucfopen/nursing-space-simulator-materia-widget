@@ -8,10 +8,21 @@ export function initData(qset, assetData) {
 	// NOTE: old qsets have the grid structure saved differently; if loading fails, fallback to the default
 	let grid = {};
 	try {
-		grid = JSON.parse(qset.options.gridLoader.grid);
+		// if it doesn't have a `rows` entry, it's an old version, where the grid
+		// is stored as a stringify'd json
+		if (!qset.options.gridLoader.rows) {
+			console.log("1");
+			grid = JSON.parse(qset.options.gridLoader.grid);
+		}
+		else {
+			console.log("2");
+			grid = qset.options.gridLoader.grid;
+		}
 	} catch (error) {
+		console.log("3");
 		grid = JSON.parse(defaultData.grid);
 	}
+
 	if (qset.options.gridLoader.rows) {
 		window.GRID_ROWS = qset.options.gridLoader.rows;
 		window.GRID_COLS = qset.options.gridLoader.columns;

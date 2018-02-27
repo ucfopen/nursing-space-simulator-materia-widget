@@ -12,8 +12,8 @@ function _getAssetInfo(gridValue) {
 }
 
 export function isInBounds(grid, row, col) {
-	if (row < 0 || row >= grid.length) return false;
-	if (col < 0 || col >= grid[0].length) return false;
+	if (row < 0 || row >= window.GRID_ROWS) return false;
+	if (col < 0 || col >= window.GRID_COLS) return false;
 
 	return true;
 }
