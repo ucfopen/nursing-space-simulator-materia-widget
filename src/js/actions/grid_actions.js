@@ -83,10 +83,25 @@ export function selectAssetType(asset) {
 	};
 }
 
+export const SET_DELETE_MODE = "SET_DELETE_MODE";
+export function setDeleteMode() {
+	return {
+		type: SET_DELETE_MODE
+	};
+}
+
 export const UPDATE_ASSET_POSITION = "UPDATE_ASSET_POSITION";
 export function updateAssetPosition(axisDirection) {
 	return {
 		type: UPDATE_ASSET_POSITION,
 		payload: axisDirection
+	};
+}
+
+export const DELETE_MULTIPLE_ASSETS = "DELETE_MULTIPLE_ASSETS";
+export function deleteMultipleAssets(x, y) {
+	return {
+		type: DELETE_MULTIPLE_ASSETS,
+		payload: { x, y }
 	};
 }

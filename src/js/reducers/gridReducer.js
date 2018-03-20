@@ -12,7 +12,9 @@ import {
 	ROTATE_ASSET,
 	SELECT_ASSET_TYPE,
 	SELECT_ASSET,
-	UPDATE_ASSET_POSITION
+	SET_DELETE_MODE,
+	UPDATE_ASSET_POSITION,
+	DELETE_MULTIPLE_ASSETS
 } from "../actions/grid_actions";
 import {
 	deleteItem,
@@ -24,6 +26,7 @@ import {
 	insertItem,
 	insertWalls,
 	isCellAvailable,
+	massDelete,
 	rotateCell,
 	setSticker,
 	updateStickers
@@ -37,6 +40,8 @@ export default function(
 		dragging: false,
 		currentX: null,
 		currentZ: null,
+		firstX: null,
+		firstY: null,
 		mode: "none",
 		selectedAsset: null,
 		selectedItem: null,
@@ -52,6 +57,8 @@ export default function(
 				...state,
 				currentX: null,
 				currentZ: null,
+				firstX: null,
+				firstY: null,
 				mode: "none",
 				selectedAsset: null,
 				selectedItem: null,
@@ -85,13 +92,7 @@ export default function(
 			const newStickerIndex =
 				(stickerIndex + direction + numTypes) % numTypes;
 			const newSticker = stickerTypes[newStickerIndex];
-			const newGrid = setSticker(
-				gridCopy,
-				x,
-				z,
-				side,
-				newSticker
-			)
+			const newGrid = setSticker(gridCopy, x, z, side, newSticker);
 
 			return {
 				...state,
@@ -171,11 +172,15 @@ export default function(
 					state.currentZ
 				);
 				if (HS_ASSETS[selectedAsset.id].category == "construction") {
-					prevStickers = getStickers(gridCopy, state.currentX, state.currentZ, false);
+					prevStickers = getStickers(
+						gridCopy,
+						state.currentX,
+						state.currentZ,
+						false
+					);
 				}
 				newGrid = deleteItem(gridCopy, state.currentX, state.currentZ);
-			}
-			else {
+			} else {
 				newGrid = gridCopy;
 				if (selectedAsset.id == "wall-1") {
 					let validX, validZ;
@@ -206,7 +211,7 @@ export default function(
 				z,
 				prevRotation,
 				prevStickers
-			)
+			);
 			let selectedItem = getItem(newGrid, x, z);
 			selectedItem.adj = getAdjacentSpaces(newGrid, x, z, selectedAsset);
 			return {
@@ -247,7 +252,12 @@ export default function(
 			const { x, z } = action.payload;
 			let newGrid = rotateCell(gridCopy, x, z);
 			let selectedItem = getItem(newGrid, x, z);
-			selectedItem.adj = getAdjacentSpaces(newGrid, x, z, state.selectedAsset);
+			selectedItem.adj = getAdjacentSpaces(
+				newGrid,
+				x,
+				z,
+				state.selectedAsset
+			);
 			return {
 				...state,
 				grid: newGrid,
@@ -314,6 +324,97 @@ export default function(
 			};
 		}
 
+		case SET_DELETE_MODE: {
+			return state.mode == "deleteMultiple"
+				? { ...state, mode: "" }
+				: {
+						...state,
+						currentX: null,
+						currentZ: null,
+						mode: "deleteMultiple",
+						selectedAsset: null,
+						selectedItem: null
+					};
+		}
+
+		case DELETE_MULTIPLE_ASSETS: {
+			if (state.firstX == null && state.firstY == null) {
+				window.lastMouseCoords = {
+					x: window.mouseCoords.x,
+					y: window.mouseCoords.y
+				};
+				return {
+					...state,
+					firstX: action.payload.x,
+					firstY: action.payload.y
+				};
+			}
+			const gridCopy = deepCopy(state.grid);
+
+			let positions = {
+				xOne: state.firstX,
+				yOne: state.firstY,
+				xTwo: action.payload.x,
+				yTwo: action.payload.y
+			};
+
+			let newGrid;
+
+			if (
+				positions.xOne > positions.xTwo &&
+				positions.yOne > positions.yTwo
+			) {
+				newGrid = massDelete(
+					positions.yTwo,
+					positions.yOne,
+					positions.xTwo,
+					positions.xOne,
+					positions.xTwo,
+					gridCopy
+				);
+			} else if (positions.xOne > positions.xTwo) {
+				newGrid = massDelete(
+					positions.yOne,
+					positions.yTwo,
+					positions.xTwo,
+					positions.xOne,
+					positions.xTwo,
+					gridCopy
+				);
+			} else if (positions.yOne > positions.yTwo) {
+				newGrid = massDelete(
+					positions.yTwo,
+					positions.yOne,
+					positions.xOne,
+					positions.xTwo,
+					positions.xOne,
+					gridCopy
+				);
+			} else {
+				newGrid = massDelete(
+					positions.yOne,
+					positions.yTwo,
+					positions.xOne,
+					positions.xTwo,
+					positions.xOne,
+					gridCopy
+				);
+			}
+
+			window.lastMouseCoords = {
+				x: null,
+				y: null
+			};
+
+			return {
+				...state,
+				firstX: null,
+				firstY: null,
+				mode: "none",
+				grid: newGrid
+			};
+		}
+
 		case UPDATE_ASSET_POSITION: {
 			const selectedAsset = { ...state.selectedAsset };
 
@@ -324,7 +425,11 @@ export default function(
 			const gridCopy = deepCopy(state.grid);
 			const currentX = state.currentX;
 			const currentZ = state.currentZ;
-			const currentRotation = getCellRotation(gridCopy, currentX, currentZ);
+			const currentRotation = getCellRotation(
+				gridCopy,
+				currentX,
+				currentZ
+			);
 			const prevStickers = getStickers(gridCopy, currentX, currentZ);
 			let selectedItem = getItem(gridCopy, currentX, currentZ);
 			let adjSide;
@@ -337,7 +442,14 @@ export default function(
 			switch (action.payload) {
 				case "xRight":
 					newGrid = deleteItem(gridCopy, currentX, currentZ);
-					if (isCellAvailable(gridCopy, currentX + 1, currentZ, adjSide)) {
+					if (
+						isCellAvailable(
+							gridCopy,
+							currentX + 1,
+							currentZ,
+							adjSide
+						)
+					) {
 						newGrid = insertItem(
 							newGrid,
 							selectedAsset.id,
@@ -346,7 +458,12 @@ export default function(
 							currentRotation,
 							prevStickers
 						);
-						selectedItem.adj = getAdjacentSpaces(newGrid, currentX + 1, currentZ, selectedAsset);
+						selectedItem.adj = getAdjacentSpaces(
+							newGrid,
+							currentX + 1,
+							currentZ,
+							selectedAsset
+						);
 						return {
 							...state,
 							currentX: currentX + 1,
@@ -357,7 +474,14 @@ export default function(
 					break;
 				case "xLeft":
 					newGrid = deleteItem(gridCopy, currentX, currentZ);
-					if (isCellAvailable(gridCopy, currentX - 1, currentZ, adjSide)) {
+					if (
+						isCellAvailable(
+							gridCopy,
+							currentX - 1,
+							currentZ,
+							adjSide
+						)
+					) {
 						newGrid = insertItem(
 							newGrid,
 							selectedAsset.id,
@@ -366,7 +490,12 @@ export default function(
 							currentRotation,
 							prevStickers
 						);
-						selectedItem.adj = getAdjacentSpaces(newGrid, currentX - 1, currentZ, selectedAsset);
+						selectedItem.adj = getAdjacentSpaces(
+							newGrid,
+							currentX - 1,
+							currentZ,
+							selectedAsset
+						);
 						return {
 							...state,
 							currentX: currentX - 1,
@@ -377,7 +506,14 @@ export default function(
 					break;
 				case "zUp":
 					newGrid = deleteItem(gridCopy, currentX, currentZ);
-					if (isCellAvailable(gridCopy, currentX, currentZ - 1, adjSide)) {
+					if (
+						isCellAvailable(
+							gridCopy,
+							currentX,
+							currentZ - 1,
+							adjSide
+						)
+					) {
 						newGrid = insertItem(
 							newGrid,
 							selectedAsset.id,
@@ -386,7 +522,12 @@ export default function(
 							currentRotation,
 							prevStickers
 						);
-						selectedItem.adj = getAdjacentSpaces(newGrid, currentX, currentZ - 1, selectedAsset);
+						selectedItem.adj = getAdjacentSpaces(
+							newGrid,
+							currentX,
+							currentZ - 1,
+							selectedAsset
+						);
 						return {
 							...state,
 							currentZ: currentZ - 1,
@@ -397,7 +538,14 @@ export default function(
 					break;
 				case "zDown":
 					newGrid = deleteItem(gridCopy, currentX, currentZ);
-					if (isCellAvailable(gridCopy, currentX, currentZ + 1, adjSide)) {
+					if (
+						isCellAvailable(
+							gridCopy,
+							currentX,
+							currentZ + 1,
+							adjSide
+						)
+					) {
 						newGrid = insertItem(
 							newGrid,
 							selectedAsset.id,
@@ -406,7 +554,12 @@ export default function(
 							currentRotation,
 							prevStickers
 						);
-						selectedItem.adj = getAdjacentSpaces(newGrid, currentX, currentZ + 1, selectedAsset);
+						selectedItem.adj = getAdjacentSpaces(
+							newGrid,
+							currentX,
+							currentZ + 1,
+							selectedAsset
+						);
 						return {
 							...state,
 							currentZ: currentZ + 1,

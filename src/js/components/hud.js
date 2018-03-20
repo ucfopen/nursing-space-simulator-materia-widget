@@ -30,6 +30,7 @@ import {
 	removeAsset,
 	rotateAsset,
 	selectAssetType,
+	setDeleteMode,
 	updateAssetPosition
 } from "../actions/grid_actions";
 import { restartTour } from "../actions/tour_actions";
@@ -39,9 +40,8 @@ export class HUD extends Component {
 	checkSelectAssetType(asset) {
 		const { selectedAsset } = this.props;
 		if (selectedAsset && asset && selectedAsset.id == asset.id) {
-			this.props.deselectAsset()
-		}
-		else {
+			this.props.deselectAsset();
+		} else {
 			this.props.selectAssetType(asset);
 		}
 	}
@@ -57,6 +57,7 @@ export class HUD extends Component {
 			isTooltipPersistent,
 			isTooltipTemporary,
 			mode,
+			deleteMode,
 			selectedAsset,
 			selectedItem,
 			shortcutsEnabled,
@@ -75,9 +76,11 @@ export class HUD extends Component {
 		return (
 			<div>
 				<AssetTooltip
-					visible={ (isTooltipTemporary || isTooltipPersistent) }
+					visible={isTooltipTemporary || isTooltipPersistent}
 					text={
-						isTooltipTemporary ? tooltipTemporaryText : tooltipPersistentText
+						isTooltipTemporary
+							? tooltipTemporaryText
+							: tooltipPersistentText
 					}
 					className={tooltipClassName}
 				/>
@@ -104,23 +107,36 @@ export class HUD extends Component {
 								selectedAsset={this.props.selectedAsset}
 								selectedItem={this.props.selectedItem}
 								shortcutsEnabled={shortcutsEnabled}
-								updateTemporaryTooltip={this.props.updateTemporaryTooltip}
+								updateTemporaryTooltip={
+									this.props.updateTemporaryTooltip
+								}
 							/>
 						) : null}
 						<AssetTray
 							currentCategory={this.props.currentCategory}
-							selectAssetType={this.checkSelectAssetType.bind(this)}
+							selectAssetType={this.checkSelectAssetType.bind(
+								this
+							)}
+							setDeleteMode={this.props.setDeleteMode}
+							mode={mode}
 							selectedAsset={this.props.selectedAsset}
 							setCategory={this.props.setCategory}
 							isMenuVisible={
-								mode === "editAsset" ? false : this.props.menuVisible
+								mode === "editAsset"
+									? false
+									: this.props.menuVisible
 							}
-							toggleMenu={this.props.toggleMenuVisibility.bind(this)}
+							toggleMenu={this.props.toggleMenuVisibility.bind(
+								this
+							)}
 						/>
 					</div>
 				) : (
 					<div id="ground-top-panel">
-						<button id="back" onClick={() => this.props.toggleThirdPerson()}>
+						<button
+							id="back"
+							onClick={() => this.props.toggleThirdPerson()}
+						>
 							Back
 						</button>
 					</div>
@@ -133,7 +149,6 @@ export class HUD extends Component {
 					toggleHelpVisibility={toggleHelpVisibility}
 					toggleKeyboardShortcuts={toggleKeyboardShortcuts}
 					visible={helpVisible}
-
 				/>
 			</div>
 		);
@@ -141,8 +156,7 @@ export class HUD extends Component {
 	render() {
 		if (checkPropsExist(this.props) && this.props.ready) {
 			return this.renderHUD();
-		}
-		else return null;
+		} else return null;
 	}
 }
 
@@ -159,6 +173,7 @@ function mapStateToProps({ menu, grid, position, tooltip }) {
 		helpVisible: menu.helpVisible,
 		menuVisible: menu.visible,
 		shortcutsEnabled: menu.shortcutsEnabled,
+		deleteMode: menu.deleteMode,
 		tooltipClassName: tooltip.className,
 		isTooltipTemporary: tooltip.temporary,
 		tooltipTemporaryText: tooltip.temporaryText,
@@ -175,6 +190,7 @@ export default connect(mapStateToProps, {
 	removeAsset,
 	rotateAsset,
 	selectAssetType,
+	setDeleteMode,
 	setCategory,
 	restartTour,
 	updateTemporaryTooltip,

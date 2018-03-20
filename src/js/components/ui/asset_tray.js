@@ -9,13 +9,18 @@ export default class AssetTray extends Component {
 	render() {
 		const { currentCategory, selectedAsset } = this.props;
 		const { selectAssetType, setCategory } = this.props;
+		const { setDeleteMode, mode } = this.props;
 		return (
 			<div
 				className={this.props.isMenuVisible ? "open" : "closed"}
 				id="UI-bottom-panel"
 				// preventDefault on mousedown prevents items underneath from being dragged
-				onMouseDown={(e)=>e.preventDefault()}>
-				<button className="drawer-toggle" onClick={this.props.toggleMenu}>
+				onMouseDown={e => e.preventDefault()}
+			>
+				<button
+					className="drawer-toggle"
+					onClick={this.props.toggleMenu}
+				>
 					{this.props.isMenuVisible ? "[Close Menu]" : "[Open Menu]"}
 				</button>
 				<div id="asset-selection-menu">
@@ -31,8 +36,18 @@ export default class AssetTray extends Component {
 								id: "pov_camera",
 								title: "POV Camera"
 							})
-						}>
+						}
+					>
 						First-Person Viewer
+					</button>
+					<button
+						className={
+							mode == "deleteMultiple" ? "active-category" : ""
+						}
+						id="vr-viewer-mode"
+						onClick={() => setDeleteMode()}
+					>
+						Delete Multiple Assets
 					</button>
 					<div id="categories-list">
 						{HS_CATEGORIES.map((category, index) => (
@@ -52,7 +67,10 @@ export default class AssetTray extends Component {
 								<AssetButton
 									item={HS_ASSETS[asset]}
 									key={asset}
-									onClick={selectAssetType.bind(this, HS_ASSETS[asset])}
+									onClick={selectAssetType.bind(
+										this,
+										HS_ASSETS[asset]
+									)}
 									selectedAsset={selectedAsset}
 								/>
 							);
