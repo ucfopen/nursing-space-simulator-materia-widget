@@ -131,20 +131,40 @@ export class VRScene extends Component {
 			currentZ,
 			grid,
 			mode,
+			multipleX,
+			multipleZ,
 			selectedAsset,
+			selectedAssets,
 			thirdPerson
 		} = this.props;
 		const { selectAsset } = this.props;
 		const mappedAssets = grid.map(
 			(row, rowIndex) =>
 				row.map((column, colIndex) => {
+					var selectedX = currentX;
+					var selectedZ = currentZ;
+					if (multipleX.length > 0) {
+						for (
+							var counter = 0;
+							counter < multipleX.length;
+							counter++
+						) {
+							if (
+								multipleX[counter] == colIndex &&
+								multipleZ[counter] == rowIndex
+							) {
+								var selectedX = multipleX[counter];
+								var selectedZ = multipleZ[counter];
+							}
+						}
+					}
 					return column !== "0" && column != "X" ? (
 						<QsetAsset
 							attributes={column}
 							data={HS_ASSETS[column.id]}
 							insertAsset={this.checkAssetDrag.bind(this)}
 							isSelected={
-								currentX === colIndex && currentZ === rowIndex
+								selectedX === colIndex && selectedZ === rowIndex
 							}
 							key={`${rowIndex} ${colIndex}`}
 							mode={mode}
@@ -160,7 +180,7 @@ export class VRScene extends Component {
 							}
 							rotation={column.rotation}
 							selectedAssetId={
-								selectedAsset ? selectedAsset.id : null
+								selectedAsset ? selectedAsset.id > 0 : null
 							}
 							thirdPerson={thirdPerson}
 							x={colIndex}
@@ -198,7 +218,6 @@ export class VRScene extends Component {
 			validX,
 			validZ
 		} = this.props;
-
 		const mappedFloor = grid.map(
 			(row, rowIndex) =>
 				row.map(
@@ -212,7 +231,7 @@ export class VRScene extends Component {
 							onClick={this.modeCheck(mode)}
 							deleteMode={deleteMode}
 							selectedAsset={selectedAsset}
-							selectedItem={selectedItem}
+							// selectedItem={selectedItem}
 							thirdPerson={thirdPerson}
 							validX={validX}
 							validZ={validZ}
@@ -233,6 +252,7 @@ export class VRScene extends Component {
 			posX,
 			posY,
 			posZ,
+			multipleX,
 			shortcutsEnabled,
 			thirdPerson
 		} = this.props;
@@ -295,7 +315,9 @@ export class VRScene extends Component {
 				/>
 				{this.renderFloor()}
 				{this.renderAssets()}
-				{this.props.mode == "manipulation" && !this.props.dragging ? (
+				{this.props.mode == "manipulation" &&
+				!this.props.dragging &&
+				multipleX.length == 0 ? (
 					<AssetMovementControls
 						currentX={this.props.currentX}
 						currentZ={this.props.currentZ}
@@ -323,11 +345,15 @@ function mapStateToProps({ grid, position, menu }) {
 		dragging: grid.dragging,
 		grid: grid.grid,
 		mode: grid.mode,
+		multipleX: grid.multipleX,
+		multipleZ: grid.multipleZ,
 		posX: position.x,
 		posY: position.y,
 		posZ: position.z,
 		selectedAsset: grid.selectedAsset,
+		selectedAssets: grid.selectedAssets,
 		selectedItem: grid.selectedItem,
+		selectedItems: grid.selectedItems,
 		shortcutsEnabled: menu.shortcutsEnabled,
 		thirdPerson: position.thirdPerson,
 		validX: grid.validX,

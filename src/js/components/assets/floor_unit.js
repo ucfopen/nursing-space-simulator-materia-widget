@@ -77,7 +77,15 @@ export default class FloorUnit extends Component {
 	}
 
 	render() {
-		const { mode, selectedAsset, validX, validZ, x, z } = this.props;
+		const {
+			mode,
+			selectedAsset,
+			selectedAssets,
+			validX,
+			validZ,
+			x,
+			z
+		} = this.props;
 
 		return (
 			<Entity>

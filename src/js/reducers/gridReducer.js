@@ -43,8 +43,12 @@ export default function(
 		firstX: null,
 		firstY: null,
 		mode: "none",
+		multipleX: [],
+		multipleZ: [],
 		selectedAsset: null,
+		selectedAssets: [],
 		selectedItem: null,
+		selectedItems: [],
 		validX: null,
 		validZ: null,
 		ready: false
@@ -60,6 +64,8 @@ export default function(
 				firstX: null,
 				firstY: null,
 				mode: "none",
+				multipleX: [],
+				multipleZ: [],
 				selectedAsset: null,
 				selectedItem: null,
 				validX: null,
@@ -236,12 +242,36 @@ export default function(
 
 		case REMOVE_ASSET: {
 			const gridCopy = deepCopy(state.grid);
+			let newGrid = gridCopy;
+			console.log(newGrid);
+			if (state.multipleX.length > 0) {
+				for (
+					var counter = 0;
+					counter < state.multipleX.length;
+					counter++
+				) {
+					newGrid = deleteItem(
+						newGrid,
+						state.multipleX[counter],
+						state.multipleZ[counter]
+					);
+				}
+			} else {
+				newGrid = deleteItem(
+					gridCopy,
+					action.payload.x,
+					action.payload.z
+				);
+			}
+			console.log(newGrid);
 			return {
 				...state,
 				currentX: null,
 				currentZ: null,
-				grid: deleteItem(gridCopy, action.payload.x, action.payload.z),
+				grid: newGrid,
 				mode: "none",
+				multipleX: [],
+				multipleZ: [],
 				selectedAsset: null,
 				selectedItem: null
 			};
@@ -250,14 +280,39 @@ export default function(
 		case ROTATE_ASSET: {
 			const gridCopy = deepCopy(state.grid);
 			const { x, z } = action.payload;
-			let newGrid = rotateCell(gridCopy, x, z);
-			let selectedItem = getItem(newGrid, x, z);
-			selectedItem.adj = getAdjacentSpaces(
-				newGrid,
-				x,
-				z,
-				state.selectedAsset
-			);
+			if (state.multipleX.length > 0) {
+				for (
+					var counter = 0;
+					counter < state.multipleX.length;
+					counter++
+				) {
+					var newGrid = rotateCell(
+						gridCopy,
+						state.multipleX[counter],
+						state.multipleZ[counter]
+					);
+					var selectedItem = getItem(
+						newGrid,
+						state.multipleX[counter],
+						state.multipleZ[counter]
+					);
+					selectedItem.adj = getAdjacentSpaces(
+						newGrid,
+						state.multipleX[counter],
+						state.multipleZ[counter],
+						state.selectedAsset
+					);
+				}
+			} else {
+				var newGrid = rotateCell(gridCopy, x, z);
+				var selectedItem = getItem(newGrid, x, z);
+				selectedItem.adj = getAdjacentSpaces(
+					newGrid,
+					x,
+					z,
+					state.selectedAsset
+				);
+			}
 			return {
 				...state,
 				grid: newGrid,
@@ -301,14 +356,28 @@ export default function(
 			} else {
 				let selectedItem = getItem(gridCopy, x, z);
 				selectedItem.adj = getAdjacentSpaces(gridCopy, x, z, asset);
+				let assetArray = state.selectedAssets;
+				let itemArray = state.selectedItems;
+				let multipleXArray = state.multipleX;
+				let multipleZArray = state.multipleZ;
+				if (window.shiftKeyIsPressed == true) {
+					assetArray.push(asset);
+					itemArray.push(selectedItem);
+					multipleXArray.push(x);
+					multipleZArray.push(z);
+				}
 				return {
 					...state,
 					currentX: x,
 					currentZ: z,
 					dragging: dragging,
 					mode: "manipulation",
+					multipleX: multipleXArray,
+					multipleZ: multipleZArray,
 					selectedAsset: asset,
-					selectedItem: selectedItem
+					selectedAssets: assetArray,
+					selectedItem: selectedItem,
+					selectedItems: itemArray
 				};
 			}
 		}
