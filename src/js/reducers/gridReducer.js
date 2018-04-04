@@ -161,7 +161,11 @@ export default function(
 				? { ...state.selectedAsset }
 				: null;
 
-			if (!selectedAsset || selectedAsset.id === "pov_camera") {
+			if (
+				!selectedAsset ||
+				selectedAsset.id === "pov_camera" ||
+				state.multipleX.length > 0
+			) {
 				return state;
 			}
 
@@ -388,6 +392,8 @@ export default function(
 				currentX: null,
 				currentZ: null,
 				mode: "assetTypeSelected",
+				multipleX: [],
+				multipleZ: [],
 				selectedAsset: action.payload,
 				selectedItem: null
 			};
