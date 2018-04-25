@@ -247,7 +247,6 @@ export default function(
 		case REMOVE_ASSET: {
 			const gridCopy = deepCopy(state.grid);
 			let newGrid = gridCopy;
-			console.log(newGrid);
 			if (state.multipleX.length > 0) {
 				for (
 					var counter = 0;
@@ -267,7 +266,6 @@ export default function(
 					action.payload.z
 				);
 			}
-			console.log(newGrid);
 			return {
 				...state,
 				currentX: null,
@@ -362,26 +360,43 @@ export default function(
 				selectedItem.adj = getAdjacentSpaces(gridCopy, x, z, asset);
 				let assetArray = state.selectedAssets;
 				let itemArray = state.selectedItems;
-				let multipleXArray = state.multipleX;
-				let multipleZArray = state.multipleZ;
+				var multipleXArray = state.multipleX;
+				var multipleZArray = state.multipleZ;
+				var deselect = false;
+				var currentX = null;
+				var currentZ = null;
 				if (window.shiftKeyIsPressed == true) {
-					assetArray.push(asset);
-					itemArray.push(selectedItem);
-					multipleXArray.push(x);
-					multipleZArray.push(z);
+					for (
+						var counter = 0;
+						counter < multipleXArray.length;
+						counter++
+					) {
+						if (
+							multipleXArray[counter] == x &&
+							multipleZArray[counter] == z
+						) {
+							multipleXArray.splice(counter, 1);
+							multipleZArray.splice(counter, 1);
+							deselect = true;
+						}
+					}
+					if (!deselect) {
+						multipleXArray.push(x);
+						multipleZArray.push(z);
+						currentX = x;
+						currentZ = z;
+					}
 				}
 				return {
 					...state,
-					currentX: x,
-					currentZ: z,
+					currentX: currentX,
+					currentZ: currentZ,
 					dragging: dragging,
 					mode: "manipulation",
 					multipleX: multipleXArray,
 					multipleZ: multipleZArray,
 					selectedAsset: asset,
-					selectedAssets: assetArray,
-					selectedItem: selectedItem,
-					selectedItems: itemArray
+					selectedItem: selectedItem
 				};
 			}
 		}
