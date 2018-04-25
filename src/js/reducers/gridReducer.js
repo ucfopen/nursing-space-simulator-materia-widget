@@ -363,8 +363,9 @@ export default function(
 				var multipleXArray = state.multipleX;
 				var multipleZArray = state.multipleZ;
 				var deselect = false;
-				var currentX = null;
-				var currentZ = null;
+				var currentX = x;
+				var currentZ = z;
+				var selectedAsset = asset;
 				if (window.shiftKeyIsPressed == true) {
 					for (
 						var counter = 0;
@@ -378,13 +379,17 @@ export default function(
 							multipleXArray.splice(counter, 1);
 							multipleZArray.splice(counter, 1);
 							deselect = true;
+							if (multipleXArray.length == 0) {
+								selectedAsset = null;
+							}
 						}
 					}
 					if (!deselect) {
 						multipleXArray.push(x);
 						multipleZArray.push(z);
-						currentX = x;
-						currentZ = z;
+					} else {
+						currentX = null;
+						currentZ = null;
 					}
 				}
 				return {
@@ -395,7 +400,7 @@ export default function(
 					mode: "manipulation",
 					multipleX: multipleXArray,
 					multipleZ: multipleZArray,
-					selectedAsset: asset,
+					selectedAsset: selectedAsset,
 					selectedItem: selectedItem
 				};
 			}

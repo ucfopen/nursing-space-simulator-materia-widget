@@ -102,6 +102,8 @@ export class HUD extends Component {
 								extendWall={this.props.extendWall}
 								isMenuVisible={this.props.menuVisible}
 								mode={mode}
+								multipleX={this.props.multipleX}
+								multipleZ={this.props.multipleZ}
 								removeAsset={this.props.removeAsset}
 								rotateAsset={this.props.rotateAsset}
 								selectedAsset={this.props.selectedAsset}
@@ -165,6 +167,8 @@ function mapStateToProps({ menu, grid, position, tooltip }) {
 		currentCategory: menu.currentCategory,
 		currentX: grid.currentX,
 		currentZ: grid.currentZ,
+		multipleX: grid.multipleX,
+		multipleZ: grid.multipleZ,
 		ready: grid.ready,
 		mode: grid.mode,
 		selectedAsset: grid.selectedAsset,
