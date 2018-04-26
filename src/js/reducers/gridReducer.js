@@ -378,20 +378,25 @@ export default function(
 						) {
 							multipleXArray.splice(counter, 1);
 							multipleZArray.splice(counter, 1);
+							assetArray.splice(counter, 1);
 							deselect = true;
 							if (multipleXArray.length == 0) {
 								selectedAsset = null;
+							} else if (multipleXArray.length == 1) {
+								selectedAsset = assetArray[0];
 							}
 						}
 					}
 					if (!deselect) {
 						multipleXArray.push(x);
 						multipleZArray.push(z);
+						assetArray.push(asset);
 					} else {
 						currentX = null;
 						currentZ = null;
 					}
 				}
+				console.log(assetArray);
 				return {
 					...state,
 					currentX: currentX,
