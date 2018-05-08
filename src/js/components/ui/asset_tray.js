@@ -9,7 +9,7 @@ export default class AssetTray extends Component {
 	render() {
 		const { currentCategory, selectedAsset } = this.props;
 		const { selectAssetType, setCategory } = this.props;
-		const { setDeleteMode, mode } = this.props;
+		const { setDeleteMode, setSelectMode, mode } = this.props;
 		return (
 			<div
 				className={this.props.isMenuVisible ? "open" : "closed"}

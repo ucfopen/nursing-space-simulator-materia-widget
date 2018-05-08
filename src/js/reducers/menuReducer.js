@@ -2,8 +2,7 @@ import {
 	SET_CATEGORY,
 	TOGGLE_HELP_VISIBILITY,
 	TOGGLE_KEYBOARD_SHORTCUTS,
-	TOGGLE_MENU_VISIBILITY,
-	SET_DELETE_MODE
+	TOGGLE_MENU_VISIBILITY
 } from "../actions/menu_actions";
 
 export default function(
@@ -19,9 +18,6 @@ export default function(
 	switch (action.type) {
 		case SET_CATEGORY:
 			return { ...state, currentCategory: action.payload };
-
-		case SET_DELETE_MODE:
-			return { ...state, deleteMode: !state.deleteMode };
 
 		case TOGGLE_HELP_VISIBILITY:
 			return state.helpVisible

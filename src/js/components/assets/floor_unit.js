@@ -26,6 +26,8 @@ export default class FloorUnit extends Component {
 			currentX,
 			currentZ,
 			mode,
+			multipleX,
+			multipleZ,
 			deleteMode,
 			selectedAsset,
 			thirdPerson,
@@ -35,6 +37,18 @@ export default class FloorUnit extends Component {
 			z
 		} = this.props;
 		const { onClick } = this.props;
+
+		if (mode == "selectMultiple") {
+			var arrayLength = multipleX.length;
+			if (arrayLength > 0) {
+				for (var i = 0; i < arrayLength; i++) {
+					onClick(multipleX[i], multipleZ[i], window.mouseCoords);
+				}
+			} else {
+				onClick(x, z, window.mouseCoords);
+			}
+			return;
+		}
 
 		if (mode == "deleteMultiple") {
 			onClick(x, z, window.mouseCoords);

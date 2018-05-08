@@ -163,6 +163,40 @@ export function massDelete(
 }
 
 /**
+ * deletes multiple items from the grid
+ *
+ * @param {int} counter counter for outer for loop
+ * @param {int} stopper stopping condition for outer for loop
+ * @param {int} innerCounter counter for inner for loop
+ * @param {int} innerStopper stopping condition for inner for loop
+ * @param {int} innerCounterReset saved value for innerCounter when leaving the inner for loop
+ * @param {array} grid grid to be updated
+ *
+ * @return updated grid
+ */
+export function massSelect(
+	counter,
+	stopper,
+	innerCounter,
+	innerStopper,
+	innerCounterReset,
+	grid
+) {
+	var multipleZArray = [];
+	var multipleXArray = [];
+	for (counter; counter <= stopper; counter++) {
+		for (innerCounter; innerCounter <= innerStopper; innerCounter++) {
+			if (grid[counter][innerCounter] != "0") {
+				multipleZArray.push(counter);
+				multipleXArray.push(innerCounter);
+			}
+		}
+		innerCounter = innerCounterReset;
+	}
+	return [multipleZArray, multipleXArray];
+}
+
+/**
  * inserts an item into a grid
  *
  * @param {array} grid grid to be updated

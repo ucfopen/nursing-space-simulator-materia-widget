@@ -16,12 +16,13 @@ import AssetMovementControls from "./ui/asset_movement_controls";
 // Redux Actions
 import {
 	deselectAsset,
+	deleteMultipleAssets,
 	insertAsset,
 	selectAsset,
+	selectMultipleAssets,
 	fillWalls,
 	refreshGrid,
-	updateAssetPosition,
-	deleteMultipleAssets
+	updateAssetPosition
 } from "../actions/grid_actions";
 import {
 	BAD_INSERT,
@@ -90,7 +91,6 @@ export class VRScene extends Component {
 		if (assetId == "pov_camera") {
 			return insertAsset(x, z, assetId);
 		}
-
 		let validInsert;
 		if (assetId && HS_ASSETS[assetId].spanX == 2) {
 			let gridModified =
@@ -198,6 +198,10 @@ export class VRScene extends Component {
 			return this.props.deleteMultipleAssets.bind(this);
 		}
 
+		if (mode == "selectMultiple") {
+			return this.props.selectMultipleAssets.bind(this);
+		}
+
 		if (mode == "extendWall") {
 			return this.checkFillWalls.bind(this);
 		}
@@ -209,9 +213,10 @@ export class VRScene extends Component {
 		const {
 			currentX,
 			currentZ,
-			deleteMode,
 			grid,
 			mode,
+			multipleX,
+			multipleZ,
 			selectedAsset,
 			selectedItem,
 			thirdPerson,
@@ -228,10 +233,11 @@ export class VRScene extends Component {
 							grid={grid}
 							key={`${rowIndex} ${colIndex}`}
 							mode={mode}
+							multipleX={multipleX}
+							multipleZ={multipleZ}
 							onClick={this.modeCheck(mode)}
-							deleteMode={deleteMode}
 							selectedAsset={selectedAsset}
-							// selectedItem={selectedItem}
+							selectedItem={selectedItem}
 							thirdPerson={thirdPerson}
 							validX={validX}
 							validZ={validZ}
@@ -317,7 +323,7 @@ export class VRScene extends Component {
 				{this.renderAssets()}
 				{this.props.mode == "manipulation" &&
 				!this.props.dragging &&
-				multipleX.length == 0 ? (
+				multipleX.length < 2 ? (
 					<AssetMovementControls
 						currentX={this.props.currentX}
 						currentZ={this.props.currentZ}
@@ -353,7 +359,6 @@ function mapStateToProps({ grid, position, menu }) {
 		selectedAsset: grid.selectedAsset,
 		selectedAssets: grid.selectedAssets,
 		selectedItem: grid.selectedItem,
-		selectedItems: grid.selectedItems,
 		shortcutsEnabled: menu.shortcutsEnabled,
 		thirdPerson: position.thirdPerson,
 		validX: grid.validX,
@@ -368,6 +373,7 @@ export default connect(mapStateToProps, {
 	insertAsset,
 	refreshGrid,
 	selectAsset,
+	selectMultipleAssets,
 	showErrorTooltip,
 	updateAssetPosition,
 	updateTimedTooltip

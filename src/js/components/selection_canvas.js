@@ -9,7 +9,10 @@ import VRScene from "./vr_scene";
 // Redux Actions
 import { initData } from "../actions";
 import { startTourSection, endTour } from "../actions/tour_actions";
-import { deleteMultipleAssets } from "../actions/grid_actions";
+import {
+	deleteMultipleAssets,
+	selectMultipleAssets
+} from "../actions/grid_actions";
 
 // JSON structure describing asset data
 import assetData from "../../assets/assets.json";
@@ -31,6 +34,9 @@ class SelectionCanvas extends Component {
 		}
 		const ctx = this.refs.canvas.getContext("2d");
 		ctx.fillStyle = "rgba(192, 57, 43, 0.2)";
+		if (this.props.mode == "selectMultiple") {
+			ctx.fillStyle = "rgba(24, 209, 40, 0.2)";
+		}
 		ctx.clearRect(0, 0, 2000, 2000);
 		var rectWidth = window.mouseCoords.x - window.lastMouseCoords.x;
 		var rectHeight = window.mouseCoords.y - window.lastMouseCoords.y;
@@ -45,7 +51,10 @@ class SelectionCanvas extends Component {
 	}
 
 	render() {
-		if (this.props.mode != "deleteMultiple") {
+		if (
+			this.props.mode != "deleteMultiple" &&
+			this.props.mode != "selectMultiple"
+		) {
 			return null;
 		}
 		return (

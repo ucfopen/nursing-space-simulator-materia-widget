@@ -83,10 +83,25 @@ export function selectAssetType(asset) {
 	};
 }
 
+export const SELECT_MULTIPLE_ASSETS = "SELECT_MULTIPLE_ASSETS";
+export function selectMultipleAssets(x, y) {
+	return {
+		type: SELECT_MULTIPLE_ASSETS,
+		payload: { x, y }
+	};
+}
+
 export const SET_DELETE_MODE = "SET_DELETE_MODE";
 export function setDeleteMode() {
 	return {
 		type: SET_DELETE_MODE
+	};
+}
+
+export const SET_SELECT_MODE = "SET_SELECT_MODE";
+export function setSelectMode() {
+	return {
+		type: SET_SELECT_MODE
 	};
 }
 

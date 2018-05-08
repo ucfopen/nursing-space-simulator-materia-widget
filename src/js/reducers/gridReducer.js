@@ -13,8 +13,10 @@ import {
 	SELECT_ASSET_TYPE,
 	SELECT_ASSET,
 	SET_DELETE_MODE,
+	SET_SELECT_MODE,
 	UPDATE_ASSET_POSITION,
-	DELETE_MULTIPLE_ASSETS
+	DELETE_MULTIPLE_ASSETS,
+	SELECT_MULTIPLE_ASSETS
 } from "../actions/grid_actions";
 import {
 	deleteItem,
@@ -27,6 +29,7 @@ import {
 	insertWalls,
 	isCellAvailable,
 	massDelete,
+	massSelect,
 	rotateCell,
 	setSticker,
 	updateStickers
@@ -48,7 +51,6 @@ export default function(
 		selectedAsset: null,
 		selectedAssets: [],
 		selectedItem: null,
-		selectedItems: [],
 		validX: null,
 		validZ: null,
 		ready: false
@@ -67,6 +69,7 @@ export default function(
 				multipleX: [],
 				multipleZ: [],
 				selectedAsset: null,
+				selectedAssets: [],
 				selectedItem: null,
 				validX: null,
 				validZ: null
@@ -224,6 +227,9 @@ export default function(
 			);
 			let selectedItem = getItem(newGrid, x, z);
 			selectedItem.adj = getAdjacentSpaces(newGrid, x, z, selectedAsset);
+			var multipleX = [x];
+			var multipleZ = [z];
+			var assetArray = [selectedAsset];
 			return {
 				...state,
 				currentX: x,
@@ -231,6 +237,9 @@ export default function(
 				dragging: false,
 				grid: newGrid,
 				mode: "manipulation",
+				multipleX: multipleX,
+				multipleZ: multipleZ,
+				selectedAssets: assetArray,
 				selectedItem: selectedItem
 			};
 		}
@@ -359,7 +368,6 @@ export default function(
 				let selectedItem = getItem(gridCopy, x, z);
 				selectedItem.adj = getAdjacentSpaces(gridCopy, x, z, asset);
 				let assetArray = state.selectedAssets;
-				let itemArray = state.selectedItems;
 				var multipleXArray = state.multipleX;
 				var multipleZArray = state.multipleZ;
 				var deselect = false;
@@ -395,8 +403,14 @@ export default function(
 						currentX = null;
 						currentZ = null;
 					}
+				} else {
+					multipleXArray = [];
+					multipleZArray = [];
+					assetArray = [];
+					assetArray.push(asset);
+					multipleXArray.push(x);
+					multipleZArray.push(z);
 				}
-				console.log(assetArray);
 				return {
 					...state,
 					currentX: currentX,
@@ -406,6 +420,7 @@ export default function(
 					multipleX: multipleXArray,
 					multipleZ: multipleZArray,
 					selectedAsset: selectedAsset,
+					selectedAssets: assetArray,
 					selectedItem: selectedItem
 				};
 			}
@@ -432,6 +447,19 @@ export default function(
 						currentX: null,
 						currentZ: null,
 						mode: "deleteMultiple",
+						selectedAsset: null,
+						selectedItem: null
+					};
+		}
+
+		case SET_SELECT_MODE: {
+			return state.mode == "selectMultiple"
+				? { ...state, mode: "" }
+				: {
+						...state,
+						currentX: null,
+						currentZ: null,
+						mode: "selectMultiple",
 						selectedAsset: null,
 						selectedItem: null
 					};
@@ -515,6 +543,89 @@ export default function(
 			};
 		}
 
+		case SELECT_MULTIPLE_ASSETS: {
+			if (state.firstX == null && state.firstY == null) {
+				window.lastMouseCoords = {
+					x: window.mouseCoords.x,
+					y: window.mouseCoords.y
+				};
+				return {
+					...state,
+					firstX: action.payload.x,
+					firstY: action.payload.y
+				};
+			}
+			const gridCopy = deepCopy(state.grid);
+
+			let positions = {
+				xOne: state.firstX,
+				yOne: state.firstY,
+				xTwo: action.payload.x,
+				yTwo: action.payload.y
+			};
+
+			var gridPoints;
+
+			if (
+				positions.xOne > positions.xTwo &&
+				positions.yOne > positions.yTwo
+			) {
+				gridPoints = massSelect(
+					positions.yTwo,
+					positions.yOne,
+					positions.xTwo,
+					positions.xOne,
+					positions.xTwo,
+					gridCopy
+				);
+			} else if (positions.xOne > positions.xTwo) {
+				gridPoints = massSelect(
+					positions.yOne,
+					positions.yTwo,
+					positions.xTwo,
+					positions.xOne,
+					positions.xTwo,
+					gridCopy
+				);
+			} else if (positions.yOne > positions.yTwo) {
+				gridPoints = massSelect(
+					positions.yTwo,
+					positions.yOne,
+					positions.xOne,
+					positions.xTwo,
+					positions.xOne,
+					gridCopy
+				);
+			} else {
+				gridPoints = massSelect(
+					positions.yOne,
+					positions.yTwo,
+					positions.xOne,
+					positions.xTwo,
+					positions.xOne,
+					gridCopy
+				);
+			}
+			var multipleZArray = gridPoints[0];
+			var multipleXArray = gridPoints[1];
+
+			window.lastMouseCoords = {
+				x: null,
+				y: null
+			};
+			return {
+				...state,
+				currentX: multipleXArray[0],
+				currentZ: multipleZArray[0],
+				firstX: null,
+				firstY: null,
+				mode: "none",
+				grid: gridCopy,
+				multipleX: multipleXArray,
+				multipelZ: multipleZArray
+			};
+		}
+
 		case UPDATE_ASSET_POSITION: {
 			const selectedAsset = { ...state.selectedAsset };
 
@@ -525,12 +636,17 @@ export default function(
 			const gridCopy = deepCopy(state.grid);
 			const currentX = state.currentX;
 			const currentZ = state.currentZ;
+			var multipleX = state.multipleX;
+			var multipleZ = state.multipleZ;
+			let assetArray = state.selectedAssets;
 			const currentRotation = getCellRotation(
 				gridCopy,
 				currentX,
 				currentZ
 			);
 			const prevStickers = getStickers(gridCopy, currentX, currentZ);
+			var arrayLength = multipleX.length;
+			var i = 0;
 			let selectedItem = getItem(gridCopy, currentX, currentZ);
 			let adjSide;
 			let newGrid;
@@ -538,135 +654,215 @@ export default function(
 			if (selectedAsset.id && HS_ASSETS[selectedAsset.id].spanX == 2) {
 				adjSide = 3 - ((currentRotation + 180) % 360) / 90;
 			}
-
 			switch (action.payload) {
 				case "xRight":
-					newGrid = deleteItem(gridCopy, currentX, currentZ);
-					if (
-						isCellAvailable(
-							gridCopy,
-							currentX + 1,
-							currentZ,
-							adjSide
-						)
-					) {
-						newGrid = insertItem(
-							newGrid,
-							selectedAsset.id,
-							currentX + 1,
-							currentZ,
-							currentRotation,
-							prevStickers
-						);
-						selectedItem.adj = getAdjacentSpaces(
-							newGrid,
-							currentX + 1,
-							currentZ,
-							selectedAsset
-						);
-						return {
-							...state,
-							currentX: currentX + 1,
-							grid: newGrid,
-							selectedItem: selectedItem
-						};
+					for (i; i < arrayLength; i++) {
+						if (
+							adjSide != null ||
+							isCellAvailable(
+								gridCopy,
+								multipleX[i] + 1,
+								multipleZ[i],
+								adjSide
+							)
+						) {
+							newGrid = deleteItem(
+								gridCopy,
+								multipleX[i],
+								multipleZ[i]
+							);
+							newGrid = insertItem(
+								newGrid,
+								assetArray[i].id,
+								multipleX[i] + 1,
+								multipleZ[i],
+								currentRotation,
+								prevStickers
+							);
+							selectedItem.adj = getAdjacentSpaces(
+								newGrid,
+								multipleX[i] + 1,
+								multipleZ[i],
+								selectedAsset
+							);
+							multipleX[i] = multipleX[i] + 1;
+						} else {
+							return {
+								...state,
+								currentX: multipleX[arrayLength - 1],
+								currentZ: multipleZ[arrayLength - 1],
+								grid: gridCopy,
+								multipleX: multipleX,
+								multipleZ: multipleZ,
+								selectedItem: selectedItem
+							};
+						}
 					}
+					return {
+						...state,
+						currentX: multipleX[arrayLength - 1],
+						currentZ: multipleZ[arrayLength - 1],
+						grid: newGrid,
+						multipleX: multipleX,
+						multipleZ: multipleZ,
+						selectedItem: selectedItem
+					};
 					break;
 				case "xLeft":
-					newGrid = deleteItem(gridCopy, currentX, currentZ);
-					if (
-						isCellAvailable(
-							gridCopy,
-							currentX - 1,
-							currentZ,
-							adjSide
-						)
-					) {
-						newGrid = insertItem(
-							newGrid,
-							selectedAsset.id,
-							currentX - 1,
-							currentZ,
-							currentRotation,
-							prevStickers
-						);
-						selectedItem.adj = getAdjacentSpaces(
-							newGrid,
-							currentX - 1,
-							currentZ,
-							selectedAsset
-						);
-						return {
-							...state,
-							currentX: currentX - 1,
-							grid: newGrid,
-							selectedItem: selectedItem
-						};
+					for (i; i < arrayLength; i++) {
+						if (
+							isCellAvailable(
+								gridCopy,
+								multipleX[i] - 1,
+								multipleZ[i],
+								adjSide
+							)
+						) {
+							newGrid = deleteItem(
+								gridCopy,
+								multipleX[i],
+								multipleZ[i]
+							);
+							newGrid = insertItem(
+								newGrid,
+								assetArray[i].id,
+								multipleX[i] - 1,
+								multipleZ[i],
+								currentRotation,
+								prevStickers
+							);
+							selectedItem.adj = getAdjacentSpaces(
+								newGrid,
+								multipleX[i] - 1,
+								multipleZ[i],
+								selectedAsset
+							);
+							multipleX[i] = multipleX[i] - 1;
+						} else {
+							return {
+								...state,
+								currentX: multipleX[arrayLength - 1],
+								currentZ: multipleZ[arrayLength - 1],
+								grid: gridCopy,
+								multipleX: multipleX,
+								multipleZ: multipleZ,
+								selectedItem: selectedItem
+							};
+						}
 					}
+					return {
+						...state,
+						currentX: multipleX[arrayLength - 1],
+						currentZ: multipleZ[arrayLength - 1],
+						grid: newGrid,
+						multipleX: multipleX,
+						multipleZ: multipleZ,
+						selectedItem: selectedItem
+					};
 					break;
 				case "zUp":
-					newGrid = deleteItem(gridCopy, currentX, currentZ);
-					if (
-						isCellAvailable(
-							gridCopy,
-							currentX,
-							currentZ - 1,
-							adjSide
-						)
-					) {
-						newGrid = insertItem(
-							newGrid,
-							selectedAsset.id,
-							currentX,
-							currentZ - 1,
-							currentRotation,
-							prevStickers
-						);
-						selectedItem.adj = getAdjacentSpaces(
-							newGrid,
-							currentX,
-							currentZ - 1,
-							selectedAsset
-						);
-						return {
-							...state,
-							currentZ: currentZ - 1,
-							grid: newGrid,
-							selectedItem: selectedItem
-						};
+					for (i; i < arrayLength; i++) {
+						if (
+							isCellAvailable(
+								gridCopy,
+								multipleX[i],
+								multipleZ[i] - 1,
+								adjSide
+							)
+						) {
+							newGrid = deleteItem(
+								gridCopy,
+								multipleX[i],
+								multipleZ[i]
+							);
+							newGrid = insertItem(
+								newGrid,
+								assetArray[i].id,
+								multipleX[i],
+								multipleZ[i] - 1,
+								currentRotation,
+								prevStickers
+							);
+							selectedItem.adj = getAdjacentSpaces(
+								newGrid,
+								multipleX[i],
+								multipleZ[i] - 1,
+								selectedAsset
+							);
+							multipleZ[i] = multipleZ[i] - 1;
+						} else {
+							return {
+								...state,
+								currentX: multipleX[arrayLength - 1],
+								currentZ: multipleZ[arrayLength - 1],
+								grid: gridCopy,
+								multipleX: multipleX,
+								multipleZ: multipleZ,
+								selectedItem: selectedItem
+							};
+						}
 					}
+					return {
+						...state,
+						currentX: multipleX[arrayLength - 1],
+						currentZ: multipleZ[arrayLength - 1],
+						grid: newGrid,
+						multipleX: multipleX,
+						multipleZ: multipleZ,
+						selectedItem: selectedItem
+					};
 					break;
 				case "zDown":
-					newGrid = deleteItem(gridCopy, currentX, currentZ);
-					if (
-						isCellAvailable(
-							gridCopy,
-							currentX,
-							currentZ + 1,
-							adjSide
-						)
-					) {
-						newGrid = insertItem(
-							newGrid,
-							selectedAsset.id,
-							currentX,
-							currentZ + 1,
-							currentRotation,
-							prevStickers
-						);
-						selectedItem.adj = getAdjacentSpaces(
-							newGrid,
-							currentX,
-							currentZ + 1,
-							selectedAsset
-						);
-						return {
-							...state,
-							currentZ: currentZ + 1,
-							grid: newGrid,
-							selectedItem: selectedItem
-						};
+					for (i; i < arrayLength; i++) {
+						if (
+							isCellAvailable(
+								gridCopy,
+								multipleX[i],
+								multipleZ[i] + 1,
+								adjSide
+							)
+						) {
+							newGrid = deleteItem(
+								gridCopy,
+								multipleX[i],
+								multipleZ[i]
+							);
+							newGrid = insertItem(
+								newGrid,
+								assetArray[i].id,
+								multipleX[i],
+								multipleZ[i] + 1,
+								currentRotation,
+								prevStickers
+							);
+							selectedItem.adj = getAdjacentSpaces(
+								newGrid,
+								multipleX[i],
+								multipleZ[i] + 1,
+								selectedAsset
+							);
+							multipleZ[i] = multipleZ[i] + 1;
+						} else {
+							return {
+								...state,
+								currentX: multipleX[arrayLength - 1],
+								currentZ: multipleZ[arrayLength - 1],
+								grid: gridCopy,
+								multipleX: multipleX,
+								multipleZ: multipleZ,
+								selectedItem: selectedItem
+							};
+						}
 					}
+					return {
+						...state,
+						currentX: multipleX[arrayLength - 1],
+						currentZ: multipleZ[arrayLength - 1],
+						grid: newGrid,
+						multipleX: multipleX,
+						multipleZ: multipleZ,
+						selectedItem: selectedItem
+					};
 					break;
 			}
 			return state;

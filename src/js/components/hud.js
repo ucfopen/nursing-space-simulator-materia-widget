@@ -31,6 +31,7 @@ import {
 	rotateAsset,
 	selectAssetType,
 	setDeleteMode,
+	setSelectMode,
 	updateAssetPosition
 } from "../actions/grid_actions";
 import { restartTour } from "../actions/tour_actions";
@@ -120,6 +121,7 @@ export class HUD extends Component {
 								this
 							)}
 							setDeleteMode={this.props.setDeleteMode}
+							setSelectMode={this.props.setSelectMode}
 							mode={mode}
 							selectedAsset={this.props.selectedAsset}
 							setCategory={this.props.setCategory}
@@ -195,6 +197,7 @@ export default connect(mapStateToProps, {
 	rotateAsset,
 	selectAssetType,
 	setDeleteMode,
+	setSelectMode,
 	setCategory,
 	restartTour,
 	updateTemporaryTooltip,
