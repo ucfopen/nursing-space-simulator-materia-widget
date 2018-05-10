@@ -670,6 +670,7 @@ export default function(
 				case "xRight":
 					for (i; i < arrayLength; i++) {
 						if (
+							adjSide != null ||
 							isCellAvailable(
 								gridCopy,
 								multipleX[i] + 1,
@@ -726,6 +727,7 @@ export default function(
 				case "xLeft":
 					for (i; i < arrayLength; i++) {
 						if (
+							adjSide != null ||
 							isCellAvailable(
 								gridCopy,
 								multipleX[i] - 1,

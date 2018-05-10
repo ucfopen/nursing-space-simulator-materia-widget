@@ -179,7 +179,8 @@ export default class AssetControls extends Component {
 									shortcutsEnabled={shortcutsEnabled}
 								/>
 							</button>
-							{selectedAsset.id == "wall-1" ? (
+							{selectedAsset.id == "wall-1" &&
+							multipleX.length < 2 ? (
 								<button
 									id="extendWall"
 									onClick={() =>
@@ -200,8 +201,9 @@ export default class AssetControls extends Component {
 									/>
 								</button>
 							) : null}
-							{selectedAsset.id == "wall-1" ||
-							selectedAsset.id == "door-1" ? (
+							{(selectedAsset.id == "wall-1" ||
+								selectedAsset.id == "door-1") &&
+							multipleX.length < 2 ? (
 								<button
 									id="editAsset"
 									onClick={() =>
