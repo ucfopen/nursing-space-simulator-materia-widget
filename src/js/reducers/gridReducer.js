@@ -19,6 +19,7 @@ import {
 	SELECT_MULTIPLE_ASSETS
 } from "../actions/grid_actions";
 import {
+	arrangeItems,
 	deleteItem,
 	findValidExtends,
 	getAdjacentSpaces,
@@ -167,7 +168,7 @@ export default function(
 			if (
 				!selectedAsset ||
 				selectedAsset.id === "pov_camera" ||
-				state.multipleX.length > 0
+				state.multipleX.length > 1
 			) {
 				return state;
 			}
@@ -284,6 +285,7 @@ export default function(
 				multipleX: [],
 				multipleZ: [],
 				selectedAsset: null,
+				selectedAssets: [],
 				selectedItem: null
 			};
 		}
@@ -650,15 +652,24 @@ export default function(
 			let selectedItem = getItem(gridCopy, currentX, currentZ);
 			let adjSide;
 			let newGrid;
+			var collision = false;
 
 			if (selectedAsset.id && HS_ASSETS[selectedAsset.id].spanX == 2) {
 				adjSide = 3 - ((currentRotation + 180) % 360) / 90;
 			}
+			var arrangedItems = arrangeItems(
+				multipleX,
+				multipleZ,
+				assetArray,
+				action.payload
+			);
+			multipleX = arrangedItems[0];
+			multipleZ = arrangedItems[1];
+			assetArray = arrangedItems[2];
 			switch (action.payload) {
 				case "xRight":
 					for (i; i < arrayLength; i++) {
 						if (
-							adjSide != null ||
 							isCellAvailable(
 								gridCopy,
 								multipleX[i] + 1,
@@ -687,26 +698,30 @@ export default function(
 							);
 							multipleX[i] = multipleX[i] + 1;
 						} else {
-							return {
-								...state,
-								currentX: multipleX[arrayLength - 1],
-								currentZ: multipleZ[arrayLength - 1],
-								grid: gridCopy,
-								multipleX: multipleX,
-								multipleZ: multipleZ,
-								selectedItem: selectedItem
-							};
+							collision = true;
 						}
 					}
-					return {
-						...state,
-						currentX: multipleX[arrayLength - 1],
-						currentZ: multipleZ[arrayLength - 1],
-						grid: newGrid,
-						multipleX: multipleX,
-						multipleZ: multipleZ,
-						selectedItem: selectedItem
-					};
+					if (collision) {
+						return {
+							...state,
+							currentX: multipleX[arrayLength - 1],
+							currentZ: multipleZ[arrayLength - 1],
+							grid: gridCopy,
+							multipleX: multipleX,
+							multipleZ: multipleZ,
+							selectedItem: selectedItem
+						};
+					} else {
+						return {
+							...state,
+							currentX: multipleX[arrayLength - 1],
+							currentZ: multipleZ[arrayLength - 1],
+							grid: newGrid,
+							multipleX: multipleX,
+							multipleZ: multipleZ,
+							selectedItem: selectedItem
+						};
+					}
 					break;
 				case "xLeft":
 					for (i; i < arrayLength; i++) {
@@ -739,26 +754,30 @@ export default function(
 							);
 							multipleX[i] = multipleX[i] - 1;
 						} else {
-							return {
-								...state,
-								currentX: multipleX[arrayLength - 1],
-								currentZ: multipleZ[arrayLength - 1],
-								grid: gridCopy,
-								multipleX: multipleX,
-								multipleZ: multipleZ,
-								selectedItem: selectedItem
-							};
+							collision = true;
 						}
 					}
-					return {
-						...state,
-						currentX: multipleX[arrayLength - 1],
-						currentZ: multipleZ[arrayLength - 1],
-						grid: newGrid,
-						multipleX: multipleX,
-						multipleZ: multipleZ,
-						selectedItem: selectedItem
-					};
+					if (collision) {
+						return {
+							...state,
+							currentX: multipleX[arrayLength - 1],
+							currentZ: multipleZ[arrayLength - 1],
+							grid: gridCopy,
+							multipleX: multipleX,
+							multipleZ: multipleZ,
+							selectedItem: selectedItem
+						};
+					} else {
+						return {
+							...state,
+							currentX: multipleX[arrayLength - 1],
+							currentZ: multipleZ[arrayLength - 1],
+							grid: newGrid,
+							multipleX: multipleX,
+							multipleZ: multipleZ,
+							selectedItem: selectedItem
+						};
+					}
 					break;
 				case "zUp":
 					for (i; i < arrayLength; i++) {
@@ -791,26 +810,30 @@ export default function(
 							);
 							multipleZ[i] = multipleZ[i] - 1;
 						} else {
-							return {
-								...state,
-								currentX: multipleX[arrayLength - 1],
-								currentZ: multipleZ[arrayLength - 1],
-								grid: gridCopy,
-								multipleX: multipleX,
-								multipleZ: multipleZ,
-								selectedItem: selectedItem
-							};
+							collision = true;
 						}
 					}
-					return {
-						...state,
-						currentX: multipleX[arrayLength - 1],
-						currentZ: multipleZ[arrayLength - 1],
-						grid: newGrid,
-						multipleX: multipleX,
-						multipleZ: multipleZ,
-						selectedItem: selectedItem
-					};
+					if (collision) {
+						return {
+							...state,
+							currentX: multipleX[arrayLength - 1],
+							currentZ: multipleZ[arrayLength - 1],
+							grid: gridCopy,
+							multipleX: multipleX,
+							multipleZ: multipleZ,
+							selectedItem: selectedItem
+						};
+					} else {
+						return {
+							...state,
+							currentX: multipleX[arrayLength - 1],
+							currentZ: multipleZ[arrayLength - 1],
+							grid: newGrid,
+							multipleX: multipleX,
+							multipleZ: multipleZ,
+							selectedItem: selectedItem
+						};
+					}
 					break;
 				case "zDown":
 					for (i; i < arrayLength; i++) {
@@ -843,26 +866,30 @@ export default function(
 							);
 							multipleZ[i] = multipleZ[i] + 1;
 						} else {
-							return {
-								...state,
-								currentX: multipleX[arrayLength - 1],
-								currentZ: multipleZ[arrayLength - 1],
-								grid: gridCopy,
-								multipleX: multipleX,
-								multipleZ: multipleZ,
-								selectedItem: selectedItem
-							};
+							collision = true;
 						}
 					}
-					return {
-						...state,
-						currentX: multipleX[arrayLength - 1],
-						currentZ: multipleZ[arrayLength - 1],
-						grid: newGrid,
-						multipleX: multipleX,
-						multipleZ: multipleZ,
-						selectedItem: selectedItem
-					};
+					if (collision) {
+						return {
+							...state,
+							currentX: multipleX[arrayLength - 1],
+							currentZ: multipleZ[arrayLength - 1],
+							grid: gridCopy,
+							multipleX: multipleX,
+							multipleZ: multipleZ,
+							selectedItem: selectedItem
+						};
+					} else {
+						return {
+							...state,
+							currentX: multipleX[arrayLength - 1],
+							currentZ: multipleZ[arrayLength - 1],
+							grid: newGrid,
+							multipleX: multipleX,
+							multipleZ: multipleZ,
+							selectedItem: selectedItem
+						};
+					}
 					break;
 			}
 			return state;

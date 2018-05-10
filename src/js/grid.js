@@ -197,6 +197,54 @@ export function massSelect(
 }
 
 /**
+ * arranges assetArray order to avoid error when moving multiple assets
+ *
+ * @param {array} multipleX array that holds the x values for the selected assets
+ * @param {array} multipleZ array that holds the z values for the selected assets
+ * @param {array} assets array that holds currently selected assets
+ * @param {string} direction direction in which the assets are being moved
+ *
+ * @return array included sorted arrays of assets
+ */
+export function arrangeItems(multipleX, multipleZ, assets, direction) {
+	//combine arrays
+	var items = [];
+	for (var i = 0; i < assets.length; i++)
+		items.push({ x: multipleX[i], z: multipleZ[i], asset: assets[i] });
+
+	switch (direction) {
+		case "xRight":
+			items.sort(function(a, b) {
+				return a.x > b.x ? -1 : a.x == b.x ? 0 : 1;
+			});
+			break;
+		case "xLeft":
+			items.sort(function(a, b) {
+				return a.x < b.x ? -1 : a.x == b.x ? 0 : 1;
+			});
+			break;
+		case "zUp":
+			items.sort(function(a, b) {
+				return a.z < b.z ? -1 : a.z == b.z ? 0 : 1;
+			});
+			break;
+		case "zDown":
+			items.sort(function(a, b) {
+				return a.z > b.z ? -1 : a.z == b.z ? 0 : 1;
+			});
+			break;
+	}
+
+	//separate the arrays
+	for (var j = 0; j < items.length; j++) {
+		multipleX[j] = items[j].x;
+		multipleZ[j] = items[j].z;
+		assets[j] = items[j].asset;
+	}
+	return [multipleX, multipleZ, assets];
+}
+
+/**
  * inserts an item into a grid
  *
  * @param {array} grid grid to be updated
