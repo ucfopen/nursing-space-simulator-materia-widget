@@ -209,8 +209,9 @@ export function massSelect(
 export function arrangeItems(multipleX, multipleZ, assets, direction) {
 	//combine arrays
 	var items = [];
-	for (var i = 0; i < assets.length; i++)
+	for (var i = 0; i < assets.length; i++) {
 		items.push({ x: multipleX[i], z: multipleZ[i], asset: assets[i] });
+	}
 
 	switch (direction) {
 		case "xRight":
@@ -307,15 +308,23 @@ export function insertItem(
  *
  * @return boolean
  */
-export function isCellAvailable(grid, x, z, adjSide = null) {
+export function isCellAvailable(grid, x, z, adjSide = null, direction = null) {
 	if (grid === null || x === null || z === null || isNaN(x) || isNaN(z)) {
 		return false;
 	}
 
-	const col = x,
-		row = z;
+	if ((direction = "xLeft" && adjSide != null)) {
+		var col = x - 1,
+			row = z;
+	} else {
+		var col = x,
+			row = z;
+	}
 
 	if (!isInBounds(grid, row, col)) return false;
+	if (grid[row][col].id == "desk" || grid[row][col].id == "bed-1") {
+		return true;
+	}
 
 	if (adjSide != null) {
 		const adjX = adjSide % 2 == 0 ? x : x + 2 - adjSide;
