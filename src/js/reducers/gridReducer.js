@@ -654,9 +654,6 @@ export default function(
 			let newGrid;
 			var collision = false;
 
-			if (selectedAsset.id && HS_ASSETS[selectedAsset.id].spanX == 2) {
-				adjSide = 3 - ((currentRotation + 180) % 360) / 90;
-			}
 			var arrangedItems = arrangeItems(
 				multipleX,
 				multipleZ,
@@ -669,6 +666,12 @@ export default function(
 			switch (action.payload) {
 				case "xRight":
 					for (i; i < arrayLength; i++) {
+						if (
+							assetArray[i].id &&
+							HS_ASSETS[assetArray[i].id].spanX == 2
+						) {
+							adjSide = 3 - ((currentRotation + 180) % 360) / 90;
+						}
 						if (
 							isCellAvailable(
 								gridCopy,
@@ -725,6 +728,12 @@ export default function(
 					break;
 				case "xLeft":
 					for (i; i < arrayLength; i++) {
+						if (
+							assetArray[i].id &&
+							HS_ASSETS[assetArray[i].id].spanX == 2
+						) {
+							adjSide = 3 - ((currentRotation + 180) % 360) / 90;
+						}
 						if (
 							isCellAvailable(
 								gridCopy,
@@ -783,11 +792,18 @@ export default function(
 				case "zUp":
 					for (i; i < arrayLength; i++) {
 						if (
+							assetArray[i].id &&
+							HS_ASSETS[assetArray[i].id].spanX == 2
+						) {
+							adjSide = 3 - ((currentRotation + 180) % 360) / 90;
+						}
+						if (
 							isCellAvailable(
 								gridCopy,
 								multipleX[i],
 								multipleZ[i] - 1,
-								adjSide
+								adjSide,
+								"zUp"
 							)
 						) {
 							newGrid = deleteItem(
@@ -839,11 +855,18 @@ export default function(
 				case "zDown":
 					for (i; i < arrayLength; i++) {
 						if (
+							assetArray[i].id &&
+							HS_ASSETS[assetArray[i].id].spanX == 2
+						) {
+							adjSide = 3 - ((currentRotation + 180) % 360) / 90;
+						}
+						if (
 							isCellAvailable(
 								gridCopy,
 								multipleX[i],
 								multipleZ[i] + 1,
-								adjSide
+								adjSide,
+								"zDown"
 							)
 						) {
 							newGrid = deleteItem(

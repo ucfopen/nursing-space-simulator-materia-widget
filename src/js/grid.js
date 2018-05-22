@@ -313,7 +313,7 @@ export function isCellAvailable(grid, x, z, adjSide = null, direction = null) {
 		return false;
 	}
 
-	if ((direction = "xLeft" && adjSide != null)) {
+	if (direction == "xLeft" && adjSide != null) {
 		var col = x - 1,
 			row = z;
 	} else {
@@ -321,16 +321,16 @@ export function isCellAvailable(grid, x, z, adjSide = null, direction = null) {
 			row = z;
 	}
 
+	if ((direction == "zUp" || direction == "zDown") && adjSide != null) {
+		return grid[row][col] == "0" && grid[row][col - 1] == "0";
+	}
+
 	if (!isInBounds(grid, row, col)) return false;
+
 	if (grid[row][col].id == "desk" || grid[row][col].id == "bed-1") {
 		return true;
 	}
 
-	if (adjSide != null) {
-		const adjX = adjSide % 2 == 0 ? x : x + 2 - adjSide;
-		const adjZ = adjSide % 2 == 0 ? z + adjSide - 1 : z;
-		return grid[row][col] === "0" && isCellAvailable(grid, adjX, adjZ);
-	}
 	return grid[row][col] === "0";
 }
 
