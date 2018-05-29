@@ -305,6 +305,7 @@ export function insertItem(
  * @param {int} col column of gridcell to be checked
  * @param {int} row row of gridcell to be checked
  * @param {int} adjSide adjacent side to be checked as well, if included
+ * @param {string} direction direction in which the assets are moving
  *
  * @return boolean
  */

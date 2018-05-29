@@ -791,6 +791,7 @@ export default function(
 					break;
 				case "zUp":
 					for (i; i < arrayLength; i++) {
+						adjSide = null;
 						if (
 							assetArray[i].id &&
 							HS_ASSETS[assetArray[i].id].spanX == 2
@@ -854,6 +855,7 @@ export default function(
 					break;
 				case "zDown":
 					for (i; i < arrayLength; i++) {
+						adjSide = null;
 						if (
 							assetArray[i].id &&
 							HS_ASSETS[assetArray[i].id].spanX == 2
