@@ -491,7 +491,6 @@ export function getStickers(grid, x, z, checkAdj) {
 	if (checkAdj) {
 		grid = updateStickers(grid, x, z, false);
 	}
-
 	return grid[z][x].stickers;
 }
 

@@ -401,6 +401,9 @@ export default function(
 						multipleXArray.push(x);
 						multipleZArray.push(z);
 						assetArray.push(asset);
+					} else if (multipleXArray.length > 1) {
+						currentX = multipleXArray[0];
+						currentZ = multipleZArray[0];
 					} else {
 						currentX = null;
 						currentZ = null;
@@ -646,9 +649,9 @@ export default function(
 				currentX,
 				currentZ
 			);
-			const prevStickers = getStickers(gridCopy, currentX, currentZ);
-			var arrayLength = multipleX.length;
+			var prevStickers = getStickers(gridCopy, currentX, currentZ);
 			var i = 0;
+			var arrayLength = multipleX.length;
 			let selectedItem = getItem(gridCopy, currentX, currentZ);
 			let adjSide;
 			let newGrid;
@@ -660,6 +663,8 @@ export default function(
 				assetArray,
 				action.payload
 			);
+			i = 0;
+
 			multipleX = arrangedItems[0];
 			multipleZ = arrangedItems[1];
 			assetArray = arrangedItems[2];
@@ -728,6 +733,7 @@ export default function(
 					break;
 				case "xLeft":
 					for (i; i < arrayLength; i++) {
+						adjSide = null;
 						if (
 							assetArray[i].id &&
 							HS_ASSETS[assetArray[i].id].spanX == 2
