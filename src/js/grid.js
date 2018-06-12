@@ -329,6 +329,9 @@ export function isCellAvailable(grid, x, z, adjSide = null, direction = null) {
 	if (direction == "xLeft" && adjSide != null) {
 		var col = x - 1,
 			row = z;
+	} else if (direction == "zUp" && adjSide != null) {
+		var col = x,
+			row = z - 1;
 	} else {
 		var col = x,
 			row = z;

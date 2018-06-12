@@ -680,6 +680,7 @@ export default function(
 			switch (action.payload) {
 				case "xRight":
 					for (i; i < arrayLength; i++) {
+						adjSide = null;
 						if (
 							assetArray[i].id &&
 							HS_ASSETS[assetArray[i].id].spanX == 2
