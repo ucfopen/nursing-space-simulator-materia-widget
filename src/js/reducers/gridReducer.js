@@ -649,6 +649,7 @@ export default function(
 				currentX,
 				currentZ
 			);
+			var stickerHolder = [];
 			var prevStickers = getStickers(gridCopy, currentX, currentZ);
 			var i = 0;
 			var arrayLength = multipleX.length;
@@ -657,17 +658,25 @@ export default function(
 			let newGrid;
 			var collision = false;
 
+			for (i; i < arrayLength; i++) {
+				stickerHolder.push(
+					getStickers(gridCopy, multipleX[i], multipleZ[i])
+				);
+			}
+			i = 0;
+
 			var arrangedItems = arrangeItems(
 				multipleX,
 				multipleZ,
 				assetArray,
+				stickerHolder,
 				action.payload
 			);
-			i = 0;
 
 			multipleX = arrangedItems[0];
 			multipleZ = arrangedItems[1];
 			assetArray = arrangedItems[2];
+			stickerHolder = arrangedItems[3];
 			switch (action.payload) {
 				case "xRight":
 					for (i; i < arrayLength; i++) {
@@ -696,7 +705,7 @@ export default function(
 								multipleX[i] + 1,
 								multipleZ[i],
 								currentRotation,
-								prevStickers
+								stickerHolder[i]
 							);
 							selectedItem.adj = getAdjacentSpaces(
 								newGrid,
@@ -760,7 +769,7 @@ export default function(
 								multipleX[i] - 1,
 								multipleZ[i],
 								currentRotation,
-								prevStickers
+								stickerHolder[i]
 							);
 							selectedItem.adj = getAdjacentSpaces(
 								newGrid,
@@ -824,7 +833,7 @@ export default function(
 								multipleX[i],
 								multipleZ[i] - 1,
 								currentRotation,
-								prevStickers
+								stickerHolder[i]
 							);
 							selectedItem.adj = getAdjacentSpaces(
 								newGrid,
@@ -888,7 +897,7 @@ export default function(
 								multipleX[i],
 								multipleZ[i] + 1,
 								currentRotation,
-								prevStickers
+								stickerHolder[i]
 							);
 							selectedItem.adj = getAdjacentSpaces(
 								newGrid,

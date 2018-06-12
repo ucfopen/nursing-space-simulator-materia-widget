@@ -206,11 +206,22 @@ export function massSelect(
  *
  * @return array included sorted arrays of assets
  */
-export function arrangeItems(multipleX, multipleZ, assets, direction) {
+export function arrangeItems(
+	multipleX,
+	multipleZ,
+	assets,
+	stickers,
+	direction
+) {
 	//combine arrays
 	var items = [];
 	for (var i = 0; i < assets.length; i++) {
-		items.push({ x: multipleX[i], z: multipleZ[i], asset: assets[i] });
+		items.push({
+			x: multipleX[i],
+			z: multipleZ[i],
+			asset: assets[i],
+			sticker: stickers[i]
+		});
 	}
 
 	switch (direction) {
@@ -241,8 +252,9 @@ export function arrangeItems(multipleX, multipleZ, assets, direction) {
 		multipleX[j] = items[j].x;
 		multipleZ[j] = items[j].z;
 		assets[j] = items[j].asset;
+		stickers[j] = items[j].sticker;
 	}
-	return [multipleX, multipleZ, assets];
+	return [multipleX, multipleZ, assets, stickers];
 }
 
 /**
