@@ -401,7 +401,7 @@ export default function(
 						multipleXArray.push(x);
 						multipleZArray.push(z);
 						assetArray.push(asset);
-					} else if (multipleXArray.length > 1) {
+					} else if (multipleXArray.length > 0) {
 						currentX = multipleXArray[0];
 						currentZ = multipleZArray[0];
 					} else {
