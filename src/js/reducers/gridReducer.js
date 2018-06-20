@@ -124,6 +124,9 @@ export default function(
 				currentX: state.currentX,
 				currentZ: state.currentZ,
 				mode: "extendWall",
+				multipleX: [],
+				multipleZ: [],
+				selectedAssets: [],
 				validX: validX,
 				validZ: validZ
 			};
@@ -452,6 +455,8 @@ export default function(
 						currentX: null,
 						currentZ: null,
 						mode: "deleteMultiple",
+						multipleX: [],
+						multipleZ: [],
 						selectedAsset: null,
 						selectedItem: null
 					};
