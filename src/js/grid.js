@@ -211,6 +211,7 @@ export function arrangeItems(
 	multipleZ,
 	assets,
 	stickers,
+	rotations,
 	direction
 ) {
 	//combine arrays
@@ -220,7 +221,8 @@ export function arrangeItems(
 			x: multipleX[i],
 			z: multipleZ[i],
 			asset: assets[i],
-			sticker: stickers[i]
+			sticker: stickers[i],
+			rotation: rotations[i]
 		});
 	}
 
@@ -253,8 +255,9 @@ export function arrangeItems(
 		multipleZ[j] = items[j].z;
 		assets[j] = items[j].asset;
 		stickers[j] = items[j].sticker;
+		rotations[j] = items[j].rotation;
 	}
-	return [multipleX, multipleZ, assets, stickers];
+	return [multipleX, multipleZ, assets, stickers, rotations];
 }
 
 /**

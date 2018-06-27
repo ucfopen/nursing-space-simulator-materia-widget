@@ -655,6 +655,7 @@ export default function(
 				currentZ
 			);
 			var stickerHolder = [];
+			var rotationHolder = [];
 			var prevStickers = getStickers(gridCopy, currentX, currentZ);
 			var i = 0;
 			var arrayLength = multipleX.length;
@@ -667,6 +668,10 @@ export default function(
 				stickerHolder.push(
 					getStickers(gridCopy, multipleX[i], multipleZ[i])
 				);
+
+				rotationHolder.push(
+					getCellRotation(gridCopy, multipleX[i], multipleZ[i])
+				);
 			}
 			i = 0;
 
@@ -675,6 +680,7 @@ export default function(
 				multipleZ,
 				assetArray,
 				stickerHolder,
+				rotationHolder,
 				action.payload
 			);
 
@@ -682,6 +688,8 @@ export default function(
 			multipleZ = arrangedItems[1];
 			assetArray = arrangedItems[2];
 			stickerHolder = arrangedItems[3];
+			rotationHolder = arrangedItems[4];
+
 			switch (action.payload) {
 				case "xRight":
 					for (i; i < arrayLength; i++) {
@@ -710,7 +718,7 @@ export default function(
 								assetArray[i].id,
 								multipleX[i] + 1,
 								multipleZ[i],
-								currentRotation,
+								rotationHolder[i],
 								stickerHolder[i]
 							);
 							selectedItem.adj = getAdjacentSpaces(
@@ -774,7 +782,7 @@ export default function(
 								assetArray[i].id,
 								multipleX[i] - 1,
 								multipleZ[i],
-								currentRotation,
+								rotationHolder[i],
 								stickerHolder[i]
 							);
 							selectedItem.adj = getAdjacentSpaces(
@@ -838,7 +846,7 @@ export default function(
 								assetArray[i].id,
 								multipleX[i],
 								multipleZ[i] - 1,
-								currentRotation,
+								rotationHolder[i],
 								stickerHolder[i]
 							);
 							selectedItem.adj = getAdjacentSpaces(
@@ -902,7 +910,7 @@ export default function(
 								assetArray[i].id,
 								multipleX[i],
 								multipleZ[i] + 1,
-								currentRotation,
+								rotationHolder[i],
 								stickerHolder[i]
 							);
 							selectedItem.adj = getAdjacentSpaces(
