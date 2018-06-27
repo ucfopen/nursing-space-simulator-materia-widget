@@ -649,14 +649,8 @@ export default function(
 			var multipleX = state.multipleX;
 			var multipleZ = state.multipleZ;
 			let assetArray = state.selectedAssets;
-			const currentRotation = getCellRotation(
-				gridCopy,
-				currentX,
-				currentZ
-			);
 			var stickerHolder = [];
 			var rotationHolder = [];
-			var prevStickers = getStickers(gridCopy, currentX, currentZ);
 			var i = 0;
 			var arrayLength = multipleX.length;
 			let selectedItem = getItem(gridCopy, currentX, currentZ);
@@ -698,7 +692,8 @@ export default function(
 							assetArray[i].id &&
 							HS_ASSETS[assetArray[i].id].spanX == 2
 						) {
-							adjSide = 3 - ((currentRotation + 180) % 360) / 90;
+							adjSide =
+								3 - ((rotationHolder[i] + 180) % 360) / 90;
 						}
 						if (
 							isCellAvailable(
@@ -761,7 +756,8 @@ export default function(
 							assetArray[i].id &&
 							HS_ASSETS[assetArray[i].id].spanX == 2
 						) {
-							adjSide = 3 - ((currentRotation + 180) % 360) / 90;
+							adjSide =
+								3 - ((rotationHolder[i] + 180) % 360) / 90;
 						}
 						if (
 							isCellAvailable(
@@ -825,7 +821,8 @@ export default function(
 							assetArray[i].id &&
 							HS_ASSETS[assetArray[i].id].spanX == 2
 						) {
-							adjSide = 3 - ((currentRotation + 180) % 360) / 90;
+							adjSide =
+								3 - ((rotationHolder[i] + 180) % 360) / 90;
 						}
 						if (
 							isCellAvailable(
@@ -889,7 +886,8 @@ export default function(
 							assetArray[i].id &&
 							HS_ASSETS[assetArray[i].id].spanX == 2
 						) {
-							adjSide = 3 - ((currentRotation + 180) % 360) / 90;
+							adjSide =
+								3 - ((rotationHolder[i] + 180) % 360) / 90;
 						}
 						if (
 							isCellAvailable(
