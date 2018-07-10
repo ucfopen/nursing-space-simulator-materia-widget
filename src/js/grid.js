@@ -210,6 +210,7 @@ export function arrangeItems(
 	multipleX,
 	multipleZ,
 	assets,
+	assetItems,
 	stickers,
 	rotations,
 	direction
@@ -221,6 +222,7 @@ export function arrangeItems(
 			x: multipleX[i],
 			z: multipleZ[i],
 			asset: assets[i],
+			item: assetItems[i],
 			sticker: stickers[i],
 			rotation: rotations[i]
 		});
@@ -248,16 +250,16 @@ export function arrangeItems(
 			});
 			break;
 	}
-
 	//separate the arrays
 	for (var j = 0; j < items.length; j++) {
 		multipleX[j] = items[j].x;
 		multipleZ[j] = items[j].z;
 		assets[j] = items[j].asset;
+		assetItems[j] = items[j].item;
 		stickers[j] = items[j].sticker;
 		rotations[j] = items[j].rotation;
 	}
-	return [multipleX, multipleZ, assets, stickers, rotations];
+	return [multipleX, multipleZ, assets, assetItems, stickers, rotations];
 }
 
 /**
@@ -335,20 +337,18 @@ export function isCellAvailable(grid, x, z, adjSide = null, direction = null) {
 	} else if (direction == "zUp" && adjSide != null) {
 		var col = x,
 			row = z - 1;
+	} else if (direction == "zDown" && adjSide != null) {
+		var col = x,
+			row = z + 1;
+	} else if (direction == "xRight" && adjSide != null) {
+		var col = x + 1,
+			row = z;
 	} else {
 		var col = x,
 			row = z;
 	}
 
-	if ((direction == "zUp" || direction == "zDown") && adjSide != null) {
-		return grid[row][col] == "0" && grid[row][col - 1] == "0";
-	}
-
 	if (!isInBounds(grid, row, col)) return false;
-
-	if (grid[row][col].id == "desk" || grid[row][col].id == "bed-1") {
-		return true;
-	}
 
 	return grid[row][col] === "0";
 }

@@ -52,6 +52,7 @@ export default function(
 		selectedAsset: null,
 		selectedAssets: [],
 		selectedItem: null,
+		selectedItems: [],
 		validX: null,
 		validZ: null,
 		ready: false
@@ -72,6 +73,7 @@ export default function(
 				selectedAsset: null,
 				selectedAssets: [],
 				selectedItem: null,
+				selectedItems: [],
 				validX: null,
 				validZ: null
 			};
@@ -234,6 +236,7 @@ export default function(
 			var multipleX = [x];
 			var multipleZ = [z];
 			var assetArray = [selectedAsset];
+			var itemArray = [selectedItem];
 			return {
 				...state,
 				currentX: x,
@@ -244,7 +247,8 @@ export default function(
 				multipleX: multipleX,
 				multipleZ: multipleZ,
 				selectedAssets: assetArray,
-				selectedItem: selectedItem
+				selectedItem: selectedItem,
+				selectedItems: itemArray
 			};
 		}
 
@@ -373,6 +377,7 @@ export default function(
 				let selectedItem = getItem(gridCopy, x, z);
 				selectedItem.adj = getAdjacentSpaces(gridCopy, x, z, asset);
 				let assetArray = state.selectedAssets;
+				let itemArray = state.selectedItems;
 				var multipleXArray = state.multipleX;
 				var multipleZArray = state.multipleZ;
 				var deselect = false;
@@ -404,6 +409,7 @@ export default function(
 						multipleXArray.push(x);
 						multipleZArray.push(z);
 						assetArray.push(asset);
+						itemArray.push(selectedItem);
 					} else if (multipleXArray.length > 0) {
 						currentX = multipleXArray[0];
 						currentZ = multipleZArray[0];
@@ -416,6 +422,7 @@ export default function(
 					multipleZArray = [];
 					assetArray = [];
 					assetArray.push(asset);
+					itemArray.push(selectedItem);
 					multipleXArray.push(x);
 					multipleZArray.push(z);
 				}
@@ -429,7 +436,8 @@ export default function(
 					multipleZ: multipleZArray,
 					selectedAsset: selectedAsset,
 					selectedAssets: assetArray,
-					selectedItem: selectedItem
+					selectedItem: selectedItem,
+					selectedItems: itemArray
 				};
 			}
 		}
@@ -649,6 +657,7 @@ export default function(
 			var multipleX = state.multipleX;
 			var multipleZ = state.multipleZ;
 			let assetArray = state.selectedAssets;
+			let itemArray = state.selectedItems;
 			var stickerHolder = [];
 			var rotationHolder = [];
 			var i = 0;
@@ -673,6 +682,7 @@ export default function(
 				multipleX,
 				multipleZ,
 				assetArray,
+				itemArray,
 				stickerHolder,
 				rotationHolder,
 				action.payload
@@ -681,8 +691,9 @@ export default function(
 			multipleX = arrangedItems[0];
 			multipleZ = arrangedItems[1];
 			assetArray = arrangedItems[2];
-			stickerHolder = arrangedItems[3];
-			rotationHolder = arrangedItems[4];
+			itemArray = arrangedItems[3];
+			stickerHolder = arrangedItems[4];
+			rotationHolder = arrangedItems[5];
 
 			switch (action.payload) {
 				case "xRight":
@@ -700,7 +711,8 @@ export default function(
 								gridCopy,
 								multipleX[i] + 1,
 								multipleZ[i],
-								adjSide
+								adjSide,
+								"xRight"
 							)
 						) {
 							newGrid = deleteItem(
@@ -716,11 +728,11 @@ export default function(
 								rotationHolder[i],
 								stickerHolder[i]
 							);
-							selectedItem.adj = getAdjacentSpaces(
+							itemArray[i].adj = getAdjacentSpaces(
 								newGrid,
 								multipleX[i] + 1,
 								multipleZ[i],
-								selectedAsset
+								assetArray[i]
 							);
 							multipleX[i] = multipleX[i] + 1;
 						} else {
@@ -734,8 +746,7 @@ export default function(
 							currentZ: multipleZ[arrayLength - 1],
 							grid: gridCopy,
 							multipleX: multipleX,
-							multipleZ: multipleZ,
-							selectedItem: selectedItem
+							multipleZ: multipleZ
 						};
 					} else {
 						return {
@@ -744,8 +755,7 @@ export default function(
 							currentZ: multipleZ[arrayLength - 1],
 							grid: newGrid,
 							multipleX: multipleX,
-							multipleZ: multipleZ,
-							selectedItem: selectedItem
+							multipleZ: multipleZ
 						};
 					}
 					break;
@@ -781,11 +791,11 @@ export default function(
 								rotationHolder[i],
 								stickerHolder[i]
 							);
-							selectedItem.adj = getAdjacentSpaces(
+							itemArray[i].adj = getAdjacentSpaces(
 								newGrid,
 								multipleX[i] - 1,
 								multipleZ[i],
-								selectedAsset
+								assetArray[i]
 							);
 							multipleX[i] = multipleX[i] - 1;
 						} else {
@@ -799,8 +809,7 @@ export default function(
 							currentZ: multipleZ[arrayLength - 1],
 							grid: gridCopy,
 							multipleX: multipleX,
-							multipleZ: multipleZ,
-							selectedItem: selectedItem
+							multipleZ: multipleZ
 						};
 					} else {
 						return {
@@ -809,8 +818,7 @@ export default function(
 							currentZ: multipleZ[arrayLength - 1],
 							grid: newGrid,
 							multipleX: multipleX,
-							multipleZ: multipleZ,
-							selectedItem: selectedItem
+							multipleZ: multipleZ
 						};
 					}
 					break;
@@ -846,11 +854,11 @@ export default function(
 								rotationHolder[i],
 								stickerHolder[i]
 							);
-							selectedItem.adj = getAdjacentSpaces(
+							itemArray[i].adj = getAdjacentSpaces(
 								newGrid,
 								multipleX[i],
 								multipleZ[i] - 1,
-								selectedAsset
+								assetArray[i]
 							);
 							multipleZ[i] = multipleZ[i] - 1;
 						} else {
@@ -864,8 +872,7 @@ export default function(
 							currentZ: multipleZ[arrayLength - 1],
 							grid: gridCopy,
 							multipleX: multipleX,
-							multipleZ: multipleZ,
-							selectedItem: selectedItem
+							multipleZ: multipleZ
 						};
 					} else {
 						return {
@@ -874,8 +881,7 @@ export default function(
 							currentZ: multipleZ[arrayLength - 1],
 							grid: newGrid,
 							multipleX: multipleX,
-							multipleZ: multipleZ,
-							selectedItem: selectedItem
+							multipleZ: multipleZ
 						};
 					}
 					break;
@@ -911,11 +917,11 @@ export default function(
 								rotationHolder[i],
 								stickerHolder[i]
 							);
-							selectedItem.adj = getAdjacentSpaces(
+							itemArray[i].adj = getAdjacentSpaces(
 								newGrid,
 								multipleX[i],
 								multipleZ[i] + 1,
-								selectedAsset
+								assetArray[i]
 							);
 							multipleZ[i] = multipleZ[i] + 1;
 						} else {
@@ -929,8 +935,7 @@ export default function(
 							currentZ: multipleZ[arrayLength - 1],
 							grid: gridCopy,
 							multipleX: multipleX,
-							multipleZ: multipleZ,
-							selectedItem: selectedItem
+							multipleZ: multipleZ
 						};
 					} else {
 						return {
@@ -939,8 +944,7 @@ export default function(
 							currentZ: multipleZ[arrayLength - 1],
 							grid: newGrid,
 							multipleX: multipleX,
-							multipleZ: multipleZ,
-							selectedItem: selectedItem
+							multipleZ: multipleZ
 						};
 					}
 					break;
