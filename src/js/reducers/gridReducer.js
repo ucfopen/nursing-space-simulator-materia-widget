@@ -675,6 +675,13 @@ export default function(
 				rotationHolder.push(
 					getCellRotation(gridCopy, multipleX[i], multipleZ[i])
 				);
+
+				if (
+					assetArray[i].id == "desk" &&
+					action.payload == "xLeft" &&
+					rotationHolder[i] == 180
+				) {
+				}
 			}
 			i = 0;
 
@@ -707,6 +714,13 @@ export default function(
 								3 - ((rotationHolder[i] + 180) % 360) / 90;
 						}
 						if (
+							(assetArray[i].id == "desk" ||
+								assetArray[i].id == "bed-1") &&
+							multipleX[i] != multipleX[i] + 1
+						) {
+							multipleX[i] += 2;
+						}
+						if (
 							isCellAvailable(
 								gridCopy,
 								multipleX[i] + 1,
@@ -715,6 +729,13 @@ export default function(
 								"xRight"
 							)
 						) {
+							if (
+								(assetArray[i].id == "desk" ||
+									assetArray[i].id == "bed-1") &&
+								multipleX[i] != multipleX[i] + 2
+							) {
+								multipleX[i] -= 2;
+							}
 							newGrid = deleteItem(
 								gridCopy,
 								multipleX[i],
@@ -770,6 +791,12 @@ export default function(
 								3 - ((rotationHolder[i] + 180) % 360) / 90;
 						}
 						if (
+							assetArray[i].id == "desk" ||
+							assetArray[i].id == "bed-1"
+						) {
+							multipleX[i] -= 2;
+						}
+						if (
 							isCellAvailable(
 								gridCopy,
 								multipleX[i] - 1,
@@ -778,6 +805,13 @@ export default function(
 								"xLeft"
 							)
 						) {
+							if (
+								assetArray[i].id == "desk" ||
+								assetArray[i].id == "bed-1"
+							) {
+								multipleX[i] += 2;
+							}
+
 							newGrid = deleteItem(
 								gridCopy,
 								multipleX[i],
@@ -838,7 +872,8 @@ export default function(
 								multipleX[i],
 								multipleZ[i] - 1,
 								adjSide,
-								"zUp"
+								"zUp",
+								rotationHolder[i]
 							)
 						) {
 							newGrid = deleteItem(
@@ -901,7 +936,8 @@ export default function(
 								multipleX[i],
 								multipleZ[i] + 1,
 								adjSide,
-								"zDown"
+								"zDown",
+								rotationHolder[i]
 							)
 						) {
 							newGrid = deleteItem(

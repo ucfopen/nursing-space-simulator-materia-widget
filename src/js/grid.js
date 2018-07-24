@@ -202,6 +202,9 @@ export function massSelect(
  * @param {array} multipleX array that holds the x values for the selected assets
  * @param {array} multipleZ array that holds the z values for the selected assets
  * @param {array} assets array that holds currently selected assets
+ * @param {array} assetItems array that holds currently selected items
+ * @param {array} stickers array that holds the stickers on the currently selected assets
+ * @param {array} rotations array that holds the rotations of the currently selected assets
  * @param {string} direction direction in which the assets are being moved
  *
  * @return array included sorted arrays of assets
@@ -319,28 +322,41 @@ export function insertItem(
  * checks to see if an item is placed in a grid cell
  *
  * @param {array} grid grid to be checked
- * @param {int} col column of gridcell to be checked
- * @param {int} row row of gridcell to be checked
+ * @param {int} x column of gridcell to be checked
+ * @param {int} z row of gridcell to be checked
  * @param {int} adjSide adjacent side to be checked as well, if included
  * @param {string} direction direction in which the assets are moving
  *
  * @return boolean
  */
-export function isCellAvailable(grid, x, z, adjSide = null, direction = null) {
+export function isCellAvailable(
+	grid,
+	x,
+	z,
+	adjSide = null,
+	direction = null,
+	rotation = null
+) {
 	if (grid === null || x === null || z === null || isNaN(x) || isNaN(z)) {
 		return false;
 	}
 
-	if (direction == "xLeft" && adjSide != null) {
+	if (rotation == 0 || rotation == 180) {
+		var horizontal = true;
+	} else {
+		var vertical = true;
+	}
+
+	if (direction == "xLeft" && adjSide != null && !vertical) {
 		var col = x - 1,
 			row = z;
-	} else if (direction == "zUp" && adjSide != null) {
+	} else if (direction == "zUp" && adjSide != null && !horizontal) {
 		var col = x,
 			row = z - 1;
-	} else if (direction == "zDown" && adjSide != null) {
+	} else if (direction == "zDown" && adjSide != null && !horizontal) {
 		var col = x,
 			row = z + 1;
-	} else if (direction == "xRight" && adjSide != null) {
+	} else if (direction == "xRight" && adjSide != null && !vertical) {
 		var col = x + 1,
 			row = z;
 	} else {
