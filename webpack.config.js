@@ -12,15 +12,14 @@ baseConfig.entry = {
 }
 
 baseConfig.module.rules.push({
-	test: /\.css$/i,
-	loader: ExtractTextPlugin.extract({ use: ['css-loader'] }),
-	exclude: /node_modules/
-})
-
-baseConfig.module.rules.push({
-	test: /\.js$/,
-	loader: 'babel-loader',
-	exclude: /node_modules/
-})
+		test: /\.js$/,
+		use: {
+			loader: 'babel-loader',
+			options: {
+				presets: ['babel-preset-env']
+			}
+		},
+		exclude: /(node_modules|bower_components)/,
+	})
 
 module.exports = baseConfig
