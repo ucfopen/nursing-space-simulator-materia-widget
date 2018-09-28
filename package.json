@@ -26,7 +26,7 @@
 		"aframe-react": "^4.2.3",
 		"fs": "^0.0.2",
 		"lodash": "^4.17.4",
-		"materia-widget-development-kit": "^1.2.2",
+		"materia-widget-development-kit": "https://github.com/ucfopen/Materia-Widget-Dev-Kit.git#v1.2.3-alpha2",
 		"react": "^15.5.4",
 		"react-dom": "^15.5.4",
 		"react-joyride": "^1.10.1",
