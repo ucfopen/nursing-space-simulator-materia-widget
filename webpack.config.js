@@ -1,6 +1,6 @@
-const path = require('path')
+// const path = require('path')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
-const baseConfig = require('materia-widget-development-kit/webpack-widget').getLegacyWidgetBuildConfig()
+let baseConfig = require('materia-widget-development-kit/webpack-widget').getLegacyWidgetBuildConfig()
 
 baseConfig.entry = {
 	'js/creator.js': ['./src/js/creator.js'],
@@ -11,16 +11,24 @@ baseConfig.entry = {
 	'react-joyride-compiled.css': ['./src/react-joyride-compiled.css']
 }
 
-baseConfig.module.rules.push({
-	test: /\.css$/i,
-	loader: ExtractTextPlugin.extract({ use: ['css-loader'] }),
-	exclude: /node_modules/
-})
+var baseModuleRules = require('materia-widget-development-kit/webpack-widget').getDefaultRules()
+
+baseConfig.module.rules = [
+	baseModuleRules.copyImages,
+	baseModuleRules.loadHTMLAndReplaceMateriaScripts,
+	baseModuleRules.loadAndPrefixCSS,
+	baseModuleRules.loadAndPrefixSASS
+]
 
 baseConfig.module.rules.push({
-	test: /\.js$/,
-	loader: 'babel-loader',
-	exclude: /node_modules/
-})
+		test: /\.js$/,
+		use: {
+			loader: 'babel-loader',
+			options: {
+				presets: ['babel-preset-env']
+			}
+		},
+		exclude: /(node_modules|bower_components)/,
+	})
 
 module.exports = baseConfig
