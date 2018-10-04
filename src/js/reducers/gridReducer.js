@@ -347,7 +347,7 @@ export default function(
 			let oldSelectedAsset = state.selectedAsset
 				? { ...state.selectedAsset }
 				: null;
-
+			console.log(asset.id, oldSelectedAsset);
 			if (
 				oldSelectedAsset &&
 				oldSelectedAsset.id !== "pov_camera" &&
@@ -364,6 +364,7 @@ export default function(
 				);
 				let selectedItem = getItem(newGrid, x, z);
 				selectedItem.adj = getAdjacentSpaces(newGrid, x, z, asset);
+
 				return {
 					...state,
 					currentX: x,
@@ -713,13 +714,11 @@ export default function(
 							adjSide =
 								3 - ((rotationHolder[i] + 180) % 360) / 90;
 						}
-						if (
-							(assetArray[i].id == "desk" ||
-								assetArray[i].id == "bed-1") &&
-							multipleX[i] != multipleX[i] + 1
-						) {
-							multipleX[i] += 2;
+
+						if (assetArray[i].id == "desk") {
+							multipleX[i] += 1;
 						}
+
 						if (
 							isCellAvailable(
 								gridCopy,
@@ -729,12 +728,8 @@ export default function(
 								"xRight"
 							)
 						) {
-							if (
-								(assetArray[i].id == "desk" ||
-									assetArray[i].id == "bed-1") &&
-								multipleX[i] != multipleX[i] + 2
-							) {
-								multipleX[i] -= 2;
+							if (assetArray[i].id == "desk") {
+								multipleX[i] -= 1;
 							}
 							newGrid = deleteItem(
 								gridCopy,
@@ -790,12 +785,11 @@ export default function(
 							adjSide =
 								3 - ((rotationHolder[i] + 180) % 360) / 90;
 						}
-						if (
-							assetArray[i].id == "desk" ||
-							assetArray[i].id == "bed-1"
-						) {
-							multipleX[i] -= 2;
+
+						if (assetArray[i].id == "desk") {
+							multipleX[i] -= 1;
 						}
+
 						if (
 							isCellAvailable(
 								gridCopy,
@@ -805,13 +799,9 @@ export default function(
 								"xLeft"
 							)
 						) {
-							if (
-								assetArray[i].id == "desk" ||
-								assetArray[i].id == "bed-1"
-							) {
-								multipleX[i] += 2;
+							if (assetArray[i].id == "desk") {
+								multipleX[i] += 1;
 							}
-
 							newGrid = deleteItem(
 								gridCopy,
 								multipleX[i],
