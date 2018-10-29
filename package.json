@@ -1,8 +1,9 @@
 {
-	"name": "Hospital-Sim",
+	"name": "@ucfopen/hospital-sim",
+	"materia": {
+		"cleanName": "hospital-sim"
+	},
 	"version": "0.2.0",
-	"private": true,
-	"main": "app.js",
 	"jest": {
 		"collectCoverageFrom": ["src/**/*.js"],
 		"testPathIgnorePatterns": ["/node_modules/", "/custom_test_utilities/"],
@@ -14,10 +15,7 @@
 				"statements": 87
 			}
 		}
-	},
-	"materia": {
-		"cleanName": "hospital-sim"
-	},
+	},	
 	"dependencies": {
 		"aframe": "^0.5.0",
 		"aframe-click-drag-component":
@@ -26,7 +24,6 @@
 		"aframe-react": "^4.2.3",
 		"fs": "^0.0.2",
 		"lodash": "^4.17.4",
-		"materia-widget-development-kit": "^1.2.2",
 		"react": "^15.5.4",
 		"react-dom": "^15.5.4",
 		"react-joyride": "^1.10.1",
@@ -47,16 +44,17 @@
 		"jsdom": "^11.0.0",
 		"lint-staged": "^3.6.1",
 		"prettier": "^1.4.4",
-		"react-test-renderer": "^15.6.1"
+		"react-test-renderer": "^15.6.1",
+		"materia-widget-development-kit": "2.0.0"
 	},
 	"scripts": {
 		"start": "webpack-dev-server",
-		"build": "webpack",
-		"build-prod": "webpack -p",
-		"test": "jest --coverage --verbose"
+		"build-dev": "webpack",
+		"build": "webpack -p",
+		"test": "TZ='America/New_York' jest --verbose"
 	},
 	"lint-staged": {
 		"*.js": ["prettier --use-tabs --jsx-bracket-same-line --write", "git add"]
 	},
-	"author": "New Media"
+	"license": "AGPL-3.0"
 }
