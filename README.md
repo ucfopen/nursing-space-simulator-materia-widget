@@ -1,65 +1,24 @@
-# Hospital Simulation Simulator
+<h1>
+    <img src="src/_icons/icon-60.png" width="36px"/>
+    Nursing Simulation Builder: A Materia Widget
+</h1>
 
-Here be the README for CDL's Hospital Simulation Simulator.
+Design a 3D nursing simulation space by filling rooms with an inventory of items such as beds, IVs, Crash Carts, and seating. Use the first-person viewer to experience your simulation space from the eyes of an occupant. Nursing Simulation Builder is designed for use with [Materia](https://github.com/ucfopen/Materia), an open-source platform for interactive course content developed by the University of Central Florida.
 
-## Getting started
+Note: While stable builds are pushed every semester or two, this product is still in development.
 
-Join us on CDL's Slack in the #hospital-sim channel for daily chat about the
-project.
+![Nursing Simulation Builder Player](src/_screen-shots/1.png)
 
-Or follow our project Trello board: https://trello.com/b/GDms09JR/hospital-sim
+### Basic Use
 
-## A-Frame
+In a production evironment, Nursing Simulation Builder is installed to your Materia instance and is accessed via the Widget Catalog. For development, Nursing Simulation Builder is bundled with the [Materia Widget Development Kit](https://github.com/ucfopen/Materia-Widget-Dev-Kit), which allows for rapid development in a local context using express.js.
 
-We have settled on a Javascript framework called A-Frame.
+### Local Development
 
-https://github.com/aframevr/aframe/
+Nursing Simulation Builder uses the Materia Widget Development Kit for local development. Check out [the docs for the MDK](https://ucfopen.github.io/Materia-Docs/develop/materia-widget-development-kit.html) to learn more about starting up the local express environment.
 
-After you clone this repo, you will need to clone the A-Frame repo.
-https://github.com/aframevr/aframe/#local-development
+### Installation to Materia
 
-Check out the A-Frame demo here: https://codepen.io/mozvr/pen/BjygdO
+Widget installation options are covered in the [Installing Widgets](https://ucfopen.github.io/Materia-Docs/admin/installing-widgets.html) section of the Materia Docs.
 
-Don't forget to try the A-Frame inspector by pressing Ctrl + Alt + i
-
-## UI Concepts
-
-Here's the working document that outlines the gist of our UI.
-https://docs.google.com/document/d/1TSJ3jovXUSu7N78MxGUVOUxALBcYFtmRRjlABIJVHR8/edit
-
-## Testing Locally
-
-Until the `master` branch is updated with Materia widget support, steps to run
-the Simulator locally will differ between `master` and the
-`materia-widget-integration` branch.
-
-### Testing Standalone (master)
-
-You can load the simulator locally by simply opening the `player.html` file in
-the browser. However, certain assets will not load properly due to cross-origin
-policy.
-
-To serve the page locally, you can run the following:
-
-```
-python -m SimpleHTTPServer
-```
-
-This will load the page to `http://localhost:8000` by default. You can specify
-the port by providing it as an additional argument.
-
-### Testing in Materia (materia-widget-integration)
-
-Clone the DevMateria repo locally: https://clu.cdl.ucf.edu/materia/devmateria
-and ensure installation prerequisites are met. Clone or symlink the Hospital Sim
-repo into DevMateria's `sandbox` directory. Ensure the
-`materia-widget-integration` branch is checked out, and run `npm install` (or
-`yarn install` if you have Yarn) in the Hospital Sim directory.
-
-Run the start script in DevMateria root: `./start` You can then visit
-`http://localhost:8118` to visit DevMateria.
-
-### More
-
-Background image under Public Domain:
-https://commons.wikimedia.org/wiki/Commons:Featured_pictures/Places/Panoramas#/media/File:Coimbra_November_2012-1.jpg
+For more information about the widget development process, be sure to visit the [widget developer guide](https://ucfopen.github.io/Materia-Docs/develop/widget-developer-guide.html) for Materia.
