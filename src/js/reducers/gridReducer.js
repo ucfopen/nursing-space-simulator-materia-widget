@@ -722,7 +722,7 @@ export default function(
 						if (
 							isCellAvailable(
 								gridCopy,
-								multipleX[i] + 1,
+								multipleX[i],
 								multipleZ[i],
 								adjSide,
 								"xRight"
@@ -752,6 +752,9 @@ export default function(
 							);
 							multipleX[i] = multipleX[i] + 1;
 						} else {
+							if (assetArray[i].id == "desk") {
+								multipleX[i] -= 1;
+							}
 							collision = true;
 						}
 					}
@@ -823,6 +826,9 @@ export default function(
 							);
 							multipleX[i] = multipleX[i] - 1;
 						} else {
+							if (assetArray[i].id == "desk") {
+								multipleX[i] += 1;
+							}
 							collision = true;
 						}
 					}
@@ -920,16 +926,22 @@ export default function(
 							adjSide =
 								3 - ((rotationHolder[i] + 180) % 360) / 90;
 						}
+						if (assetArray[i].id == "desk") {
+								multipleX[i] += 1;
+							}
 						if (
 							isCellAvailable(
 								gridCopy,
 								multipleX[i],
-								multipleZ[i] + 1,
+								multipleZ[i],
 								adjSide,
 								"zDown",
 								rotationHolder[i]
 							)
 						) {
+							if (assetArray[i].id == "desk") {
+								multipleX[i] -= 1;
+							}
 							newGrid = deleteItem(
 								gridCopy,
 								multipleX[i],
@@ -951,6 +963,9 @@ export default function(
 							);
 							multipleZ[i] = multipleZ[i] + 1;
 						} else {
+							if (assetArray[i].id == "desk") {
+								multipleX[i] -= 1;
+							}
 							collision = true;
 						}
 					}
