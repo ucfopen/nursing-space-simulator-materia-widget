@@ -347,7 +347,6 @@ export default function(
 			let oldSelectedAsset = state.selectedAsset
 				? { ...state.selectedAsset }
 				: null;
-			console.log(asset.id, oldSelectedAsset);
 			if (
 				oldSelectedAsset &&
 				oldSelectedAsset.id !== "pov_camera" &&
@@ -706,7 +705,7 @@ export default function(
 			switch (action.payload) {
 				case "xRight":
 					for (i; i < arrayLength; i++) {
-						var nudge = 0;
+						var nudge = 1;
 						adjSide = null;
 						if (
 							assetArray[i].id &&
@@ -717,10 +716,11 @@ export default function(
 						}
 
 						if (assetArray[i].id == "desk") {
-							nudge = 1;
+							if(rotationHolder[i] != 0) {
+								nudge = 0;
+							}
 							multipleX[i] += 1;
 						}
-
 						if (
 							isCellAvailable(
 								gridCopy,
@@ -782,6 +782,7 @@ export default function(
 					break;
 				case "xLeft":
 					for (i; i < arrayLength; i++) {
+						var nudge = 1;
 						adjSide = null;
 						if (
 							assetArray[i].id &&
@@ -792,13 +793,16 @@ export default function(
 						}
 
 						if (assetArray[i].id == "desk") {
+							if(rotationHolder[i] != 180) {
+								nudge = 0;
+							}
 							multipleX[i] -= 1;
 						}
 
 						if (
 							isCellAvailable(
 								gridCopy,
-								multipleX[i] - 1,
+								multipleX[i] - nudge,
 								multipleZ[i],
 								adjSide,
 								"xLeft"
@@ -856,6 +860,7 @@ export default function(
 					break;
 				case "zUp":
 					for (i; i < arrayLength; i++) {
+						var nudge = 1;
 						adjSide = null;
 						if (
 							assetArray[i].id &&
@@ -864,16 +869,26 @@ export default function(
 							adjSide =
 								3 - ((rotationHolder[i] + 180) % 360) / 90;
 						}
+						if (assetArray[i].id == "desk") {
+							nudge = 0;
+							if (rotationHolder[i] == 270) {
+								nudge = -1;
+							}
+							multipleZ[i] -= 1;
+						}
 						if (
 							isCellAvailable(
 								gridCopy,
 								multipleX[i],
-								multipleZ[i] - 1,
+								multipleZ[i] - nudge,
 								adjSide,
 								"zUp",
 								rotationHolder[i]
 							)
 						) {
+							if (assetArray[i].id == "desk") {
+								multipleZ[i] += 1;
+							}
 							newGrid = deleteItem(
 								gridCopy,
 								multipleX[i],
@@ -895,6 +910,9 @@ export default function(
 							);
 							multipleZ[i] = multipleZ[i] - 1;
 						} else {
+							if (assetArray[i].id == "desk") {
+								multipleZ[i] += 1;
+							}
 							collision = true;
 						}
 					}
@@ -930,12 +948,14 @@ export default function(
 								3 - ((rotationHolder[i] + 180) % 360) / 90;
 						}
 						if (assetArray[i].id == "desk") {
-								if(multipleZ[i] != 10) {
-									nudge = 0;
-								}
-								multipleZ[i] += 1;
+							if(multipleZ[i] != 10) {
+								nudge = 0;
 							}
-							console.log(multipleZ[i]);
+							if(rotationHolder[i] == 90) {
+								nudge = -1;
+							}
+							multipleZ[i] += 1;
+						}
 						if (
 							isCellAvailable(
 								gridCopy,
