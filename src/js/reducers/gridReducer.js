@@ -706,6 +706,7 @@ export default function(
 			switch (action.payload) {
 				case "xRight":
 					for (i; i < arrayLength; i++) {
+						var nudge = 0;
 						adjSide = null;
 						if (
 							assetArray[i].id &&
@@ -716,13 +717,14 @@ export default function(
 						}
 
 						if (assetArray[i].id == "desk") {
+							nudge = 1;
 							multipleX[i] += 1;
 						}
 
 						if (
 							isCellAvailable(
 								gridCopy,
-								multipleX[i],
+								multipleX[i] + nudge,
 								multipleZ[i],
 								adjSide,
 								"xRight"
@@ -918,6 +920,7 @@ export default function(
 					break;
 				case "zDown":
 					for (i; i < arrayLength; i++) {
+						var nudge = 1;
 						adjSide = null;
 						if (
 							assetArray[i].id &&
@@ -927,20 +930,24 @@ export default function(
 								3 - ((rotationHolder[i] + 180) % 360) / 90;
 						}
 						if (assetArray[i].id == "desk") {
-								multipleX[i] += 1;
+								if(multipleZ[i] != 10) {
+									nudge = 0;
+								}
+								multipleZ[i] += 1;
 							}
+							console.log(multipleZ[i]);
 						if (
 							isCellAvailable(
 								gridCopy,
 								multipleX[i],
-								multipleZ[i],
+								multipleZ[i] + nudge,
 								adjSide,
 								"zDown",
 								rotationHolder[i]
 							)
 						) {
 							if (assetArray[i].id == "desk") {
-								multipleX[i] -= 1;
+								multipleZ[i] -= 1;
 							}
 							newGrid = deleteItem(
 								gridCopy,
@@ -964,7 +971,7 @@ export default function(
 							multipleZ[i] = multipleZ[i] + 1;
 						} else {
 							if (assetArray[i].id == "desk") {
-								multipleX[i] -= 1;
+								multipleZ[i] -= 1;
 							}
 							collision = true;
 						}
