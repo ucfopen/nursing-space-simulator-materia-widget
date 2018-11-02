@@ -676,12 +676,6 @@ export default function(
 					getCellRotation(gridCopy, multipleX[i], multipleZ[i])
 				);
 
-				if (
-					assetArray[i].id == "desk" &&
-					action.payload == "xLeft" &&
-					rotationHolder[i] == 180
-				) {
-				}
 			}
 			i = 0;
 
@@ -715,7 +709,7 @@ export default function(
 								3 - ((rotationHolder[i] + 180) % 360) / 90;
 						}
 
-						if (assetArray[i].id == "desk") {
+						if (assetArray[i].id == "desk" || assetArray[i].id == "bed-1") {
 							if(rotationHolder[i] != 0) {
 								nudge = 0;
 							}
@@ -730,7 +724,7 @@ export default function(
 								"xRight"
 							)
 						) {
-							if (assetArray[i].id == "desk") {
+							if (assetArray[i].id == "desk" || assetArray[i].id == "bed-1") {
 								multipleX[i] -= 1;
 							}
 							newGrid = deleteItem(
@@ -754,7 +748,7 @@ export default function(
 							);
 							multipleX[i] = multipleX[i] + 1;
 						} else {
-							if (assetArray[i].id == "desk") {
+							if (assetArray[i].id == "desk" || assetArray[i].id == "bed-1") {
 								multipleX[i] -= 1;
 							}
 							collision = true;
@@ -792,7 +786,7 @@ export default function(
 								3 - ((rotationHolder[i] + 180) % 360) / 90;
 						}
 
-						if (assetArray[i].id == "desk") {
+						if (assetArray[i].id == "desk" || assetArray[i].id == "bed-1") {
 							if(rotationHolder[i] != 180) {
 								nudge = 0;
 							}
@@ -808,7 +802,7 @@ export default function(
 								"xLeft"
 							)
 						) {
-							if (assetArray[i].id == "desk") {
+							if (assetArray[i].id == "desk" || assetArray[i].id == "bed-1") {
 								multipleX[i] += 1;
 							}
 							newGrid = deleteItem(
@@ -832,7 +826,7 @@ export default function(
 							);
 							multipleX[i] = multipleX[i] - 1;
 						} else {
-							if (assetArray[i].id == "desk") {
+							if (assetArray[i].id == "desk" || assetArray[i].id == "bed-1") {
 								multipleX[i] += 1;
 							}
 							collision = true;
@@ -869,7 +863,7 @@ export default function(
 							adjSide =
 								3 - ((rotationHolder[i] + 180) % 360) / 90;
 						}
-						if (assetArray[i].id == "desk") {
+						if (assetArray[i].id == "desk" || assetArray[i].id == "bed-1") {
 							nudge = 0;
 							if (rotationHolder[i] == 270) {
 								nudge = -1;
@@ -886,7 +880,7 @@ export default function(
 								rotationHolder[i]
 							)
 						) {
-							if (assetArray[i].id == "desk") {
+							if (assetArray[i].id == "desk" || assetArray[i].id == "bed-1") {
 								multipleZ[i] += 1;
 							}
 							newGrid = deleteItem(
@@ -910,7 +904,7 @@ export default function(
 							);
 							multipleZ[i] = multipleZ[i] - 1;
 						} else {
-							if (assetArray[i].id == "desk") {
+							if (assetArray[i].id == "desk" || assetArray[i].id == "bed-1") {
 								multipleZ[i] += 1;
 							}
 							collision = true;
@@ -947,7 +941,7 @@ export default function(
 							adjSide =
 								3 - ((rotationHolder[i] + 180) % 360) / 90;
 						}
-						if (assetArray[i].id == "desk") {
+						if (assetArray[i].id == "desk" || assetArray[i].id == "bed-1") {
 							if(multipleZ[i] != 10) {
 								nudge = 0;
 							}
@@ -966,7 +960,7 @@ export default function(
 								rotationHolder[i]
 							)
 						) {
-							if (assetArray[i].id == "desk") {
+							if (assetArray[i].id == "desk" || assetArray[i].id == "bed-1") {
 								multipleZ[i] -= 1;
 							}
 							newGrid = deleteItem(
@@ -990,7 +984,7 @@ export default function(
 							);
 							multipleZ[i] = multipleZ[i] + 1;
 						} else {
-							if (assetArray[i].id == "desk") {
+							if (assetArray[i].id == "desk" || assetArray[i].id == "bed-1") {
 								multipleZ[i] -= 1;
 							}
 							collision = true;
