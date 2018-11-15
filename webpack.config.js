@@ -4,7 +4,6 @@ const widgetWebpack = require('materia-widget-development-kit/webpack-widget')
 
 // replace default entries
 const entries = {
-	'js/creator.js': ['./src/js/creator.js'],
 	'js/player.js': ['./src/js/player.js'],
 	'creator.css': ['./src/creator.scss', './src/creator.html'],
 	'player.css': ['./src/player.css', './src/player.html'],

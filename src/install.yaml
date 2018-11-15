@@ -12,7 +12,7 @@ general:
   is_storage_enabled: No
   api_version: 2
 files:
-  creator: creator.html
+  creator: default
   player: player.html
   flash_version: 0
 score:
