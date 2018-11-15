@@ -3,6 +3,7 @@
 exports[`Asset Controls Component renders asset controls 1`] = `
 <div
   id="UI-selected-asset-options"
+  onMouseDown={[Function]}
 >
   <span
     id="selected-asset-label"
@@ -17,6 +18,8 @@ exports[`Asset Controls Component renders asset controls 1`] = `
   <button
     id="deselect"
     onClick={[Function]}
+    onMouseEnter={[Function]}
+    onMouseLeave={[Function]}
   >
     <svg
       enableBackground="new 0 0 125 125"
@@ -47,6 +50,7 @@ exports[`Asset Controls Component renders asset controls 1`] = `
 exports[`Asset Controls Component renders asset controls 2`] = `
 <div
   id="UI-selected-asset-options"
+  onMouseDown={[Function]}
 >
   <span
     id="selected-asset-label"
@@ -61,6 +65,8 @@ exports[`Asset Controls Component renders asset controls 2`] = `
   <button
     id="deselect"
     onClick={[Function]}
+    onMouseEnter={[Function]}
+    onMouseLeave={[Function]}
   >
     <svg
       enableBackground="new 0 0 125 125"
