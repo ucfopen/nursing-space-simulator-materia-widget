@@ -82,16 +82,9 @@ export default function(
 			const currSticker = stickers[side];
 			const stickerIndex = stickerTypes.indexOf(currSticker);
 			const numTypes = stickerTypes.length;
-			const newStickerIndex =
-				(stickerIndex + direction + numTypes) % numTypes;
+			const newStickerIndex = (stickerIndex + direction + numTypes) % numTypes;
 			const newSticker = stickerTypes[newStickerIndex];
-			const newGrid = setSticker(
-				gridCopy,
-				x,
-				z,
-				side,
-				newSticker
-			)
+			const newGrid = setSticker(gridCopy, x, z, side, newSticker);
 
 			return {
 				...state,
@@ -171,21 +164,19 @@ export default function(
 					state.currentZ
 				);
 				if (HS_ASSETS[selectedAsset.id].category == "construction") {
-					prevStickers = getStickers(gridCopy, state.currentX, state.currentZ, false);
+					prevStickers = getStickers(
+						gridCopy,
+						state.currentX,
+						state.currentZ,
+						false
+					);
 				}
 				newGrid = deleteItem(gridCopy, state.currentX, state.currentZ);
-			}
-			else {
+			} else {
 				newGrid = gridCopy;
 				if (selectedAsset.id == "wall-1") {
 					let validX, validZ;
-					newGrid = insertItem(
-						newGrid,
-						selectedAsset.id,
-						x,
-						z,
-						prevRotation
-					);
+					newGrid = insertItem(newGrid, selectedAsset.id, x, z, prevRotation);
 					[validX, validZ] = findValidExtends(newGrid, x, z);
 					return {
 						...state,
@@ -206,7 +197,7 @@ export default function(
 				z,
 				prevRotation,
 				prevStickers
-			)
+			);
 			let selectedItem = getItem(newGrid, x, z);
 			selectedItem.adj = getAdjacentSpaces(newGrid, x, z, selectedAsset);
 			return {
@@ -346,7 +337,12 @@ export default function(
 							currentRotation,
 							prevStickers
 						);
-						selectedItem.adj = getAdjacentSpaces(newGrid, currentX + 1, currentZ, selectedAsset);
+						selectedItem.adj = getAdjacentSpaces(
+							newGrid,
+							currentX + 1,
+							currentZ,
+							selectedAsset
+						);
 						return {
 							...state,
 							currentX: currentX + 1,
@@ -366,7 +362,12 @@ export default function(
 							currentRotation,
 							prevStickers
 						);
-						selectedItem.adj = getAdjacentSpaces(newGrid, currentX - 1, currentZ, selectedAsset);
+						selectedItem.adj = getAdjacentSpaces(
+							newGrid,
+							currentX - 1,
+							currentZ,
+							selectedAsset
+						);
 						return {
 							...state,
 							currentX: currentX - 1,
@@ -386,7 +387,12 @@ export default function(
 							currentRotation,
 							prevStickers
 						);
-						selectedItem.adj = getAdjacentSpaces(newGrid, currentX, currentZ - 1, selectedAsset);
+						selectedItem.adj = getAdjacentSpaces(
+							newGrid,
+							currentX,
+							currentZ - 1,
+							selectedAsset
+						);
 						return {
 							...state,
 							currentZ: currentZ - 1,
@@ -406,7 +412,12 @@ export default function(
 							currentRotation,
 							prevStickers
 						);
-						selectedItem.adj = getAdjacentSpaces(newGrid, currentX, currentZ + 1, selectedAsset);
+						selectedItem.adj = getAdjacentSpaces(
+							newGrid,
+							currentX,
+							currentZ + 1,
+							selectedAsset
+						);
 						return {
 							...state,
 							currentZ: currentZ + 1,

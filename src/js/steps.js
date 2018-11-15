@@ -23,7 +23,8 @@ const beginning = [
 	},
 	{
 		title: "Moving the Camera",
-		text: "The camera's position can be adjusted using these buttons. The middle button recenters the camera.",
+		text:
+			"The camera's position can be adjusted using these buttons. The middle button recenters the camera.",
 		selector: "#camera-controls",
 		position: "left",
 		allowClicksThruHole: true
@@ -37,7 +38,8 @@ const beginning = [
 	},
 	{
 		title: "Categories",
-		text: "Here are the categories of objects to choose from. Make sure the <strong>Equipment</strong> category is selected.",
+		text:
+			"Here are the categories of objects to choose from. Make sure the <strong>Equipment</strong> category is selected.",
 		selector: "#categories-list",
 		position: "top",
 		allowClicksThruHole: true
@@ -135,7 +137,8 @@ const clickToPlaceWall = [
 const clickToExtendWall = [
 	{
 		title: "Wall Extension",
-		text: "<strong>Click/touch</strong> a valid green square to extend the wall.",
+		text:
+			"<strong>Click/touch</strong> a valid green square to extend the wall.",
 		selector: ".a-canvas",
 		position: "right",
 		allowClicksThruHole: true,
@@ -188,7 +191,8 @@ const extendWallButton = [
 const extendWallAgain = [
 	{
 		title: "Extend Wall",
-		text: "<strong>Click/touch</strong> a valid green square to extend the wall.",
+		text:
+			"<strong>Click/touch</strong> a valid green square to extend the wall.",
 		selector: ".a-canvas",
 		position: "right",
 		allowClicksThruHole: true,

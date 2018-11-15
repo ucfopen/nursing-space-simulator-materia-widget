@@ -9,7 +9,7 @@ import {
 	DESELECT_ASSET,
 	EDIT_ASSET
 } from "../actions/grid_actions";
-import { getCurrentPosition } from "../components/ui/keyboard_controls"
+import { getCurrentPosition } from "../components/ui/keyboard_controls";
 
 export default function(
 	state = {
@@ -96,7 +96,7 @@ export default function(
 				x: pos.x,
 				y: pos.y,
 				z: pos.z
-			}
+			};
 		}
 
 		case EDIT_ASSET:
@@ -129,7 +129,7 @@ export default function(
 				x: pos.x,
 				y: pos.y,
 				z: pos.z
-			}
+			};
 		}
 
 		case TOGGLE_THIRD_PERSON:
@@ -148,7 +148,7 @@ export default function(
 				x: pos.x,
 				y: pos.y,
 				z: pos.z
-			}
+			};
 		}
 	}
 }

@@ -15,7 +15,12 @@ export function updatePersistentTooltip(enabled, text = "", className = null) {
 }
 
 export const UPDATE_TEMPORARY_TOOLTIP = "UPDATE_TEMPORARY_TOOLTIP";
-export function updateTemporaryTooltip(enabled, text = "", key = null, className = null) {
+export function updateTemporaryTooltip(
+	enabled,
+	text = "",
+	key = null,
+	className = null
+) {
 	return {
 		type: UPDATE_TEMPORARY_TOOLTIP,
 		payload: { enabled, text, key, className }

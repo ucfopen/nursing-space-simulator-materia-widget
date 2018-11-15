@@ -39,9 +39,8 @@ export class HUD extends Component {
 	checkSelectAssetType(asset) {
 		const { selectedAsset } = this.props;
 		if (selectedAsset && asset && selectedAsset.id == asset.id) {
-			this.props.deselectAsset()
-		}
-		else {
+			this.props.deselectAsset();
+		} else {
 			this.props.selectAssetType(asset);
 		}
 	}
@@ -75,7 +74,7 @@ export class HUD extends Component {
 		return (
 			<div>
 				<AssetTooltip
-					visible={ (isTooltipTemporary || isTooltipPersistent) }
+					visible={isTooltipTemporary || isTooltipPersistent}
 					text={
 						isTooltipTemporary ? tooltipTemporaryText : tooltipPersistentText
 					}
@@ -133,7 +132,6 @@ export class HUD extends Component {
 					toggleHelpVisibility={toggleHelpVisibility}
 					toggleKeyboardShortcuts={toggleKeyboardShortcuts}
 					visible={helpVisible}
-
 				/>
 			</div>
 		);
@@ -141,8 +139,7 @@ export class HUD extends Component {
 	render() {
 		if (checkPropsExist(this.props) && this.props.ready) {
 			return this.renderHUD();
-		}
-		else return null;
+		} else return null;
 	}
 }
 
