@@ -45,4 +45,12 @@ const options = {
 
 const config = widgetWebpack.getLegacyWidgetBuildConfig(options)
 
+// prevent webpack from including these, we'll load from a cdn
+config.externals = {
+	react: 'React',
+	'react-dom': 'ReactDOM',
+	redux: 'Redux',
+	aframe: 'AFRAME'
+}
+
 module.exports = config
