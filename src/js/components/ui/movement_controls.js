@@ -26,8 +26,9 @@ export default class MovementControls extends Component {
 
 	render() {
 		const { thirdPerson, updateCameraPosition } = this.props;
-		return ( // preventDefault on mousedown prevents items underneath from being dragged
-			<div id="UI-right-panel" onMouseDown={(e)=>e.preventDefault()}>
+		return (
+			// preventDefault on mousedown prevents items underneath from being dragged
+			<div id="UI-right-panel" onMouseDown={e => e.preventDefault()}>
 				<div id="top-buttons" />
 				<button id="screenshot" onClick={this.takeScreenShot.bind(this)}>
 					<ScreenshotSVG />
@@ -35,7 +36,9 @@ export default class MovementControls extends Component {
 				{thirdPerson ? (
 					<div id="camera-controls">
 						<div id="camera-move">
-							<button id="camera-up" onMouseDown={updateCameraPosition.bind(this, "zUp")}>
+							<button
+								id="camera-up"
+								onMouseDown={updateCameraPosition.bind(this, "zUp")}>
 								<UpArrowSVG />
 							</button>
 							<div id="camera-move-horizontal">
@@ -44,18 +47,20 @@ export default class MovementControls extends Component {
 									onMouseDown={updateCameraPosition.bind(this, "xLeft")}>
 									<LeftArrowSVG />
 								</button>
-									<button
-										id="camera-reset"
-										onMouseDown={updateCameraPosition.bind(this, "reset")}>
-										<ResetCamera />
-									</button>
+								<button
+									id="camera-reset"
+									onMouseDown={updateCameraPosition.bind(this, "reset")}>
+									<ResetCamera />
+								</button>
 								<button
 									id="camera-right"
 									onMouseDown={updateCameraPosition.bind(this, "xRight")}>
 									<RightArrowSVG />
 								</button>
 							</div>
-							<button id="camera-down" onMouseDown={updateCameraPosition.bind(this, "zDown")}>
+							<button
+								id="camera-down"
+								onMouseDown={updateCameraPosition.bind(this, "zDown")}>
 								<DownArrowSVG />
 							</button>
 						</div>

@@ -25,9 +25,9 @@ export default class AssetMovementControls extends Component {
 		// this is to center the asset within the arrows when it would otherwise be offset due to the difference in height between the asset and arrows
 
 		// width and height are shifted based on the asset spanX and spanZ
-		const side = selectedItem ? (450 - selectedItem.rotation) % 360 / 90 : 3;
-		let widthShift = (asset.spanX/2 - 0.5);
-		let heightShift = asset.spanZ/2 - 0.5;
+		const side = selectedItem ? ((450 - selectedItem.rotation) % 360) / 90 : 3;
+		let widthShift = asset.spanX / 2 - 0.5;
+		let heightShift = asset.spanZ / 2 - 0.5;
 		let centerX, centerZ;
 		if (side % 2 == 0) {
 			[widthShift, heightShift] = [heightShift, widthShift];
@@ -35,8 +35,7 @@ export default class AssetMovementControls extends Component {
 		if (side == 1 || side == 2) {
 			centerX = currentX + widthShift;
 			centerZ = currentZ + heightShift;
-		}
-		else {
+		} else {
 			centerX = currentX - widthShift;
 			centerZ = currentZ - heightShift;
 		}
@@ -53,50 +52,51 @@ export default class AssetMovementControls extends Component {
 		const zOffset = (centerZ - position.z) * (depthShift - 1);
 
 		// scale the arrows so that they're smaller when zoomed in (base is y=18)
-		const scale = (
-			position.y < 5
-				? 0.2
-				: (position.y * 2/3 + 18 * 1/3) / 18 // linear scale biased to 1
-		);
+		const scale =
+			position.y < 5 ? 0.2 : (position.y * 2 / 3 + 18 * 1 / 3) / 18; // linear scale biased to 1
 
 		return (
-				<Entity>
-					{ selectedItem.adj[0] ? (
-						<Arrow
-							onClick={this.controlClicked.bind(this, "zUp")}
-							radius={heightShift}
-							scale={scale}
-							x={centerX + xOffset}
-							z={centerZ + zOffset}/>
-					): null}
-					{ selectedItem.adj[1] ? (
-						<Arrow
-							onClick={this.controlClicked.bind(this, "xRight")}
-							radius={widthShift}
-							rotation={270}
-							scale={scale}
-							x={centerX + xOffset}
-							z={centerZ + zOffset}/>
-					): null}
-					{ selectedItem.adj[2] ? (
-						<Arrow
-							onClick={this.controlClicked.bind(this, "zDown")}
-							radius={heightShift}
-							rotation={180}
-							scale={scale}
-							x={centerX + xOffset}
-							z={centerZ + zOffset}/>
-					): null}
-					{ selectedItem.adj[3] ? (
-						<Arrow
-							onClick={this.controlClicked.bind(this, "xLeft")}
-							radius={widthShift}
-							rotation={90}
-							scale={scale}
-							x={centerX + xOffset}
-							z={centerZ + zOffset}/>
-					): null}
-				</Entity>
+			<Entity>
+				{selectedItem.adj[0] ? (
+					<Arrow
+						onClick={this.controlClicked.bind(this, "zUp")}
+						radius={heightShift}
+						scale={scale}
+						x={centerX + xOffset}
+						z={centerZ + zOffset}
+					/>
+				) : null}
+				{selectedItem.adj[1] ? (
+					<Arrow
+						onClick={this.controlClicked.bind(this, "xRight")}
+						radius={widthShift}
+						rotation={270}
+						scale={scale}
+						x={centerX + xOffset}
+						z={centerZ + zOffset}
+					/>
+				) : null}
+				{selectedItem.adj[2] ? (
+					<Arrow
+						onClick={this.controlClicked.bind(this, "zDown")}
+						radius={heightShift}
+						rotation={180}
+						scale={scale}
+						x={centerX + xOffset}
+						z={centerZ + zOffset}
+					/>
+				) : null}
+				{selectedItem.adj[3] ? (
+					<Arrow
+						onClick={this.controlClicked.bind(this, "xLeft")}
+						radius={widthShift}
+						rotation={90}
+						scale={scale}
+						x={centerX + xOffset}
+						z={centerZ + zOffset}
+					/>
+				) : null}
+			</Entity>
 		);
 	}
 }

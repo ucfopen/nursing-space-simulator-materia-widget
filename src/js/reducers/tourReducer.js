@@ -9,7 +9,11 @@ import {
 	SELECT_ASSET
 } from "../actions/grid_actions";
 import { INIT_DATA } from "../actions/index";
-import { START_TOUR_SECTION, END_TOUR, RESTART_TOUR } from "../actions/tour_actions";
+import {
+	START_TOUR_SECTION,
+	END_TOUR,
+	RESTART_TOUR
+} from "../actions/tour_actions";
 import { SET_CATEGORY, TOGGLE_HELP_VISIBILITY } from "../actions/menu_actions";
 import { TOGGLE_THIRD_PERSON } from "../actions/camera_actions";
 

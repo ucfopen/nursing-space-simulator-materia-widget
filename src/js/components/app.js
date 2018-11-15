@@ -11,7 +11,7 @@ import { initData } from "../actions";
 import { startTourSection, endTour } from "../actions/tour_actions";
 
 // JSON structure describing asset data
-import assetData from '../../assets/assets.json';
+import assetData from "../../assets/assets.json";
 
 export class App extends Component {
 	componentDidMount() {
