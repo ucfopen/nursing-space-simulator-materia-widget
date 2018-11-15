@@ -22,17 +22,15 @@
 		}
 	},
 	"dependencies": {
-		"aframe": "^0.5.0",
-		"aframe-click-drag-component": "git+ssh://git@clu.cdl.ucf.edu:materia/aframe-click-drag-component",
+		"aframe": "0.5.0",
+		"aframe-click-drag-component": "ucfopen/aframe-click-drag-component#b13614ddbbbe2afddfd67edb23b96bfdeb1d19c9",
 		"aframe-mouse-cursor-component": "^0.5.2",
 		"aframe-react": "^4.2.3",
-		"fs": "^0.0.2",
-		"lodash": "^4.17.4",
-		"react": "^15.5.4",
-		"react-dom": "^15.5.4",
+		"react": "15.6.2",
+		"react-dom": "15.6.2",
 		"react-joyride": "^1.10.1",
-		"react-redux": "^5.0.5",
-		"redux": "^3.6.0"
+		"react-redux": "5.0.6",
+		"redux": "3.7.2"
 	},
 	"devDependencies": {
 		"babel-core": "^6.25.0",
@@ -47,7 +45,7 @@
 		"jest": "^20.0.4",
 		"jsdom": "^11.0.0",
 		"lint-staged": "^3.6.1",
-		"materia-widget-development-kit": "2.0.0",
+		"materia-widget-development-kit": "^2.0.0",
 		"prettier": "^1.4.4",
 		"react-test-renderer": "^15.6.1"
 	},
@@ -57,11 +55,22 @@
 		"build": "webpack -p",
 		"test": "TZ='America/New_York' jest --verbose"
 	},
+	"prettier": {
+		"useTabs": true,
+		"jsxBracketSameLine": true
+	},
+	"husky": {
+		"hooks": {
+			"pre-commit": "lint-staged"
+		}
+	},
 	"lint-staged": {
-		"*.js": [
-			"prettier --use-tabs --jsx-bracket-same-line --write",
+		"src/**/*.js": [
+			"prettier --write",
 			"git add"
 		]
 	},
-	"license": "AGPL-3.0"
+	"license": "AGPL-3.0",
+	"description": "Design a 3D nursing simulation space by filling rooms with an inventory of items such as beds, IVs, Crash Carts, and seating. For use in Materia.",
+	"author": "University of Central Florida, Center for Distributed Learning"
 }
