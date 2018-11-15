@@ -5,6 +5,8 @@
 	},
 	"version": "0.2.1",
 	"jest": {
+		"coverageReporters": ["text-summary", "lcov"],
+		"verbose": false,
 		"collectCoverageFrom": [
 			"src/**/*.js"
 		],
@@ -53,7 +55,9 @@
 		"start": "webpack-dev-server",
 		"build-dev": "webpack",
 		"build": "webpack -p",
-		"test": "TZ='America/New_York' jest --verbose"
+		"test": "TZ='America/New_York' jest --verbose",
+		"test-ci": "TZ='America/New_York' CI=true jest --ci --useStderr --coverage --coverageReporters text-summary cobertura",
+		"pre-commit": "yarn test-ci && lint-staged"
 	},
 	"prettier": {
 		"useTabs": true,
@@ -61,7 +65,7 @@
 	},
 	"husky": {
 		"hooks": {
-			"pre-commit": "lint-staged"
+			"pre-commit": "yarn pre-commit"
 		}
 	},
 	"lint-staged": {

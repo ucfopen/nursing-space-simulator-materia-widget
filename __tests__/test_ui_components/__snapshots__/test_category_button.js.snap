@@ -2,7 +2,7 @@
 
 exports[`Category button tests renders correctly 1`] = `
 <button
-  className="asset-category"
+  className="asset-category category-beds"
   data-category="beds"
   onClick={[Function]}
 >
