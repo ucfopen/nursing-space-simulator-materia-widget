@@ -5,10 +5,12 @@ const widgetWebpack = require('materia-widget-development-kit/webpack-widget')
 // replace default entries
 const entries = {
 	'js/player.js': ['./src/js/player.js'],
-	'creator.css': ['./src/creator.scss', './src/creator.html'],
-	'player.css': ['./src/player.css', './src/player.html'],
-	'custom-joyride.css': ['./src/custom-joyride.css'],
-	'react-joyride-compiled.css': ['./src/react-joyride-compiled.css']
+	'player.css': [
+		'./src/player.html',
+		'./src/player.scss',
+		'./src/react-joyride-compiled.scss',
+		'./src/custom-joyride.scss'
+	]
 }
 
 // get default ruleset from widget config - need to create new ruleset by bundling default + custom
