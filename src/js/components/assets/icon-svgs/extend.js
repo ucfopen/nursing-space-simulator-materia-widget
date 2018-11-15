@@ -24,7 +24,8 @@ export default props => {
 					strokeWidth="3"
 					strokeMiterlimit="10"
 					fill="#DC7627"
-					points="65.16 116.69 65.16 33.69 105.17 30.08"/>
+					points="65.16 116.69 65.16 33.69 105.17 30.08"
+				/>
 				<line
 					stroke="#000000"
 					strokeWidth="3"
@@ -35,11 +36,29 @@ export default props => {
 					y2="33.69"
 				/>
 				{props.shortcutsEnabled ? (
-					<rect x="88" y="87" width="35" height="35" rx="12" ry="12" fill="#fff" strokeWidth="2" stroke="#000" strokeWidth="3" strokeMiterlimit="10"/>
-				): null}
+					<rect
+						x="88"
+						y="87"
+						width="35"
+						height="35"
+						rx="12"
+						ry="12"
+						fill="#fff"
+						strokeWidth="2"
+						stroke="#000"
+						strokeWidth="3"
+						strokeMiterlimit="10"
+					/>
+				) : null}
 				{props.shortcutsEnabled ? (
-					<text fontSize="26px" fill="#000" fontFamily="Arial-BoldMT Arial" transform="translate(97 114)">E</text>
-				): null}
+					<text
+						fontSize="26px"
+						fill="#000"
+						fontFamily="Arial-BoldMT Arial"
+						transform="translate(97 114)">
+						E
+					</text>
+				) : null}
 				<polygon
 					fill="#FFFFFF"
 					stroke="#000000"
@@ -47,7 +66,6 @@ export default props => {
 					strokeMiterlimit="10"
 					points="98.52 90.61 73.38 54.46 73.38 66.04 8.56 37.65 8.56 64.77 73.38 93.16 73.38 104.74 98.52 90.61"
 				/>
-
 			</g>
 		</svg>
 	);

@@ -55,7 +55,7 @@ export default props => {
 								color: selectionColor,
 								opacity: selectionOpacity,
 								side: "double"
-						}
+							}
 						: {
 								side: "double",
 								color: "white",
@@ -63,7 +63,7 @@ export default props => {
 								opacity: 1,
 								transparent: true,
 								metalness
-						}
+							}
 				}
 				position={{ y: 1 }}
 				rotation={{ y: -90, z: -90 }}
@@ -79,13 +79,13 @@ export default props => {
 								color: selectionColor,
 								opacity: selectionOpacity,
 								side: "double"
-						}
+							}
 						: {
 								side: "double",
 								color: "#d1d1d1",
 								opacity: 1,
 								metalness
-						}
+							}
 				}
 				position={{ y: 0.1375 }}
 				rotation={{ y: -90, z: -90 }}

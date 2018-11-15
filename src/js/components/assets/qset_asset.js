@@ -30,16 +30,30 @@ export default class QsetAsset extends Component {
 		const { isSelected, selectedAssetId, x, z } = this.props;
 		const roundedX = Math.round(this.lastX);
 		const roundedZ = Math.round(this.lastZ);
-		if (roundedX && roundedZ &&!isNaN(roundedX) && !isNaN(roundedZ) && isSelected) {
+		if (
+			roundedX &&
+			roundedZ &&
+			!isNaN(roundedX) &&
+			!isNaN(roundedZ) &&
+			isSelected
+		) {
 			this.props.insertAsset(roundedX, roundedZ, selectedAssetId);
-		}
-		else {
+		} else {
 			this.props.insertAsset(x, z, selectedAssetId);
 		}
 	}
 
 	renderAsset() {
-		const { attributes, data, isSelected, mode, rotation, thirdPerson, x, z } = this.props;
+		const {
+			attributes,
+			data,
+			isSelected,
+			mode,
+			rotation,
+			thirdPerson,
+			x,
+			z
+		} = this.props;
 		const { onClick } = this.props;
 		const id = data.id;
 
@@ -64,9 +78,7 @@ export default class QsetAsset extends Component {
 				}}
 				material={{ color: "green", opacity: 0.4 }}
 				obj-model={
-					isSelected
-						? `obj: #${id}-obj;`
-						: `obj: #${id}-obj;mtl: #${id}-mtl;`
+					isSelected ? `obj: #${id}-obj;` : `obj: #${id}-obj;mtl: #${id}-mtl;`
 				}
 				position={{ x, y: 0.1, z }}
 				primitive={data.tag}
@@ -77,10 +89,19 @@ export default class QsetAsset extends Component {
 	}
 
 	renderAssetNonDrag() {
-		const { attributes, data, isSelected, mode, rotation, thirdPerson, x, z } = this.props;
+		const {
+			attributes,
+			data,
+			isSelected,
+			mode,
+			rotation,
+			thirdPerson,
+			x,
+			z
+		} = this.props;
 		const { onClick } = this.props;
 		const id = data.id;
-		const validClick = thirdPerson &&  mode != "editAsset";
+		const validClick = thirdPerson && mode != "editAsset";
 
 		return data.category === "construction" ? (
 			<Wall
@@ -100,9 +121,7 @@ export default class QsetAsset extends Component {
 				}}
 				material={{ color: "green", opacity: 0.4 }}
 				obj-model={
-					isSelected
-						? `obj: #${id}-obj;`
-						: `obj: #${id}-obj;mtl: #${id}-mtl;`
+					isSelected ? `obj: #${id}-obj;` : `obj: #${id}-obj;mtl: #${id}-mtl;`
 				}
 				position={{ x, y: 0.1, z }}
 				primitive={data.tag}

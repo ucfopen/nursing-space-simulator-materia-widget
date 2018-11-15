@@ -8,19 +8,18 @@ export default props => {
 
 	if (stickerType == "fireSticker") {
 		return (
-			<Entity
-				rotation={{ y: rotation + 90, z: -90 }} >
+			<Entity rotation={{ y: rotation + 90, z: -90 }}>
 				<Entity
-					geometry={{ height: 0.25, primitive: "plane", width: .5 }}
+					geometry={{ height: 0.25, primitive: "plane", width: 0.5 }}
 					material={
 						isSelected
 							? { color: "green", opacity: 0.4 }
 							: { color: "white", src: "#fireTexture", opacity: 1 }
 					}
-					position={{ y: 0, x: -1.5, z: .508 }}
+					position={{ y: 0, x: -1.5, z: 0.508 }}
 				/>
 			</Entity>
-		)
+		);
 	}
 	return (
 		<Entity

@@ -16,17 +16,9 @@ export default class ArrowPrimitive extends Component {
 		this.setState({ active: false });
 	}
 
-	render () {
+	render() {
 		// attributes
-		const {
-			color,
-			radius,
-			rotation,
-			scale,
-			selectionColor,
-			x,
-			z
-		} = this.props;
+		const { color, radius, rotation, scale, selectionColor, x, z } = this.props;
 
 		// functions
 		const { onClick } = this.props;
@@ -40,9 +32,9 @@ export default class ArrowPrimitive extends Component {
 				}}
 				position={{ x, y: 3.2, z }}
 				rotation={{ x: -90, y: rotation, z: 0 }}
-				scale={{ x:scale, y: scale, z: scale }}>
+				scale={{ x: scale, y: scale, z: scale }}>
 				<Entity
-					geometry={{ primitive: "plane", height: .8, width: .5 }}
+					geometry={{ primitive: "plane", height: 0.8, width: 0.5 }}
 					material={
 						this.state.active
 							? { color: selectionColor, opacity: 1, side: "double" }
@@ -57,8 +49,8 @@ export default class ArrowPrimitive extends Component {
 							? { color: selectionColor, opacity: 1, side: "double" }
 							: { color: color, opacity: 1, side: "double" }
 					}
-					position={{ x:-0.55, y: radius + 1.25, z: 0 }}
-					scale={{x: 0.55, y: 0.8}}
+					position={{ x: -0.55, y: radius + 1.25, z: 0 }}
+					scale={{ x: 0.55, y: 0.8 }}
 				/>
 			</Entity>
 		);

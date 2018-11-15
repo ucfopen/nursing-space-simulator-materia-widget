@@ -9,8 +9,8 @@ import {
 	INSERT_ASSET,
 	REMOVE_ASSET,
 	SELECT_ASSET,
-	SELECT_ASSET_TYPE,
- } from "../actions/grid_actions";
+	SELECT_ASSET_TYPE
+} from "../actions/grid_actions";
 import {
 	BAD_INSERT,
 	BAD_WALL_EXTEND,
@@ -34,7 +34,6 @@ export default function(
 	action
 ) {
 	switch (action.type) {
-
 		case SHOW_ERROR_TOOLTIP:
 			switch (action.payload.error) {
 				case BAD_INSERT:
@@ -55,7 +54,8 @@ export default function(
 						...state,
 						className: "error",
 						temporary: true,
-						temporaryText: "Walls can only be extended horizontally and vertically.",
+						temporaryText:
+							"Walls can only be extended horizontally and vertically.",
 						temporaryKey: action.payload.key
 					};
 				case IMPOSSIBLE_WALL_EXTEND:
@@ -96,7 +96,7 @@ export default function(
 					className: null,
 					temporary: false,
 					temporaryKey: null
-				}
+				};
 			}
 			return state;
 
@@ -110,15 +110,15 @@ export default function(
 
 		case SELECT_ASSET_TYPE:
 			if (state.prevSelectedType != action.payload.id) {
-				const text = (
+				const text =
 					action.payload.id == "pov_camera"
 						? "Click on a space to jump into first-person view."
 						: (
-							<p>Click on a valid space to place a
-								<strong> {HS_ASSETS[action.payload.id].title}</strong>.
-							</p>
-						).props.children
-				);
+								<p>
+									Click on a valid space to place a
+									<strong> {HS_ASSETS[action.payload.id].title}</strong>.
+								</p>
+							).props.children;
 				return {
 					...state,
 					className: null,
@@ -149,7 +149,7 @@ export default function(
 				temporary: false,
 				persistent: true,
 				persistentText: "Select items to attach to the sides of this item."
-			}
+			};
 
 		case INSERT_ASSET:
 			if (action.payload.assetId == "wall-1" && state.persistent) {

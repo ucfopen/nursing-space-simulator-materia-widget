@@ -37,11 +37,7 @@ import { checkPropsExist, deepCopy } from "../utils";
 export class VRScene extends Component {
 	cancelExtend() {
 		const key = Math.random();
-		const {
-			deselectAsset,
-			showErrorTooltip,
-			updateTimedTooltip
-		} = this.props;
+		const { deselectAsset, showErrorTooltip, updateTimedTooltip } = this.props;
 
 		deselectAsset();
 		showErrorTooltip(IMPOSSIBLE_WALL_EXTEND, key);
@@ -51,15 +47,13 @@ export class VRScene extends Component {
 	}
 	checkFillWalls(x, z, extendX, extendZ, validX, validZ) {
 		const { fillWalls, showErrorTooltip, updateTimedTooltip } = this.props;
-		let validFill = (
+		let validFill =
 			(x == extendX && validZ.includes(z)) ||
-			(z == extendZ && validX.includes(x))
-		);
+			(z == extendZ && validX.includes(x));
 
 		if (validFill) {
 			fillWalls(x, z, extendX, extendZ, validX, validZ);
-		}
-		else {
+		} else {
 			const key = Math.random();
 			showErrorTooltip(BAD_WALL_EXTEND, key);
 			setTimeout(function() {
@@ -74,8 +68,7 @@ export class VRScene extends Component {
 
 		if (!isInBounds(grid, z, x) || (currentX == x && currentZ == z)) {
 			refreshGrid(); // refresh needed to reset the drag
-		}
-		else {
+		} else {
 			this.checkInsertAsset(x, z, assetId);
 		}
 	}
@@ -95,26 +88,22 @@ export class VRScene extends Component {
 
 		let validInsert;
 		if (assetId && HS_ASSETS[assetId].spanX == 2) {
-			let gridModified = (
+			let gridModified =
 				currentX != null && currentZ
 					? deleteItem(deepCopy(grid), currentX, currentZ)
-					: grid
-			);
+					: grid;
 			let prevRotation = selectedItem ? selectedItem.rotation : 180;
 			const adjSide = 3 - ((prevRotation + 180) % 360) / 90;
 			validInsert = isCellAvailable(gridModified, x, z, adjSide);
-		}
-		else {
+		} else {
 			validInsert = isCellAvailable(grid, x, z);
 		}
 
 		if (validInsert) {
 			insertAsset(x, z, assetId);
-		}
-		else if (dragging) {
+		} else if (dragging) {
 			refreshGrid();
-		}
-		else if (currentX != x || currentZ != z) {
+		} else if (currentX != x || currentZ != z) {
 			if (assetId === null) return;
 			const key = Math.random();
 			showErrorTooltip(BAD_INSERT, key, HS_ASSETS[assetId].title);
@@ -144,7 +133,7 @@ export class VRScene extends Component {
 		const mappedAssets = grid.map(
 			(row, rowIndex) =>
 				row.map((column, colIndex) => {
-					return (column !== "0" && column != "X") ? (
+					return column !== "0" && column != "X" ? (
 						<QsetAsset
 							attributes={column}
 							data={HS_ASSETS[column.id]}
@@ -153,14 +142,14 @@ export class VRScene extends Component {
 							key={`${rowIndex} ${colIndex}`}
 							mode={mode}
 							onClick={
-								mode != "editAsset" ? (
-									selectAsset.bind(
-										this,
-										HS_ASSETS[column.id],
-										colIndex,
-										rowIndex
-									)
-								) : null
+								mode != "editAsset"
+									? selectAsset.bind(
+											this,
+											HS_ASSETS[column.id],
+											colIndex,
+											rowIndex
+										)
+									: null
 							}
 							rotation={column.rotation}
 							selectedAssetId={selectedAsset ? selectedAsset.id : null}
@@ -201,7 +190,8 @@ export class VRScene extends Component {
 							onClick={
 								mode == "extendWall"
 									? this.checkFillWalls.bind(this)
-									: this.checkInsertAsset.bind(this)}
+									: this.checkInsertAsset.bind(this)
+							}
 							selectedAsset={selectedAsset}
 							selectedItem={selectedItem}
 							thirdPerson={thirdPerson}
@@ -219,9 +209,16 @@ export class VRScene extends Component {
 	}
 
 	renderScene() {
-		const { mode, posX, posY, posZ, shortcutsEnabled, thirdPerson } = this.props;
+		const {
+			mode,
+			posX,
+			posY,
+			posZ,
+			shortcutsEnabled,
+			thirdPerson
+		} = this.props;
 		const { updateAssetPosition } = this.props;
-		const position = { x: posX, y: posY, z: posZ }
+		const position = { x: posX, y: posY, z: posZ };
 		return (
 			<Scene className="vr-scene" keyboard-shortcuts="enterVR: false">
 				<a-assets>
@@ -230,11 +227,7 @@ export class VRScene extends Component {
 						id="ceilingTexture"
 						src="assets/CEILING_TILE.jpg"
 					/>
-					<img
-						alt="door-texture"
-						id="doorTexture"
-						src="assets/DOOR_TEX.png"
-					/>
+					<img alt="door-texture" id="doorTexture" src="assets/DOOR_TEX.png" />
 					<img
 						alt="fire-texture"
 						id="fireTexture"
@@ -279,17 +272,16 @@ export class VRScene extends Component {
 				/>
 				{this.renderFloor()}
 				{this.renderAssets()}
-				{ this.props.mode == "manipulation" && !this.props.dragging
-					? (
-						<AssetMovementControls
-							currentX={this.props.currentX}
-							currentZ={this.props.currentZ}
-							asset={this.props.selectedAsset}
-							position={position}
-							selectedItem={this.props.selectedItem}
-							updateAssetPosition={updateAssetPosition}/>
-					) : null
-				}
+				{this.props.mode == "manipulation" && !this.props.dragging ? (
+					<AssetMovementControls
+						currentX={this.props.currentX}
+						currentZ={this.props.currentZ}
+						asset={this.props.selectedAsset}
+						position={position}
+						selectedItem={this.props.selectedItem}
+						updateAssetPosition={updateAssetPosition}
+					/>
+				) : null}
 			</Scene>
 		);
 	}
@@ -297,8 +289,7 @@ export class VRScene extends Component {
 	render() {
 		if (checkPropsExist(this.props)) {
 			return this.renderScene();
-		}
-		else return null;
+		} else return null;
 	}
 }
 
