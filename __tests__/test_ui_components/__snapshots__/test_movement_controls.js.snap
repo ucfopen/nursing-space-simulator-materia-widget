@@ -3,6 +3,7 @@
 exports[`Movement Controls tests renders movement controls correctly 1`] = `
 <div
   id="UI-right-panel"
+  onMouseDown={[Function]}
 >
   <div
     id="top-buttons"
@@ -162,6 +163,35 @@ exports[`Movement Controls tests renders movement controls correctly 1`] = `
                 stroke="#000000"
                 strokeMiterlimit="10"
                 strokeWidth="3"
+              />
+            </g>
+          </svg>
+        </button>
+        <button
+          id="camera-reset"
+          onMouseDown={[Function]}
+        >
+          <svg
+            height="50px"
+            version="1.1"
+            viewBox="0 0 125 125"
+            width="20px"
+            x="0px"
+            xmlns="http://www.w3.org/2000/svg"
+            y="0px"
+          >
+            <g
+              id="Layer_3"
+            >
+              <circle
+                cx="65"
+                cy="65"
+                fill="#DC7627"
+                r="55"
+                stroke="#000000"
+                strokeLinecap="round"
+                strokeMiterlimit="10"
+                strokeWidth="6"
               />
             </g>
           </svg>
@@ -282,6 +312,7 @@ exports[`Movement Controls tests renders movement controls correctly 1`] = `
 exports[`Movement Controls tests renders movement controls correctly 2`] = `
 <div
   id="UI-right-panel"
+  onMouseDown={[Function]}
 >
   <div
     id="top-buttons"
@@ -441,6 +472,35 @@ exports[`Movement Controls tests renders movement controls correctly 2`] = `
                 stroke="#000000"
                 strokeMiterlimit="10"
                 strokeWidth="3"
+              />
+            </g>
+          </svg>
+        </button>
+        <button
+          id="camera-reset"
+          onMouseDown={[Function]}
+        >
+          <svg
+            height="50px"
+            version="1.1"
+            viewBox="0 0 125 125"
+            width="20px"
+            x="0px"
+            xmlns="http://www.w3.org/2000/svg"
+            y="0px"
+          >
+            <g
+              id="Layer_3"
+            >
+              <circle
+                cx="65"
+                cy="65"
+                fill="#DC7627"
+                r="55"
+                stroke="#000000"
+                strokeLinecap="round"
+                strokeMiterlimit="10"
+                strokeWidth="6"
               />
             </g>
           </svg>

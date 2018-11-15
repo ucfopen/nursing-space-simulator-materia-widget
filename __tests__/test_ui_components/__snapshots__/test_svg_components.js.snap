@@ -8,7 +8,7 @@ exports[`SVG Components test renders ConfirmSVG correctly 1`] = `
   viewBox="0 0 125 125"
   width="55px"
   x="0px"
-  xmlns="http://www.w3.org/2000/svg"
+  xmlns="http=//www.w3.org/2000/svg"
   y="0px"
 >
   <g
@@ -16,7 +16,7 @@ exports[`SVG Components test renders ConfirmSVG correctly 1`] = `
   >
     <polygon
       fill="#DC7627"
-      points="119,33.2 100.4,14.7 45,70.2 23.5,48.7  5,67.2 26.4,88.7 26.4,88.7 45,107.2 45,107.2 45,107.2 63.5,88.7 63.5,88.7"
+      points="119,33.2 100.4,14.7 45,70.2 23.5,48.7 5,67.2 26.4,88.7 26.4,88.7 45,107.2 45,107.2 45,107.2 63.5,88.7 63.5,88.7"
       stroke="#000000"
       strokeMiterlimit="10"
       strokeWidth="3"

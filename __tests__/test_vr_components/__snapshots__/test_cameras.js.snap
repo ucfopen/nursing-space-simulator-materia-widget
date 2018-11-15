@@ -2,4 +2,8 @@
 
 exports[`Camera tests renders CameraFP correctly 1`] = `<a-entity />`;
 
-exports[`Camera tests renders CameraTP correctly 1`] = `<a-entity />`;
+exports[`Camera tests renders CameraTP correctly 1`] = `
+<a-entity
+  id="cameratp"
+/>
+`;

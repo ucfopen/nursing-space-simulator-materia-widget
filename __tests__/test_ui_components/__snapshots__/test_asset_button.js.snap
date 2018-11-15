@@ -5,7 +5,7 @@ exports[`Asset Button Tests renders asset button 1`] = `
   className="button-container"
 >
   <button
-    className="asset"
+    className="asset asset-bed-1"
     data-category="beds"
     data-title="Bed-1"
     id="bed-1"
