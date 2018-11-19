@@ -1,6 +1,10 @@
 import positionReducer from "../../src/js/reducers/positionReducer";
 import * as actions from "../../src/js/actions/camera_actions";
-import { INSERT_ASSET } from "../../src/js/actions/grid_actions";
+import {
+	INSERT_ASSET,
+	EDIT_ASSET,
+	DESELECT_ASSET
+} from "../../src/js/actions/grid_actions";
 
 describe("position reducer", () => {
 	it("should return the inital state", () => {
@@ -12,6 +16,9 @@ describe("position reducer", () => {
 				{}
 			)
 		).toEqual({
+			prevX: 14.5,
+			prevY: 18,
+			prevZ: 9,
 			x: 14.5,
 			y: 18,
 			z: 9,
@@ -20,6 +27,7 @@ describe("position reducer", () => {
 	});
 
 	it("should handle CAMERA_UPDATE_POSITION", () => {
+		jest.spyOn(Math, "random").mockReturnValue(1);
 		const x = 10,
 			y = 10,
 			z = 10;
@@ -37,7 +45,7 @@ describe("position reducer", () => {
 				}
 			)
 		).toEqual({
-			x: x + 1,
+			x: x + 2,
 			y,
 			z
 		});
@@ -55,7 +63,7 @@ describe("position reducer", () => {
 				}
 			)
 		).toEqual({
-			x: x - 1,
+			x: x - 2,
 			y,
 			z
 		});
@@ -74,7 +82,23 @@ describe("position reducer", () => {
 			)
 		).toEqual({
 			x,
-			y: y + 1,
+			y: y + 2,
+			z
+		});
+
+		expect(
+			positionReducer(
+				// State being passed in
+				{ x, y: 31, z },
+				// Action being passed in
+				{
+					type: actions.CAMERA_UPDATE_POSITION,
+					payload: direction
+				}
+			)
+		).toEqual({
+			x,
+			y: 31,
 			z
 		});
 
@@ -92,7 +116,23 @@ describe("position reducer", () => {
 			)
 		).toEqual({
 			x,
-			y: y - 1,
+			y: y - 2,
+			z
+		});
+
+		expect(
+			positionReducer(
+				// State being passed in
+				{ x, y: 4, z },
+				// Action being passed in
+				{
+					type: actions.CAMERA_UPDATE_POSITION,
+					payload: direction
+				}
+			)
+		).toEqual({
+			x,
+			y: 4,
 			z
 		});
 
@@ -111,7 +151,7 @@ describe("position reducer", () => {
 		).toEqual({
 			x,
 			y,
-			z: z - 1
+			z: z - 2
 		});
 
 		direction = "zDown";
@@ -129,7 +169,7 @@ describe("position reducer", () => {
 		).toEqual({
 			x,
 			y,
-			z: z + 1
+			z: z + 2
 		});
 
 		direction = "reset";
@@ -145,9 +185,9 @@ describe("position reducer", () => {
 				}
 			)
 		).toEqual({
-			x,
-			y: 2,
-			z
+			x: 14.5,
+			y: 18.00001,
+			z: 9
 		});
 	});
 
@@ -155,7 +195,7 @@ describe("position reducer", () => {
 		expect(
 			positionReducer(
 				// State being passed in
-				[],
+				{ prevX: 2.5, prevY: 18, prevZ: 14 },
 				// Action being passed in
 				{
 					type: actions.TOGGLE_THIRD_PERSON
@@ -163,6 +203,9 @@ describe("position reducer", () => {
 			)
 		).toEqual({
 			thirdPerson: true,
+			prevX: 2.5,
+			prevY: 18,
+			prevZ: 14,
 			x: 2.5,
 			y: 18,
 			z: 14
@@ -196,7 +239,7 @@ describe("position reducer", () => {
 		expect(
 			positionReducer(
 				// State being passed in
-				[],
+				{ x: 1, y: 1, z: 1 },
 				// Action being passed in
 				{
 					type: INSERT_ASSET,
@@ -207,27 +250,74 @@ describe("position reducer", () => {
 				}
 			)
 		).toEqual(
-			[] // this is the state being passed in
+			{ x: 1, y: 1, z: 1 } // this is the state being passed in
 		);
 	});
 
-	it("should handle INSERT_ASSET with any asset id that is not pov_camera", () => {
+	it("should handle EDIT_ASSET", () => {
 		expect(
 			positionReducer(
 				// State being passed in
-				[],
+				{ x: 1, y: 1, z: 1 },
 				// Action being passed in
 				{
-					type: INSERT_ASSET,
+					type: EDIT_ASSET,
 					payload: {
-						assetId: "bed-1",
-						x: 1,
-						z: 1
+						x: 3,
+						z: 3
 					}
 				}
 			)
 		).toEqual(
-			[] // this is the state being passed in
+			{ x: 3, y: 6.5, z: 3, prevX: 1, prevY: 1, prevZ: 1 } // this is the state being passed in
+		);
+	});
+
+	it("should handle DESELECT_ASSET if action.payload.restorePosition", () => {
+		expect(
+			positionReducer(
+				// State being passed in
+				{ prevX: 1, prevY: 1, prevZ: 1 },
+				// Action being passed in
+				{
+					type: DESELECT_ASSET,
+					payload: {
+						restorePosition: true
+					}
+				}
+			)
+		).toEqual(
+			{
+				prevX: 1,
+				prevY: 1,
+				prevZ: 1,
+				thirdPerson: true,
+				x: 1,
+				y: 1,
+				z: 1
+			} // this is the state being passed in
+		);
+	});
+
+	it("should handle DESELECT_ASSET if action.payload.restorePosition", () => {
+		expect(
+			positionReducer(
+				// State being passed in
+				{ x: 1, y: 1, z: 1 },
+				// Action being passed in
+				{
+					type: DESELECT_ASSET,
+					payload: {
+						restorePosition: false
+					}
+				}
+			)
+		).toEqual(
+			{
+				x: 1,
+				y: 1,
+				z: 1
+			} // this is the state being passed in
 		);
 	});
 });
