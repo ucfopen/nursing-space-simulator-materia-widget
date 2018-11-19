@@ -18,10 +18,15 @@ describe("grid reducer", () => {
 				{}
 			)
 		).toEqual({
-			manipulationMode: false,
-			selectedAsset: null,
+			dragging: false,
 			currentX: null,
-			currentZ: null
+			currentZ: null,
+			mode: "none",
+			selectedAsset: null,
+			selectedItem: null,
+			validX: null,
+			validZ: null,
+			ready: false
 		});
 	});
 
@@ -48,7 +53,8 @@ describe("grid reducer", () => {
 				}
 			)
 		).toEqual({
-			grid
+			grid,
+			ready: true
 		});
 	});
 
@@ -68,17 +74,19 @@ describe("grid reducer", () => {
 			)
 		).toEqual({
 			selectedAsset: asset,
-			manipulationMode: false,
+			selectedItem: null,
 			currentX: null,
-			currentZ: null
+			currentZ: null,
+			mode: "assetTypeSelected"
 		});
 	});
 
-	it("should handle SELECT_ASSET", () => {
+	it.only("should handle SELECT_ASSET", () => {
 		let currentlySelectedAsset = {
 			id: "wall-1",
 			category: "walls",
 			canReplace: ["walls"]
+			// adj: [false, false, true, false]
 		};
 
 		let assetBeingSelected = {
@@ -90,6 +98,14 @@ describe("grid reducer", () => {
 		let grid = [["0", { id: "bed-1", rotation: 0 }], ["0", "0"]];
 		let x = 0,
 			z = 0;
+
+		let expectedGrid = insertItem(
+			JSON.parse(JSON.stringify(grid)),
+			currentlySelectedAsset.id,
+			x,
+			z
+		);
+		expectedGrid[0][0].adj = [false, false, true, false];
 
 		// If the currently selected asset can replace the asset being selected, replace the asset being selected
 		expect(
@@ -107,16 +123,17 @@ describe("grid reducer", () => {
 				}
 			)
 		).toEqual({
-			manipulationMode: true,
+			mode: "manipulation",
 			selectedAsset: currentlySelectedAsset,
+			selectedItem: {
+				adj: [false, false, true, false],
+				id: "wall-1",
+				rotation: 180,
+				stickers: null
+			},
 			currentX: x,
 			currentZ: z,
-			grid: insertItem(
-				JSON.parse(JSON.stringify(grid)),
-				currentlySelectedAsset.id,
-				x,
-				z
-			)
+			grid: expectedGrid
 		});
 
 		// If the currently selected asset is null, the asset being selected should be set to selected asset

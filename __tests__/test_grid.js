@@ -1,8 +1,7 @@
 import * as gridFunctions from "../src/js/grid";
 
-const gridString =
-	"wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 0 bed-1.0 0 wall-1.0 wall-1.0 chair-1.-90 0 0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0 wall-1.0";
 const grid = [
+	// row 0
 	[
 		{ id: "wall-1", rotation: 0 },
 		{ id: "wall-1", rotation: 0 },
@@ -10,6 +9,7 @@ const grid = [
 		{ id: "wall-1", rotation: 0 },
 		{ id: "wall-1", rotation: 0 }
 	],
+	// row 1
 	[
 		{ id: "wall-1", rotation: 0 },
 		"0",
@@ -17,6 +17,7 @@ const grid = [
 		"0",
 		{ id: "wall-1", rotation: 0 }
 	],
+	// row 2
 	[
 		{ id: "wall-1", rotation: 0 },
 		{ id: "chair-1", rotation: -90 },
@@ -24,6 +25,7 @@ const grid = [
 		"0",
 		{ id: "wall-1", rotation: 0 }
 	],
+	// row 3
 	[
 		{ id: "wall-1", rotation: 0 },
 		{ id: "wall-1", rotation: 0 },
@@ -34,59 +36,22 @@ const grid = [
 ];
 
 describe("test grid functions", () => {
-	it("loads a grid correctly", () => {
-		let newGrid;
-
-		newGrid = gridFunctions.loadGrid(gridString, 4, 5);
-		for (let i = 0; i < newGrid.length; i++) {
-			for (let j = 0; j < newGrid[0].length; j++) {
-				if (newGrid[i][j].id == "wall-1") {
-					if (j === 0) {
-						expect(newGrid[i][j].rotation).toEqual(0);
-					} else if (j === newGrid[0].length - 1) {
-						expect(newGrid[i][j].rotation).toEqual(180);
-					} else if (i === 0) {
-						expect(newGrid[i][j].rotation).toEqual(270);
-					} else if (i === newGrid.length - 1) {
-						expect(newGrid[i][j].rotation).toEqual(90);
-					}
-				} else {
-					expect(JSON.stringify(newGrid[i][j])).toEqual(
-						JSON.stringify(grid[i][j])
-					);
-				}
-			}
-		}
-
-		newGrid = gridFunctions.loadGrid(null, 4, 5);
-		expect(newGrid).toEqual(null);
-
-		newGrid = gridFunctions.loadGrid(gridString, null, 5);
-		expect(newGrid).toEqual(null);
-
-		newGrid = gridFunctions.loadGrid(gridString, 4, null);
-		expect(newGrid).toEqual(null);
-
-		newGrid = gridFunctions.loadGrid(null, null, null);
-		expect(newGrid).toEqual(null);
-	});
-
 	it("rotates a cell correctly", () => {
 		let rotatedGrid;
 
 		rotatedGrid = gridFunctions.rotateCell(
 			JSON.parse(JSON.stringify(grid)),
-			0,
-			1
+			0, // col
+			1 // row
 		);
-		expect(rotatedGrid[1][0].rotation).toEqual(-90);
+		expect(rotatedGrid[1][0].rotation).toEqual(270);
 
 		rotatedGrid = gridFunctions.rotateCell(
 			JSON.parse(JSON.stringify(grid)),
 			1,
 			2
 		);
-		expect(rotatedGrid[2][1].rotation).toEqual(-180);
+		expect(rotatedGrid[2][1].rotation).toEqual(180);
 
 		rotatedGrid = gridFunctions.rotateCell(
 			JSON.parse(JSON.stringify(grid)),
@@ -136,12 +101,12 @@ describe("test grid functions", () => {
 
 		insertedGrid = gridFunctions.insertItem(
 			JSON.parse(JSON.stringify(grid)),
-			"iv",
+			"test-item",
 			1,
 			1
 		);
 		expect(insertedGrid[1][1].rotation).toEqual(180);
-		expect(insertedGrid[1][1].id).toEqual("iv");
+		expect(insertedGrid[1][1].id).toEqual("test-item");
 
 		insertedGrid = gridFunctions.insertItem(
 			JSON.parse(JSON.stringify(grid)),
@@ -161,12 +126,12 @@ describe("test grid functions", () => {
 		);
 		expect(insertedGrid[1][1]).toEqual("0");
 
-		insertedGrid = gridFunctions.insertItem(null, "iv", 1, 1);
+		insertedGrid = gridFunctions.insertItem(null, "test-item", 1, 1);
 		expect(insertedGrid).toEqual(null);
 
 		insertedGrid = gridFunctions.insertItem(
 			JSON.parse(JSON.stringify(grid)),
-			"iv",
+			"test-item",
 			null,
 			1
 		);
@@ -174,7 +139,7 @@ describe("test grid functions", () => {
 
 		insertedGrid = gridFunctions.insertItem(
 			JSON.parse(JSON.stringify(grid)),
-			"iv",
+			"test-item",
 			1,
 			null
 		);

@@ -1,5 +1,3 @@
-import { loadGrid } from "../grid";
-
 // Default grid structure to use as a fallback for old qsets
 import defaultData from "../../assets/default.json";
 

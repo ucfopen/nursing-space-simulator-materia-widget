@@ -5,15 +5,28 @@
 	},
 	"version": "0.2.1",
 	"jest": {
+		"globals": {
+			"HS_ASSETS": {
+				"wall-1": {
+					"spanX": 1
+				},
+				"chair-1": {
+					"spanX": 1
+				},
+				"bed-1": {
+					"spanX": 2
+				},
+				"test-item": {
+					"spanX": 1
+				}
+			},
+			"HS_CATEGORIES": ["equipment", "construction", "people"],
+			"HS_STICKER_TYPES": ["0", "fireSticker", "soapSticker", "tvSticker"]
+		},
 		"coverageReporters": ["text-summary", "lcov"],
 		"verbose": false,
-		"collectCoverageFrom": [
-			"src/**/*.js"
-		],
-		"testPathIgnorePatterns": [
-			"/node_modules/",
-			"/custom_test_utilities/"
-		],
+		"collectCoverageFrom": ["src/**/*.js"],
+		"testPathIgnorePatterns": ["/node_modules/", "/custom_test_utilities/"],
 		"coverageThreshold": {
 			"global": {
 				"branches": 97,
@@ -25,7 +38,8 @@
 	},
 	"dependencies": {
 		"aframe": "0.5.0",
-		"aframe-click-drag-component": "ucfopen/aframe-click-drag-component#b13614ddbbbe2afddfd67edb23b96bfdeb1d19c9",
+		"aframe-click-drag-component":
+			"ucfopen/aframe-click-drag-component#b13614ddbbbe2afddfd67edb23b96bfdeb1d19c9",
 		"aframe-mouse-cursor-component": "^0.5.2",
 		"aframe-react": "^4.2.3",
 		"react": "15.6.2",
@@ -56,7 +70,8 @@
 		"build-dev": "webpack",
 		"build": "webpack -p",
 		"test": "TZ='America/New_York' jest --verbose",
-		"test-ci": "TZ='America/New_York' CI=true jest --ci --useStderr --coverage --coverageReporters text-summary cobertura",
+		"test-ci":
+			"TZ='America/New_York' CI=true jest --ci --useStderr --coverage --coverageReporters text-summary cobertura",
 		"pre-commit": "yarn test-ci && lint-staged"
 	},
 	"prettier": {
@@ -69,12 +84,10 @@
 		}
 	},
 	"lint-staged": {
-		"src/**/*.js": [
-			"prettier --write",
-			"git add"
-		]
+		"src/**/*.js": ["prettier --write", "git add"]
 	},
 	"license": "AGPL-3.0",
-	"description": "Design a 3D nursing simulation space by filling rooms with an inventory of items such as beds, IVs, Crash Carts, and seating. For use in Materia.",
+	"description":
+		"Design a 3D nursing simulation space by filling rooms with an inventory of items such as beds, IVs, Crash Carts, and seating. For use in Materia.",
 	"author": "University of Central Florida, Center for Distributed Learning"
 }

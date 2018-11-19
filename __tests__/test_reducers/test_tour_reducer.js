@@ -13,6 +13,7 @@ import {
 import { INIT_DATA } from "../../src/js/actions";
 
 import steps from "../../src/js/steps";
+import { SET_CATEGORY } from "../../src/js/actions/menu_actions";
 
 const initialState = {
 	tourRunning: true,
@@ -23,8 +24,8 @@ const initialState = {
 };
 
 const selectedAsset = {
-	id: "wall-tv",
-	assetId: "wall-tv"
+	id: "bed-1",
+	assetId: "bed-1"
 };
 
 const selectedAssetCamera = {
@@ -33,17 +34,6 @@ const selectedAssetCamera = {
 };
 
 describe("tour reducer", () => {
-	it("should return the inital state", () => {
-		expect(
-			tourReducer(
-				// State being passed in
-				undefined,
-				// Action being passed in
-				{}
-			)
-		).toEqual(initialState);
-	});
-
 	it("should return runNextSet when started", () => {
 		expect(
 			tourReducer(
@@ -84,7 +74,7 @@ describe("tour reducer", () => {
 
 	////////////////////////////////////////////////////////////////////////
 
-	it("SELECT_ASSET_TYPE, stepCompletion:1, selectedAsset:object ===> runNextSet: True", () => {
+	it("SELECT_ASSET_TYPE, stepCompletion:1, selectedAsset:bed-1 ===> runNextSet: True", () => {
 		const test = tourReducer(
 			// State being passed in
 			{
@@ -116,7 +106,7 @@ describe("tour reducer", () => {
 		expect(test).toHaveProperty("runNextSet", false);
 	});
 
-	it("SELECT_ASSET_TYPE, stepCompletion:3, selectedAsset:camera ===> runNextSet: True", () => {
+	it(`SET_CATEGORY, stepCompletion:3, selectedAsset:"construction" ===> runNextSet: True`, () => {
 		const test = tourReducer(
 			// State being passed in
 			{
@@ -125,8 +115,8 @@ describe("tour reducer", () => {
 			},
 			// Action being passed in
 			{
-				type: SELECT_ASSET_TYPE,
-				payload: selectedAssetCamera
+				type: SET_CATEGORY,
+				payload: "construction"
 			}
 		);
 		expect(test).toHaveProperty("runNextSet", true);
@@ -183,7 +173,7 @@ describe("tour reducer", () => {
 
 	////////////////////////////////////////////////////////////////////////
 
-	it("INSERT_ASSET, stepCompletion:2, selectedAsset:object ===> runNextSet: True", () => {
+	it("INSERT_ASSET, stepCompletion:2, selectedAsset:bed-1 ===> runNextSet: True", () => {
 		const test = tourReducer(
 			// State being passed in
 			{
@@ -215,7 +205,7 @@ describe("tour reducer", () => {
 		expect(test).toHaveProperty("runNextSet", false);
 	});
 
-	it("INSERT_ASSET, stepCompletion:4, selectedAsset:camera ===> runNextSet: True", () => {
+	it("SELECT_ASSET_TYPE, stepCompletion:4, selectedAsset:wall-1 ===> runNextSet: False", () => {
 		const test = tourReducer(
 			// State being passed in
 			{
@@ -224,27 +214,11 @@ describe("tour reducer", () => {
 			},
 			// Action being passed in
 			{
-				type: INSERT_ASSET,
-				payload: selectedAssetCamera
+				type: SELECT_ASSET_TYPE,
+				payload: { id: "wall-1" }
 			}
 		);
 		expect(test).toHaveProperty("runNextSet", true);
-	});
-
-	it("INSERT_ASSET, stepCompletion:4, selectedAsset:object ===> runNextSet: False", () => {
-		const test = tourReducer(
-			// State being passed in
-			{
-				...initialState,
-				stepCompletion: 4
-			},
-			// Action being passed in
-			{
-				type: INSERT_ASSET,
-				payload: selectedAsset
-			}
-		);
-		expect(test).toHaveProperty("runNextSet", false);
 	});
 
 	it("INSERT_ASSET: runNextSet False if tour ended", () => {

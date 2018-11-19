@@ -248,9 +248,9 @@ export default function(
 
 		case SELECT_ASSET: {
 			const gridCopy = deepCopy(state.grid);
-			const { asset, dragging, x, z } = action.payload;
+			const { asset, dragging, x, z } = action.payload; //wall-tv
 
-			let oldSelectedAsset = state.selectedAsset
+			let oldSelectedAsset = state.selectedAsset //wall-1
 				? { ...state.selectedAsset }
 				: null;
 
@@ -277,7 +277,7 @@ export default function(
 					grid: newGrid,
 					mode: "manipulation",
 					selectedAsset: oldSelectedAsset,
-					selectedItem: getItem(newGrid, x, z)
+					selectedItem: selectedItem
 				};
 			} else {
 				let selectedItem = getItem(gridCopy, x, z);
