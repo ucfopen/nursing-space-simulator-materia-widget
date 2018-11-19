@@ -55,7 +55,7 @@ describe("Asset Controls Component", () => {
 	it("calls correct methods when clicking manupulation mode buttons", () => {
 		let manipulationModeAssetControls = shallow(
 			<AssetControls
-				manipulationMode={true}
+				manipulationMode={"manipulation"}
 				deselectAsset={deselectMock}
 				rotateAsset={rotateMock}
 				removeAsset={removeMock}
@@ -64,7 +64,6 @@ describe("Asset Controls Component", () => {
 				currentZ={1}
 			/>
 		);
-
 		manipulationModeAssetControls.find("#confirm").simulate("click");
 		manipulationModeAssetControls.find("#rotate").simulate("click");
 		manipulationModeAssetControls.find("#remove").simulate("click");
