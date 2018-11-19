@@ -14,15 +14,16 @@ const item = {
 
 let clickEventMock = jest.fn();
 
+
 describe("Asset Button Tests", () => {
-	it("renders asset button", () => {
+	test("renders asset button", () => {
 		const tree = renderer
 			.create(<AssetButton onClick={clickEventMock} item={item} />)
 			.toJSON();
 		expect(tree).toMatchSnapshot();
 	});
 
-	it("handles click", () => {
+	test("handles click", () => {
 		const assetButton = shallow(
 			<AssetButton onClick={clickEventMock} item={item} />
 		);
