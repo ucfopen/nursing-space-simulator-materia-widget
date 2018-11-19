@@ -7,7 +7,8 @@ import {
 
 import {
 	SELECT_ASSET_TYPE,
-	INSERT_ASSET
+	INSERT_ASSET,
+	DESELECT_ASSET
 } from "../../src/js/actions/grid_actions";
 
 import { INIT_DATA } from "../../src/js/actions";
@@ -249,6 +250,38 @@ describe("tour reducer", () => {
 			{
 				type: SELECT_ASSET_TYPE,
 				payload: selectedAsset
+			}
+		);
+		expect(test).toHaveProperty("runNextSet", false);
+	});
+
+	it("DESELECT_ASSET, stepCompletion:12", () => {
+		const test = tourReducer(
+			// State being passed in
+			{
+				...initialState,
+				stepCompletion: 12,
+				tourRunning: true
+			},
+			// Action being passed in
+			{
+				type: DESELECT_ASSET
+			}
+		);
+		expect(test).toHaveProperty("runNextSet", true);
+	});
+
+	it("DESELECT_ASSET, stepCompletion:12, if tour is not running", () => {
+		const test = tourReducer(
+			// State being passed in
+			{
+				...initialState,
+				stepCompletion: 12,
+				tourRunning: false
+			},
+			// Action being passed in
+			{
+				type: DESELECT_ASSET
 			}
 		);
 		expect(test).toHaveProperty("runNextSet", false);
