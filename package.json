@@ -8,16 +8,24 @@
 		"globals": {
 			"HS_ASSETS": {
 				"wall-1": {
-					"spanX": 1
+					"spanX": 1,
+					"category": "construction"
 				},
 				"chair-1": {
-					"spanX": 1
+					"spanX": 1,
+					"category": "equipment"
+				},
+				"window": {
+					"spanX": 1,
+					"category": "construction"
 				},
 				"bed-1": {
-					"spanX": 2
+					"spanX": 2,
+					"category": "equipment"
 				},
 				"test-item": {
-					"spanX": 1
+					"spanX": 1,
+					"category": "equipment"
 				}
 			},
 			"HS_CATEGORIES": ["equipment", "construction", "people"],
