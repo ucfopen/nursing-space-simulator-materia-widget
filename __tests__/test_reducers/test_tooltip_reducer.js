@@ -6,7 +6,10 @@ import {
 	SHOW_ERROR_TOOLTIP,
 	BAD_INSERT,
 	BAD_WALL_EXTEND,
-	IMPOSSIBLE_WALL_EXTEND
+	IMPOSSIBLE_WALL_EXTEND,
+	UPDATE_PERSISTENT_TOOLTIP,
+	UPDATE_TEMPORARY_TOOLTIP,
+	UPDATE_TIMED_TOOLTIP
 } from "../../src/js/actions/tooltip_actions";
 
 const initialState = {
@@ -99,5 +102,70 @@ describe("tooltip reducer", () => {
 				}
 			})
 		).toEqual(initialState);
+	});
+
+	it("should handle UPDATE_PERSISTENT_TOOLTIP", () => {
+		expect(
+			menuReducer(initialState, {
+				type: UPDATE_PERSISTENT_TOOLTIP,
+				payload: {
+					className: "test_name",
+					enabled: true,
+					text: "test_text"
+				}
+			})
+		).toEqual({
+			className: "test_name",
+			persistent: true,
+			persistentText: "test_text",
+			prevSelectedType: null,
+			temporary: false,
+			temporaryKey: null,
+			temporaryText: "temp"
+		});
+	});
+
+	it("should handle UPDATE_TEMPORARY_TOOLTIP", () => {
+		expect(
+			menuReducer(initialState, {
+				type: UPDATE_TEMPORARY_TOOLTIP,
+				payload: {
+					className: "test_name",
+					enabled: true,
+					text: "test_text",
+					key: "test_key"
+				}
+			})
+		).toEqual({
+			className: "test_name",
+			persistent: false,
+			persistentText: "persistent",
+			prevSelectedType: null,
+			temporary: true,
+			temporaryKey: "test_key",
+			temporaryText: "test_text"
+		});
+	});
+
+	it("should handle UPDATE_TIMED_TOOLTIP", () => {
+		expect(
+			menuReducer(initialState, {
+				type: UPDATE_TIMED_TOOLTIP,
+				payload: {
+					className: "test_name",
+					enabled: true,
+					text: "test_text",
+					key: "test_key"
+				}
+			})
+		).toEqual({
+			className: null,
+			persistent: false,
+			persistentText: "persistent",
+			prevSelectedType: null,
+			temporary: false,
+			temporaryKey: null,
+			temporaryText: "temp"
+		});
 	});
 });

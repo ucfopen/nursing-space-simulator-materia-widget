@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Scene } from "aframe-react";
 import { connect } from "react-redux";
 
 // Custom React Components
