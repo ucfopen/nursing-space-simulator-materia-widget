@@ -573,13 +573,10 @@ describe("tour reducer", () => {
 	it("should trigger default case", () => {
 		const test = tourReducer(
 			// State being passed in
-			{
-				...initialState
-			},
+			initialState,
 			// Action being passed in
-			{
-			}
+			{}
 		);
-		expect(test).toHaveProperty("runNextSet", false);
+		expect(test).toBe(initialState);
 	});
 });
