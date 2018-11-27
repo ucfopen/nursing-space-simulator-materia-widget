@@ -12,7 +12,18 @@ import {
 	UPDATE_TIMED_TOOLTIP
 } from "../../src/js/actions/tooltip_actions";
 
-import { EXTEND_WALL } from "../../src/js/actions/grid_actions";
+import {
+	EXTEND_WALL,
+	SELECT_ASSET_TYPE,
+	EDIT_ASSET,
+	INSERT_ASSET,
+	DESELECT_ASSET,
+	FILL_WALLS,
+	REMOVE_ASSET,
+	SELECT_ASSET
+} from "../../src/js/actions/grid_actions";
+
+import { TOGGLE_THIRD_PERSON } from "../../src/js/actions/camera_actions";
 
 const initialState = {
 	className: null,
@@ -211,6 +222,283 @@ describe("tooltip reducer", () => {
 			className: null,
 			persistent: true,
 			persistentText: "Click on a valid space to auto-fill walls.",
+			prevSelectedType: null,
+			temporary: false,
+			temporaryKey: null,
+			temporaryText: "temp"
+		});
+	});
+
+	it("should handle SELECT_ASSET_TYPE", () => {
+		expect(
+			menuReducer(
+				{
+					...initialState,
+					prevSelectedType: "test_type"
+				},
+				{
+					type: SELECT_ASSET_TYPE,
+					payload: {
+						id: "pov_camera"
+					}
+				}
+			)
+		).toEqual({
+			className: null,
+			persistent: true,
+			persistentText: "Click on a space to jump into first-person view.",
+			prevSelectedType: "pov_camera",
+			temporary: false,
+			temporaryKey: null,
+			temporaryText: "temp"
+		});
+	});
+
+	it("should handle SELECT_ASSET_TYPE if state.prevSelectedType != action.payload.id && action.payload.id != pov_camera", () => {
+		const text = [
+			"Click on a valid space to place a ",
+			<strong>temp-title</strong>,
+			"."
+		];
+		expect(
+			menuReducer(
+				{
+					...initialState,
+					prevSelectedType: "test_type"
+				},
+				{
+					type: SELECT_ASSET_TYPE,
+					payload: {
+						id: "test-item"
+					}
+				}
+			)
+		).toEqual({
+			className: null,
+			persistent: true,
+			persistentText: text,
+			prevSelectedType: "test-item",
+			temporary: false,
+			temporaryKey: null,
+			temporaryText: "temp"
+		});
+	});
+
+	it("should handle SELECT_ASSET_TYPE if state.prevSelectedType == action.payload.id", () => {
+		expect(
+			menuReducer(
+				{
+					...initialState,
+					prevSelectedType: "test_type"
+				},
+				{
+					type: SELECT_ASSET_TYPE,
+					payload: {
+						id: "test_type"
+					}
+				}
+			)
+		).toEqual({
+			className: null,
+			persistent: false,
+			persistentText: "persistent",
+			prevSelectedType: null,
+			temporary: false,
+			temporaryKey: null,
+			temporaryText: "temp"
+		});
+	});
+
+	it("should handle TOGGLE_THIRD_PERSON", () => {
+		expect(
+			menuReducer(
+				{
+					...initialState
+				},
+				{
+					type: TOGGLE_THIRD_PERSON
+				}
+			)
+		).toEqual({
+			className: null,
+			persistent: true,
+			persistentText: "Click on a space to jump into first-person view.",
+			prevSelectedType: null,
+			temporary: false,
+			temporaryKey: null,
+			temporaryText: "temp"
+		});
+	});
+
+	it("should handle EDIT_ASSET", () => {
+		expect(
+			menuReducer(
+				{
+					...initialState
+				},
+				{
+					type: EDIT_ASSET
+				}
+			)
+		).toEqual({
+			className: null,
+			persistent: true,
+			persistentText: "Select items to attach to the sides of this item.",
+			prevSelectedType: null,
+			temporary: false,
+			temporaryKey: null,
+			temporaryText: "temp"
+		});
+	});
+
+	it("should handle INSERT_ASSET if action.payload.assetId == 'wall-1' && state.persistent", () => {
+		expect(
+			menuReducer(
+				{
+					...initialState,
+					persistent: true
+				},
+				{
+					type: INSERT_ASSET,
+					payload: {
+						assetId: "wall-1"
+					}
+				}
+			)
+		).toEqual({
+			className: null,
+			persistent: true,
+			persistentText: "Click on a valid space to auto-fill walls.",
+			prevSelectedType: null,
+			temporary: false,
+			temporaryKey: null,
+			temporaryText: "temp"
+		});
+		//if action.payload.assetId == pov_camera
+		expect(
+			menuReducer(
+				{
+					...initialState,
+					persistent: true
+				},
+				{
+					type: INSERT_ASSET,
+					payload: {
+						assetId: "pov_camera"
+					}
+				}
+			)
+		).toEqual({
+			className: null,
+			persistent: true,
+			persistentText: "persistent",
+			prevSelectedType: null,
+			temporary: false,
+			temporaryKey: null,
+			temporaryText: "temp"
+		});
+		//if action.payload.assetId != pov_camera or wall-1
+		expect(
+			menuReducer(
+				{
+					...initialState,
+					persistent: true
+				},
+				{
+					type: INSERT_ASSET,
+					payload: {
+						assetId: "test_id"
+					}
+				}
+			)
+		).toEqual({
+			className: null,
+			persistent: false,
+			persistentText: "persistent",
+			prevSelectedType: null,
+			temporary: false,
+			temporaryKey: null,
+			temporaryText: "temp"
+		});
+	});
+
+	it("should handle DESELECT_ASSET", () => {
+		expect(
+			menuReducer(
+				{
+					...initialState
+				},
+				{
+					type: DESELECT_ASSET
+				}
+			)
+		).toEqual({
+			className: null,
+			persistent: false,
+			persistentText: "persistent",
+			prevSelectedType: null,
+			temporary: false,
+			temporaryKey: null,
+			temporaryText: "temp"
+		});
+	});
+
+	it("should handle FILL_WALLS", () => {
+		expect(
+			menuReducer(
+				{
+					...initialState
+				},
+				{
+					type: FILL_WALLS
+				}
+			)
+		).toEqual({
+			className: null,
+			persistent: false,
+			persistentText: "persistent",
+			prevSelectedType: null,
+			temporary: false,
+			temporaryKey: null,
+			temporaryText: "temp"
+		});
+	});
+
+	it("should handle REMOVE_ASSET", () => {
+		expect(
+			menuReducer(
+				{
+					...initialState
+				},
+				{
+					type: REMOVE_ASSET
+				}
+			)
+		).toEqual({
+			className: null,
+			persistent: false,
+			persistentText: "persistent",
+			prevSelectedType: null,
+			temporary: false,
+			temporaryKey: null,
+			temporaryText: "temp"
+		});
+	});
+
+	it("should handle SELECT_ASSET", () => {
+		expect(
+			menuReducer(
+				{
+					...initialState
+				},
+				{
+					type: SELECT_ASSET
+				}
+			)
+		).toEqual({
+			className: null,
+			persistent: false,
+			persistentText: "persistent",
 			prevSelectedType: null,
 			temporary: false,
 			temporaryKey: null,

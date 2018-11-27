@@ -25,7 +25,8 @@
 				},
 				"test-item": {
 					"spanX": 1,
-					"category": "equipment"
+					"category": "equipment",
+					"title": "temp-title"
 				}
 			},
 			"HS_CATEGORIES": ["equipment", "construction", "people"],
