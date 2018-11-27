@@ -1,7 +1,7 @@
 {
-	"name": "@ucfopen/hospital-sim",
+	"name": "@ucfopen/nursing-simulation-builder",
 	"materia": {
-		"cleanName": "hospital-sim"
+		"cleanName": "nursing-simulation-builder"
 	},
 	"version": "0.2.1",
 	"jest": {
