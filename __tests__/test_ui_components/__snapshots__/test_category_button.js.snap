@@ -9,3 +9,13 @@ exports[`Category button tests renders correctly 1`] = `
   Beds
 </button>
 `;
+
+exports[`Category button tests renders correctly if category == currentCategory 1`] = `
+<button
+  className="active-category asset-category category-beds"
+  data-category="beds"
+  onClick={[Function]}
+>
+  Beds
+</button>
+`;

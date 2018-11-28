@@ -63,7 +63,10 @@ describe("Asset Tray tests", () => {
 			/>
 		);
 
-		assetTray.find("button").at(1).simulate("click");
+		assetTray
+			.find("button")
+			.at(1)
+			.simulate("click");
 
 		expect(selectAssetTypeMock).toBeCalledWith({
 			id: "pov_camera",
