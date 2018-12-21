@@ -5,13 +5,14 @@ import { connect } from "react-redux";
 // Custom React Components
 import HUD from "./hud";
 import VRScene from "./vr_scene";
+import SelectionCanvas from "./selection_canvas";
 
 // Redux Actions
 import { initData } from "../actions";
 import { startTourSection, endTour } from "../actions/tour_actions";
 
 // JSON structure describing asset data
-import assetData from '../../assets/assets.json';
+import assetData from "../../assets/assets.json";
 
 export class App extends Component {
 	componentDidMount() {
@@ -40,7 +41,8 @@ export class App extends Component {
 			<div
 				id="app"
 				// When in first person, app container style must be modified to absolute position to support built in aframe UI
-				style={this.props.thirdPerson ? {} : { position: "absolute" }}>
+				style={this.props.thirdPerson ? {} : { position: "absolute" }}
+			>
 				<Joyride
 					callback={this.joyrideCallback.bind(this)}
 					debug={false}
@@ -62,6 +64,7 @@ export class App extends Component {
 				/>
 				<VRScene />
 				<HUD />
+				<SelectionCanvas />
 			</div>
 		);
 	}

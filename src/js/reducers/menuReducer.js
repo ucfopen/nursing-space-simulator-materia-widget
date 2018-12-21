@@ -10,7 +10,9 @@ export default function(
 		currentCategory: "equipment",
 		helpVisible: false,
 		shortcutsEnabled: true,
-		visible: true },
+		visible: true,
+		deleteMode: false
+	},
 	action
 ) {
 	switch (action.type) {
@@ -19,13 +21,13 @@ export default function(
 
 		case TOGGLE_HELP_VISIBILITY:
 			return state.helpVisible
-				? {...state, helpVisible: false}
-				: {...state, helpVisible: true}
+				? { ...state, helpVisible: false }
+				: { ...state, helpVisible: true };
 
 		case TOGGLE_KEYBOARD_SHORTCUTS:
 			return state.shortcutsEnabled
-				? {...state, shortcutsEnabled: false}
-				: {...state, shortcutsEnabled: true}
+				? { ...state, shortcutsEnabled: false }
+				: { ...state, shortcutsEnabled: true };
 
 		case TOGGLE_MENU_VISIBILITY:
 			return state.visible

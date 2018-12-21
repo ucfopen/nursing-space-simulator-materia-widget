@@ -12,9 +12,14 @@ import {
 	ROTATE_ASSET,
 	SELECT_ASSET_TYPE,
 	SELECT_ASSET,
-	UPDATE_ASSET_POSITION
+	SET_DELETE_MODE,
+	SET_SELECT_MODE,
+	UPDATE_ASSET_POSITION,
+	DELETE_MULTIPLE_ASSETS,
+	SELECT_MULTIPLE_ASSETS
 } from "../actions/grid_actions";
 import {
+	arrangeItems,
 	deleteItem,
 	findValidExtends,
 	getAdjacentSpaces,
@@ -24,6 +29,8 @@ import {
 	insertItem,
 	insertWalls,
 	isCellAvailable,
+	massDelete,
+	massSelect,
 	rotateCell,
 	setSticker,
 	updateStickers
@@ -37,9 +44,15 @@ export default function(
 		dragging: false,
 		currentX: null,
 		currentZ: null,
+		firstX: null,
+		firstY: null,
 		mode: "none",
+		multipleX: [],
+		multipleZ: [],
 		selectedAsset: null,
+		selectedAssets: [],
 		selectedItem: null,
+		selectedItems: [],
 		validX: null,
 		validZ: null,
 		ready: false
@@ -52,9 +65,15 @@ export default function(
 				...state,
 				currentX: null,
 				currentZ: null,
+				firstX: null,
+				firstY: null,
 				mode: "none",
+				multipleX: [],
+				multipleZ: [],
 				selectedAsset: null,
+				selectedAssets: [],
 				selectedItem: null,
+				selectedItems: [],
 				validX: null,
 				validZ: null
 			};
@@ -85,13 +104,7 @@ export default function(
 			const newStickerIndex =
 				(stickerIndex + direction + numTypes) % numTypes;
 			const newSticker = stickerTypes[newStickerIndex];
-			const newGrid = setSticker(
-				gridCopy,
-				x,
-				z,
-				side,
-				newSticker
-			)
+			const newGrid = setSticker(gridCopy, x, z, side, newSticker);
 
 			return {
 				...state,
@@ -113,6 +126,9 @@ export default function(
 				currentX: state.currentX,
 				currentZ: state.currentZ,
 				mode: "extendWall",
+				multipleX: [],
+				multipleZ: [],
+				selectedAssets: [],
 				validX: validX,
 				validZ: validZ
 			};
@@ -154,7 +170,11 @@ export default function(
 				? { ...state.selectedAsset }
 				: null;
 
-			if (!selectedAsset || selectedAsset.id === "pov_camera") {
+			if (
+				!selectedAsset ||
+				selectedAsset.id === "pov_camera" ||
+				state.multipleX.length > 1
+			) {
 				return state;
 			}
 
@@ -171,11 +191,15 @@ export default function(
 					state.currentZ
 				);
 				if (HS_ASSETS[selectedAsset.id].category == "construction") {
-					prevStickers = getStickers(gridCopy, state.currentX, state.currentZ, false);
+					prevStickers = getStickers(
+						gridCopy,
+						state.currentX,
+						state.currentZ,
+						false
+					);
 				}
 				newGrid = deleteItem(gridCopy, state.currentX, state.currentZ);
-			}
-			else {
+			} else {
 				newGrid = gridCopy;
 				if (selectedAsset.id == "wall-1") {
 					let validX, validZ;
@@ -206,9 +230,13 @@ export default function(
 				z,
 				prevRotation,
 				prevStickers
-			)
+			);
 			let selectedItem = getItem(newGrid, x, z);
 			selectedItem.adj = getAdjacentSpaces(newGrid, x, z, selectedAsset);
+			var multipleX = [x];
+			var multipleZ = [z];
+			var assetArray = [selectedAsset];
+			var itemArray = [selectedItem];
 			return {
 				...state,
 				currentX: x,
@@ -216,7 +244,11 @@ export default function(
 				dragging: false,
 				grid: newGrid,
 				mode: "manipulation",
-				selectedItem: selectedItem
+				multipleX: multipleX,
+				multipleZ: multipleZ,
+				selectedAssets: assetArray,
+				selectedItem: selectedItem,
+				selectedItems: itemArray
 			};
 		}
 
@@ -231,13 +263,36 @@ export default function(
 
 		case REMOVE_ASSET: {
 			const gridCopy = deepCopy(state.grid);
+			let newGrid = gridCopy;
+			if (state.multipleX.length > 0) {
+				for (
+					var counter = 0;
+					counter < state.multipleX.length;
+					counter++
+				) {
+					newGrid = deleteItem(
+						newGrid,
+						state.multipleX[counter],
+						state.multipleZ[counter]
+					);
+				}
+			} else {
+				newGrid = deleteItem(
+					gridCopy,
+					action.payload.x,
+					action.payload.z
+				);
+			}
 			return {
 				...state,
 				currentX: null,
 				currentZ: null,
-				grid: deleteItem(gridCopy, action.payload.x, action.payload.z),
+				grid: newGrid,
 				mode: "none",
+				multipleX: [],
+				multipleZ: [],
 				selectedAsset: null,
+				selectedAssets: [],
 				selectedItem: null
 			};
 		}
@@ -245,9 +300,39 @@ export default function(
 		case ROTATE_ASSET: {
 			const gridCopy = deepCopy(state.grid);
 			const { x, z } = action.payload;
-			let newGrid = rotateCell(gridCopy, x, z);
-			let selectedItem = getItem(newGrid, x, z);
-			selectedItem.adj = getAdjacentSpaces(newGrid, x, z, state.selectedAsset);
+			if (state.multipleX.length > 0) {
+				for (
+					var counter = 0;
+					counter < state.multipleX.length;
+					counter++
+				) {
+					var newGrid = rotateCell(
+						gridCopy,
+						state.multipleX[counter],
+						state.multipleZ[counter]
+					);
+					var selectedItem = getItem(
+						newGrid,
+						state.multipleX[counter],
+						state.multipleZ[counter]
+					);
+					selectedItem.adj = getAdjacentSpaces(
+						newGrid,
+						state.multipleX[counter],
+						state.multipleZ[counter],
+						state.selectedAsset
+					);
+				}
+			} else {
+				var newGrid = rotateCell(gridCopy, x, z);
+				var selectedItem = getItem(newGrid, x, z);
+				selectedItem.adj = getAdjacentSpaces(
+					newGrid,
+					x,
+					z,
+					state.selectedAsset
+				);
+			}
 			return {
 				...state,
 				grid: newGrid,
@@ -262,7 +347,6 @@ export default function(
 			let oldSelectedAsset = state.selectedAsset
 				? { ...state.selectedAsset }
 				: null;
-
 			if (
 				oldSelectedAsset &&
 				oldSelectedAsset.id !== "pov_camera" &&
@@ -279,6 +363,7 @@ export default function(
 				);
 				let selectedItem = getItem(newGrid, x, z);
 				selectedItem.adj = getAdjacentSpaces(newGrid, x, z, asset);
+
 				return {
 					...state,
 					currentX: x,
@@ -291,14 +376,68 @@ export default function(
 			} else {
 				let selectedItem = getItem(gridCopy, x, z);
 				selectedItem.adj = getAdjacentSpaces(gridCopy, x, z, asset);
+				let assetArray = state.selectedAssets;
+				let itemArray = state.selectedItems;
+				var multipleXArray = state.multipleX;
+				var multipleZArray = state.multipleZ;
+				var deselect = false;
+				var currentX = x;
+				var currentZ = z;
+				var selectedAsset = asset;
+				if (window.shiftKeyIsPressed == true) {
+					for (
+						var counter = 0;
+						counter < multipleXArray.length;
+						counter++
+					) {
+						if (
+							multipleXArray[counter] == x &&
+							multipleZArray[counter] == z
+						) {
+							multipleXArray.splice(counter, 1);
+							multipleZArray.splice(counter, 1);
+							assetArray.splice(counter, 1);
+							deselect = true;
+							if (multipleXArray.length == 0) {
+								selectedAsset = null;
+							} else if (multipleXArray.length == 1) {
+								selectedAsset = assetArray[0];
+							}
+						}
+					}
+					if (!deselect) {
+						multipleXArray.push(x);
+						multipleZArray.push(z);
+						assetArray.push(asset);
+						itemArray.push(selectedItem);
+					} else if (multipleXArray.length > 0) {
+						currentX = multipleXArray[0];
+						currentZ = multipleZArray[0];
+					} else {
+						currentX = null;
+						currentZ = null;
+					}
+				} else {
+					multipleXArray = [];
+					multipleZArray = [];
+					assetArray = [];
+					assetArray.push(asset);
+					itemArray.push(selectedItem);
+					multipleXArray.push(x);
+					multipleZArray.push(z);
+				}
 				return {
 					...state,
-					currentX: x,
-					currentZ: z,
+					currentX: currentX,
+					currentZ: currentZ,
 					dragging: dragging,
 					mode: "manipulation",
-					selectedAsset: asset,
-					selectedItem: selectedItem
+					multipleX: multipleXArray,
+					multipleZ: multipleZArray,
+					selectedAsset: selectedAsset,
+					selectedAssets: assetArray,
+					selectedItem: selectedItem,
+					selectedItems: itemArray
 				};
 			}
 		}
@@ -309,8 +448,199 @@ export default function(
 				currentX: null,
 				currentZ: null,
 				mode: "assetTypeSelected",
+				multipleX: [],
+				multipleZ: [],
 				selectedAsset: action.payload,
 				selectedItem: null
+			};
+		}
+
+		case SET_DELETE_MODE: {
+			return state.mode == "deleteMultiple"
+				? { ...state, mode: "" }
+				: {
+						...state,
+						currentX: null,
+						currentZ: null,
+						mode: "deleteMultiple",
+						multipleX: [],
+						multipleZ: [],
+						selectedAsset: null,
+						selectedItem: null
+					};
+		}
+
+		case SET_SELECT_MODE: {
+			return state.mode == "selectMultiple"
+				? { ...state, mode: "" }
+				: {
+						...state,
+						currentX: null,
+						currentZ: null,
+						mode: "selectMultiple",
+						selectedAsset: null,
+						selectedItem: null
+					};
+		}
+
+		case DELETE_MULTIPLE_ASSETS: {
+			if (state.firstX == null && state.firstY == null) {
+				window.lastMouseCoords = {
+					x: window.mouseCoords.x,
+					y: window.mouseCoords.y
+				};
+				return {
+					...state,
+					firstX: action.payload.x,
+					firstY: action.payload.y
+				};
+			}
+			const gridCopy = deepCopy(state.grid);
+
+			let positions = {
+				xOne: state.firstX,
+				yOne: state.firstY,
+				xTwo: action.payload.x,
+				yTwo: action.payload.y
+			};
+
+			let newGrid;
+
+			if (
+				positions.xOne > positions.xTwo &&
+				positions.yOne > positions.yTwo
+			) {
+				newGrid = massDelete(
+					positions.yTwo,
+					positions.yOne,
+					positions.xTwo,
+					positions.xOne,
+					positions.xTwo,
+					gridCopy
+				);
+			} else if (positions.xOne > positions.xTwo) {
+				newGrid = massDelete(
+					positions.yOne,
+					positions.yTwo,
+					positions.xTwo,
+					positions.xOne,
+					positions.xTwo,
+					gridCopy
+				);
+			} else if (positions.yOne > positions.yTwo) {
+				newGrid = massDelete(
+					positions.yTwo,
+					positions.yOne,
+					positions.xOne,
+					positions.xTwo,
+					positions.xOne,
+					gridCopy
+				);
+			} else {
+				newGrid = massDelete(
+					positions.yOne,
+					positions.yTwo,
+					positions.xOne,
+					positions.xTwo,
+					positions.xOne,
+					gridCopy
+				);
+			}
+
+			window.lastMouseCoords = {
+				x: null,
+				y: null
+			};
+
+			return {
+				...state,
+				firstX: null,
+				firstY: null,
+				mode: "none",
+				grid: newGrid
+			};
+		}
+
+		case SELECT_MULTIPLE_ASSETS: {
+			if (state.firstX == null && state.firstY == null) {
+				window.lastMouseCoords = {
+					x: window.mouseCoords.x,
+					y: window.mouseCoords.y
+				};
+				return {
+					...state,
+					firstX: action.payload.x,
+					firstY: action.payload.y
+				};
+			}
+			const gridCopy = deepCopy(state.grid);
+
+			let positions = {
+				xOne: state.firstX,
+				yOne: state.firstY,
+				xTwo: action.payload.x,
+				yTwo: action.payload.y
+			};
+
+			var gridPoints;
+
+			if (
+				positions.xOne > positions.xTwo &&
+				positions.yOne > positions.yTwo
+			) {
+				gridPoints = massSelect(
+					positions.yTwo,
+					positions.yOne,
+					positions.xTwo,
+					positions.xOne,
+					positions.xTwo,
+					gridCopy
+				);
+			} else if (positions.xOne > positions.xTwo) {
+				gridPoints = massSelect(
+					positions.yOne,
+					positions.yTwo,
+					positions.xTwo,
+					positions.xOne,
+					positions.xTwo,
+					gridCopy
+				);
+			} else if (positions.yOne > positions.yTwo) {
+				gridPoints = massSelect(
+					positions.yTwo,
+					positions.yOne,
+					positions.xOne,
+					positions.xTwo,
+					positions.xOne,
+					gridCopy
+				);
+			} else {
+				gridPoints = massSelect(
+					positions.yOne,
+					positions.yTwo,
+					positions.xOne,
+					positions.xTwo,
+					positions.xOne,
+					gridCopy
+				);
+			}
+			var multipleZArray = gridPoints[0];
+			var multipleXArray = gridPoints[1];
+
+			window.lastMouseCoords = {
+				x: null,
+				y: null
+			};
+			return {
+				...state,
+				currentX: multipleXArray[0],
+				currentZ: multipleZArray[0],
+				firstX: null,
+				firstY: null,
+				mode: "none",
+				grid: gridCopy,
+				multipleX: multipleXArray,
+				multipelZ: multipleZArray
 			};
 		}
 
@@ -324,94 +654,359 @@ export default function(
 			const gridCopy = deepCopy(state.grid);
 			const currentX = state.currentX;
 			const currentZ = state.currentZ;
-			const currentRotation = getCellRotation(gridCopy, currentX, currentZ);
-			const prevStickers = getStickers(gridCopy, currentX, currentZ);
+			var multipleX = state.multipleX;
+			var multipleZ = state.multipleZ;
+			let assetArray = state.selectedAssets;
+			let itemArray = state.selectedItems;
+			var stickerHolder = [];
+			var rotationHolder = [];
+			var i = 0;
+			var arrayLength = multipleX.length;
 			let selectedItem = getItem(gridCopy, currentX, currentZ);
 			let adjSide;
 			let newGrid;
+			var collision = false;
 
-			if (selectedAsset.id && HS_ASSETS[selectedAsset.id].spanX == 2) {
-				adjSide = 3 - ((currentRotation + 180) % 360) / 90;
+			for (i; i < arrayLength; i++) {
+				stickerHolder.push(
+					getStickers(gridCopy, multipleX[i], multipleZ[i])
+				);
+
+				rotationHolder.push(
+					getCellRotation(gridCopy, multipleX[i], multipleZ[i])
+				);
+
 			}
+			i = 0;
+
+			var arrangedItems = arrangeItems(
+				multipleX,
+				multipleZ,
+				assetArray,
+				itemArray,
+				stickerHolder,
+				rotationHolder,
+				action.payload
+			);
+
+			multipleX = arrangedItems[0];
+			multipleZ = arrangedItems[1];
+			assetArray = arrangedItems[2];
+			itemArray = arrangedItems[3];
+			stickerHolder = arrangedItems[4];
+			rotationHolder = arrangedItems[5];
 
 			switch (action.payload) {
 				case "xRight":
-					newGrid = deleteItem(gridCopy, currentX, currentZ);
-					if (isCellAvailable(gridCopy, currentX + 1, currentZ, adjSide)) {
-						newGrid = insertItem(
-							newGrid,
-							selectedAsset.id,
-							currentX + 1,
-							currentZ,
-							currentRotation,
-							prevStickers
-						);
-						selectedItem.adj = getAdjacentSpaces(newGrid, currentX + 1, currentZ, selectedAsset);
+					for (i; i < arrayLength; i++) {
+						var nudge = 1;
+						adjSide = null;
+						if (
+							assetArray[i].id &&
+							HS_ASSETS[assetArray[i].id].spanX == 2
+						) {
+							adjSide =
+								3 - ((rotationHolder[i] + 180) % 360) / 90;
+						}
+
+						if (assetArray[i].id == "desk" || assetArray[i].id == "bed-1") {
+							if(rotationHolder[i] != 0) {
+								nudge = 0;
+							}
+							multipleX[i] += 1;
+						}
+						if (
+							isCellAvailable(
+								gridCopy,
+								multipleX[i] + nudge,
+								multipleZ[i],
+								adjSide,
+								"xRight"
+							)
+						) {
+							if (assetArray[i].id == "desk" || assetArray[i].id == "bed-1") {
+								multipleX[i] -= 1;
+							}
+							newGrid = deleteItem(
+								gridCopy,
+								multipleX[i],
+								multipleZ[i]
+							);
+							newGrid = insertItem(
+								newGrid,
+								assetArray[i].id,
+								multipleX[i] + 1,
+								multipleZ[i],
+								rotationHolder[i],
+								stickerHolder[i]
+							);
+							itemArray[i].adj = getAdjacentSpaces(
+								newGrid,
+								multipleX[i] + 1,
+								multipleZ[i],
+								assetArray[i]
+							);
+							multipleX[i] = multipleX[i] + 1;
+						} else {
+							if (assetArray[i].id == "desk" || assetArray[i].id == "bed-1") {
+								multipleX[i] -= 1;
+							}
+							collision = true;
+						}
+					}
+					if (collision) {
 						return {
 							...state,
-							currentX: currentX + 1,
+							currentX: multipleX[arrayLength - 1],
+							currentZ: multipleZ[arrayLength - 1],
+							grid: gridCopy,
+							multipleX: multipleX,
+							multipleZ: multipleZ
+						};
+					} else {
+						return {
+							...state,
+							currentX: multipleX[arrayLength - 1],
+							currentZ: multipleZ[arrayLength - 1],
 							grid: newGrid,
-							selectedItem: selectedItem
+							multipleX: multipleX,
+							multipleZ: multipleZ
 						};
 					}
 					break;
 				case "xLeft":
-					newGrid = deleteItem(gridCopy, currentX, currentZ);
-					if (isCellAvailable(gridCopy, currentX - 1, currentZ, adjSide)) {
-						newGrid = insertItem(
-							newGrid,
-							selectedAsset.id,
-							currentX - 1,
-							currentZ,
-							currentRotation,
-							prevStickers
-						);
-						selectedItem.adj = getAdjacentSpaces(newGrid, currentX - 1, currentZ, selectedAsset);
+					for (i; i < arrayLength; i++) {
+						var nudge = 1;
+						adjSide = null;
+						if (
+							assetArray[i].id &&
+							HS_ASSETS[assetArray[i].id].spanX == 2
+						) {
+							adjSide =
+								3 - ((rotationHolder[i] + 180) % 360) / 90;
+						}
+
+						if (assetArray[i].id == "desk" || assetArray[i].id == "bed-1") {
+							if(rotationHolder[i] != 180) {
+								nudge = 0;
+							}
+							multipleX[i] -= 1;
+						}
+
+						if (
+							isCellAvailable(
+								gridCopy,
+								multipleX[i] - nudge,
+								multipleZ[i],
+								adjSide,
+								"xLeft"
+							)
+						) {
+							if (assetArray[i].id == "desk" || assetArray[i].id == "bed-1") {
+								multipleX[i] += 1;
+							}
+							newGrid = deleteItem(
+								gridCopy,
+								multipleX[i],
+								multipleZ[i]
+							);
+							newGrid = insertItem(
+								newGrid,
+								assetArray[i].id,
+								multipleX[i] - 1,
+								multipleZ[i],
+								rotationHolder[i],
+								stickerHolder[i]
+							);
+							itemArray[i].adj = getAdjacentSpaces(
+								newGrid,
+								multipleX[i] - 1,
+								multipleZ[i],
+								assetArray[i]
+							);
+							multipleX[i] = multipleX[i] - 1;
+						} else {
+							if (assetArray[i].id == "desk" || assetArray[i].id == "bed-1") {
+								multipleX[i] += 1;
+							}
+							collision = true;
+						}
+					}
+					if (collision) {
 						return {
 							...state,
-							currentX: currentX - 1,
+							currentX: multipleX[arrayLength - 1],
+							currentZ: multipleZ[arrayLength - 1],
+							grid: gridCopy,
+							multipleX: multipleX,
+							multipleZ: multipleZ
+						};
+					} else {
+						return {
+							...state,
+							currentX: multipleX[arrayLength - 1],
+							currentZ: multipleZ[arrayLength - 1],
 							grid: newGrid,
-							selectedItem: selectedItem
+							multipleX: multipleX,
+							multipleZ: multipleZ
 						};
 					}
 					break;
 				case "zUp":
-					newGrid = deleteItem(gridCopy, currentX, currentZ);
-					if (isCellAvailable(gridCopy, currentX, currentZ - 1, adjSide)) {
-						newGrid = insertItem(
-							newGrid,
-							selectedAsset.id,
-							currentX,
-							currentZ - 1,
-							currentRotation,
-							prevStickers
-						);
-						selectedItem.adj = getAdjacentSpaces(newGrid, currentX, currentZ - 1, selectedAsset);
+					for (i; i < arrayLength; i++) {
+						var nudge = 1;
+						adjSide = null;
+						if (
+							assetArray[i].id &&
+							HS_ASSETS[assetArray[i].id].spanX == 2
+						) {
+							adjSide =
+								3 - ((rotationHolder[i] + 180) % 360) / 90;
+						}
+						if (assetArray[i].id == "desk" || assetArray[i].id == "bed-1") {
+							nudge = 0;
+							if (rotationHolder[i] == 270) {
+								nudge = -1;
+							}
+							multipleZ[i] -= 1;
+						}
+						if (
+							isCellAvailable(
+								gridCopy,
+								multipleX[i],
+								multipleZ[i] - nudge,
+								adjSide,
+								"zUp",
+								rotationHolder[i]
+							)
+						) {
+							if (assetArray[i].id == "desk" || assetArray[i].id == "bed-1") {
+								multipleZ[i] += 1;
+							}
+							newGrid = deleteItem(
+								gridCopy,
+								multipleX[i],
+								multipleZ[i]
+							);
+							newGrid = insertItem(
+								newGrid,
+								assetArray[i].id,
+								multipleX[i],
+								multipleZ[i] - 1,
+								rotationHolder[i],
+								stickerHolder[i]
+							);
+							itemArray[i].adj = getAdjacentSpaces(
+								newGrid,
+								multipleX[i],
+								multipleZ[i] - 1,
+								assetArray[i]
+							);
+							multipleZ[i] = multipleZ[i] - 1;
+						} else {
+							if (assetArray[i].id == "desk" || assetArray[i].id == "bed-1") {
+								multipleZ[i] += 1;
+							}
+							collision = true;
+						}
+					}
+					if (collision) {
 						return {
 							...state,
-							currentZ: currentZ - 1,
+							currentX: multipleX[arrayLength - 1],
+							currentZ: multipleZ[arrayLength - 1],
+							grid: gridCopy,
+							multipleX: multipleX,
+							multipleZ: multipleZ
+						};
+					} else {
+						return {
+							...state,
+							currentX: multipleX[arrayLength - 1],
+							currentZ: multipleZ[arrayLength - 1],
 							grid: newGrid,
-							selectedItem: selectedItem
+							multipleX: multipleX,
+							multipleZ: multipleZ
 						};
 					}
 					break;
 				case "zDown":
-					newGrid = deleteItem(gridCopy, currentX, currentZ);
-					if (isCellAvailable(gridCopy, currentX, currentZ + 1, adjSide)) {
-						newGrid = insertItem(
-							newGrid,
-							selectedAsset.id,
-							currentX,
-							currentZ + 1,
-							currentRotation,
-							prevStickers
-						);
-						selectedItem.adj = getAdjacentSpaces(newGrid, currentX, currentZ + 1, selectedAsset);
+					for (i; i < arrayLength; i++) {
+						var nudge = 1;
+						adjSide = null;
+						if (
+							assetArray[i].id &&
+							HS_ASSETS[assetArray[i].id].spanX == 2
+						) {
+							adjSide =
+								3 - ((rotationHolder[i] + 180) % 360) / 90;
+						}
+						if (assetArray[i].id == "desk" || assetArray[i].id == "bed-1") {
+							if(multipleZ[i] != 10) {
+								nudge = 0;
+							}
+							if(rotationHolder[i] == 90) {
+								nudge = -1;
+							}
+							multipleZ[i] += 1;
+						}
+						if (
+							isCellAvailable(
+								gridCopy,
+								multipleX[i],
+								multipleZ[i] + nudge,
+								adjSide,
+								"zDown",
+								rotationHolder[i]
+							)
+						) {
+							if (assetArray[i].id == "desk" || assetArray[i].id == "bed-1") {
+								multipleZ[i] -= 1;
+							}
+							newGrid = deleteItem(
+								gridCopy,
+								multipleX[i],
+								multipleZ[i]
+							);
+							newGrid = insertItem(
+								newGrid,
+								assetArray[i].id,
+								multipleX[i],
+								multipleZ[i] + 1,
+								rotationHolder[i],
+								stickerHolder[i]
+							);
+							itemArray[i].adj = getAdjacentSpaces(
+								newGrid,
+								multipleX[i],
+								multipleZ[i] + 1,
+								assetArray[i]
+							);
+							multipleZ[i] = multipleZ[i] + 1;
+						} else {
+							if (assetArray[i].id == "desk" || assetArray[i].id == "bed-1") {
+								multipleZ[i] -= 1;
+							}
+							collision = true;
+						}
+					}
+					if (collision) {
 						return {
 							...state,
-							currentZ: currentZ + 1,
+							currentX: multipleX[arrayLength - 1],
+							currentZ: multipleZ[arrayLength - 1],
+							grid: gridCopy,
+							multipleX: multipleX,
+							multipleZ: multipleZ
+						};
+					} else {
+						return {
+							...state,
+							currentX: multipleX[arrayLength - 1],
+							currentZ: multipleZ[arrayLength - 1],
 							grid: newGrid,
-							selectedItem: selectedItem
+							multipleX: multipleX,
+							multipleZ: multipleZ
 						};
 					}
 					break;

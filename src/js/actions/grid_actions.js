@@ -83,10 +83,40 @@ export function selectAssetType(asset) {
 	};
 }
 
+export const SELECT_MULTIPLE_ASSETS = "SELECT_MULTIPLE_ASSETS";
+export function selectMultipleAssets(x, y) {
+	return {
+		type: SELECT_MULTIPLE_ASSETS,
+		payload: { x, y }
+	};
+}
+
+export const SET_DELETE_MODE = "SET_DELETE_MODE";
+export function setDeleteMode() {
+	return {
+		type: SET_DELETE_MODE
+	};
+}
+
+export const SET_SELECT_MODE = "SET_SELECT_MODE";
+export function setSelectMode() {
+	return {
+		type: SET_SELECT_MODE
+	};
+}
+
 export const UPDATE_ASSET_POSITION = "UPDATE_ASSET_POSITION";
 export function updateAssetPosition(axisDirection) {
 	return {
 		type: UPDATE_ASSET_POSITION,
 		payload: axisDirection
+	};
+}
+
+export const DELETE_MULTIPLE_ASSETS = "DELETE_MULTIPLE_ASSETS";
+export function deleteMultipleAssets(x, y) {
+	return {
+		type: DELETE_MULTIPLE_ASSETS,
+		payload: { x, y }
 	};
 }

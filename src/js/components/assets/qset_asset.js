@@ -30,19 +30,33 @@ export default class QsetAsset extends Component {
 		const { isSelected, selectedAssetId, x, z } = this.props;
 		const roundedX = Math.round(this.lastX);
 		const roundedZ = Math.round(this.lastZ);
-		if (roundedX && roundedZ &&!isNaN(roundedX) && !isNaN(roundedZ) && isSelected) {
+		if (
+			roundedX &&
+			roundedZ &&
+			!isNaN(roundedX) &&
+			!isNaN(roundedZ) &&
+			isSelected
+		) {
 			this.props.insertAsset(roundedX, roundedZ, selectedAssetId);
-		}
-		else {
+		} else {
 			this.props.insertAsset(x, z, selectedAssetId);
 		}
 	}
 
 	renderAsset() {
-		const { attributes, data, isSelected, mode, rotation, thirdPerson, x, z } = this.props;
+		const {
+			attributes,
+			data,
+			isSelected,
+			mode,
+			rotation,
+			thirdPerson,
+			selectedAssets,
+			x,
+			z
+		} = this.props;
 		const { onClick } = this.props;
 		const id = data.id;
-
 		return data.category === "construction" ? (
 			<Wall
 				attributes={attributes}
@@ -77,11 +91,19 @@ export default class QsetAsset extends Component {
 	}
 
 	renderAssetNonDrag() {
-		const { attributes, data, isSelected, mode, rotation, thirdPerson, x, z } = this.props;
+		const {
+			attributes,
+			data,
+			isSelected,
+			mode,
+			rotation,
+			thirdPerson,
+			x,
+			z
+		} = this.props;
 		const { onClick } = this.props;
 		const id = data.id;
-		const validClick = thirdPerson &&  mode != "editAsset";
-
+		const validClick = thirdPerson && mode != "editAsset";
 		return data.category === "construction" ? (
 			<Wall
 				type={id}

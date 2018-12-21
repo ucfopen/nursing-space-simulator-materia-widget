@@ -10,6 +10,7 @@ import {
 	REMOVE_ASSET,
 	SELECT_ASSET,
 	SELECT_ASSET_TYPE,
+	SET_DELETE_MODE
  } from "../actions/grid_actions";
 import {
 	BAD_INSERT,
@@ -106,6 +107,14 @@ export default function(
 				temporary: false,
 				persistent: true,
 				persistentText: "Click on a valid space to auto-fill walls."
+			};
+
+		case SET_DELETE_MODE:
+			return {
+				...state,
+				temporary: false,
+				persistent: true,
+				persistentText: "Click two points on the grid to create a red box that deletes everything inside of it."
 			};
 
 		case SELECT_ASSET_TYPE:

@@ -26,6 +26,9 @@ export default class FloorUnit extends Component {
 			currentX,
 			currentZ,
 			mode,
+			multipleX,
+			multipleZ,
+			deleteMode,
 			selectedAsset,
 			thirdPerson,
 			validX,
@@ -35,9 +38,27 @@ export default class FloorUnit extends Component {
 		} = this.props;
 		const { onClick } = this.props;
 
+		if (mode == "selectMultiple") {
+			var arrayLength = multipleX.length;
+			if (arrayLength > 0) {
+				for (var i = 0; i < arrayLength; i++) {
+					onClick(multipleX[i], multipleZ[i], window.mouseCoords);
+				}
+			} else {
+				onClick(x, z, window.mouseCoords);
+			}
+			return;
+		}
+
+		if (mode == "deleteMultiple") {
+			onClick(x, z, window.mouseCoords);
+			return;
+		}
+
 		if (!thirdPerson || mode == "editAsset") return;
 
-		if (mode == "extendWall") onClick(x, z, currentX, currentZ, validX, validZ);
+		if (mode == "extendWall")
+			onClick(x, z, currentX, currentZ, validX, validZ);
 		else if (selectedAsset) onClick(x, z, selectedAsset.id);
 	}
 
@@ -63,14 +84,22 @@ export default class FloorUnit extends Component {
 		const rotation = selectedItem ? selectedItem.rotation : 180;
 		const adjSide = 3 - ((rotation + 180) % 360) / 90;
 		return {
-			x: adjSide % 2 == 0 ? x : (x + 2 - adjSide),
+			x: adjSide % 2 == 0 ? x : x + 2 - adjSide,
 			y: y,
-			z: adjSide % 2 == 0 ? (z + adjSide - 1) : z
-		}
+			z: adjSide % 2 == 0 ? z + adjSide - 1 : z
+		};
 	}
 
 	render() {
-		const { mode, selectedAsset, validX, validZ, x, z } = this.props;
+		const {
+			mode,
+			selectedAsset,
+			selectedAssets,
+			validX,
+			validZ,
+			x,
+			z
+		} = this.props;
 
 		return (
 			<Entity>
@@ -83,17 +112,17 @@ export default class FloorUnit extends Component {
 					height="1"
 					material={
 						mode == "extendWall"
-							? ({
-								color: this.highlightExtend() ? "green" : "#ff7777",
-								opacity: this.state.active ? 0.7 : 0.4
-							})
-							: (
-								this.state.active && selectedAsset
-									? this.isValidPlace()
-										? "color: green; opacity: 0.5;"
-										: "color: red; opacity: 0.5;"
-									: "opacity: 0"
-							)
+							? {
+									color: this.highlightExtend()
+										? "green"
+										: "#ff7777",
+									opacity: this.state.active ? 0.7 : 0.4
+								}
+							: this.state.active && selectedAsset
+								? this.isValidPlace()
+									? "color: green; opacity: 0.5;"
+									: "color: red; opacity: 0.5;"
+								: "opacity: 0"
 					}
 					position={{ x, y: "0.25", z }}
 					primitive="a-plane"
@@ -101,26 +130,23 @@ export default class FloorUnit extends Component {
 					scale={{ x: "1", y: "1", z: "1" }}
 					width="1"
 				/>
-				{	this.state.active &&
-					selectedAsset &&
-					selectedAsset.spanX == 2
-					? (
-						<Entity
-							height="1"
-							material={
-								this.isValidPlace()
-									? "color: green; opacity: 0.5;"
-									: "color: red; opacity: 0.5;"
-							}
-							position={ this.nextBedPosition(x, 0.25, z) }
-							primitive="a-plane"
-							rotation={{ x: "-90", y: "0", z: "0" }}
-							scale={{ x: "1", y: "1", z: "1" }}
-							width="1"
-						/>
-					)
-					: null
-				}
+				{this.state.active &&
+				selectedAsset &&
+				selectedAsset.spanX == 2 ? (
+					<Entity
+						height="1"
+						material={
+							this.isValidPlace()
+								? "color: green; opacity: 0.5;"
+								: "color: red; opacity: 0.5;"
+						}
+						position={this.nextBedPosition(x, 0.25, z)}
+						primitive="a-plane"
+						rotation={{ x: "-90", y: "0", z: "0" }}
+						scale={{ x: "1", y: "1", z: "1" }}
+						width="1"
+					/>
+				) : null}
 			</Entity>
 		);
 	}

@@ -14,7 +14,7 @@ import {
 	rotateAsset,
 	selectAssetType,
 	updateAssetPosition
-} from "../../actions/grid_actions"
+} from "../../actions/grid_actions";
 import {
 	setCategory,
 	toggleHelpVisibility,
@@ -24,11 +24,16 @@ import {
 import { showErrorTooltip } from "../../actions/tooltip_actions";
 
 export class KeyboardControls extends Component {
-
-	processKey (e) {
+	processKey(e) {
 		document.activeElement.blur();
 
-		const { currentX, currentZ, mode, selectedAsset, thirdPerson } = this.props;
+		const {
+			currentX,
+			currentZ,
+			mode,
+			selectedAsset,
+			thirdPerson
+		} = this.props;
 		const {
 			deselectAsset,
 			editAsset,
@@ -45,12 +50,11 @@ export class KeyboardControls extends Component {
 		} = this.props;
 
 		if (!thirdPerson) {
-			if (e.key == "Escape")
-				toggleThirdPerson();
+			if (e.key == "Escape") toggleThirdPerson();
 			return;
 		}
 
-		switch(e.key.toUpperCase()) {
+		switch (e.key.toUpperCase()) {
 			case "X":
 			case "-":
 				return updateCameraPosition("yUp");
@@ -68,10 +72,12 @@ export class KeyboardControls extends Component {
 
 			case "ESCAPE":
 			case "Q":
-				if (mode == "manipulation" ||
+				if (
+					mode == "manipulation" ||
 					mode == "editAsset" ||
 					mode == "extendWall" ||
-					mode == "assetTypeSelected")
+					mode == "assetTypeSelected"
+				)
 					return deselectAsset(mode == "editAsset");
 				break;
 
@@ -88,7 +94,8 @@ export class KeyboardControls extends Component {
 				break;
 
 			case "V":
-				if (mode == "manipulation" &&
+				if (
+					mode == "manipulation" &&
 					selectedAsset &&
 					["wall-1", "door-1"].includes(selectedAsset.id)
 				) {
@@ -97,7 +104,8 @@ export class KeyboardControls extends Component {
 				break;
 
 			case "E":
-				if (mode == "manipulation" &&
+				if (
+					mode == "manipulation" &&
 					selectedAsset &&
 					selectedAsset.id == "wall-1"
 				) {
@@ -108,7 +116,7 @@ export class KeyboardControls extends Component {
 			case "1":
 			case "2":
 			case "3":
-					setCategory(HS_CATEGORIES[parseInt(e.key) - 1]);
+				setCategory(HS_CATEGORIES[parseInt(e.key) - 1]);
 				break;
 
 			case "F":
@@ -116,8 +124,7 @@ export class KeyboardControls extends Component {
 				if (mode != "extendWall" && mode != "editAsset") {
 					if (selectedAsset && selectedAsset.id == "pov_camera") {
 						deselectAsset();
-					}
-					else {
+					} else {
 						selectAssetType({
 							id: "pov_camera",
 							title: "POV Camera"
@@ -128,28 +135,28 @@ export class KeyboardControls extends Component {
 			case "ARROWUP":
 			case "W":
 				if (mode == "manipulation") {
-					updateAssetPosition("zUp")
+					updateAssetPosition("zUp");
 				}
 				break;
 
 			case "ARROWLEFT":
 			case "A":
 				if (mode == "manipulation") {
-					updateAssetPosition("xLeft")
+					updateAssetPosition("xLeft");
 				}
 				break;
 
 			case "ARROWDOWN":
 			case "S":
 				if (mode == "manipulation") {
-					updateAssetPosition("zDown")
+					updateAssetPosition("zDown");
 				}
 				break;
 
 			case "ARROWRIGHT":
 			case "D":
 				if (mode == "manipulation") {
-					updateAssetPosition("xRight")
+					updateAssetPosition("xRight");
 				}
 				break;
 
@@ -160,19 +167,18 @@ export class KeyboardControls extends Component {
 
 	render() {
 		const { shortcutsEnabled, thirdPerson } = this.props;
-		window.onkeydown = (e) => {
-			shortcutsEnabled
-				? this.processKey(e)
-				: null
+		window.onkeydown = e => {
+			shortcutsEnabled ? this.processKey(e) : null;
 		};
 
 		return (
 			<button
 				id="keyboard-shortcut"
 				className={shortcutsEnabled ? "active" : null}
-				onClick={(e) => this.props.toggleHelpVisibility()}
+				onClick={e => this.props.toggleHelpVisibility()}
 				// preventDefault on mousedown prevents items underneath from being dragged
-				onMouseDown={(e)=>e.preventDefault()}>
+				onMouseDown={e => e.preventDefault()}
+			>
 				Help and Keyboard Shortcuts
 			</button>
 		);
@@ -184,6 +190,8 @@ function mapStateToProps({ grid, position, menu }) {
 		currentX: grid.currentX,
 		currentZ: grid.currentZ,
 		mode: grid.mode,
+		multipleX: grid.multipleX,
+		multipleZ: grid.multipleZ,
 		selectedAsset: grid.selectedAsset,
 		shortcutsEnabled: menu.shortcutsEnabled,
 		thirdPerson: position.thirdPerson
@@ -208,8 +216,7 @@ export default connect(mapStateToProps, {
 })(KeyboardControls);
 
 export function getCurrentPosition() {
-	if (!document || !document.querySelector('#cameratp'))
-		return null;
+	if (!document || !document.querySelector("#cameratp")) return null;
 
-	return document.querySelector('#cameratp').getAttribute('position');
+	return document.querySelector("#cameratp").getAttribute("position");
 }

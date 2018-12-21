@@ -33,13 +33,11 @@ export function loadGrid(gridString, rows, columns) {
 	}
 
 	let tempGrid = gridString.split(" ");
-	return (
-		[...Array(rows)].map(() => {
-			return tempGrid.splice(0, columns).map(gridItem => {
-				return _getAssetInfo(gridItem);
-			});
-		})
-	);
+	return [...Array(rows)].map(() => {
+		return tempGrid.splice(0, columns).map(gridItem => {
+			return _getAssetInfo(gridItem);
+		});
+	});
 }
 
 /**
@@ -66,13 +64,13 @@ export function rotateCell(grid, x, z) {
 		const id = grid[row][col].id;
 		if (id && HS_ASSETS[id].spanX == 2) {
 			const adjSideNew = 3 - ((rotationNew + 180) % 360) / 90;
-			const adjXNew = adjSideNew % 2 == 0 ? x : (x + 2 - adjSideNew);
-			const adjZNew = adjSideNew % 2 == 0 ? (z + adjSideNew - 1) : z;
+			const adjXNew = adjSideNew % 2 == 0 ? x : x + 2 - adjSideNew;
+			const adjZNew = adjSideNew % 2 == 0 ? z + adjSideNew - 1 : z;
 
 			const rotationOld = grid[row][col].rotation;
 			const adjSideOld = 3 - ((rotationOld + 180) % 360) / 90;
-			const adjXOld = adjSideOld % 2 == 0 ? x : (x + 2 - adjSideOld);
-			const adjZOld = adjSideOld % 2 == 0 ? (z + adjSideOld - 1) : z;
+			const adjXOld = adjSideOld % 2 == 0 ? x : x + 2 - adjSideOld;
+			const adjZOld = adjSideOld % 2 == 0 ? z + adjSideOld - 1 : z;
 
 			if (grid[adjZOld][adjXOld] == "X") {
 				grid[adjZOld][adjXOld] = "0";
@@ -93,7 +91,7 @@ export function rotateCell(grid, x, z) {
 
 	// rotates the stickers, if available
 	if (grid[row][col].stickers) {
-		grid[row][col].stickers.unshift(grid[row][col].stickers.pop())
+		grid[row][col].stickers.unshift(grid[row][col].stickers.pop());
 	}
 
 	return grid;
@@ -116,16 +114,14 @@ export function deleteItem(grid, x, z) {
 	const col = x,
 		row = z;
 
-
-	if (grid[row][col] && grid[row][col] != "0" && grid[row][col] != "X")
-	{
+	if (grid[row][col] && grid[row][col] != "0" && grid[row][col] != "X") {
 		// check the span of the asset, currenly only supports X-span of 2
 		const id = grid[row][col].id;
 		if (id && HS_ASSETS[id].spanX == 2) {
 			const rotation = grid[row][col].rotation;
 			const adjSide = 3 - ((rotation + 180) % 360) / 90;
-			const adjX = adjSide % 2 == 0 ? x : (x + 2 - adjSide);
-			const adjZ = adjSide % 2 == 0 ? (z + adjSide - 1) : z;
+			const adjX = adjSide % 2 == 0 ? x : x + 2 - adjSide;
+			const adjZ = adjSide % 2 == 0 ? z + adjSide - 1 : z;
 			if (grid[adjZ][adjX] == "X") {
 				grid[adjZ][adjX] = "0";
 			}
@@ -135,6 +131,138 @@ export function deleteItem(grid, x, z) {
 	grid[row][col] = "0";
 
 	return grid;
+}
+
+/**
+ * deletes multiple items from the grid
+ *
+ * @param {int} counter counter for outer for loop
+ * @param {int} stopper stopping condition for outer for loop
+ * @param {int} innerCounter counter for inner for loop
+ * @param {int} innerStopper stopping condition for inner for loop
+ * @param {int} innerCounterReset saved value for innerCounter when leaving the inner for loop
+ * @param {array} grid grid to be updated
+ *
+ * @return updated grid
+ */
+export function massDelete(
+	counter,
+	stopper,
+	innerCounter,
+	innerStopper,
+	innerCounterReset,
+	grid
+) {
+	for (counter; counter <= stopper; counter++) {
+		for (innerCounter; innerCounter <= innerStopper; innerCounter++) {
+			grid[counter][innerCounter] = "0";
+		}
+		innerCounter = innerCounterReset;
+	}
+	return grid;
+}
+
+/**
+ * deletes multiple items from the grid
+ *
+ * @param {int} counter counter for outer for loop
+ * @param {int} stopper stopping condition for outer for loop
+ * @param {int} innerCounter counter for inner for loop
+ * @param {int} innerStopper stopping condition for inner for loop
+ * @param {int} innerCounterReset saved value for innerCounter when leaving the inner for loop
+ * @param {array} grid grid to be updated
+ *
+ * @return updated grid
+ */
+export function massSelect(
+	counter,
+	stopper,
+	innerCounter,
+	innerStopper,
+	innerCounterReset,
+	grid
+) {
+	var multipleZArray = [];
+	var multipleXArray = [];
+	for (counter; counter <= stopper; counter++) {
+		for (innerCounter; innerCounter <= innerStopper; innerCounter++) {
+			if (grid[counter][innerCounter] != "0") {
+				multipleZArray.push(counter);
+				multipleXArray.push(innerCounter);
+			}
+		}
+		innerCounter = innerCounterReset;
+	}
+	return [multipleZArray, multipleXArray];
+}
+
+/**
+ * arranges assetArray order to avoid error when moving multiple assets
+ *
+ * @param {array} multipleX array that holds the x values for the selected assets
+ * @param {array} multipleZ array that holds the z values for the selected assets
+ * @param {array} assets array that holds currently selected assets
+ * @param {array} assetItems array that holds currently selected items
+ * @param {array} stickers array that holds the stickers on the currently selected assets
+ * @param {array} rotations array that holds the rotations of the currently selected assets
+ * @param {string} direction direction in which the assets are being moved
+ *
+ * @return array included sorted arrays of assets
+ */
+export function arrangeItems(
+	multipleX,
+	multipleZ,
+	assets,
+	assetItems,
+	stickers,
+	rotations,
+	direction
+) {
+	//combine arrays
+	var items = [];
+	for (var i = 0; i < assets.length; i++) {
+		items.push({
+			x: multipleX[i],
+			z: multipleZ[i],
+			asset: assets[i],
+			item: assetItems[i],
+			sticker: stickers[i],
+			rotation: rotations[i]
+		});
+	}
+
+	switch (direction) {
+		case "xRight":
+			items.sort(function(a, b) {
+				return a.x > b.x ? -1 : a.x == b.x ? 0 : 1;
+			});
+			break;
+		case "xLeft":
+			items.sort(function(a, b) {
+				return a.x < b.x ? -1 : a.x == b.x ? 0 : 1;
+			});
+			break;
+		case "zUp":
+			items.sort(function(a, b) {
+				return a.z < b.z ? -1 : a.z == b.z ? 0 : 1;
+			});
+			break;
+		case "zDown":
+			items.sort(function(a, b) {
+				return a.z > b.z ? -1 : a.z == b.z ? 0 : 1;
+			});
+			break;
+	}
+	//separate the arrays
+	for (var j = 0; j < items.length; j++) {
+		multipleX[j] = items[j].x;
+		multipleZ[j] = items[j].z;
+		assets[j] = items[j].asset;
+		assetItems[j] = items[j].item;
+		stickers[j] = items[j].sticker;
+		rotations[j] = items[j].rotation;
+	}
+	return [multipleX, multipleZ, assets, assetItems, stickers, rotations];
 }
 
 /**
@@ -148,7 +276,14 @@ export function deleteItem(grid, x, z) {
  *
  * @return updated grid
  */
-export function insertItem(grid, itemId, x, z, rotation = 180, stickers = null) {
+export function insertItem(
+	grid,
+	itemId,
+	x,
+	z,
+	rotation = 180,
+	stickers = null
+) {
 	if (grid === null || x === null || z === null) {
 		return null;
 	}
@@ -168,8 +303,8 @@ export function insertItem(grid, itemId, x, z, rotation = 180, stickers = null) 
 	// if an asset spans multiple spaces, flag those spaces as occupied
 	if (itemId && HS_ASSETS[itemId].spanX == 2) {
 		const adjSide = 3 - ((rotation + 180) % 360) / 90;
-		const adjX = adjSide % 2 == 0 ? x : (x + 2 - adjSide);
-		const adjZ = adjSide % 2 == 0 ? (z + adjSide - 1) : z;
+		const adjX = adjSide % 2 == 0 ? x : x + 2 - adjSide;
+		const adjZ = adjSide % 2 == 0 ? z + adjSide - 1 : z;
 		if (isCellAvailable(grid, adjX, adjZ)) {
 			grid[adjZ][adjX] = "X";
 		}
@@ -187,28 +322,50 @@ export function insertItem(grid, itemId, x, z, rotation = 180, stickers = null) 
  * checks to see if an item is placed in a grid cell
  *
  * @param {array} grid grid to be checked
- * @param {int} col column of gridcell to be checked
- * @param {int} row row of gridcell to be checked
+ * @param {int} x column of gridcell to be checked
+ * @param {int} z row of gridcell to be checked
  * @param {int} adjSide adjacent side to be checked as well, if included
+ * @param {string} direction direction in which the assets are moving
  *
  * @return boolean
  */
-export function isCellAvailable(grid, x, z, adjSide = null) {
+export function isCellAvailable(
+	grid,
+	x,
+	z,
+	adjSide = null,
+	direction = null,
+	rotation = null
+) {
 	if (grid === null || x === null || z === null || isNaN(x) || isNaN(z)) {
 		return false;
 	}
 
-	const col = x,
-		row = z;
+	if (rotation == 0 || rotation == 180) {
+		var horizontal = true;
+	} else {
+		var vertical = true;
+	}
+
+	if (direction == "xLeft" && adjSide != null && !vertical) {
+		var col = x - 1,
+			row = z;
+	} else if (direction == "zUp" && adjSide != null && !horizontal) {
+		var col = x,
+			row = z - 1;
+	} else if (direction == "zDown" && adjSide != null && !horizontal) {
+		var col = x,
+			row = z + 1;
+	} else if (direction == "xRight" && adjSide != null && !vertical) {
+		var col = x + 1,
+			row = z;
+	} else {
+		var col = x,
+			row = z;
+	}
 
 	if (!isInBounds(grid, row, col)) return false;
 
-	if (adjSide != null)
-	{
-		const adjX = adjSide % 2 == 0 ? x : (x + 2 - adjSide);
-		const adjZ = adjSide % 2 == 0 ? (z + adjSide - 1) : z;
-		return (grid[row][col] === "0" && isCellAvailable(grid, adjX, adjZ));
-	}
 	return grid[row][col] === "0";
 }
 
@@ -291,35 +448,26 @@ export function findValidExtends(grid, x, z) {
 	// Valid direction array in order: up, right, down, left
 	let dir = [true, true, true, true];
 	let level = 1;
-	while (dir[0] || dir[1] || dir[2] || dir[3])
-	{
-		if (dir[0]) // up
-		{
-			if (isCellAvailable(grid, x, z - level))
-				validZ.push(z - level);
-			else
-				dir[0] = false;
+	while (dir[0] || dir[1] || dir[2] || dir[3]) {
+		if (dir[0]) {
+			// up
+			if (isCellAvailable(grid, x, z - level)) validZ.push(z - level);
+			else dir[0] = false;
 		}
-		if (dir[1]) // right
-		{
-			if (isCellAvailable(grid, x + level, z))
-				validX.push(x + level);
-			else
-				dir[1] = false;
+		if (dir[1]) {
+			// right
+			if (isCellAvailable(grid, x + level, z)) validX.push(x + level);
+			else dir[1] = false;
 		}
-		if (dir[2]) // down
-		{
-			if (isCellAvailable(grid, x, z + level))
-				validZ.push(z + level);
-			else
-				dir[2] = false;
+		if (dir[2]) {
+			// down
+			if (isCellAvailable(grid, x, z + level)) validZ.push(z + level);
+			else dir[2] = false;
 		}
-		if (dir[3]) // left
-		{
-			if (isCellAvailable(grid, x - level, z))
-				validX.push(x - level);
-			else
-				dir[3] = false;
+		if (dir[3]) {
+			// left
+			if (isCellAvailable(grid, x - level, z)) validX.push(x - level);
+			else dir[3] = false;
 		}
 		level++;
 	}
@@ -343,20 +491,16 @@ export function insertWalls(grid, startX, startZ, endX, endZ) {
 		let x = endX;
 		let z = Math.min(startZ, endZ);
 		let end = Math.max(startZ, endZ);
-		while (z <= end)
-		{
-			if (z != startZ)
-				grid = insertItem(grid, "wall-1", x, z, 0);
+		while (z <= end) {
+			if (z != startZ) grid = insertItem(grid, "wall-1", x, z, 0);
 			z++;
 		}
 	} else {
 		let z = endZ;
 		let x = Math.min(startX, endX);
 		let end = Math.max(startX, endX);
-		while (x <= end)
-		{
-			if (x != startX)
-				grid = insertItem(grid, "wall-1", x, z, 0);
+		while (x <= end) {
+			if (x != startX) grid = insertItem(grid, "wall-1", x, z, 0);
 			x++;
 		}
 	}
@@ -376,13 +520,11 @@ export function insertWalls(grid, startX, startZ, endX, endZ) {
  * @return stickers at given point
  */
 export function getStickers(grid, x, z, checkAdj) {
-	if (!grid[z][x].stickers)
-		grid[z][x].stickers = ["0", "0", "0", "0"];
+	if (!grid[z][x].stickers) grid[z][x].stickers = ["0", "0", "0", "0"];
 
 	if (checkAdj) {
 		grid = updateStickers(grid, x, z, false);
 	}
-
 	return grid[z][x].stickers;
 }
 
@@ -402,24 +544,27 @@ export function updateStickers(grid, x, z, createNew) {
 		grid[z][x].stickers = ["0", "0", "0", "0"];
 
 	for (let side = 0; side < 4; side++) {
-		const adjX = side % 2 == 0 ? x : (x + 2 - side);
-		const adjZ = side % 2 == 0 ? (z + side - 1) : z;
+		const adjX = side % 2 == 0 ? x : x + 2 - side;
+		const adjZ = side % 2 == 0 ? z + side - 1 : z;
 		let adjItem = getItemId(grid, adjX, adjZ);
 
-		if (adjItem != "0" && ["wall-1", "door-1", "window"].includes(adjItem))
-		{
+		if (
+			adjItem != "0" &&
+			["wall-1", "door-1", "window"].includes(adjItem)
+		) {
 			// The "X" is a flag to show that a sticker cannot go on this side
 			if (grid[z][x].stickers) {
 				grid[z][x].stickers[side] = "X";
 			}
 
 			// Also update the adjacent wall if necessary
-			if ( ["wall-1", "door-1"].includes(adjItem) && grid[adjZ][adjX].stickers)
-			{
+			if (
+				["wall-1", "door-1"].includes(adjItem) &&
+				grid[adjZ][adjX].stickers
+			) {
 				if (side % 2 == 0) {
 					grid[adjZ][adjX].stickers[2 - side] = "X";
-				}
-				else {
+				} else {
 					grid[adjZ][adjX].stickers[4 - side] = "X";
 				}
 			}
@@ -468,21 +613,22 @@ export function getAdjacentSpaces(grid, x, z, selectedAsset) {
 
 	if (selectedAsset.spanX == 2) {
 		const rotation = getItem(grid, x, z).rotation;
-		if (rotation % 180 == 0) { // it's horizontal
+		if (rotation % 180 == 0) {
+			// it's horizontal
 			// top
-			let adjSide = rotation == 180 ? 3 : 1
+			let adjSide = rotation == 180 ? 3 : 1;
 			adjSpaces.push(isCellAvailable(grid, x, z - 1, adjSide));
 			// right
 			let adjX = rotation == 180 ? x + 1 : x + 2;
 			adjSpaces.push(isCellAvailable(grid, adjX, z));
 			// bottom
-			adjSide = rotation == 180 ? 3 : 1
+			adjSide = rotation == 180 ? 3 : 1;
 			adjSpaces.push(isCellAvailable(grid, x, z + 1, adjSide));
 			// right
 			adjX = rotation == 180 ? x - 2 : x - 1;
 			adjSpaces.push(isCellAvailable(grid, adjX, z));
-		}
-		else { // vertical
+		} else {
+			// vertical
 			// top
 			let adjZ = rotation == 90 ? z - 2 : z - 1;
 			adjSpaces.push(isCellAvailable(grid, x, adjZ));
@@ -496,11 +642,10 @@ export function getAdjacentSpaces(grid, x, z, selectedAsset) {
 			adjSide = rotation == 90 ? 0 : 2;
 			adjSpaces.push(isCellAvailable(grid, x - 1, z, adjSide));
 		}
-	}
-	else {
+	} else {
 		for (let side = 0; side < 4; side++) {
-			const adjX = side % 2 == 0 ? x : (x + 2 - side);
-			const adjZ = side % 2 == 0 ? (z + side - 1) : z;
+			const adjX = side % 2 == 0 ? x : x + 2 - side;
+			const adjZ = side % 2 == 0 ? z + side - 1 : z;
 			adjSpaces.push(isCellAvailable(grid, adjX, adjZ));
 		}
 	}
