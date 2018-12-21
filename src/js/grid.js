@@ -1,43 +1,8 @@
-// Helper function for loadGrid that parses a string to an object
-function _getAssetInfo(gridValue) {
-	if (gridValue === "0") return gridValue;
-
-	const assetInfo = gridValue.split(".");
-
-	return {
-		id: assetInfo[0],
-		rotation: parseInt(assetInfo[1]),
-		stickers: assetInfo.length == 3 ? assetInfo[2].split(",") : null
-	};
-}
-
 export function isInBounds(grid, row, col) {
 	if (row < 0 || row >= grid.length) return false;
 	if (col < 0 || col >= grid[0].length) return false;
 
 	return true;
-}
-
-/**
- * takes a string and creates a grid data structure that can be manipulated with the methods below
- *
- * @param {string} gridString string representation of the grid to be loaded
- * @param {int} rows number of rows in the grid
- * @param {int} columns number of columns in the grid
- *
- * @return array representation of the grid string
- */
-export function loadGrid(gridString, rows, columns) {
-	if (gridString === null || rows === null || columns === null) {
-		return null;
-	}
-
-	let tempGrid = gridString.split(" ");
-	return [...Array(rows)].map(() => {
-		return tempGrid.splice(0, columns).map(gridItem => {
-			return _getAssetInfo(gridItem);
-		});
-	});
 }
 
 /**

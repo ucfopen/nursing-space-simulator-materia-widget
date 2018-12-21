@@ -1,7 +1,106 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`FloorUnit tests renders FloorUnit correctly 1`] = `
-<a-entity>
-  <a-plane />
-</a-entity>
+<Entity>
+  <Entity
+    events={
+      Object {
+        "mouseenter": [Function],
+        "mouseleave": [Function],
+        "mouseup": [Function],
+      }
+    }
+    height="1"
+    material="opacity: 0"
+    position={
+      Object {
+        "x": undefined,
+        "y": "0.25",
+        "z": undefined,
+      }
+    }
+    primitive="a-plane"
+    rotation={
+      Object {
+        "x": "-90",
+        "y": "0",
+        "z": "0",
+      }
+    }
+    scale={
+      Object {
+        "x": "1",
+        "y": "1",
+        "z": "1",
+      }
+    }
+    width="1"
+  />
+</Entity>
+`;
+
+exports[`FloorUnit tests renders FloorUnit correctly when there is selected asset that spans 2 x 1`] = `
+<Entity>
+  <Entity
+    events={
+      Object {
+        "mouseenter": [Function],
+        "mouseleave": [Function],
+        "mouseup": [Function],
+      }
+    }
+    height="1"
+    material="color: red; opacity: 0.5;"
+    position={
+      Object {
+        "x": undefined,
+        "y": "0.25",
+        "z": undefined,
+      }
+    }
+    primitive="a-plane"
+    rotation={
+      Object {
+        "x": "-90",
+        "y": "0",
+        "z": "0",
+      }
+    }
+    scale={
+      Object {
+        "x": "1",
+        "y": "1",
+        "z": "1",
+      }
+    }
+    width="1"
+  />
+  <Entity
+    height="1"
+    material="color: red; opacity: 0.5;"
+    position={
+      Object {
+        "x": NaN,
+        "y": 0.25,
+        "z": undefined,
+      }
+    }
+    primitive="a-plane"
+    rotation={
+      Object {
+        "x": "-90",
+        "y": "0",
+        "z": "0",
+      }
+    }
+    scale={
+      Object {
+        "x": "1",
+        "y": "1",
+        "z": "1",
+      }
+    }
+    width="1"
+  />
+</Entity>
 `;

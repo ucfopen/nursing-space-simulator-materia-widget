@@ -1,6 +1,5 @@
 import React, { Component } from "react";
-import AFRAME from "aframe";
-import { Entity, Scene } from "aframe-react";
+import { Scene } from "aframe-react";
 import { connect } from "react-redux";
 
 // Custom React Components

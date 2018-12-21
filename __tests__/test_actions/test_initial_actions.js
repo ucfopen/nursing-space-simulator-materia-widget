@@ -1,5 +1,4 @@
 import * as actions from "../../src/js/actions";
-import { loadGrid } from "../../src/js/grid";
 describe("Menu Action Tests", () => {
 	it("initialize action", () => {
 		// does not represent a qset to its fullest extent
@@ -18,12 +17,6 @@ describe("Menu Action Tests", () => {
 				]
 			}
 		};
-
-		const grid = loadGrid(
-			qset.options.gridLoader.content,
-			qset.options.gridLoader.rows,
-			qset.options.gridLoader.columns
-		);
 
 		const expectedAction = {
 			type: actions.INIT_DATA,

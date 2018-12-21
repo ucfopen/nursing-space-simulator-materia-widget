@@ -188,7 +188,6 @@ describe("HUD tests", () => {
 		};
 		const store = createStore(reducers);
 		store.dispatch(initData(qset));
-		// console.log(connectedAppComponent.debug());
 		const connectedHudComponent = mount(<ConnectedHud store={store} />),
 			hud = connectedHudComponent.find(HUD);
 

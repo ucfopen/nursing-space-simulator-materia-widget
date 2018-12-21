@@ -1,15 +1,9 @@
 import gridReducer from "../../src/js/reducers/gridReducer";
 import * as actions from "../../src/js/actions/grid_actions";
 import { INIT_DATA } from "../../src/js/actions/";
-import {
-	deleteItem,
-	insertItem,
-	rotateCell,
-	getCellRotation
-} from "../../src/js/grid";
 
 describe("grid reducer", () => {
-	it("should return the inital state", () => {
+	it("should return the initial state", () => {
 		expect(
 			gridReducer(
 				// State being passed in
@@ -18,19 +12,27 @@ describe("grid reducer", () => {
 				{}
 			)
 		).toEqual({
-			manipulationMode: false,
-			selectedAsset: null,
+			dragging: false,
 			currentX: null,
-			currentZ: null
+			currentZ: null,
+			mode: "none",
+			selectedAsset: null,
+			selectedItem: null,
+			validX: null,
+			validZ: null,
+			ready: false
 		});
 	});
 
 	it("should handle INIT_DATA", () => {
-		const grid = [["0", { id: "bed-1", rotation: 0 }], ["0", "0"]];
-		const categories = ["beds", "equipment", "walls", "people"];
+		const grid = [
+			["0", { id: "bed-1", rotation: 0 }],
+			[{ id: "wall-1", rotation: 90 }, "0"]
+		];
+		const categories = ["construction", "equipment", "people"];
 		const assets = [
-			{ id: "bed-1", category: "beds" },
-			{ id: "wall-1", category: "0" }
+			{ id: "bed-1", category: "equipment" },
+			{ id: "wall-1", category: "construction" }
 		];
 
 		expect(
@@ -48,7 +50,8 @@ describe("grid reducer", () => {
 				}
 			)
 		).toEqual({
-			grid
+			grid,
+			ready: true
 		});
 	});
 
@@ -68,58 +71,90 @@ describe("grid reducer", () => {
 			)
 		).toEqual({
 			selectedAsset: asset,
-			manipulationMode: false,
+			selectedItem: null,
 			currentX: null,
-			currentZ: null
+			currentZ: null,
+			mode: "assetTypeSelected"
 		});
 	});
 
-	it("should handle SELECT_ASSET", () => {
-		let currentlySelectedAsset = {
+	it("should handle SELECT_ASSET when there is a selected asset type that can replace an object being clicked on", () => {
+		// the wall type is selected
+		let currentlySelectedAssetType = {
 			id: "wall-1",
-			category: "walls",
-			canReplace: ["walls"]
+			category: "construction",
+			canReplace: ["construction"]
 		};
 
-		let assetBeingSelected = {
-			id: "wall-tv",
-			category: "walls",
-			canReplace: ["walls"]
+		// a window on the scene is clicked on
+		let payloadAsset = {
+			id: "window",
+			category: "construction"
 		};
 
-		let grid = [["0", { id: "bed-1", rotation: 0 }], ["0", "0"]];
-		let x = 0,
-			z = 0;
+		const grid = [
+			["0", { id: "bed-1", rotation: 0 }],
+			[{ id: "window", rotation: 90 }, "0"]
+		];
+
+		// the window is clicked on but since the selected asset type
+		// is wall, the wall will replace it
+		const expectedGrid = [
+			["0", { id: "bed-1", rotation: 0 }],
+			[
+				{
+					id: "wall-1",
+					rotation: 90,
+					adj: [true, true, false, false],
+					stickers: null
+				},
+				"0"
+			]
+		];
 
 		// If the currently selected asset can replace the asset being selected, replace the asset being selected
 		expect(
 			gridReducer(
 				// State being passed in
-				{ selectedAsset: currentlySelectedAsset, grid },
+				{ selectedAsset: currentlySelectedAssetType, grid },
 				// Action being passed in
 				{
 					type: actions.SELECT_ASSET,
 					payload: {
-						asset: assetBeingSelected,
-						x,
-						z
+						asset: payloadAsset,
+						x: 0,
+						z: 1
 					}
 				}
 			)
 		).toEqual({
-			manipulationMode: true,
-			selectedAsset: currentlySelectedAsset,
-			currentX: x,
-			currentZ: z,
-			grid: insertItem(
-				JSON.parse(JSON.stringify(grid)),
-				currentlySelectedAsset.id,
-				x,
-				z
-			)
+			mode: "manipulation",
+			selectedAsset: currentlySelectedAssetType,
+			selectedItem: {
+				adj: [true, true, false, false],
+				id: "wall-1",
+				rotation: 90,
+				stickers: null
+			},
+			currentX: 0,
+			currentZ: 1,
+			grid: expectedGrid
 		});
+	});
 
-		// If the currently selected asset is null, the asset being selected should be set to selected asset
+	it("should handle SELECT_ASSET when there is no currently selected asset in state ", () => {
+		// a window on the scene is clicked on
+		let payloadAsset = {
+			id: "window",
+			category: "construction"
+		};
+
+		const grid = [
+			["0", { id: "bed-1", rotation: 0 }],
+			[{ id: "window", rotation: 90 }, "0"]
+		];
+
+		// If there is no currently selected asset, the asset being selected should be set to selected asset
 		expect(
 			gridReducer(
 				// State being passed in
@@ -128,72 +163,24 @@ describe("grid reducer", () => {
 				{
 					type: actions.SELECT_ASSET,
 					payload: {
-						asset: assetBeingSelected,
-						z,
-						x
+						asset: payloadAsset,
+						x: 0,
+						z: 1
 					}
 				}
 			)
 		).toEqual({
 			grid: grid,
-			manipulationMode: true,
-			selectedAsset: assetBeingSelected,
-			currentX: x,
-			currentZ: z
-		});
-
-		assetBeingSelected = currentlySelectedAsset;
-
-		// If the currently selected asset is equal to the asset being selected, the asset being selected should be set to selected asset
-		expect(
-			gridReducer(
-				// State being passed in
-				{ selectedAsset: currentlySelectedAsset, grid },
-				// Action being passed in
-				{
-					type: actions.SELECT_ASSET,
-					payload: {
-						asset: assetBeingSelected,
-						z,
-						x
-					}
-				}
-			)
-		).toEqual({
-			grid: grid,
-			manipulationMode: true,
-			selectedAsset: assetBeingSelected,
-			currentX: x,
-			currentZ: z
-		});
-
-		currentlySelectedAsset = {
-			id: "bed-1",
-			category: "beds",
-			canReplace: ["beds"]
-		};
-
-		// If the currently selected asset cannot replace the asset being selected, the asset being selected should be set to selected asset
-		expect(
-			gridReducer(
-				// State being passed in
-				{ selectedAsset: currentlySelectedAsset, grid },
-				// Action being passed in
-				{
-					type: actions.SELECT_ASSET,
-					payload: {
-						asset: assetBeingSelected,
-						z,
-						x
-					}
-				}
-			)
-		).toEqual({
-			grid: grid,
-			manipulationMode: true,
-			selectedAsset: assetBeingSelected,
-			currentX: x,
-			currentZ: z
+			mode: "manipulation",
+			selectedAsset: payloadAsset,
+			currentX: 0,
+			currentZ: 1,
+			dragging: undefined,
+			selectedItem: {
+				adj: [true, true, false, false],
+				id: "window",
+				rotation: 90
+			}
 		});
 	});
 
@@ -208,41 +195,59 @@ describe("grid reducer", () => {
 				}
 			)
 		).toEqual({
-			manipulationMode: false,
-			selectedAsset: null,
 			currentX: null,
-			currentZ: null
+			currentZ: null,
+			mode: "none",
+			selectedAsset: null,
+			selectedItem: null,
+			validX: null,
+			validZ: null
 		});
 	});
 
 	it("should handle ROTATE_ASSET", () => {
-		const grid = [["0", { id: "bed-1", rotation: 0 }], ["0", "0"]];
-		const x = 0,
-			z = 1;
+		const grid = [["0", { id: "window", rotation: 0, spanX: 1 }], ["0", "0"]];
+		const expectedGrid = [
+			[
+				"0",
+				{
+					adj: [false, false, true, true],
+					id: "window",
+					rotation: 270,
+					spanX: 1
+				}
+			],
+			["0", "0"]
+		];
 
 		expect(
 			gridReducer(
 				// State being passed in
-				{ grid: grid },
+				{ grid: grid, selectedAsset: { spanX: 1 } },
 				// Action being passed in
 				{
 					type: actions.ROTATE_ASSET,
 					payload: {
-						x,
-						z
+						x: 1,
+						z: 0
 					}
 				}
 			)
 		).toEqual({
-			grid: rotateCell(JSON.parse(JSON.stringify(grid)), x, z)
+			grid: expectedGrid,
+			selectedAsset: { spanX: 1 },
+			selectedItem: {
+				adj: [false, false, true, true],
+				id: "window",
+				rotation: 270,
+				spanX: 1
+			}
 		});
 	});
 
 	it("should handle REMOVE_ASSET", () => {
-		const grid = [["0", { id: "bed-1", rotation: 0 }], ["0", "0"]];
-
-		const x = 1,
-			z = 0;
+		const grid = [["0", { id: "window", rotation: 0, spanX: 1 }], ["0", "0"]];
+		const expectedGrid = [["0", "0"], ["0", "0"]];
 
 		expect(
 			gridReducer(
@@ -252,29 +257,25 @@ describe("grid reducer", () => {
 				{
 					type: actions.REMOVE_ASSET,
 					payload: {
-						x,
-						z
+						x: 1,
+						z: 0
 					}
 				}
 			)
 		).toEqual({
-			grid: deleteItem(JSON.parse(JSON.stringify(grid)), x, z),
-			manipulationMode: false,
+			grid: expectedGrid,
+			mode: "none",
 			selectedAsset: null,
+			selectedItem: null,
 			currentX: null,
 			currentZ: null
 		});
 	});
 
-	it("should handle INSERT_ASSET", () => {
+	it("should handle INSERT_ASSET when there is no selected asset", () => {
 		const grid = [["0", { id: "bed-1", rotation: 0 }], ["0", "0"]];
-
 		let selectedAsset = null;
 
-		let x = 1,
-			z = 1;
-
-		// If the selected asset is null, return the previous state
 		expect(
 			gridReducer(
 				// State being passed in
@@ -283,8 +284,8 @@ describe("grid reducer", () => {
 				{
 					type: actions.INSERT_ASSET,
 					payload: {
-						x,
-						z
+						x: 0,
+						z: 0
 					}
 				}
 			)
@@ -292,113 +293,230 @@ describe("grid reducer", () => {
 			selectedAsset: null,
 			grid
 		});
+	});
 
-		selectedAsset = {
-			id: "wall-1"
+	it("should handle INSERT_ASSET if there is a selected item (not in construction category)", () => {
+		const grid = [["0", { id: "chair-1", rotation: 0 }], ["0", "0"]];
+		const expectedGrid = [
+			["0", "0"],
+			[
+				{
+					adj: [true, true, false, false],
+					id: "chair-1",
+					rotation: 0,
+					stickers: null
+				},
+				"0"
+			]
+		];
+		const selectedAsset = {
+			id: "chair-1"
 		};
 
-		// If an asset is selected and the cell to be inserted is not occupied, insert and select the item
 		expect(
 			gridReducer(
 				// State being passed in
-				{ selectedAsset, grid, currentX: null, currentZ: null },
+				{ selectedAsset, grid, currentX: 1, currentZ: 0 },
 				// Action being passed in
 				{
 					type: actions.INSERT_ASSET,
 					payload: {
-						x,
-						z
+						x: 0,
+						z: 1
 					}
 				}
 			)
 		).toEqual({
-			grid: insertItem(
-				JSON.parse(JSON.stringify(grid)),
-				selectedAsset.id,
-				x,
-				z
-			),
-			selectedAsset,
-			manipulationMode: true,
-			currentX: x,
-			currentZ: z
+			currentX: 0,
+			currentZ: 1,
+			dragging: false,
+			grid: expectedGrid,
+			mode: "manipulation",
+			selectedAsset: { id: "chair-1" },
+			selectedItem: {
+				adj: [true, true, false, false],
+				id: "chair-1",
+				rotation: 0,
+				stickers: null
+			}
 		});
+	});
 
-		x = 1;
-		z = 0;
+	it("should handle INSERT_ASSET if there is a selected item (construction category)", () => {
+		const grid = [
+			["0", { id: "bed-1", rotation: 0 }],
+			[{ id: "window", rotation: 90, stickers: "sticker1, sticker2" }, "0"]
+		];
 
-		// If the cell to be inserted to is occupied, return the previous state
+		const expectedGrid = [
+			[
+				{
+					id: "window",
+					rotation: 90,
+					stickers: "sticker1, sticker2",
+					adj: [false, false, true, false]
+				},
+				{ id: "bed-1", rotation: 0 }
+			],
+			["0", "0"]
+		];
+
+		const selectedAsset = {
+			id: "window"
+		};
+
 		expect(
 			gridReducer(
 				// State being passed in
-				{ selectedAsset, grid, currentX: null, currentZ: null },
+				{ grid, currentX: 0, currentZ: 1, selectedAsset },
 				// Action being passed in
 				{
 					type: actions.INSERT_ASSET,
 					payload: {
-						x,
-						z
+						x: 0,
+						z: 0
 					}
+				}
+			)
+		).toEqual({
+			grid: expectedGrid,
+			selectedAsset,
+			currentX: 0,
+			currentZ: 0,
+			dragging: false,
+			mode: "manipulation",
+			selectedItem: {
+				adj: [false, false, true, false],
+				id: "window",
+				rotation: 90,
+				stickers: "sticker1, sticker2"
+			}
+		});
+	});
+
+	it("should handle INSERT_ASSET for wall-1 (goes into extendWall mode)", () => {
+		const grid = [["0", "0", "0"], ["0", "0", "0"], ["0", "0", "0"]];
+
+		const expectedGrid = [
+			["0", "0", "0"],
+			["0", { id: "wall-1", rotation: 180, stickers: null }, "0"],
+			["0", "0", "0"]
+		];
+
+		const selectedAsset = {
+			id: "wall-1",
+			category: "construction",
+			rotation: 270
+		};
+
+		expect(
+			gridReducer(
+				// State being passed in
+				{ grid, selectedAsset, currentX: null, currentZ: null },
+				// Action being passed in
+				{
+					type: actions.INSERT_ASSET,
+					payload: {
+						x: 1,
+						z: 1
+					}
+				}
+			)
+		).toEqual({
+			grid: expectedGrid,
+			selectedAsset,
+			currentX: 1,
+			currentZ: 1,
+			dragging: false,
+			mode: "extendWall",
+			validX: [1, 2, 0],
+			validZ: [1, 0, 2]
+		});
+	});
+
+	it("should handle INSERT_ASSET", () => {
+		const grid = [["0", "0", "0"], ["0", "0", "0"], ["0", "0", "0"]];
+
+		const expectedGrid = [
+			["0", "0", "0"],
+			[
+				"0",
+				{
+					adj: [true, true, true, true],
+					id: "test-item",
+					rotation: 180,
+					stickers: null
+				},
+				"0"
+			],
+			["0", "0", "0"]
+		];
+
+		const selectedAsset = {
+			id: "test-item",
+			rotation: 270
+		};
+
+		expect(
+			gridReducer(
+				// State being passed in
+				{ grid, selectedAsset, currentX: null, currentZ: null },
+				// Action being passed in
+				{
+					type: actions.INSERT_ASSET,
+					payload: {
+						x: 1,
+						z: 1
+					}
+				}
+			)
+		).toEqual({
+			grid: expectedGrid,
+			selectedAsset,
+			currentX: 1,
+			currentZ: 1,
+			dragging: false,
+			mode: "manipulation",
+			selectedItem: {
+				adj: [true, true, true, true],
+				id: "test-item",
+				rotation: 180,
+				stickers: null
+			}
+		});
+	});
+
+	it("should handle UPDATE_ASSET_POSITION when no selected asset or pov_camera", () => {
+		const grid = [
+			["0", "0", "0"],
+			["0", { id: "bed-1", rotation: 180 }, "0"],
+			["0", "0", "0"]
+		];
+
+		// no selected asset
+		expect(
+			gridReducer(
+				// State being passed in
+				{
+					grid,
+					currentX: null,
+					currentZ: null,
+					selectedAsset: null
+				},
+				// Action being passed in
+				{
+					type: actions.UPDATE_ASSET_POSITION,
+					payload: "xRight"
 				}
 			)
 		).toEqual({
 			grid,
-			selectedAsset,
 			currentX: null,
-			currentZ: null
+			currentZ: null,
+			selectedAsset: null
 		});
 
-		x = 0;
-		z = 0;
-
-		// Tests currently selected asset is deleted when inserted to a new grid cell (aka moving an asset)
-		const prevRotation = getCellRotation(grid, 1, 0);
-		const newGrid = deleteItem(JSON.parse(JSON.stringify(grid)), 1, 0);
-
-		expect(
-			gridReducer(
-				{ selectedAsset, grid, currentX: 1, currentZ: 0 },
-				{
-					type: actions.INSERT_ASSET,
-					payload: {
-						x,
-						z
-					}
-				}
-			)
-		).toEqual({
-			grid: insertItem(
-				JSON.parse(JSON.stringify(newGrid)),
-				selectedAsset.id,
-				x,
-				z,
-				prevRotation
-			),
-			selectedAsset,
-			manipulationMode: true,
-			currentX: x,
-			currentZ: z
-		});
-	});
-
-	it("should handle UPDATE_ASSET_POSITION", () => {
-		const grid = [
-			["0", "0", "0"],
-			["0", { id: "bed-1", rotation: 0 }, "0"],
-			["0", "0", "0"]
-		];
-
-		let selectedAsset = {
-			id: "bed-1"
-		};
-
-		const x = 1,
-			z = 1;
-
-		let direction = null;
-		let newGrid;
-
-		// Does not attempt to update an assets position if there is none or if the asset is pov_camera
+		// selected asset: pov_camera
 		expect(
 			gridReducer(
 				// State being passed in
@@ -411,7 +529,7 @@ describe("grid reducer", () => {
 				// Action being passed in
 				{
 					type: actions.UPDATE_ASSET_POSITION,
-					payload: "xUp"
+					payload: "xRight"
 				}
 			)
 		).toEqual({
@@ -420,195 +538,512 @@ describe("grid reducer", () => {
 			currentZ: null,
 			selectedAsset: { id: "pov_camera", title: "POV Camera" }
 		});
+	});
 
+	it("should handle UPDATE_ASSET_POSITION xRight", () => {
+		const grid = [
+			["0", "0", "0"],
+			["0", { id: "bed-1", rotation: 180 }, "0"],
+			["0", "0", "0"]
+		];
+
+		const blockedGrid = [
+			["0", "0", "0"],
+			["0", { id: "bed-1", rotation: 180 }, "X"],
+			["0", "0", "0"]
+		];
+
+		const expectedGrid = [
+			["0", "0", "0"],
+			[
+				"0",
+				"X",
+				{ id: "bed-1", rotation: 180, stickers: ["0", "0", "0", "0"] }
+			],
+			["0", "0", "0"]
+		];
+
+		// cell to right is available
 		expect(
 			gridReducer(
 				// State being passed in
-				{ grid, currentX: x, currentZ: z, selectedAsset },
+				{
+					grid,
+					currentX: 1,
+					currentZ: 1,
+					selectedAsset: { id: "bed-1" }
+				},
 				// Action being passed in
 				{
 					type: actions.UPDATE_ASSET_POSITION,
-					payload: direction
+					payload: "xRight"
+				}
+			)
+		).toEqual({
+			grid: expectedGrid,
+			currentX: 2,
+			currentZ: 1,
+			selectedAsset: { id: "bed-1" },
+			selectedItem: {
+				adj: [true, false, true, false],
+				id: "bed-1",
+				rotation: 180,
+				stickers: ["0", "0", "0", "0"]
+			}
+		});
+
+		// cell to right is NOT available
+		expect(
+			gridReducer(
+				// State being passed in
+				{
+					grid: blockedGrid,
+					currentX: 1,
+					currentZ: 1,
+					selectedAsset: { id: "bed-1" }
+				},
+				// Action being passed in
+				{
+					type: actions.UPDATE_ASSET_POSITION,
+					payload: "xRight"
+				}
+			)
+		).toEqual({
+			grid: blockedGrid,
+			currentX: 1,
+			currentZ: 1,
+			selectedAsset: { id: "bed-1" }
+		});
+	});
+
+	it("should handle UPDATE_ASSET_POSITION xLeft", () => {
+		const grid = [
+			["0", "0", "0"],
+			["0", { id: "bed-1", rotation: 0 }, "0"],
+			["0", "0", "0"]
+		];
+
+		const blockedGrid = [
+			["0", "0", "0"],
+			["X", { id: "bed-1", rotation: 0 }, "0"],
+			["0", "0", "0"]
+		];
+
+		const expectedGrid = [
+			["0", "0", "0"],
+			[{ id: "bed-1", rotation: 0, stickers: ["0", "0", "0", "0"] }, "X", "0"],
+			["0", "0", "0"]
+		];
+
+		// cell to left is available
+		expect(
+			gridReducer(
+				// State being passed in
+				{
+					grid,
+					currentX: 1,
+					currentZ: 1,
+					selectedAsset: { id: "bed-1" }
+				},
+				// Action being passed in
+				{
+					type: actions.UPDATE_ASSET_POSITION,
+					payload: "xLeft"
+				}
+			)
+		).toEqual({
+			grid: expectedGrid,
+			currentX: 0,
+			currentZ: 1,
+			selectedAsset: { id: "bed-1" },
+			selectedItem: {
+				adj: [true, false, true, false],
+				id: "bed-1",
+				rotation: 0,
+				stickers: ["0", "0", "0", "0"]
+			}
+		});
+
+		// cell to left is NOT available
+		expect(
+			gridReducer(
+				// State being passed in
+				{
+					grid: blockedGrid,
+					currentX: 1,
+					currentZ: 1,
+					selectedAsset: { id: "bed-1" }
+				},
+				// Action being passed in
+				{
+					type: actions.UPDATE_ASSET_POSITION,
+					payload: "xLeft"
+				}
+			)
+		).toEqual({
+			grid: blockedGrid,
+			currentX: 1,
+			currentZ: 1,
+			selectedAsset: { id: "bed-1" }
+		});
+	});
+
+	it("should handle UPDATE_ASSET_POSITION zUp", () => {
+		const grid = [
+			["0", "0", "0"],
+			["0", { id: "bed-1", rotation: 0 }, "0"],
+			["0", "0", "0"]
+		];
+
+		const blockedGrid = [
+			["0", "0", "X"],
+			["0", { id: "bed-1", rotation: 0 }, "0"],
+			["0", "0", "0"]
+		];
+
+		const expectedGrid = [
+			["0", { id: "bed-1", rotation: 0, stickers: ["0", "0", "0", "0"] }, "X"],
+			["0", "0", "0"],
+			["0", "0", "0"]
+		];
+
+		// cell above is available
+		expect(
+			gridReducer(
+				// State being passed in
+				{
+					grid,
+					currentX: 1,
+					currentZ: 1,
+					selectedAsset: { id: "bed-1" }
+				},
+				// Action being passed in
+				{
+					type: actions.UPDATE_ASSET_POSITION,
+					payload: "zUp"
+				}
+			)
+		).toEqual({
+			grid: expectedGrid,
+			currentX: 1,
+			currentZ: 0,
+			selectedAsset: { id: "bed-1" },
+			selectedItem: {
+				adj: [false, false, true, true],
+				id: "bed-1",
+				rotation: 0,
+				stickers: ["0", "0", "0", "0"]
+			}
+		});
+
+		// cell to above is NOT available
+		expect(
+			gridReducer(
+				// State being passed in
+				{
+					grid: blockedGrid,
+					currentX: 1,
+					currentZ: 1,
+					selectedAsset: { id: "bed-1" }
+				},
+				// Action being passed in
+				{
+					type: actions.UPDATE_ASSET_POSITION,
+					payload: "zUp"
+				}
+			)
+		).toEqual({
+			grid: blockedGrid,
+			currentX: 1,
+			currentZ: 1,
+			selectedAsset: { id: "bed-1" }
+		});
+	});
+
+	it("should handle UPDATE_ASSET_POSITION zDown", () => {
+		const grid = [
+			["0", "0", "0"],
+			["0", { id: "bed-1", rotation: 0 }, "0"],
+			["0", "0", "0"]
+		];
+
+		const blockedGrid = [
+			["0", "0", "0"],
+			["0", { id: "bed-1", rotation: 0 }, "0"],
+			["0", "0", "X"]
+		];
+
+		const expectedGrid = [
+			["0", "0", "0"],
+			["0", "0", "0"],
+			["0", { id: "bed-1", rotation: 0, stickers: ["0", "0", "0", "0"] }, "X"]
+		];
+
+		// cell below is available
+		expect(
+			gridReducer(
+				// State being passed in
+				{
+					grid,
+					currentX: 1,
+					currentZ: 1,
+					selectedAsset: { id: "bed-1" }
+				},
+				// Action being passed in
+				{
+					type: actions.UPDATE_ASSET_POSITION,
+					payload: "zDown"
+				}
+			)
+		).toEqual({
+			grid: expectedGrid,
+			currentX: 1,
+			currentZ: 2,
+			selectedAsset: { id: "bed-1" },
+			selectedItem: {
+				adj: [true, false, false, true],
+				id: "bed-1",
+				rotation: 0,
+				stickers: ["0", "0", "0", "0"]
+			}
+		});
+
+		// cell to below is NOT available
+		expect(
+			gridReducer(
+				// State being passed in
+				{
+					grid: blockedGrid,
+					currentX: 1,
+					currentZ: 1,
+					selectedAsset: { id: "bed-1" }
+				},
+				// Action being passed in
+				{
+					type: actions.UPDATE_ASSET_POSITION,
+					payload: "zDown"
+				}
+			)
+		).toEqual({
+			grid: blockedGrid,
+			currentX: 1,
+			currentZ: 1,
+			selectedAsset: { id: "bed-1" }
+		});
+
+		// this is to get test coverage for a 1x1 item
+		const smallGrid = [["0", { id: "chair-1" }], ["0", "0"]];
+		const expectedSmallGrid = [
+			["0", "0"],
+			["0", { id: "chair-1", rotation: 180, stickers: ["0", "0", "0", "0"] }]
+		];
+		expect(
+			gridReducer(
+				// State being passed in
+				{
+					grid: smallGrid,
+					currentX: 1,
+					currentZ: 0,
+					selectedAsset: { id: "chair-1" }
+				},
+				// Action being passed in
+				{
+					type: actions.UPDATE_ASSET_POSITION,
+					payload: "zDown"
+				}
+			)
+		).toEqual({
+			currentX: 1,
+			currentZ: 1,
+			grid: expectedSmallGrid,
+			selectedAsset: { id: "chair-1" },
+			selectedItem: {
+				adj: [true, false, false, true],
+				id: "chair-1",
+				stickers: ["0", "0", "0", "0"]
+			}
+		});
+	});
+
+	it("should handle REFRESH_GRID", () => {
+		const grid = [
+			["0", "0", "0"],
+			["0", { id: "bed-1", rotation: 0 }, "0"],
+			["0", "0", "0"]
+		];
+
+		// cell below is available
+		expect(
+			gridReducer(
+				// State being passed in
+				{
+					grid,
+					selectedAsset: { id: "bed-1" }
+				},
+				// Action being passed in
+				{
+					type: actions.REFRESH_GRID
 				}
 			)
 		).toEqual({
 			grid: grid,
-			currentX: x,
-			currentZ: z,
-			selectedAsset
+			selectedAsset: { id: "bed-1" },
+			dragging: false
 		});
+	});
 
-		direction = "xRight";
-		newGrid = deleteItem(JSON.parse(JSON.stringify(grid)), x, z);
-
-		expect(
-			gridReducer(
-				// State being passed in
-				{ grid, currentX: x, currentZ: z, selectedAsset },
-				// Action being passed it
-				{
-					type: actions.UPDATE_ASSET_POSITION,
-					payload: direction
-				}
-			)
-		).toEqual({
-			grid: insertItem(
-				newGrid,
-				selectedAsset.id,
-				x + 1,
-				z,
-				grid[z][x].rotation
-			),
-			currentX: x + 1,
-			currentZ: z,
-			selectedAsset
-		});
-
-		direction = "xLeft";
-		newGrid = deleteItem(JSON.parse(JSON.stringify(grid)), x, z);
-
-		expect(
-			gridReducer(
-				// State being passed in
-				{ grid, currentX: x, currentZ: z, selectedAsset },
-				// Action being passed it
-				{
-					type: actions.UPDATE_ASSET_POSITION,
-					payload: direction
-				}
-			)
-		).toEqual({
-			grid: insertItem(
-				newGrid,
-				selectedAsset.id,
-				x - 1,
-				z,
-				grid[z][x].rotation
-			),
-			currentX: x - 1,
-			currentZ: z,
-			selectedAsset
-		});
-
-		direction = "zUp";
-		newGrid = deleteItem(JSON.parse(JSON.stringify(grid)), x, z);
-
-		expect(
-			gridReducer(
-				// State being passed in
-				{ grid, currentX: x, currentZ: z, selectedAsset },
-				// Action being passed it
-				{
-					type: actions.UPDATE_ASSET_POSITION,
-					payload: direction
-				}
-			)
-		).toEqual({
-			grid: insertItem(
-				newGrid,
-				selectedAsset.id,
-				x,
-				z - 1,
-				grid[z][x].rotation
-			),
-			currentX: x,
-			currentZ: z - 1,
-			selectedAsset
-		});
-
-		direction = "zDown";
-		newGrid = deleteItem(JSON.parse(JSON.stringify(grid)), x, z);
-
-		expect(
-			gridReducer(
-				// State being passed in
-				{ grid, currentX: x, currentZ: z, selectedAsset },
-				// Action being passed it
-				{
-					type: actions.UPDATE_ASSET_POSITION,
-					payload: direction
-				}
-			)
-		).toEqual({
-			grid: insertItem(
-				newGrid,
-				selectedAsset.id,
-				x,
-				z + 1,
-				grid[z][x].rotation
-			),
-			currentX: x,
-			currentZ: z + 1,
-			selectedAsset
-		});
-
-		// Given the constant test grid, these are possible invalid moves that should not change the state
-		let invalidMovements = [
-			{
-				direction: "xRight",
-				x: 0,
-				z: 1
-			},
-			{
-				direction: "xLeft",
-				x: 0,
-				z: 1
-			},
-			{
-				direction: "xLeft",
-				x: 2,
-				z: 1
-			},
-			{
-				direction: "xRight",
-				x: 2,
-				z: 1
-			},
-			{
-				direction: "zUp",
-				x: 1,
-				z: 0
-			},
-			{
-				direction: "zDown",
-				x: 1,
-				z: 0
-			},
-			{
-				direction: "zUp",
-				x: 1,
-				z: 2
-			},
-			{
-				direction: "zDown",
-				x: 1,
-				z: 2
-			}
+	it("should handle EDIT_STICKER", () => {
+		const grid = [
+			[
+				"0",
+				{ id: "wall", rotation: 0, stickers: ["0", "currSticker", "0", "0"] }
+			],
+			["0", "0"]
 		];
 
-		// Tests all invalid moves to make sure the state does not change
-		for (let i = 0; i < invalidMovements.length; i++) {
-			expect(
-				gridReducer(
-					// State being passed in
-					{
-						grid,
-						currentX: invalidMovements[i].x,
-						currentZ: invalidMovements[i].z,
-						selectedAsset
-					},
-					// Action being passed it
-					{
-						type: actions.UPDATE_ASSET_POSITION,
-						payload: invalidMovements[i].direction
+		const expectedGrid = [
+			["0", { id: "wall", rotation: 0, stickers: ["0", "typeB", "0", "0"] }],
+			["0", "0"]
+		];
+
+		expect(
+			gridReducer(
+				// State being passed in
+				{
+					grid
+				},
+				// Action being passed in
+				{
+					type: actions.EDIT_STICKER,
+					payload: {
+						x: 1,
+						z: 0,
+						direction: 1, // forward 1
+						side: 1, // 2nd item in stickers array (currSticker)
+						stickerTypes: ["typeA", "currSticker", "typeB"]
 					}
-				)
-			).toEqual({
-				grid,
-				currentX: invalidMovements[i].x,
-				currentZ: invalidMovements[i].z,
-				selectedAsset
-			});
-		}
+				}
+			)
+		).toEqual({
+			grid: expectedGrid,
+			selectedItem: {
+				id: "wall",
+				rotation: 0,
+				stickers: ["0", "typeB", "0", "0"]
+			}
+		});
+	});
+
+	it("should handle EXTEND_WALL", () => {
+		const grid = [
+			["0", "X", "0"],
+			[
+				"0",
+				{ id: "wall", rotation: 0, stickers: ["0", "currSticker", "0", "0"] },
+				"X"
+			],
+			["0", "0", "0"]
+		];
+
+		expect(
+			gridReducer(
+				// State being passed in
+				{
+					grid,
+					currentX: 1,
+					currentZ: 1
+				},
+				// Action being passed in
+				{
+					type: actions.EXTEND_WALL
+				}
+			)
+		).toEqual({
+			grid: grid,
+			currentX: 1,
+			currentZ: 1,
+			mode: "extendWall",
+			validX: [1, 0],
+			validZ: [1, 2]
+		});
+	});
+
+	it("should handle EDIT_ASSET", () => {
+		const grid = [
+			["0", "X", "0"],
+			["0", { id: "wall", rotation: 0 }, "X"],
+			["0", "0", "0"]
+		];
+
+		const expectedGrid = [
+			["0", "X", "0"],
+			["0", { id: "wall", rotation: 0, stickers: ["0", "0", "0", "0"] }, "X"],
+			["0", "0", "0"]
+		];
+
+		expect(
+			gridReducer(
+				// State being passed in
+				{
+					grid,
+					currentX: 1,
+					currentZ: 1
+				},
+				// Action being passed in
+				{
+					type: actions.EDIT_ASSET,
+					payload: {
+						x: 1,
+						z: 1
+					}
+				}
+			)
+		).toEqual({
+			currentX: 1,
+			currentZ: 1,
+			grid: expectedGrid,
+			mode: "editAsset",
+			selectedItem: { id: "wall", rotation: 0, stickers: ["0", "0", "0", "0"] }
+		});
+	});
+
+	it("should handle FILL_WALLS", () => {
+		const grid = [[{ id: "wall-1", rotation: 0 }, "0", "0"]];
+
+		const expectedGrid = [
+			[
+				{ id: "wall-1", rotation: 0 },
+				{ id: "wall-1", rotation: 0, stickers: null },
+				{ id: "wall-1", rotation: 0, stickers: null }
+			]
+		];
+
+		expect(
+			gridReducer(
+				// State being passed in
+				{
+					grid
+				},
+				// Action being passed in
+				{
+					type: actions.FILL_WALLS,
+					payload: {
+						x: 2,
+						z: 0,
+						extendX: 0,
+						extendZ: 0
+					}
+				}
+			)
+		).toEqual({
+			currentX: null,
+			currentZ: null,
+			grid: expectedGrid,
+			mode: "none",
+			selectedAsset: null,
+			selectedItem: null,
+			validX: null,
+			validZ: null
+		});
 	});
 });

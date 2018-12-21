@@ -12,13 +12,32 @@ const item = {
 	title: "Bed-1"
 };
 
-let clickEventMock = jest.fn();
+const selectedAsset = {
+	buttonSource: "/images/test.jpg",
+	category: "beds",
+	id: "bed-1",
+	title: "Bed-1"
+};
 
+let clickEventMock = jest.fn();
 
 describe("Asset Button Tests", () => {
 	test("renders asset button", () => {
 		const tree = renderer
 			.create(<AssetButton onClick={clickEventMock} item={item} />)
+			.toJSON();
+		expect(tree).toMatchSnapshot();
+	});
+
+	test("renders asset button if selectedAsset.id === item.id", () => {
+		const tree = renderer
+			.create(
+				<AssetButton
+					onClick={clickEventMock}
+					item={item}
+					selectedAsset={selectedAsset}
+				/>
+			)
 			.toJSON();
 		expect(tree).toMatchSnapshot();
 	});
