@@ -3,9 +3,12 @@
 	"materia": {
 		"cleanName": "nursing-simulation-builder"
 	},
-	"version": "0.2.1",
+	"version": "0.3.0",
 	"jest": {
-		"coverageReporters": ["text-summary", "lcov"],
+		"coverageReporters": [
+			"text-summary",
+			"lcov"
+		],
 		"verbose": false,
 		"collectCoverageFrom": [
 			"src/**/*.js"
