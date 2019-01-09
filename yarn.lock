@@ -6366,18 +6366,18 @@ map-visit@^1.0.0:
   dependencies:
     object-visit "^1.0.0"
 
-materia-server-client-assets@1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/materia-server-client-assets/-/materia-server-client-assets-1.1.0.tgz#862df070549a23fd5bffc3ee9339ca573598bab3"
-  integrity sha512-09n5zTzuAmf8VT7Gv0UpLP1dQR7PivG4HJ1fMWitcpDCUgqpPicP05FpPjOFX+1+qP2nvCx9LxeYXXxowK8Sbw==
+materia-server-client-assets@1.2.2:
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/materia-server-client-assets/-/materia-server-client-assets-1.2.2.tgz#fa07a251513ac95a80e92dbbeaee784ea829d561"
+  integrity sha512-mWHGwRyUON5Bwf7TwQPmTskFHXg32Sj4vcbeoeVwNAn7ZwCz+fBdOZ3dn9nYoJ+ZaxjGqschNmD3NrJDZoC4tA==
   dependencies:
     angular "1.6.9"
     ngmodal ucfcdl/ngModal#v1.2.2
 
-materia-widget-development-kit@^2.0.0:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/materia-widget-development-kit/-/materia-widget-development-kit-2.1.0.tgz#888956c2bfd2f9c797c135dfcaca99dbbcc58bfd"
-  integrity sha512-owfAwo6fSyz7EIWy5cTmohuxnh6Kx20ByxsisXAaadYWU5YSu8D0uyp5PHLatUroMAxS6xMPg11ZBomxmonsTg==
+materia-widget-development-kit@^2.3.0:
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/materia-widget-development-kit/-/materia-widget-development-kit-2.3.0.tgz#2e0c408a5a956c807d9fc0b14070656a3deb81ff"
+  integrity sha512-iNFskFxm5aj7CS1sM94h0ZkKe5sTcyOlBzBQ2OBTdyj8dTNyVcuh98vQYXU3KGEGGxzZRRpTQ3zNozX6mKlsdA==
   dependencies:
     angular-mocks "1.6.9"
     autoprefixer "^7.1.2"
@@ -6399,7 +6399,7 @@ materia-widget-development-kit@^2.0.0:
     hogan-express "^0.5.2"
     html-loader "^0.5.5"
     html-webpack-plugin "^2.29.0"
-    materia-server-client-assets "1.1.0"
+    materia-server-client-assets "1.2.2"
     node-sass "^4.5.3"
     postcss-loader "2.0.6"
     prettier "^1.11.1"
@@ -6803,7 +6803,7 @@ next-tick@1:
   resolved "https://registry.yarnpkg.com/next-tick/-/next-tick-1.0.0.tgz#ca86d1fe8828169b0120208e3dc8424b9db8342c"
   integrity sha1-yobR/ogoFpsBICCOPchCS524NCw=
 
-ngmodal@ucfcdl/ngModal#v1.2.2:
+"ngmodal@github:ucfcdl/ngModal#v1.2.2":
   version "1.2.2"
   resolved "https://codeload.github.com/ucfcdl/ngModal/tar.gz/6abad982bdb8f258ffcdc20316a907c2292399d2"
 
