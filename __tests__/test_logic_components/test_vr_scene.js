@@ -1,3 +1,4 @@
+import aframe from "aframe";
 import ConnectedVRScene, { VRScene } from "../../src/js/components/vr_scene";
 import React from "react";
 import { Provider } from "react-redux";
@@ -8,6 +9,7 @@ import reducers from "../../src/js/reducers";
 import { initData } from "../../src/js/actions/";
 import qset from "../custom_test_utilities/mock_qset";
 import { jsdom } from "jsdom";
+import assetData from "../../src/assets/assets.json";
 
 const position = { x: 0, y: 0, z: 0 };
 const assets = {
@@ -35,43 +37,37 @@ const grid = [
 ];
 
 const propsInVRScene = [
+	"store",
 	"qset",
-	"position",
-	"thirdPerson",
-	"assets",
-	"grid",
 	"currentX",
 	"currentZ",
+	"dragging",
+	"grid",
+	"mode",
+	"posX",
+	"posY",
+	"posZ",
+	"selectedAsset",
+	"selectedItem",
+	"shortcutsEnabled",
+	"thirdPerson",
+	"validX",
+	"validZ",
+	"deselectAsset",
+	"fillWalls",
 	"insertAsset",
+	"refreshGrid",
 	"selectAsset",
-	"store",
-	"storeSubscription",
-	"selectedAsset"
+	"showErrorTooltip",
+	"updateAssetPosition",
+	"updateTimedTooltip",
+	"storeSubscription"
 ];
 
 const insertAsset = jest.fn();
 const selectAsset = jest.fn();
 
 describe("VR Scene Tests", () => {
-	it("should display loading if no props are passed in", () => {
-		const vrSceneTree = renderer.create(<VRScene />).toJSON();
-		expect(vrSceneTree).toMatchSnapshot();
-	});
-
-	it("should display loading when no position is passed in", () => {
-		const vrSceneTree = renderer
-			.create(<VRScene grid={grid} assets={assets} />)
-			.toJSON();
-		expect(vrSceneTree).toMatchSnapshot();
-	});
-
-	it("should display loading when no assets are passed in", () => {
-		const vrSceneTree = renderer
-			.create(<VRScene grid={grid} position={position} />)
-			.toJSON();
-		expect(vrSceneTree).toMatchSnapshot();
-	});
-
 	it("should display the scene when all props are passed in", () => {
 		const vrSceneTree = renderer
 			.create(
@@ -131,14 +127,13 @@ describe("VR Scene Tests", () => {
 		const store = createStore(reducers);
 
 		// A manual dispatch is required since a single component is being tested
-		store.dispatch(initData(qset));
+		store.dispatch(initData(qset, assetData));
 
 		const connectedVRSceneComponent = shallow(
 			<ConnectedVRScene store={store} qset={qset} />
 		);
 
 		const propsToBeTested = connectedVRSceneComponent.props();
-
 		Object.keys(propsToBeTested).map(prop => {
 			expect(propsInVRScene.includes(prop)).toBe(true);
 			expect(propsToBeTested[prop]).not.toBe(undefined);
