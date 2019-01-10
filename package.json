@@ -38,10 +38,10 @@
 		"testPathIgnorePatterns": ["/node_modules/", "/custom_test_utilities/"],
 		"coverageThreshold": {
 			"global": {
-				"branches": 97,
-				"functions": 91,
-				"lines": 89,
-				"statements": 87
+				"branches": 60,
+				"functions": 55,
+				"lines": 65,
+				"statements": 65
 			}
 		}
 	},
