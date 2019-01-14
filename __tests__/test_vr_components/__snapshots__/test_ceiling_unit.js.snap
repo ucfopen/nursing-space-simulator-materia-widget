@@ -1,3 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`CeilingUnit tests renders CeilingUnit correctly 1`] = `<a-plane />`;

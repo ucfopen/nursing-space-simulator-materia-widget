@@ -21,7 +21,8 @@ describe("Grid Action Tests", () => {
 			payload: {
 				asset,
 				x: 5,
-				z: 7
+				z: 7,
+				dragging: null
 			}
 		};
 		expect(actions.selectAsset(asset, 5, 7)).toEqual(expectedAction);
@@ -29,7 +30,10 @@ describe("Grid Action Tests", () => {
 
 	it("deselectAsset", () => {
 		const expectedAction = {
-			type: actions.DESELECT_ASSET
+			type: actions.DESELECT_ASSET,
+			payload: {
+				restorePosition: false
+			}
 		};
 		expect(actions.deselectAsset()).toEqual(expectedAction);
 	});

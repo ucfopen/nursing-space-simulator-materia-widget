@@ -1,23 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`VR Scene Tests should display loading if no props are passed in 1`] = `
-<div>
-  Loading
-</div>
-`;
-
-exports[`VR Scene Tests should display loading when no assets are passed in 1`] = `
-<div>
-  Loading
-</div>
-`;
-
-exports[`VR Scene Tests should display loading when no position is passed in 1`] = `
-<div>
-  Loading
-</div>
-`;
-
 exports[`VR Scene Tests should display the scene when all props are passed in 1`] = `
 <a-scene
   className="vr-scene"
@@ -28,37 +10,51 @@ exports[`VR Scene Tests should display the scene when all props are passed in 1`
       id="ceilingTexture"
       src="assets/CEILING_TILE.jpg"
     />
-    <a-asset-item
-      id="bed-obj"
-      src="url/to/obj"
+    <img
+      alt="door-texture"
+      id="doorTexture"
+      src="assets/DOOR_TEX.png"
     />
-    <a-asset-item
-      id="chair-obj"
-      src="url/to/obj"
-    />
-    <a-asset-item
-      id="bed-mtl"
-      src="url/to/mtl"
-    />
-    <a-asset-item
-      id="chair-mtl"
-      src="url/to/mtl"
+    <img
+      alt="fire-texture"
+      id="fireTexture"
+      src="assets/FIRE_TEXTURE.png"
     />
   </a-assets>
   <a-sky />
   <a-plane />
   <a-plane />
   <a-entity />
-  <a-entity />
-  <a-plane />
-  <a-plane />
-  <a-plane />
-  <a-plane />
-  <a-plane />
-  <a-plane />
-  <a-plane />
-  <a-plane />
-  <a-plane />
+  <a-entity
+    id="cameratp"
+  />
+  <a-entity>
+    <a-plane />
+  </a-entity>
+  <a-entity>
+    <a-plane />
+  </a-entity>
+  <a-entity>
+    <a-plane />
+  </a-entity>
+  <a-entity>
+    <a-plane />
+  </a-entity>
+  <a-entity>
+    <a-plane />
+  </a-entity>
+  <a-entity>
+    <a-plane />
+  </a-entity>
+  <a-entity>
+    <a-plane />
+  </a-entity>
+  <a-entity>
+    <a-plane />
+  </a-entity>
+  <a-entity>
+    <a-plane />
+  </a-entity>
 </a-scene>
 `;
 
@@ -72,36 +68,50 @@ exports[`VR Scene Tests should not render ceiling when in third person 1`] = `
       id="ceilingTexture"
       src="assets/CEILING_TILE.jpg"
     />
-    <a-asset-item
-      id="bed-obj"
-      src="url/to/obj"
+    <img
+      alt="door-texture"
+      id="doorTexture"
+      src="assets/DOOR_TEX.png"
     />
-    <a-asset-item
-      id="chair-obj"
-      src="url/to/obj"
-    />
-    <a-asset-item
-      id="bed-mtl"
-      src="url/to/mtl"
-    />
-    <a-asset-item
-      id="chair-mtl"
-      src="url/to/mtl"
+    <img
+      alt="fire-texture"
+      id="fireTexture"
+      src="assets/FIRE_TEXTURE.png"
     />
   </a-assets>
   <a-sky />
   <a-plane />
   <a-entity />
-  <a-entity />
-  <a-plane />
-  <a-plane />
-  <a-plane />
-  <a-plane />
-  <a-plane />
-  <a-plane />
-  <a-plane />
-  <a-plane />
-  <a-plane />
+  <a-entity
+    id="cameratp"
+  />
+  <a-entity>
+    <a-plane />
+  </a-entity>
+  <a-entity>
+    <a-plane />
+  </a-entity>
+  <a-entity>
+    <a-plane />
+  </a-entity>
+  <a-entity>
+    <a-plane />
+  </a-entity>
+  <a-entity>
+    <a-plane />
+  </a-entity>
+  <a-entity>
+    <a-plane />
+  </a-entity>
+  <a-entity>
+    <a-plane />
+  </a-entity>
+  <a-entity>
+    <a-plane />
+  </a-entity>
+  <a-entity>
+    <a-plane />
+  </a-entity>
 </a-scene>
 `;
 
@@ -115,35 +125,49 @@ exports[`VR Scene Tests should render floor correctly if a selected asset is pas
       id="ceilingTexture"
       src="assets/CEILING_TILE.jpg"
     />
-    <a-asset-item
-      id="bed-obj"
-      src="url/to/obj"
+    <img
+      alt="door-texture"
+      id="doorTexture"
+      src="assets/DOOR_TEX.png"
     />
-    <a-asset-item
-      id="chair-obj"
-      src="url/to/obj"
-    />
-    <a-asset-item
-      id="bed-mtl"
-      src="url/to/mtl"
-    />
-    <a-asset-item
-      id="chair-mtl"
-      src="url/to/mtl"
+    <img
+      alt="fire-texture"
+      id="fireTexture"
+      src="assets/FIRE_TEXTURE.png"
     />
   </a-assets>
   <a-sky />
   <a-plane />
   <a-entity />
-  <a-entity />
-  <a-plane />
-  <a-plane />
-  <a-plane />
-  <a-plane />
-  <a-plane />
-  <a-plane />
-  <a-plane />
-  <a-plane />
-  <a-plane />
+  <a-entity
+    id="cameratp"
+  />
+  <a-entity>
+    <a-plane />
+  </a-entity>
+  <a-entity>
+    <a-plane />
+  </a-entity>
+  <a-entity>
+    <a-plane />
+  </a-entity>
+  <a-entity>
+    <a-plane />
+  </a-entity>
+  <a-entity>
+    <a-plane />
+  </a-entity>
+  <a-entity>
+    <a-plane />
+  </a-entity>
+  <a-entity>
+    <a-plane />
+  </a-entity>
+  <a-entity>
+    <a-plane />
+  </a-entity>
+  <a-entity>
+    <a-plane />
+  </a-entity>
 </a-scene>
 `;

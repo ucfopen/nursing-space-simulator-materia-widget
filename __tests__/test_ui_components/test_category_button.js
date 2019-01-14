@@ -16,6 +16,20 @@ describe("Category button tests", () => {
 		expect(categoryButtonTree).toMatchSnapshot();
 	});
 
+	it("renders correctly if category == currentCategory", () => {
+		const categoryButtonTree = renderer
+			.create(
+				<CategoryButton
+					category="beds"
+					currentCategory="beds"
+					onClick={mockClick}
+				/>
+			)
+			.toJSON();
+
+		expect(categoryButtonTree).toMatchSnapshot();
+	});
+
 	it("handles click correctly", () => {
 		const categoryButton = shallow(
 			<CategoryButton category="beds" onClick={mockClick} />

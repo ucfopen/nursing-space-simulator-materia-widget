@@ -5,7 +5,6 @@ import { connect } from "react-redux";
 import AssetControls from "./ui/asset_controls";
 import AssetTooltip from "./ui/asset_tooltip";
 import AssetTray from "./ui/asset_tray";
-import CategoryButton from "./ui/category_button";
 import HelpPane from "./ui/help_pane";
 import KeyboardControls from "./ui/keyboard_controls";
 import MovementControls from "./ui/movement_controls";
@@ -57,7 +56,6 @@ export class HUD extends Component {
 			isTooltipTemporary,
 			mode,
 			selectedAsset,
-			selectedItem,
 			shortcutsEnabled,
 			thirdPerson,
 			tooltipClassName,

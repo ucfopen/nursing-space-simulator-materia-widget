@@ -6,6 +6,7 @@ import { mount, shallow } from "enzyme";
 import { createStore } from "redux";
 import reducers from "../../src/js/reducers";
 import { JSDOM } from "jsdom";
+import enginecore from "materia-server-client-assets/dist/js/materia.enginecore.js";
 
 const jsdom = new JSDOM(
 	"<!doctype html><html><body><div id='app'></div></body></html>"
@@ -29,8 +30,9 @@ describe("App tests", () => {
 
 	it("should end tour if joyride callback returns finished", () => {
 		const endTourSpy = jest.fn();
+
 		const wrapper = shallow(<App endTour={endTourSpy} />);
-		wrapper.instance().joyrideCallback({ type: "finished" });
+		wrapper.instance().joyrideCallback({ isTourSkipped: true });
 		expect(endTourSpy).toBeCalled();
 	});
 });

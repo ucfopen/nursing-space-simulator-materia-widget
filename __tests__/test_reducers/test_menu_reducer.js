@@ -12,7 +12,9 @@ describe("menu reducer", () => {
 			)
 		).toEqual({
 			visible: true,
-			currentCategory: "beds"
+			currentCategory: "equipment",
+			helpVisible: false,
+			shortcutsEnabled: true
 		});
 	});
 
@@ -57,6 +59,62 @@ describe("menu reducer", () => {
 			)
 		).toEqual({
 			currentCategory: "walls"
+		});
+	});
+
+	it("should handle TOGGLE_HELP_VISIBILITY", () => {
+		let helpVisible = true;
+
+		expect(
+			menuReducer(
+				{ helpVisible },
+				{
+					type: actions.TOGGLE_HELP_VISIBILITY
+				}
+			)
+		).toEqual({
+			helpVisible: false
+		});
+
+		helpVisible = false;
+
+		expect(
+			menuReducer(
+				{ helpVisible },
+				{
+					type: actions.TOGGLE_HELP_VISIBILITY
+				}
+			)
+		).toEqual({
+			helpVisible: true
+		});
+	});
+
+	it("should handle TOGGLE_KEYBOARD_SHORTCUTS", () => {
+		let shortcutsEnabled = true;
+
+		expect(
+			menuReducer(
+				{ shortcutsEnabled },
+				{
+					type: actions.TOGGLE_KEYBOARD_SHORTCUTS
+				}
+			)
+		).toEqual({
+			shortcutsEnabled: false
+		});
+
+		shortcutsEnabled = false;
+
+		expect(
+			menuReducer(
+				{ shortcutsEnabled },
+				{
+					type: actions.TOGGLE_KEYBOARD_SHORTCUTS
+				}
+			)
+		).toEqual({
+			shortcutsEnabled: true
 		});
 	});
 });
