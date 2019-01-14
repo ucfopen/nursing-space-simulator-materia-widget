@@ -83,8 +83,7 @@ describe("tooltip reducer", () => {
 			persistentText: "persistent",
 			prevSelectedType: null,
 			temporary: true,
-			temporaryText:
-				"Walls can only be extended horizontally and vertically.",
+			temporaryText: "Walls can only be extended horizontally and vertically.",
 			temporaryKey: key
 		});
 

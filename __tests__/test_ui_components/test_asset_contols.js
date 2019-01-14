@@ -7,7 +7,7 @@ import AssetControls from "../../src/js/components/ui/asset_controls";
 // Variables consistent against all tests
 const selectedAsset = {
 	// # TODO this shouldn't have this title, requires changing many tests
-	title: "Bed-1",
+	title: "Bed-1"
 };
 const wallAsset = {
 	id: "wall-1"

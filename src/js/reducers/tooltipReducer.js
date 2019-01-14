@@ -114,9 +114,10 @@ export default function(
 					action.payload.id == "pov_camera"
 						? "Click on a space to jump into first-person view."
 						: (
-							<p>
-								Click on a valid space to place a <strong>{HS_ASSETS[action.payload.id].title}</strong>.
-							</p>
+								<p>
+									Click on a valid space to place a{" "}
+									<strong>{HS_ASSETS[action.payload.id].title}</strong>.
+								</p>
 							).props.children;
 				return {
 					...state,

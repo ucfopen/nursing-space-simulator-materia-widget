@@ -21,7 +21,10 @@ import { INIT_DATA } from "../../src/js/actions";
 import { TOGGLE_THIRD_PERSON } from "../../src/js/actions/camera_actions";
 
 import steps from "../../src/js/steps";
-import { SET_CATEGORY, TOGGLE_HELP_VISIBILITY } from "../../src/js/actions/menu_actions";
+import {
+	SET_CATEGORY,
+	TOGGLE_HELP_VISIBILITY
+} from "../../src/js/actions/menu_actions";
 
 const initialState = {
 	tourRunning: true,

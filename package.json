@@ -73,7 +73,7 @@
 		"jest": "23.6.0",
 		"jsdom": "^11.0.0",
 		"lint-staged": "^3.6.1",
-		"materia-widget-development-kit": "^2.0.0",
+		"materia-widget-development-kit": "^2.3.0",
 		"prettier": "^1.4.4",
 		"react-test-renderer": "^15.6.1"
 	},

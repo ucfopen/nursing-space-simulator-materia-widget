@@ -18,7 +18,13 @@ describe("Category button tests", () => {
 
 	it("renders correctly if category == currentCategory", () => {
 		const categoryButtonTree = renderer
-			.create(<CategoryButton category="beds" currentCategory="beds" onClick={mockClick} />)
+			.create(
+				<CategoryButton
+					category="beds"
+					currentCategory="beds"
+					onClick={mockClick}
+				/>
+			)
 			.toJSON();
 
 		expect(categoryButtonTree).toMatchSnapshot();

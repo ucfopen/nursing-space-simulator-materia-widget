@@ -1,0 +1,28 @@
+language: node_js
+node_js:
+  - '6'
+cache:
+  yarn: true
+  directories:
+    - node_modules
+before_install:
+  - npm config set spin false
+  - npm install -g npm@^5
+script:
+  - yarn test-ci
+  - yarn build
+deploy:
+  skip_cleanup: true
+  provider: releases
+  api_key:
+    secure: "u7ssRMtaWZI7f7gaDECoCydXXgJ/DE67W6LEa7HcB70scVg1L89CBJowixa4LDkpNB/EKnaxxis6MkUDy8emmDPIkGoBKF1iBhxHLnM1H6wGadUYOq0+M3Nvw6Bx/G+DEvNV1VM/40gh1tcn0UtelQuDHkJ6RbuATateWvey4QScbC2AIlhbJZeksQ8dS/xWafRxslBbXGXzgW3PgiqZK7LV1gOfTiHP6f1Dgb53aDhYZdgIHRyUmZYC9Mm73JnFkWrQs4sfvFCSdXc0OpMJHaf/CFumfCHBsN0pf5+MO5znxYbAq8Hg1QJDkFBLbpFACYjtOyC4GzFmLdt0JBU/VByi5+bnacngo1oqhk8SI1knlUZjirw4gKwvGsl8X2WyER+0RVgUBked2rfNst88ziFKKj5UWIB6EQkPPdHwBnyAEKZEOmB0/T/asPuxcJ6RhZ5ViNnQCRTpAqaM2FxIyoLIQH8yhSBOc93hKLFGjs7G12VKU7uNTmN3Y3+8tkVrJxrDgbXJlH7nF6i/PyY4XWtNK8iCSqc1Kb7Fs7UHc++biHnmEyV0VARsgzzkEw1ZQkPDxgGLd8jjVUCqrUrie6t/OhHk0MA5DYonp+tJzEiAQwxKFN2YircDMDF4JqObvgN/VRlEwCF0+sqZLd2H69s42EyQGTJ8u/LzRBbQWJ8="
+  file:
+    - build/_output/nursing-simulation-builder.wigt
+    - build/_output/nursing-simulation-builder-build-info.yml
+  on:
+    tags: true
+    repo: ucfopen/nursing-simulation-builder-materia-widget
+notifications:
+  email: false
+  slack:
+    secure: "vot6SL24UwOEMRjCehXtM+MZc5nh6GrAFvkW3mnTiq4TV9SOi2MIvPjYHJlzd6SeRz3ZOiCGgEByEMOpVeVyOMC+ZILaXI0evqiRJ+LrpBmpnDoo7xGTbCajISYPYoIxWpxeBh0VZ0Tx4jnsF7Q/whyPwZpKjf6j0AR8a++7p/321lI0zTv5ATv74E1K85CX3qxiLMntoxUg3kRwjqOfXfCgGQnWsHWYeM/nroCnuCwJDpG2Apkb2rYI23GmbG1vQR3RtEYwiHhC3RvXInta/pNauUDWpcJhuQZv5IbqfdOC/Sxe5SLJq/fZU+V8cOGEV8GZcBHYd4uCYXr0JuXfVS7e4W0l2zmLZ7imU7fsqTWvc5vQINtLuRen7GmXlTKNWL++UNBiPKc2QNU/EbUhi6RCYr5JsrHSmBBS7pu7j+cMYwYzF1a1HxnGopDQxMfHSKy8OkX49E4Q7GmQuBcdh/gEDdg+biBH5j4RRGr9eJU9rxRdEuVHNw7f8qFnibpjqGXgCLx9x3kXyBWfgzpt9eX/iHOlGGeT5ah6An8EGmR6gOipTk25Xp30wZ54FAg11i/6onk7gj2WYUIgvykgrDybjZzdLZJRUOpCNFOTVmO7ouPOrFE5Qchjk0vrL2/FTQAw6aFZXTz6lXoJ4OXu3d/q5ZYTbHHH2rA5qW4y17w="
