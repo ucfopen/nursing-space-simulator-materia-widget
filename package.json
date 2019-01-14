@@ -3,7 +3,7 @@
 	"materia": {
 		"cleanName": "nursing-simulation-builder"
 	},
-	"version": "0.3.1",
+	"version": "0.3.2",
 	"jest": {
 		"globals": {
 			"HS_ASSETS": {
