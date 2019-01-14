@@ -255,7 +255,8 @@ describe("tooltip reducer", () => {
 
 	it("should handle SELECT_ASSET_TYPE if state.prevSelectedType != action.payload.id && action.payload.id != pov_camera", () => {
 		const text = [
-			"Click on a valid space to place a ",
+			"Click on a valid space to place a",
+			" ",
 			<strong>temp-title</strong>,
 			"."
 		];
