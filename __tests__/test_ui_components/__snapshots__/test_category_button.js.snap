@@ -4,7 +4,7 @@ exports[`Category button tests renders correctly 1`] = `
 <button
   className="asset-category category-beds"
   data-category="beds"
-  onClick={[Function]}
+  onClick={[MockFunction]}
 >
   Beds
 </button>
@@ -14,7 +14,7 @@ exports[`Category button tests renders correctly if category == currentCategory 
 <button
   className="active-category asset-category category-beds"
   data-category="beds"
-  onClick={[Function]}
+  onClick={[MockFunction]}
 >
   Beds
 </button>

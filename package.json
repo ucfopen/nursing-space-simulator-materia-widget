@@ -38,10 +38,10 @@
 		"testPathIgnorePatterns": ["/node_modules/", "/custom_test_utilities/"],
 		"coverageThreshold": {
 			"global": {
-				"branches": 97,
-				"functions": 91,
-				"lines": 89,
-				"statements": 87
+				"branches": 60,
+				"functions": 55,
+				"lines": 65,
+				"statements": 65
 			}
 		}
 	},
@@ -93,7 +93,8 @@
 		}
 	},
 	"lint-staged": {
-		"src/**/*.js": ["prettier --write", "git add"]
+		"src/**/*.js": ["prettier --write", "git add"],
+		"__tests__/**/*.js": ["prettier --write", "git add"]
 	},
 	"license": "AGPL-3.0",
 	"description":
