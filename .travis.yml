@@ -21,7 +21,7 @@ deploy:
     - build/_output/nursing-simulation-builder-build-info.yml
   on:
     tags: true
-    repo: ucfopen/nursing-simulation-builder-materia-widget
+    repo: ucfopen/nursing-space-simulator-materia-widget
 notifications:
   email: false
   slack:
