@@ -4,10 +4,10 @@ exports[`Asset Tray tests renders asset tray 1`] = `
 <div
   className="closed"
   id="UI-bottom-panel"
+  onMouseDown={[Function]}
 >
   <button
     className="drawer-toggle"
-    onClick={undefined}
   >
     [Open Menu]
   </button>
@@ -15,7 +15,7 @@ exports[`Asset Tray tests renders asset tray 1`] = `
     id="asset-selection-menu"
   >
     <button
-      className=""
+      className="active-category"
       id="vr-viewer-mode"
       onClick={[Function]}
     >
@@ -25,28 +25,21 @@ exports[`Asset Tray tests renders asset tray 1`] = `
       id="categories-list"
     >
       <button
-        className="active-category asset-category"
-        data-category="beds"
-        onClick={[Function]}
-      >
-        Beds
-      </button>
-      <button
-        className="asset-category"
+        className="asset-category category-equipment"
         data-category="equipment"
         onClick={[Function]}
       >
         Equipment
       </button>
       <button
-        className="asset-category"
-        data-category="walls"
+        className="active-category asset-category category-construction"
+        data-category="construction"
         onClick={[Function]}
       >
-        Walls
+        Construction
       </button>
       <button
-        className="asset-category"
+        className="asset-category category-people"
         data-category="people"
         onClick={[Function]}
       >
@@ -61,10 +54,24 @@ exports[`Asset Tray tests renders asset tray 1`] = `
       className="button-container"
     >
       <button
-        className="asset"
-        data-category="beds"
-        data-title={undefined}
-        id={undefined}
+        className="asset asset-undefined"
+        data-category="construction"
+        onClick={[Function]}
+        style={
+          Object {
+            "background": "url(undefined) no-repeat center center",
+            "backgroundSize": "100% 100%",
+          }
+        }
+      />
+      <div />
+    </div>
+    <div
+      className="button-container"
+    >
+      <button
+        className="asset asset-undefined"
+        data-category="construction"
         onClick={[Function]}
         style={
           Object {

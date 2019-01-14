@@ -22,3 +22,26 @@ exports[`Asset Button Tests renders asset button 1`] = `
   </div>
 </div>
 `;
+
+exports[`Asset Button Tests renders asset button if selectedAsset.id === item.id 1`] = `
+<div
+  className="button-container"
+>
+  <button
+    className="asset asset-selected-icon asset-bed-1"
+    data-category="beds"
+    data-title="Bed-1"
+    id="bed-1"
+    onClick={[Function]}
+    style={
+      Object {
+        "background": "url(/images/test.jpg) no-repeat center center",
+        "backgroundSize": "100% 100%",
+      }
+    }
+  />
+  <div>
+    Bed-1
+  </div>
+</div>
+`;

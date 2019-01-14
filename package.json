@@ -5,30 +5,53 @@
 	},
 	"version": "0.3.0",
 	"jest": {
+		"globals": {
+			"HS_ASSETS": {
+				"wall-1": {
+					"spanX": 1,
+					"category": "construction"
+				},
+				"chair-1": {
+					"spanX": 1,
+					"category": "equipment"
+				},
+				"window": {
+					"spanX": 1,
+					"category": "construction"
+				},
+				"bed-1": {
+					"spanX": 2,
+					"category": "equipment"
+				},
+				"test-item": {
+					"spanX": 1,
+					"category": "equipment",
+					"title": "temp-title"
+				}
+			},
+			"HS_CATEGORIES": ["equipment", "construction", "people"],
+			"HS_STICKER_TYPES": ["0", "fireSticker", "soapSticker", "tvSticker"]
+		},
 		"coverageReporters": [
 			"text-summary",
 			"lcov"
 		],
 		"verbose": false,
-		"collectCoverageFrom": [
-			"src/**/*.js"
-		],
-		"testPathIgnorePatterns": [
-			"/node_modules/",
-			"/custom_test_utilities/"
-		],
+		"collectCoverageFrom": ["src/**/*.js"],
+		"testPathIgnorePatterns": ["/node_modules/", "/custom_test_utilities/"],
 		"coverageThreshold": {
 			"global": {
-				"branches": 97,
-				"functions": 91,
-				"lines": 89,
-				"statements": 87
+				"branches": 60,
+				"functions": 55,
+				"lines": 65,
+				"statements": 65
 			}
 		}
 	},
 	"dependencies": {
 		"aframe": "0.5.0",
-		"aframe-click-drag-component": "ucfopen/aframe-click-drag-component#b13614ddbbbe2afddfd67edb23b96bfdeb1d19c9",
+		"aframe-click-drag-component":
+			"ucfopen/aframe-click-drag-component#b13614ddbbbe2afddfd67edb23b96bfdeb1d19c9",
 		"aframe-mouse-cursor-component": "^0.5.2",
 		"aframe-react": "^4.2.3",
 		"react": "15.6.2",
@@ -39,7 +62,7 @@
 	},
 	"devDependencies": {
 		"babel-core": "^6.25.0",
-		"babel-jest": "^20.0.3",
+		"babel-jest": "23.6.0",
 		"babel-loader": "^7.1.1",
 		"babel-preset-env": "^1.7.0",
 		"babel-preset-es2015": "^6.24.1",
@@ -47,7 +70,7 @@
 		"babel-preset-stage-3": "^6.24.1",
 		"enzyme": "^2.9.1",
 		"husky": "1.1.4",
-		"jest": "^20.0.4",
+		"jest": "23.6.0",
 		"jsdom": "^11.0.0",
 		"lint-staged": "^3.6.1",
 		"materia-widget-development-kit": "^2.0.0",
@@ -59,7 +82,8 @@
 		"build-dev": "webpack",
 		"build": "webpack -p",
 		"test": "TZ='America/New_York' jest --verbose",
-		"test-ci": "TZ='America/New_York' CI=true jest --ci --useStderr --coverage --coverageReporters text-summary cobertura",
+		"test-ci":
+			"TZ='America/New_York' CI=true jest --ci --useStderr --coverage --coverageReporters text-summary cobertura",
 		"pre-commit": "yarn test-ci && lint-staged"
 	},
 	"prettier": {
@@ -72,12 +96,11 @@
 		}
 	},
 	"lint-staged": {
-		"src/**/*.js": [
-			"prettier --write",
-			"git add"
-		]
+		"src/**/*.js": ["prettier --write", "git add"],
+		"__tests__/**/*.js": ["prettier --write", "git add"]
 	},
 	"license": "AGPL-3.0",
-	"description": "Design a 3D nursing simulation space by filling rooms with an inventory of items such as beds, IVs, Crash Carts, and seating. For use in Materia.",
+	"description":
+		"Design a 3D nursing simulation space by filling rooms with an inventory of items such as beds, IVs, Crash Carts, and seating. For use in Materia.",
 	"author": "University of Central Florida, Center for Distributed Learning"
 }

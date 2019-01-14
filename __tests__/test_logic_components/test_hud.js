@@ -1,11 +1,12 @@
 import ConnectedHud, { HUD } from "../../src/js/components/hud";
 import React from "react";
 import { Provider } from "react-redux";
-import { mount, shallow } from "enzyme";
+import { mount, shallow, render } from "enzyme";
 import { createStore } from "redux";
 import renderer from "react-test-renderer";
 import reducers from "../../src/js/reducers";
 import { initData } from "../../src/js/actions/";
+import assetData from "../../src/assets/assets.json";
 
 // Constants used across all tests
 const categories = ["beds", "equipment", "walls", "people"];
@@ -28,77 +29,12 @@ const updateCameraPositionMock = jest.fn();
 const selectAssetTypeMock = jest.fn();
 const setCategoryMock = jest.fn();
 const toggleThirdPersonMock = jest.fn();
+const toggleMenuVisibilityMock = jest.fn();
 
 describe("HUD tests", () => {
 	it("Should render loading when no props are passed in", () => {
 		const hudTree = renderer.create(<HUD />).toJSON();
-		expect(hudTree).toMatchSnapshot();
-	});
-
-	it("Should render loading when asset prop is not passed in", () => {
-		const hudTree = renderer
-			.create(
-				<HUD
-					categories={categories}
-					updateAssetPosition={updateAssetPositionMock}
-					updateCameraPosition={updateCameraPositionMock}
-				/>
-			)
-			.toJSON();
-		expect(hudTree).toMatchSnapshot();
-	});
-
-	it("Should render loading when asset prop is not passed in", () => {
-		const hudTree = renderer
-			.create(
-				<HUD
-					categories={categories}
-					assets={assets}
-					updateCameraPosition={updateCameraPositionMock}
-				/>
-			)
-			.toJSON();
-		expect(hudTree).toMatchSnapshot();
-	});
-
-	it("Should render loading when asset prop is not passed in", () => {
-		const hudTree = renderer
-			.create(
-				<HUD
-					categories={categories}
-					assets={assets}
-					updateAssetPosition={updateAssetPositionMock}
-				/>
-			)
-			.toJSON();
-		expect(hudTree).toMatchSnapshot();
-	});
-
-	it("Should render loading when asset prop is not passed in", () => {
-		const hudTree = renderer
-			.create(
-				<HUD
-					assets={assets}
-					updateAssetPosition={updateAssetPositionMock}
-					updateCameraPosition={updateCameraPositionMock}
-				/>
-			)
-			.toJSON();
-		expect(hudTree).toMatchSnapshot();
-	});
-
-	it("Should render loading when asset prop is not passed in", () => {
-		const hudTree = renderer
-			.create(
-				<HUD
-					categories={categories}
-					assets={assets}
-					updateAssetPosition={updateAssetPositionMock}
-					updateCameraPosition={updateCameraPositionMock}
-				/>
-			)
-			.toJSON();
-		expect(hudTree).toMatchSnapshot();
+		expect(hudTree).toBeNull();
 	});
 
 	it("should execute toggle camera type when the back third person button is pressed", () => {
@@ -113,58 +49,55 @@ describe("HUD tests", () => {
 				selectAssetType={selectAssetTypeMock}
 				setCategory={setCategoryMock}
 				toggleThirdPerson={toggleThirdPersonMock}
+				ready={true}
 			/>
 		);
-
 		hud.find("#back").simulate("click");
 
 		expect(toggleThirdPersonMock).toBeCalled();
 	});
 
-	/*it("Should use updateAssetPosition when an asset is selected", () => {
-		const hud = shallow(
-			<HUD
-				categories={categories}
-				assets={assets}
-				selectedAsset={selectedAsset}
-				updateAssetPosition={updateAssetPositionMock}
-				updateCameraPosition={updateCameraPositionMock}
-			/>
-		);
-		expect(hud.update).toBe(update);
-	});*/
-
 	it("should render third person correctly with selected asset", () => {
+		const store = createStore(reducers);
 		const hudTree = renderer
 			.create(
-				<HUD
-					categories={categories}
-					assets={assets}
-					updateAssetPosition={updateAssetPositionMock}
-					updateCameraPosition={updateCameraPositionMock}
-					thirdPerson={true}
-					selectedAsset={selectedAsset}
-					selectAssetType={selectAssetTypeMock}
-					setCategory={setCategoryMock}
-				/>
+				<Provider store={store}>
+					<HUD
+						categories={categories}
+						assets={assets}
+						updateAssetPosition={updateAssetPositionMock}
+						updateCameraPosition={updateCameraPositionMock}
+						thirdPerson={true}
+						toggleMenuVisibility={toggleMenuVisibilityMock}
+						selectedAsset={selectedAsset}
+						selectAssetType={selectAssetTypeMock}
+						setCategory={setCategoryMock}
+						ready={true}
+					/>
+				</Provider>
 			)
 			.toJSON();
 		expect(hudTree).toMatchSnapshot();
 	});
 
 	it("should render third person correctly without selected asset", () => {
+		const store = createStore(reducers);
 		const hudTree = renderer
 			.create(
-				<HUD
-					categories={categories}
-					assets={assets}
-					updateAssetPosition={updateAssetPositionMock}
-					updateCameraPosition={updateCameraPositionMock}
-					thirdPerson={true}
-					selectedAsset={null}
-					selectAssetType={selectAssetTypeMock}
-					setCategory={setCategoryMock}
-				/>
+				<Provider store={store}>
+					<HUD
+						categories={categories}
+						assets={assets}
+						updateAssetPosition={updateAssetPositionMock}
+						updateCameraPosition={updateCameraPositionMock}
+						thirdPerson={true}
+						toggleMenuVisibility={toggleMenuVisibilityMock}
+						selectedAsset={null}
+						selectAssetType={selectAssetTypeMock}
+						setCategory={setCategoryMock}
+						ready={true}
+					/>
+				</Provider>
 			)
 			.toJSON();
 		expect(hudTree).toMatchSnapshot();
@@ -187,10 +120,9 @@ describe("HUD tests", () => {
 			}
 		};
 		const store = createStore(reducers);
-		store.dispatch(initData(qset));
-		// console.log(connectedAppComponent.debug());
-		const connectedHudComponent = mount(<ConnectedHud store={store} />),
-			hud = connectedHudComponent.find(HUD);
+		store.dispatch(initData(qset, assetData));
+		const connectedHudComponent = shallow(<ConnectedHud store={store} />);
+		const hud = connectedHudComponent.find(HUD);
 
 		Object.keys(hud.props()).map(prop => {
 			expect(hud.props()[prop]).not.toBe(undefined);

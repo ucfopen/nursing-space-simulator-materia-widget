@@ -143,27 +143,25 @@ export default function(
 		}
 
 		case INSERT_ASSET: {
-			const selectedAsset = state.selectedAsset
-				? { ...state.selectedAsset }
-				: null;
-
-			if (!selectedAsset || selectedAsset.id === "pov_camera") {
+			if (!state.selectedAsset || state.selectedAsset.id === "pov_camera") {
 				return state;
 			}
 
 			const { x, z } = action.payload;
 			const gridCopy = deepCopy(state.grid);
-			let newGrid,
-				prevRotation = 180,
-				prevStickers;
+			let newGrid;
+			let prevRotation = 180;
+			let prevStickers;
 
+			// if an item is selected
+			// and an empty square is clicked
 			if (state.currentX !== null && state.currentZ !== null) {
 				prevRotation = getCellRotation(
 					gridCopy,
 					state.currentX,
 					state.currentZ
 				);
-				if (HS_ASSETS[selectedAsset.id].category == "construction") {
+				if (HS_ASSETS[state.selectedAsset.id].category == "construction") {
 					prevStickers = getStickers(
 						gridCopy,
 						state.currentX,
@@ -174,9 +172,16 @@ export default function(
 				newGrid = deleteItem(gridCopy, state.currentX, state.currentZ);
 			} else {
 				newGrid = gridCopy;
-				if (selectedAsset.id == "wall-1") {
+				// place wall and go into extendWall mode
+				if (state.selectedAsset.id == "wall-1") {
 					let validX, validZ;
-					newGrid = insertItem(newGrid, selectedAsset.id, x, z, prevRotation);
+					newGrid = insertItem(
+						newGrid,
+						state.selectedAsset.id,
+						x,
+						z,
+						prevRotation
+					);
 					[validX, validZ] = findValidExtends(newGrid, x, z);
 					return {
 						...state,
@@ -190,16 +195,17 @@ export default function(
 					};
 				}
 			}
+			// standard insertion of item
 			newGrid = insertItem(
 				newGrid,
-				selectedAsset.id,
+				state.selectedAsset.id,
 				x,
 				z,
 				prevRotation,
 				prevStickers
 			);
 			let selectedItem = getItem(newGrid, x, z);
-			selectedItem.adj = getAdjacentSpaces(newGrid, x, z, selectedAsset);
+			selectedItem.adj = getAdjacentSpaces(newGrid, x, z, state.selectedAsset);
 			return {
 				...state,
 				currentX: x,
@@ -212,11 +218,10 @@ export default function(
 		}
 
 		case REFRESH_GRID: {
-			const gridCopy = deepCopy(state.grid);
 			return {
 				...state,
 				dragging: false,
-				grid: gridCopy
+				grid: deepCopy(state.grid)
 			};
 		}
 
@@ -250,20 +255,19 @@ export default function(
 			const gridCopy = deepCopy(state.grid);
 			const { asset, dragging, x, z } = action.payload;
 
-			let oldSelectedAsset = state.selectedAsset
-				? { ...state.selectedAsset }
-				: null;
-
+			// if there is an asset type selected
+			// and that asset type can replace the item being clicked on
+			// replace the item in the grid with the asset type
 			if (
-				oldSelectedAsset &&
-				oldSelectedAsset.id !== "pov_camera" &&
-				oldSelectedAsset.id !== asset.id &&
-				oldSelectedAsset.canReplace.includes(asset.category)
+				state.selectedAsset &&
+				state.selectedAsset.id !== "pov_camera" &&
+				state.selectedAsset.id !== asset.id &&
+				state.selectedAsset.canReplace.includes(asset.category)
 			) {
 				const prevRotation = getCellRotation(gridCopy, x, z);
 				let newGrid = insertItem(
 					gridCopy,
-					oldSelectedAsset.id,
+					state.selectedAsset.id,
 					x,
 					z,
 					prevRotation
@@ -276,10 +280,10 @@ export default function(
 					currentZ: z,
 					grid: newGrid,
 					mode: "manipulation",
-					selectedAsset: oldSelectedAsset,
-					selectedItem: getItem(newGrid, x, z)
+					selectedItem: selectedItem
 				};
 			} else {
+				// normal selection of the item being clicked on
 				let selectedItem = getItem(gridCopy, x, z);
 				selectedItem.adj = getAdjacentSpaces(gridCopy, x, z, asset);
 				return {
@@ -306,9 +310,7 @@ export default function(
 		}
 
 		case UPDATE_ASSET_POSITION: {
-			const selectedAsset = { ...state.selectedAsset };
-
-			if (!selectedAsset || selectedAsset.id === "pov_camera") {
+			if (!state.selectedAsset || state.selectedAsset.id === "pov_camera") {
 				return state;
 			}
 
@@ -321,17 +323,19 @@ export default function(
 			let adjSide;
 			let newGrid;
 
-			if (selectedAsset.id && HS_ASSETS[selectedAsset.id].spanX == 2) {
+			if (
+				state.selectedAsset.id &&
+				HS_ASSETS[state.selectedAsset.id].spanX == 2
+			) {
 				adjSide = 3 - ((currentRotation + 180) % 360) / 90;
 			}
-
 			switch (action.payload) {
 				case "xRight":
 					newGrid = deleteItem(gridCopy, currentX, currentZ);
 					if (isCellAvailable(gridCopy, currentX + 1, currentZ, adjSide)) {
 						newGrid = insertItem(
 							newGrid,
-							selectedAsset.id,
+							state.selectedAsset.id,
 							currentX + 1,
 							currentZ,
 							currentRotation,
@@ -341,7 +345,7 @@ export default function(
 							newGrid,
 							currentX + 1,
 							currentZ,
-							selectedAsset
+							state.selectedAsset
 						);
 						return {
 							...state,
@@ -356,7 +360,7 @@ export default function(
 					if (isCellAvailable(gridCopy, currentX - 1, currentZ, adjSide)) {
 						newGrid = insertItem(
 							newGrid,
-							selectedAsset.id,
+							state.selectedAsset.id,
 							currentX - 1,
 							currentZ,
 							currentRotation,
@@ -366,7 +370,7 @@ export default function(
 							newGrid,
 							currentX - 1,
 							currentZ,
-							selectedAsset
+							state.selectedAsset
 						);
 						return {
 							...state,
@@ -381,7 +385,7 @@ export default function(
 					if (isCellAvailable(gridCopy, currentX, currentZ - 1, adjSide)) {
 						newGrid = insertItem(
 							newGrid,
-							selectedAsset.id,
+							state.selectedAsset.id,
 							currentX,
 							currentZ - 1,
 							currentRotation,
@@ -391,7 +395,7 @@ export default function(
 							newGrid,
 							currentX,
 							currentZ - 1,
-							selectedAsset
+							state.selectedAsset
 						);
 						return {
 							...state,
@@ -406,7 +410,7 @@ export default function(
 					if (isCellAvailable(gridCopy, currentX, currentZ + 1, adjSide)) {
 						newGrid = insertItem(
 							newGrid,
-							selectedAsset.id,
+							state.selectedAsset.id,
 							currentX,
 							currentZ + 1,
 							currentRotation,
@@ -416,7 +420,7 @@ export default function(
 							newGrid,
 							currentX,
 							currentZ + 1,
-							selectedAsset
+							state.selectedAsset
 						);
 						return {
 							...state,
