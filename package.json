@@ -1,9 +1,9 @@
 {
-	"name": "@ucfopen/hospital-sim",
+	"name": "@ucfopen/nursing-simulation-builder",
 	"materia": {
-		"cleanName": "hospital-sim"
+		"cleanName": "nursing-simulation-builder"
 	},
-	"version": "0.2.1",
+	"version": "0.3.0",
 	"jest": {
 		"globals": {
 			"HS_ASSETS": {
@@ -32,7 +32,10 @@
 			"HS_CATEGORIES": ["equipment", "construction", "people"],
 			"HS_STICKER_TYPES": ["0", "fireSticker", "soapSticker", "tvSticker"]
 		},
-		"coverageReporters": ["text-summary", "lcov"],
+		"coverageReporters": [
+			"text-summary",
+			"lcov"
+		],
 		"verbose": false,
 		"collectCoverageFrom": ["src/**/*.js"],
 		"testPathIgnorePatterns": ["/node_modules/", "/custom_test_utilities/"],
