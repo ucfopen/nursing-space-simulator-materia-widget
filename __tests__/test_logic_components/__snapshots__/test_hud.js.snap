@@ -308,7 +308,9 @@ exports[`HUD tests should render third person correctly with selected asset 1`] 
       </button>
     </div>
   </div>
-  <div>
+  <div
+    id="tray-div"
+  >
     <div
       id="UI-selected-asset-options"
       onMouseDown={[Function]}
@@ -404,20 +406,14 @@ exports[`HUD tests should render third person correctly with selected asset 1`] 
       />
     </div>
   </div>
-  <button
-    className="active"
-    id="keyboard-shortcut"
-    onClick={[Function]}
-    onMouseDown={[Function]}
-  >
-    Help and Keyboard Shortcuts
-  </button>
 </div>
 `;
 
 exports[`HUD tests should render third person correctly without selected asset 1`] = `
 <div>
-  <div>
+  <div
+    id="tray-div"
+  >
     <div
       className="closed"
       id="UI-bottom-panel"
@@ -470,13 +466,5 @@ exports[`HUD tests should render third person correctly without selected asset 1
       />
     </div>
   </div>
-  <button
-    className="active"
-    id="keyboard-shortcut"
-    onClick={[Function]}
-    onMouseDown={[Function]}
-  >
-    Help and Keyboard Shortcuts
-  </button>
 </div>
 `;

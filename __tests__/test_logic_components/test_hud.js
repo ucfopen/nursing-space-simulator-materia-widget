@@ -89,12 +89,11 @@ describe("HUD tests", () => {
 			/>
 		);
 		const findTray = hud.find("#vr-viewer-mode").simulate("click");
-		// expect(findTray.html()).toBe(true);
 
 		expect(deselectAssetMock).toBeCalled();
 	});
 
-	it.only("should restart the tour", () => {
+	it("should restart the tour", () => {
 		const hud = mount(
 			<HUD
 				helpVisible={true}
@@ -109,27 +108,6 @@ describe("HUD tests", () => {
 			/>
 		);
 		const findRestartButton = hud.find("#help-pane a").simulate("click");
-
-		expect(restartTourMock).toBeCalled();
-	});
-
-	it.only("should restart the tour when helpVisible == false", () => {
-		const hud = mount(
-			<HUD
-				helpVisible={false}
-				selectAssetType={selectAssetTypeMock}
-				setCategory={setCategoryMock}
-				toggleHelpVisibility={toggleHelpVisibilityMock}
-				restartTour={restartTourMock}
-				mode={"editAsset"}
-				thirdPerson={true}
-				toggleMenuVisibility={() => {}}
-				ready={true}
-			/>
-		);
-		// const findButton = hud.find(".drawer-toggle").simulate("click");
-		// const findTray = hud.find("#tray-div");
-		// expect(findTray.html()).toBe(true);
 
 		expect(restartTourMock).toBeCalled();
 	});

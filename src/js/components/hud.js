@@ -45,7 +45,7 @@ export class HUD extends Component {
 	}
 
 	restartTour() {
-		if (this.props.helpVisible) this.props.toggleHelpVisibility();
+		this.props.toggleHelpVisibility();
 		this.props.restartTour();
 	}
 
