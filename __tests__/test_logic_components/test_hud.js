@@ -30,11 +30,86 @@ const selectAssetTypeMock = jest.fn();
 const setCategoryMock = jest.fn();
 const toggleThirdPersonMock = jest.fn();
 const toggleMenuVisibilityMock = jest.fn();
-
+const deselectAssetMock = jest.fn();
+const restartTourMock = jest.fn();
+const toggleHelpVisibilityMock = jest.fn();
+jest.mock("../../src/js/components/ui/keyboard_controls.js");
+jest.mock("../../src/js/actions/grid_actions.js");
+jest.mock("../../src/js/actions/menu_actions.js");
 describe("HUD tests", () => {
 	it("Should render loading when no props are passed in", () => {
 		const hudTree = renderer.create(<HUD />).toJSON();
 		expect(hudTree).toBeNull();
+	});
+
+	it("should checkSelectAssetType", () => {
+		const hud = mount(
+			<HUD
+				categories={categories}
+				assets={assets}
+				updateAssetPosition={updateAssetPositionMock}
+				updateCameraPosition={updateCameraPositionMock}
+				thirdPerson={false}
+				selectedAsset={false}
+				selectAssetType={selectAssetTypeMock}
+				setCategory={setCategoryMock}
+				toggleThirdPerson={toggleThirdPersonMock}
+				isTooltipTemporary={true}
+				mode={"editAsset"}
+				thirdPerson={true}
+				toggleMenuVisibility={() => {}}
+				ready={true}
+			/>
+		);
+		const findTray = hud.find("#vr-viewer-mode").simulate("click");
+		// expect(findTray.html()).toBe(true);
+
+		expect(selectAssetTypeMock).toBeCalled();
+	});
+
+	it("should check asset types when asset ids match", () => {
+		const hud = mount(
+			<HUD
+				categories={categories}
+				assets={assets}
+				updateAssetPosition={updateAssetPositionMock}
+				updateCameraPosition={updateCameraPositionMock}
+				thirdPerson={false}
+				deselectAsset={deselectAssetMock}
+				selectedAsset={{id:"pov_camera"}}
+				selectedItem={{rotation:0}}
+				selectAssetType={selectAssetTypeMock}
+				setCategory={setCategoryMock}
+				toggleThirdPerson={toggleThirdPersonMock}
+				isTooltipTemporary={true}
+				mode={"editAsset"}
+				thirdPerson={true}
+				toggleMenuVisibility={() => {}}
+				ready={true}
+			/>
+		);
+		const findTray = hud.find("#vr-viewer-mode").simulate("click");
+
+		expect(deselectAssetMock).toBeCalled();
+	});
+
+	it("should restart the tour", () => {
+		const hud = mount(
+			<HUD
+				helpVisible={true}
+				selectAssetType={selectAssetTypeMock}
+				setCategory={setCategoryMock}
+				toggleHelpVisibility={toggleHelpVisibilityMock}
+				restartTour={restartTourMock}
+				mode={"editAsset"}
+				thirdPerson={true}
+				toggleMenuVisibility={() => {}}
+				ready={true}
+			/>
+		);
+		const findRestartButton = hud.find("#help-pane a").simulate("click");
+
+		expect(restartTourMock).toBeCalled();
 	});
 
 	it("should execute toggle camera type when the back third person button is pressed", () => {
@@ -49,6 +124,8 @@ describe("HUD tests", () => {
 				selectAssetType={selectAssetTypeMock}
 				setCategory={setCategoryMock}
 				toggleThirdPerson={toggleThirdPersonMock}
+				isTooltipTemporary={true}
+				mode={"editAsset"}
 				ready={true}
 			/>
 		);
@@ -95,6 +172,7 @@ describe("HUD tests", () => {
 						selectedAsset={null}
 						selectAssetType={selectAssetTypeMock}
 						setCategory={setCategoryMock}
+						mode={"editAsset"}
 						ready={true}
 					/>
 				</Provider>

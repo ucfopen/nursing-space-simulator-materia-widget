@@ -45,7 +45,7 @@ export class HUD extends Component {
 	}
 
 	restartTour() {
-		if (this.props.helpVisible) this.props.toggleHelpVisibility();
+		this.props.toggleHelpVisibility();
 		this.props.restartTour();
 	}
 
@@ -74,7 +74,9 @@ export class HUD extends Component {
 				<AssetTooltip
 					visible={isTooltipTemporary || isTooltipPersistent}
 					text={
-						isTooltipTemporary ? tooltipTemporaryText : tooltipPersistentText
+						isTooltipTemporary
+							? tooltipTemporaryText
+							: tooltipPersistentText
 					}
 					className={tooltipClassName}
 				/>
@@ -85,7 +87,7 @@ export class HUD extends Component {
 					/>
 				) : null}
 				{thirdPerson ? (
-					<div>
+					<div id="tray-div">
 						{selectedAsset ? (
 							<AssetControls
 								currentX={this.props.currentX}
@@ -101,23 +103,33 @@ export class HUD extends Component {
 								selectedAsset={this.props.selectedAsset}
 								selectedItem={this.props.selectedItem}
 								shortcutsEnabled={shortcutsEnabled}
-								updateTemporaryTooltip={this.props.updateTemporaryTooltip}
+								updateTemporaryTooltip={
+									this.props.updateTemporaryTooltip
+								}
 							/>
 						) : null}
 						<AssetTray
 							currentCategory={this.props.currentCategory}
-							selectAssetType={this.checkSelectAssetType.bind(this)}
+							selectAssetType={this.checkSelectAssetType.bind(
+								this
+							)}
 							selectedAsset={this.props.selectedAsset}
 							setCategory={this.props.setCategory}
 							isMenuVisible={
-								mode === "editAsset" ? false : this.props.menuVisible
+								mode === "editAsset"
+									? false
+									: this.props.menuVisible
 							}
-							toggleMenu={this.props.toggleMenuVisibility.bind(this)}
+							toggleMenu={this.props.toggleMenuVisibility.bind(
+								this
+							)}
 						/>
 					</div>
 				) : (
 					<div id="ground-top-panel">
-						<button id="back" onClick={() => this.props.toggleThirdPerson()}>
+						<button
+							id="back"
+							onClick={() => this.props.toggleThirdPerson()}>
 							Back
 						</button>
 					</div>
