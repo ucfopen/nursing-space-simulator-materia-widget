@@ -51,22 +51,21 @@ describe("Utils tests", () => {
 
 	it("should deepCopy an object", () => { 
 		let deepCopyFunction = deepCopy(assets);
-		deepCopyMock();
-		expect(deepCopyMock).toHaveReturned();
+		var newAssets = deepCopy(assets);
+		expect(newAssets).toEqual(assets);
 	});
 
 	it("should deepCopy when hasOwnProperty is false", () => { 
 		let test = {bed: "bed-1"}
 		test.__proto__.category = "beds";
-		deepCopy(test);
-		deepCopyMock();
-		expect(deepCopyMock).toHaveReturned();
+		var newAssets = deepCopy(assets);
+		expect(newAssets).toEqual(assets);
 	});
 
 	it("should deepCopy an array", () => { 
 		deepCopy(testProps);
-		deepCopyMock();
-		expect(deepCopyMock).toHaveReturned();
+		var newProps = deepCopy(testProps);
+		expect(newProps).toEqual(testProps);
 	});
 
 });
